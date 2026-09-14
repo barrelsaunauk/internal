@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BSUK GHL Manual, Barrel Sauna UK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#16261C; --forest-deep:#1F3D28; --forest:#2B5336; --mid:#417C51;
+    --sage:#50795F; --sage-pale:#8fae86; --honey:#C08B41; --honey-l:#D6A868;
+    --pistachio:#c5d8a4; --pistachio-l:#d8e5bf;
+    --body-dark:#dfe9df; --veil-body:#e9eee4;
+    --ink:#3A4240; --ink-l:#5C6663;
+    --hairline:rgba(65,124,81,0.30); --rule-soft:rgba(65,124,81,0.12);
+    --shadow:0 10px 30px rgba(22,38,28,0.12);
+    --face:'Raleway', Arial, Helvetica, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{background:#ffffff;}
+  body{font-family:var(--face);color:var(--ink);font-weight:400;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px;}
+  img{max-width:100%;display:block;}
+  section{padding:56px 0;}
+
+  .kicker{font-size:12px;font-weight:700;letter-spacing:0.32em;text-transform:uppercase;color:var(--honey);margin-bottom:14px;}
+  h2{font-size:38px;font-weight:700;line-height:1.1;letter-spacing:-0.5px;color:var(--ink);margin-bottom:14px;}
+  h2 span{color:var(--honey);}
+  h3{font-size:20px;font-weight:700;color:var(--ink);margin:30px 0 10px;}
+  p.lede{font-size:18px;color:var(--ink-l);max-width:680px;margin-bottom:26px;}
+  p.body{font-size:15.5px;color:var(--ink);max-width:680px;margin-bottom:16px;}
+
+  /* hero */
+  .hero-block{position:relative;overflow:hidden;
+    background:linear-gradient(180deg, rgba(22,38,28,0.62) 0%, rgba(22,38,28,0.45) 45%, rgba(22,38,28,0.92) 100%),
+    url('https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9e563e506b5777477b8e67.jpg') center 24% / cover no-repeat;
+    min-height:68vh;display:flex;align-items:flex-end;}
+  .hero-block .inner{max-width:980px;margin:0 auto;padding:120px 24px 100px;width:100%;}
+  .hero-block .dash{width:44px;height:2px;background:var(--honey-l);margin-bottom:16px;}
+  .hero-block .kicker{color:var(--honey-l);}
+  .hero-block h1{color:#ffffff;font-size:54px;font-weight:700;line-height:1.04;letter-spacing:-1px;margin-bottom:14px;max-width:720px;}
+  .hero-block h1 span{color:var(--honey-l);}
+  .hero-block p{color:var(--veil-body);font-size:18px;max-width:560px;margin-bottom:10px;}
+  .hero-block .ver{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sage-pale);margin-bottom:28px;}
+  .pill{display:inline-block;background:var(--honey);color:#ffffff;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:16px 38px;border-radius:30px;text-decoration:none;border:none;cursor:pointer;font-family:var(--face);}
+  .pill:hover{background:var(--honey-l);}
+
+  /* ghl orb */
+  .ghl-orb{width:112px;height:112px;border-radius:56px;background:#ffffff;box-shadow:0 14px 40px rgba(22,38,28,0.28);
+    margin:-56px auto 0;position:relative;z-index:4;display:flex;align-items:center;justify-content:center;}
+  .ghl-orb img{width:88px;height:88px;border-radius:44px;display:block;}
+  .orb-line{text-align:center;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:12px;}
+
+  /* name card */
+  .name-card{display:flex;align-items:center;gap:18px;background:#ffffff;border-radius:18px;padding:22px 24px;box-shadow:var(--shadow);max-width:560px;margin:26px auto 0;position:relative;z-index:3;}
+  .name-card .bot{flex:0 0 56px;}
+  .name-card .bot svg{width:56px;height:auto;display:block;}
+  .name-card .t{font-size:16px;font-weight:700;color:var(--ink);}
+  .name-card .s{font-size:13.5px;color:var(--ink-l);}
+  .name-card input{margin-left:auto;border:1px solid var(--hairline);border-radius:12px;padding:12px 16px;font-family:var(--face);font-size:15px;color:var(--ink);width:200px;background:#ffffff;}
+  .name-card input::placeholder{color:var(--sage-pale);}
+
+  /* role cards */
+  .role-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:12px;}
+  .rcard{background:#ffffff;border-radius:18px;padding:28px 24px;box-shadow:var(--shadow);text-align:center;cursor:pointer;border:2px solid transparent;font-family:var(--face);}
+  .rcard:hover{border-color:var(--hairline);}
+  .rcard.on{border-color:var(--honey);}
+  .rcard .disc{width:64px;height:64px;border-radius:32px;background:var(--forest);font-size:28px;line-height:64px;text-align:center;margin:0 auto 14px;}
+  .rcard.on .disc{background:var(--honey);}
+  .rcard .t{font-size:19px;font-weight:700;color:var(--ink);}
+  .rcard .s{font-size:14px;color:var(--ink-l);margin-top:4px;min-height:48px;}
+  .rcard .count{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sage);}
+  .rcard.on .count{color:var(--honey);}
+  .showall{text-align:center;margin-top:18px;}
+  .showall button{cursor:pointer;border:none;background:none;font-family:var(--face);font-size:14px;color:var(--sage);text-decoration:underline;}
+
+  /* journey progress strip */
+  .journey{background:var(--forest);border-radius:22px;padding:34px 20px 38px;text-align:center;box-shadow:var(--shadow);margin-top:34px;}
+  .journey .st{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--honey-l);margin-bottom:22px;}
+  .journey .row{display:flex;justify-content:space-around;max-width:760px;margin:0 auto;flex-wrap:wrap;gap:14px 0;}
+  .journey .cell{width:13%;min-width:88px;cursor:pointer;}
+  .journey .disc{width:52px;height:52px;border-radius:26px;background:#3F6A4C;margin:0 auto;font-size:22px;line-height:52px;text-align:center;transition:all .2s;}
+  .journey .cell.on .disc{background:var(--honey);}
+  .journey .cl{margin-top:10px;font-size:11px;font-weight:400;letter-spacing:1px;text-transform:uppercase;color:var(--sage-pale);line-height:1.4;}
+  .journey .cell.on .cl{color:#ffffff;font-weight:700;}
+  .journey .sum{margin-top:22px;font-size:14px;color:var(--body-dark);}
+
+  /* spine box */
+  .spine-box{background:var(--forest);border-radius:22px;padding:40px 44px;color:var(--body-dark);box-shadow:var(--shadow);}
+  .spine-box .plab{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sage-pale);margin-bottom:8px;}
+  .spine-box .big{font-size:30px;font-weight:700;color:#ffffff;line-height:1.15;}
+  .spine-box .big span{color:var(--honey-l);}
+  .spine-box .psub{color:var(--body-dark);font-size:15.5px;margin-top:12px;max-width:600px;}
+  .spine-pills{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px;}
+  .spine-pills a{display:inline-block;background:rgba(255,255,255,0.10);color:#ffffff;border-radius:24px;padding:10px 22px;text-decoration:none;font-size:14px;}
+  .spine-pills a:hover{background:var(--honey);}
+
+  /* chapter TOC cards */
+  .chap-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:12px;}
+  .fcard{display:flex;align-items:center;gap:18px;background:#ffffff;border-radius:18px;padding:22px 24px;box-shadow:var(--shadow);text-decoration:none;}
+  .fcard .disc{flex:0 0 54px;height:54px;border-radius:27px;background:var(--forest);font-size:24px;line-height:54px;text-align:center;}
+  .fcard .t{font-size:17px;font-weight:700;color:var(--ink);}
+  .fcard .s{font-size:14px;color:var(--ink-l);}
+  .fcard .state{margin-left:auto;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sage);white-space:nowrap;}
+  .fcard.done .disc{background:var(--honey);}
+  .fcard.done .state{color:var(--honey);}
+
+  /* chapter head with robot */
+  .chap-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;}
+  .chap-head .bot svg{width:130px;height:auto;display:block;}
+  @media(max-width:760px){.chap-head .bot svg{width:96px;}}
+
+  /* being built box */
+  .build-box{background:var(--forest);border-radius:22px;padding:56px 30px;text-align:center;}
+  .build-box svg{width:150px;height:auto;display:inline-block;}
+  .build-box .bt{font-size:30px;font-weight:700;color:#ffffff;margin-top:18px;}
+  .build-box .bs{font-size:15.5px;color:var(--body-dark);margin-top:8px;}
+
+  /* info cards inside chapters */
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:20px 0 8px;max-width:820px;}
+  .icard{background:#ffffff;border-radius:18px;padding:22px 24px;box-shadow:var(--shadow);}
+  .icard .disc{width:50px;height:50px;border-radius:25px;background:var(--forest);font-size:22px;line-height:50px;text-align:center;margin-bottom:12px;}
+  .icard .t{font-size:16.5px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+  .icard .s{font-size:14px;color:var(--ink-l);}
+
+  /* numbered steps */
+  .step{display:flex;gap:16px;background:#ffffff;border-radius:16px;padding:18px 22px;margin:12px 0;box-shadow:var(--shadow);max-width:760px;}
+  .step .n{flex:0 0 40px;height:40px;border-radius:20px;background:var(--honey);color:#ffffff;font-weight:700;font-size:16px;line-height:40px;text-align:center;}
+  .step .t{font-size:16px;font-weight:700;color:var(--ink);}
+  .step .s{font-size:14px;color:var(--ink-l);margin-top:2px;}
+
+  /* forest why box */
+  .why-box{background:var(--forest);border-radius:22px;padding:34px 38px;color:var(--body-dark);box-shadow:var(--shadow);margin:26px 0;max-width:820px;}
+  .why-box .plab{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--honey-l);margin-bottom:8px;}
+  .why-box .wb{font-size:15.5px;color:var(--body-dark);max-width:680px;}
+  .why-box .wb b{color:#ffffff;font-weight:700;}
+
+  /* screenshot frames */
+  .cad{background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);margin:20px 0;max-width:760px;}
+  .cad .cap{background:var(--forest-deep);border-top:3px solid var(--honey);color:#ffffff;padding:13px 18px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+  .cad .slot{border:2px dashed var(--hairline);border-radius:12px;margin:16px;min-height:150px;display:flex;align-items:center;justify-content:center;color:var(--sage);font-size:14px;text-align:center;padding:20px;}
+
+  /* link pills inside chapters */
+  .linkrow{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px;max-width:760px;}
+  .lpill{display:inline-block;background:#b07d38;color:#ffffff;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:13px 26px;border-radius:30px;text-decoration:none;}
+  .lpill:hover{background:var(--honey-l);}
+  .lpill.ghost{background:#ffffff;color:#b07d38;border:1.5px solid var(--honey);}
+  .lpill.ghost:hover{background:var(--honey);color:#ffffff;}
+
+  /* tables */
+  .ptable{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;max-width:860px;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);}
+  .ptable th{text-align:left;padding:14px 16px;color:#ffffff;background:var(--forest);font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;}
+  .ptable td{padding:12px 16px;border-bottom:1px solid var(--rule-soft);color:var(--ink-l);vertical-align:top;}
+  .ptable tr:last-child td{border-bottom:none;}
+  .ptable td:first-child{color:var(--ink);font-weight:700;}
+  .tscroll{overflow-x:auto;border-radius:18px;}
+  .whopill{display:inline-block;border-radius:20px;padding:3px 14px;font-size:12.5px;white-space:nowrap;background:var(--pistachio-l);color:var(--forest-deep);}
+  .whopill.you{background:var(--honey);color:#ffffff;}
+
+  /* tag chips */
+  .tagchip{display:inline-block;margin:4px 8px 4px 0;padding:7px 16px;border-radius:20px;font-size:13.5px;box-shadow:var(--shadow);}
+  .tagchip.sys{background:var(--pistachio-l);color:var(--forest-deep);}
+  .tagchip.you{background:#ffffff;border:1.5px solid var(--honey);color:var(--ink);}
+  .tagnote{font-size:13.5px;color:var(--ink-l);margin:6px 0 16px;max-width:680px;}
+
+  /* try it */
+  .try-card{background:#ffffff;border-radius:18px;border-top:4px solid var(--honey);box-shadow:var(--shadow);padding:22px 28px;margin:24px 0 8px;max-width:760px;}
+  .try-card .tt{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+  .try-card label{display:flex;align-items:flex-start;gap:10px;font-size:14.5px;color:var(--ink-l);margin:8px 0;cursor:pointer;}
+  .try-card input[type=checkbox]{width:17px;height:17px;accent-color:#C08B41;margin-top:4px;}
+
+  /* work block */
+  .work{background:#ffffff;border-radius:18px;box-shadow:var(--shadow);padding:24px 28px;margin:26px 0 0;max-width:760px;}
+  .work .wt{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:10px;}
+  .work label{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--ink-l);margin:6px 0;cursor:pointer;}
+  .work input[type=checkbox]{width:17px;height:17px;accent-color:#417C51;}
+  .work textarea{width:100%;min-height:80px;border:1px solid var(--hairline);border-radius:12px;padding:12px 14px;font-family:var(--face);font-size:14px;color:var(--ink);resize:vertical;margin-top:10px;background:#ffffff;}
+  .work textarea::placeholder{color:var(--sage-pale);}
+  .work .sendrow{margin-top:14px;display:flex;align-items:center;gap:14px;}
+  .work .sendlab{font-size:13.5px;color:var(--ink-l);}
+  .work .sendbtn{display:inline-block;background:#20CD63;color:#ffffff;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:12px 30px;border-radius:24px;border:none;cursor:pointer;font-family:var(--face);}
+  .work .sendbtn:hover{background:#1bb857;}
+  .work .whisper{font-size:12px;color:var(--ink-l);margin-top:8px;}
+
+  /* interlude */
+  .interlude-block{position:relative;border-radius:22px;overflow:hidden;box-shadow:var(--shadow);
+    background:linear-gradient(180deg, rgba(22,38,28,0.62), rgba(22,38,28,0.62)),
+    url('https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a97df7ffac7854efe214b7f.png') center / cover no-repeat;
+    padding:88px 48px;text-align:center;}
+  .interlude-block p{margin:0 auto;max-width:760px;color:#ffffff;font-size:30px;font-weight:200;line-height:1.35;}
+  .interlude-block p span{color:var(--honey-l);font-weight:400;}
+
+  /* chapter section frame */
+  .chapter{display:none;}
+  .chapter.vis{display:block;}
+  .chapter .chapkick{font-size:12px;font-weight:700;letter-spacing:0.32em;text-transform:uppercase;color:var(--honey);margin-bottom:10px;}
+  .chapter{border-top:1px solid var(--rule-soft);}
+
+  /* changelog + tools */
+  .log-card{background:#ffffff;border-radius:18px;border-top:4px solid var(--honey);box-shadow:var(--shadow);padding:24px 30px;margin-top:26px;font-size:15px;color:var(--ink-l);display:flex;align-items:center;gap:18px;max-width:860px;}
+  .log-card .disc{flex:0 0 54px;height:54px;border-radius:27px;background:var(--pistachio-l);font-size:24px;line-height:54px;text-align:center;}
+  .log-card .t{font-weight:700;color:var(--ink);font-size:16px;}
+  .tools{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px;}
+  .tbtn{cursor:pointer;padding:10px 22px;border-radius:24px;font-family:var(--face);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--hairline);background:#ffffff;color:var(--sage);}
+  .tbtn:hover{border-color:var(--honey);color:var(--honey);}
+  .saved-line{text-align:center;margin-top:10px;font-size:13px;color:var(--ink-l);}
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--forest);color:#ffffff;padding:11px 24px;border-radius:30px;font-size:14px;opacity:0;transition:all .3s;pointer-events:none;z-index:50;box-shadow:var(--shadow);}
+  #toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* footer */
+  .footer-box{background:var(--ground);border-radius:22px 22px 0 0;padding:52px 24px 44px;text-align:center;margin-top:70px;}
+  .footer-box img{width:150px;margin:0 auto 18px;}
+  .footer-box .signoff{color:#ffffff;font-size:18px;font-weight:700;margin-bottom:6px;}
+  .footer-box .dom{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--sage-pale);}
+
+  .backtop{text-align:center;margin-top:26px;}
+  .backtop a{font-size:13px;color:var(--sage);text-decoration:underline;}
+
+  @media(max-width:760px){
+    .hero-block h1{font-size:36px;}
+    h2{font-size:30px;}
+    .role-grid,.chap-grid,.info-grid{grid-template-columns:1fr;}
+    .hero-block .inner{padding:90px 26px 40px;}
+    .spine-box,.why-box{padding:30px 26px;}
+    .interlude-block{padding:64px 26px;}
+    .interlude-block p{font-size:23px;}
+    .name-card{flex-wrap:wrap;}
+    .name-card input{margin-left:0;width:100%;}
+    .journey .cell{width:30%;}
+  }
+  @media print{
+    .chapter{display:block !important;}
+    .tools,.work,.name-card,.showall,.pill{display:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero-block" id="top">
+  <div class="inner">
+    <div class="dash"></div>
+    <div class="kicker">Barrel Sauna UK</div>
+    <h1>GoHighLevel <span>Training Manual</span></h1>
+    <p>How Barrel Sauna UK runs on GoHighLevel: what the system does on its own, what it needs from you, and the why behind every rule.</p>
+    <div class="ver">Version 1.1 &middot; September 2026</div>
+    <button class="pill" onclick="document.getElementById('roles').scrollIntoView()">Choose your role</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="ghl-orb">
+    <img src="https://cdn.prod.website-files.com/637e5037f3ef83b76dcfc8f9/67aa714b8af7d9499d80d95a_icon.svg" alt="GoHighLevel">
+  </div>
+  <div class="orb-line">GoHighLevel</div>
+  <div class="name-card">
+    <div class="bot">
+      <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <ellipse cx="100" cy="206" rx="46" ry="8" fill="rgba(22,38,28,0.10)"/>
+        <path d="M148 118 Q170 100 166 74" stroke="#2B5336" stroke-width="13" fill="none" stroke-linecap="round"/>
+        <circle cx="166" cy="70" r="11" fill="#C08B41"/>
+        <path d="M58 108 Q58 86 100 86 Q142 86 142 108 L142 168 Q142 190 100 190 Q58 190 58 168 Z" fill="#417C51"/>
+        <path d="M58 108 Q58 86 100 86 Q142 86 142 108 L142 116 Q142 94 100 94 Q58 94 58 116 Z" fill="#2B5336" opacity="0.35"/>
+        <line x1="79" y1="90" x2="79" y2="188" stroke="#2B5336" stroke-width="2.5" opacity="0.5"/>
+        <line x1="100" y1="87" x2="100" y2="190" stroke="#2B5336" stroke-width="2.5" opacity="0.5"/>
+        <line x1="121" y1="90" x2="121" y2="188" stroke="#2B5336" stroke-width="2.5" opacity="0.5"/>
+        <path d="M58 122 Q100 134 142 122" stroke="#D6A868" stroke-width="6" fill="none"/>
+        <path d="M58 156 Q100 168 142 156" stroke="#D6A868" stroke-width="6" fill="none"/>
+        <path d="M56 124 Q38 136 40 156" stroke="#2B5336" stroke-width="13" fill="none" stroke-linecap="round"/>
+        <circle cx="40" cy="160" r="11" fill="#C08B41"/>
+        <ellipse cx="82" cy="196" rx="15" ry="9" fill="#2B5336"/>
+        <ellipse cx="118" cy="196" rx="15" ry="9" fill="#2B5336"/>
+        <rect x="60" y="18" width="80" height="62" rx="26" fill="#2B5336"/>
+        <rect x="70" y="32" width="60" height="34" rx="17" fill="#1F3D28"/>
+        <circle cx="88" cy="49" r="7.5" fill="#D6A868"/>
+        <circle cx="112" cy="49" r="7.5" fill="#D6A868"/>
+        <path d="M92 58 Q100 63 108 58" stroke="#D6A868" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <line x1="100" y1="18" x2="100" y2="8" stroke="#2B5336" stroke-width="4"/>
+        <circle cx="100" cy="6" r="5.5" fill="#C08B41"/>
+        <rect x="92" y="78" width="16" height="10" fill="#1F3D28"/>
+      </svg>
+    </div>
+    <div>
+      <div class="t">Your name</div>
+      <div class="s">Questions you send from any chapter reach Nikki on WhatsApp with your name on them</div>
+    </div>
+    <input type="text" id="who" placeholder="First name">
+  </div>
+</div>
+
+<section id="roles">
+  <div class="wrap">
+    <div class="kicker">Start Here</div>
+    <h2>What do you do <span>at BSUK?</span></h2>
+    <p class="lede">Pick your role and the manual arranges itself around your chapters. Worth reading end to end once, the full picture makes your own part easier.</p>
+    <div class="role-grid">
+      <button class="rcard" type="button" data-role="office">
+        <div class="disc">&#128194;</div>
+        <div class="t">Office</div>
+        <div class="s">Inbox, contacts, tasks and keeping the record straight</div>
+        <div class="count">6 chapters</div>
+      </button>
+      <button class="rcard" type="button" data-role="sales">
+        <div class="disc">&#129309;</div>
+        <div class="t">Sales</div>
+        <div class="s">Closer calls, estimates and deposits</div>
+        <div class="count">7 chapters</div>
+      </button>
+      <button class="rcard" type="button" data-role="callteam">
+        <div class="disc">&#128222;</div>
+        <div class="t">Call Team</div>
+        <div class="s">First calls, outcomes and bookings</div>
+        <div class="count">5 chapters</div>
+      </button>
+    </div>
+    <div class="showall"><button type="button" id="btnAll">&#128064; Show everything instead</button></div>
+
+    <div class="journey">
+      <div class="st">Your Progress</div>
+      <div class="row" id="jrow"></div>
+      <div class="sum" id="jsum"></div>
+    </div>
+
+    <div class="tools">
+      <button class="tbtn" type="button" id="btnDownload">&#128190; Save progress</button>
+      <button class="tbtn" type="button" id="btnRestore">&#128194; Restore</button>
+      <button class="tbtn" type="button" id="btnPrint">&#128196; Print</button>
+      <button class="tbtn" type="button" id="btnReset">&#129529; Clear</button>
+      <input type="file" id="fileRestore" accept="application/json" style="display:none">
+    </div>
+    <p class="saved-line" id="savedLine">Everything you tick and type saves itself in this browser.</p>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="spine-box">
+      <div class="plab">Everyone starts here</div>
+      <div class="big">The foundation, <span>whatever your role</span></div>
+      <div class="psub">What GoHighLevel is, where Wave 2 came from, and the rules that keep customers hearing the right things at the right moments. Seven short chapters, shared by everyone at BSUK.</div>
+      <div class="spine-pills">
+        <a href="#spA">&#127793; GoHighLevel, the one system</a>
+        <a href="#spB">&#128260; Wave 2, and why it exists</a>
+        <a href="#sp1">&#128200; How Wave 2 thinks</a>
+        <a href="#sp2">&#127991;&#65039; Tags, the wiring</a>
+        <a href="#sp3">&#128683; The never-do list</a>
+        <a href="#sp4">&#9997;&#65039; The words we use</a>
+        <a href="#sp5">&#128680; When something looks odd</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="kicker" id="chapKick">Your Chapters</div>
+    <h2>Built around <span>your work</span></h2>
+    <div class="chap-grid" id="chapGrid"></div>
+  </div>
+</section>
+
+<!-- ================= SPINE ================= -->
+
+<section class="chapter vis" id="spA" data-roles="all">
+  <div class="wrap">
+    <div class="chap-head">
+      <div>
+        <div class="chapkick">Everyone &middot; Chapter 1 of 7</div>
+        <h2>GoHighLevel, <span>the one system</span></h2>
+        <p class="lede">Every customer, every conversation and every automation at BSUK lives in one place. GoHighLevel is that place, and this manual is the tour.</p>
+      </div>
+      <div class="bot">
+        <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse cx="100" cy="206" rx="46" ry="8" fill="rgba(22,38,28,0.10)"/>
+          <path d="M148 118 Q170 100 166 74" stroke="#2B5336" stroke-width="13" fill="none" stroke-linecap="round"/>
+          <circle cx="166" cy="70" r="11" fill="#C08B41"/>
+          <path d="M58 108 Q58 86 100 86 Q142 86 142 108 L142 168 Q142 190 100 190 Q58 190 58 168 Z" fill="#417C51"/>
+          <path d="M58 108 Q58 86 100 86 Q142 86 142 108 L142 116 Q142 94 100 94 Q58 94 58 116 Z" fill="#2B5336" opacity="0.35"/>
+          <line x1="79" y1="90" x2="79" y2="188" stroke="#2B5336" stroke-width="2.5" opacity="0.5"/>
+          <line x1="100" y1="87" x2="100" y2="190" stroke="#2B5336" stroke-width="2.5" opacity="0.5"/>
+          <line x1="121" y1="90" x2="121" y2="188" stroke="#2B5336" stroke-width="2.5" opacity="0.5"/>
+          <path d="M58 122 Q100 134 142 122" stroke="#D6A868" stroke-width="6" fill="none"/>
+          <path d="M58 156 Q100 168 142 156" stroke="#D6A868" stroke-width="6" fill="none"/>
+          <path d="M56 124 Q38 136 40 156" stroke="#2B5336" stroke-width="13" fill="none" stroke-linecap="round"/>
+          <circle cx="40" cy="160" r="11" fill="#C08B41"/>
+          <ellipse cx="82" cy="196" rx="15" ry="9" fill="#2B5336"/>
+          <ellipse cx="118" cy="196" rx="15" ry="9" fill="#2B5336"/>
+          <rect x="60" y="18" width="80" height="62" rx="26" fill="#2B5336"/>
+          <rect x="70" y="32" width="60" height="34" rx="17" fill="#1F3D28"/>
+          <circle cx="88" cy="49" r="7.5" fill="#D6A868"/>
+          <circle cx="112" cy="49" r="7.5" fill="#D6A868"/>
+          <path d="M92 58 Q100 63 108 58" stroke="#D6A868" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <line x1="100" y1="18" x2="100" y2="8" stroke="#2B5336" stroke-width="4"/>
+          <circle cx="100" cy="6" r="5.5" fill="#C08B41"/>
+          <rect x="92" y="78" width="16" height="10" fill="#1F3D28"/>
+        </svg>
+      </div>
+    </div>
+    <p class="body">GoHighLevel, GHL from here on, runs the whole customer side of the business. A lead from a Facebook ad, a WhatsApp thread, a booked design call, an estimate, a 500 pound deposit: each is recorded in GHL against the same contact, and the automations read that record to decide what happens next.</p>
+    <div class="info-grid">
+      <div class="icard">
+        <div class="disc">&#128100;</div>
+        <div class="t">Contacts</div>
+        <div class="s">One record per person: details, tags, notes and full history. Everything else in GHL hangs off it.</div>
+      </div>
+      <div class="icard">
+        <div class="disc">&#128172;</div>
+        <div class="t">Conversations</div>
+        <div class="s">WhatsApp, SMS and email in a single inbox, so whoever picks up a thread sees the whole exchange.</div>
+      </div>
+      <div class="icard">
+        <div class="disc">&#128202;</div>
+        <div class="t">Pipelines</div>
+        <div class="s">Boards of cards tracking where every deal stands. Read left to right, they are the state of the business.</div>
+      </div>
+      <div class="icard">
+        <div class="disc">&#128197;</div>
+        <div class="t">Calendars and automations</div>
+        <div class="s">Design call bookings, and the workflows that send messages, move cards and raise alerts on their own.</div>
+      </div>
+    </div>
+    <p class="tagnote" style="margin-top:20px;">Red boxes on the screenshots throughout this manual mark exactly where to click, scroll or look.</p>
+    <div class="cad">
+      <div class="cap">Homepage dashboard, daily tasks pinned</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9a9f19c78647f313a00d35.png" alt="GHL homepage dashboard with the daily tasks panel pinned">
+    </div>
+    <div class="cad">
+      <div class="cap">Contact, showing tags, the conversation tab and what channel the conversation is in, WhatsApp, email etc</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9a9f194f0181579a542821.png" alt="A contact record showing the tags panel and the Conversations tab with a WhatsApp thread">
+    </div>
+    <div class="cad">
+      <div class="cap">Conversations tab, showing team inbox</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ac49d293d7637623c3f9d.png" alt="The Conversations area with the team inbox thread list and an open WhatsApp conversation">
+    </div>
+    <div class="why-box">
+      <div class="plab">Why one system matters</div>
+      <div class="wb">GHL is a CRM, a customer relationship management system. The whole point of a CRM is that <b>every point of contact with a customer is held in one place</b>: calls, WhatsApps, emails, notes, bookings and payments, all against the same record. That is why calling, messaging and note-taking happen inside GHL, one place, one complete history, and the automations act on it.</div>
+    </div>
+    <div class="work" data-sec="spA" data-title="GoHighLevel, the one system"></div>
+  </div>
+</section>
+
+<section class="chapter vis" id="spB" data-roles="all" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Everyone &middot; Chapter 2 of 7</div>
+    <h2>Wave 2, <span>and why it exists</span></h2>
+    <p class="lede">Wave 2 is our second round of Facebook and Meta ads. The name matters less than the story: Wave 1 proved the ads work, and taught us exactly what to build differently.</p>
+    <p class="body">Wave 1 brought in real leads and real sales. It also ran on thin plumbing. Pipeline cards moved when somebody remembered to drag them, so the board often said one thing while reality said another.</p>
+    <p class="body">The protection meant to stop automated messages reaching people mid-conversation depended on lists inside workflows, lists that had to name every other workflow and stay current forever. One was saved empty. Nothing turned red, it simply did nothing, and a customer who had spoken to the team by phone was chased by the system two days later as if that call had never happened. He told us exactly what he thought of it.</p>
+    <p class="body">Wave 2 is the re-engineered answer: the same ads in front of the same audience, running on a system rebuilt around what Wave 1 taught us.</p>
+    <div class="tscroll">
+    <table class="ptable">
+      <tr><th>What Wave 1 taught us</th><th>What Wave 2 does instead</th></tr>
+      <tr><td>Cards moved by hand, and the board drifted from reality</td><td>Every stage move fires off a recorded event: a form submitted, a call outcome, a booking, a payment</td></tr>
+      <tr><td>Suppression, holding automated messages back while a customer is mid-conversation with the team, relied on lists a person had to maintain</td><td>Every workflow checks for a live conversation before it sends, and stays quiet if it finds one</td></tr>
+      <tr><td>Triggers, the events that set an automation running, fired wider than intended and caught the wrong leads</td><td>Triggers are locked to the exact form, and every action names its pipeline explicitly</td></tr>
+    </table>
+    </div>
+    <div class="why-box">
+      <div class="plab">Why the history is in the manual</div>
+      <div class="wb">The rules in the coming chapters, never drag cards, never edit tags, exact spellings only, all exist because we watched what happens without them. <b>Each rule is a repair,</b> not caution for its own sake.</div>
+    </div>
+    <div class="work" data-sec="spB" data-title="Wave 2, and why it exists"></div>
+  </div>
+</section>
+
+<section class="chapter vis" id="sp1" data-roles="all" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Everyone &middot; Chapter 3 of 7</div>
+    <h2>How Wave 2 <span>thinks</span></h2>
+    <p class="lede">Every Facebook lead travels the same road, and the system walks them down it. This chapter is the map, and the vocabulary for reading it.</p>
+    <p class="body">Some terms first, they may be new. A <b style="font-weight:700;color:var(--ink);">pipeline</b> is a board of columns, one column per stage of the journey from fresh enquiry to paid deposit. Each <b style="font-weight:700;color:var(--ink);">card</b> on the board is one real person. When something meaningful happens to them, a call connects, a booking lands, a payment arrives, their card moves a column along. Reading the board left to right is reading the state of the business today. You will find it under Opportunities, named Wave 2 Facebook/Meta Ad.</p>
+    <p class="body">A <b style="font-weight:700;color:var(--ink);">workflow</b> is a recipe the system follows on its own: when this happens, do that. The "when" is called a <b style="font-weight:700;color:var(--ink);">trigger</b>, the event that sets a workflow running: a form submitted, a call ending, a payment landing. Wave 2 is sixteen workflows working together. They send the first WhatsApp, place the calls, read what happened on each call, run the follow-up messages and move the cards. What they cannot do is talk to a customer. That part never stopped being yours.</p>
+    <div class="tscroll">
+    <table class="ptable">
+      <tr><th>Stage</th><th>What it means</th><th>Moved by</th></tr>
+      <tr><td>&#10024; New Lead</td><td>An ad enquiry has landed. The system has already messaged them and queued the first call.</td><td><span class="whopill">Automatic</span></td></tr>
+      <tr><td>&#9742;&#65039; Contacted by Office</td><td>The call team connected. The record of that call moves the card, but the call itself is a person's work, and its number one job is getting the customer booked in with a closer.</td><td><span class="whopill you">Automatic + office caller</span></td></tr>
+      <tr><td>&#128245; Not Reached</td><td>No answer or voicemail. The retry and chase messages start on their own.</td><td><span class="whopill">Automatic</span></td></tr>
+      <tr><td>&#128293; Reached and Warm</td><td>Interested but not yet booked. The move is fully automatic: an AI reads the call transcript and files the outcome. The caller's part is drawing a clear answer out of the customer, in plain words the transcript will show. A mumbled maybe cannot be filed.</td><td><span class="whopill">Automatic</span></td></tr>
+      <tr><td>&#10052;&#65039; Reached but Cold</td><td>Not now. Read from the transcript the same way, so the same rule applies: clear words, clear filing. Well spaced check-ins then run quietly in the background.</td><td><span class="whopill">Automatic</span></td></tr>
+      <tr><td>&#128197; Call Booked with Closer</td><td>The caller books the customer straight into the closer calendar during the call, correct name, number and email. The booking then moves the card by itself. This is the stage every call aims at.</td><td><span class="whopill you">Manual booking</span></td></tr>
+      <tr><td>&#128196; Estimate Sent</td><td>The closer builds the estimate in Ecwid, our website shop system. Once it goes out, the follow-up messages and the stage move run on their own.</td><td><span class="whopill you">Closer + automatic</span></td></tr>
+      <tr><td>&#128183; Deposit Paid</td><td>The 500 pound deposit link does the closing work. Once a closer or the office sends it and the customer pays, the stage move, thank-you messages and order queue entry all run themselves. The link is in every estimate email, so point customers to it whenever the moment is right.</td><td><span class="whopill you">Closer + automatic</span></td></tr>
+    </table>
+    </div>
+    <div class="cad">
+      <div class="cap">Opportunities, pipeline stages</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9a9f19fac7854efe606231.png" alt="The Wave 2 pipeline board in Opportunities with its stage columns">
+    </div>
+    <div class="cad">
+      <div class="cap">Opportunity card, inside the pipeline</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9a9f194f0181579a54281d.png" alt="An opportunity card opened from the pipeline showing contact and opportunity details">
+    </div>
+    <!-- NOTE: batch call times below also appear in chapter ct1. If the times change, edit both places. -->
+    <div class="try-card">
+      <div class="tt">&#128336; Call timing, and the thirty seconds before you dial</div>
+      <p class="body" style="margin-bottom:0;">A queue email lands first thing each morning listing everyone due a call that day, so the day never starts blind. First dials go out at 10:30, retry calls at 12:15. Between the lead landing and your call things can move: they may have replied on WhatsApp, booked themselves in, or asked for something specific. Open the contact's notes and conversation before dialling and you start the call already knowing.</p>
+    </div>
+    <div class="cad">
+      <div class="cap">Wave 2, call queue morning email</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ac403293d7637623c3441.png" alt="The morning queue email showing how many leads are waiting and that calls connect from 10:30">
+    </div>
+    <div class="cad">
+      <div class="cap">Notes section on contact, also showing where to add tasks</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9a9f194f0181579a542810.png" alt="The Notes tab on a contact record, with the tasks panel visible on the right">
+    </div>
+    <div class="why-box">
+      <div class="plab">Why the cards move themselves</div>
+      <div class="wb">A stage change is never just a label. <b>Landing in a stage fires that stage's messages, and leaving one switches them off.</b> The automation moves a card only once it has recorded the real event, a call outcome, a booking, a payment, so what a customer hears always matches what actually happened to them. That is also why nobody drags cards by hand: a hand-moved card can fire the wrong messages at a real person, or silence the right ones, with no error shown anywhere. The division of labour is simple. <b>The system dials, routes and remembers. People do the talking and the persuading.</b></div>
+    </div>
+    <div class="work" data-sec="sp1" data-title="How Wave 2 thinks"></div>
+  </div>
+</section>
+
+<section class="chapter vis" id="sp2" data-roles="all" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Everyone &middot; Chapter 4 of 7</div>
+    <h2>Tags, <span>the wiring</span></h2>
+    <p class="lede">Tags look like labels. At BSUK they are how the automation remembers, and how it decides.</p>
+    <p class="body">Every workflow decision, send this, skip that, wait, alert someone, is the system reading a contact's tags and branching on exactly what it finds. Two consequences follow. Tags are matched by exact spelling, one changed letter and a workflow silently stops finding anyone. And the system never removes tags on its own, so a contact's tag list is also their history, which later workflows rely on to know what has already happened.</p>
+    <p class="body" style="margin-bottom:6px;">System tags, green. Placed and read by the automation, hands off. &#128994;</p>
+    <div>
+      <span class="tagchip sys">wave 2 facebook/meta lead</span>
+      <span class="tagchip sys">wave 2 call booked</span>
+      <span class="tagchip sys">amp call outcome is 'warm'</span>
+      <span class="tagchip sys">closer call outcome is 'confirmed'</span>
+    </div>
+    <p class="tagnote">A few of the many you will see on Wave 2 contacts. Each one is a switch some workflow reads.</p>
+    <p class="body" style="margin-bottom:6px;">Tags people manage, honey outline. You may be asked to add one of these. &#128400;&#65039;</p>
+    <div>
+      <span class="tagchip you">&#128172; currently in conversation</span>
+      <span class="tagchip you">&#128587; human follow up needed</span>
+    </div>
+    <p class="tagnote">Exact spellings are being confirmed. Until then, add tags only when asked, typed exactly, all lowercase.</p>
+    <div class="why-box">
+      <div class="plab">Why deleting is the dangerous one</div>
+      <div class="wb">A tag mistake is invisible. Nothing turns red, no error fires. <b>A workflow quietly stops matching, a customer quietly stops hearing from us,</b> and nobody finds out for weeks, usually when the customer calls to ask why we went silent. That is why the rule is blunt: never delete, never rename, add only when asked. It is not about trust, it is that the failure mode has no alarm.</div>
+    </div>
+    <div class="work" data-sec="sp2" data-title="Tags, the wiring"></div>
+  </div>
+</section>
+
+<section class="chapter vis" id="sp3" data-roles="all" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Everyone &middot; Chapter 5 of 7</div>
+    <h2>The <span>never-do</span> list</h2>
+    <p class="lede">Five things nobody does in GHL, whatever their role, even to fix something. Each one has an automation depending on it staying untouched.</p>
+    <div class="info-grid">
+      <div class="icard"><div class="disc">&#127991;&#65039;</div><div class="t">Never delete or rename a tag</div><div class="s">Workflows match exact spellings and rely on old tags still being there. The failure is silent.</div></div>
+      <div class="icard"><div class="disc">&#128200;</div><div class="t">Never drag a pipeline card</div><div class="s">Stage changes fire and silence customer messages. The automation places every card for a reason.</div></div>
+      <div class="icard"><div class="disc">&#9881;&#65039;</div><div class="t">Never change anything in Automation</div><div class="s">The workflows in there are the machinery under everything in this manual. Look freely, touch nothing.</div></div>
+      <div class="icard"><div class="disc">&#128197;</div><div class="t">Never edit a calendar's settings</div><div class="s">Booking flows, reminders and card moves all hang off the calendars being exactly as built.</div></div>
+      <div class="icard"><div class="disc">&#128228;</div><div class="t">Never run a bulk action or mass send</div><div class="s">One wrong filter and hundreds of customers hear from us at once. Bulk work goes through Nikki.</div></div>
+      <div class="icard"><div class="disc">&#128172;</div><div class="t">And on WhatsApp, mind the window</div><div class="s">Outside 24 hours of the customer's last message, only an approved template actually delivers. Typed messages silently fail.</div></div>
+    </div>
+    <div class="work" data-sec="sp3" data-title="The never-do list"></div>
+  </div>
+</section>
+
+<section class="chapter vis" id="sp4" data-roles="all" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Everyone &middot; Chapter 6 of 7</div>
+    <h2>The words <span>we use</span></h2>
+    <p class="lede">Customer-facing language at BSUK is deliberate. Four rules cover nearly all of it.</p>
+    <div class="info-grid">
+      <div class="icard"><div class="disc">&#128196;</div><div class="t">Estimate, always</div><div class="s">We send estimates. The other q word never appears in anything a customer reads or hears.</div></div>
+      <div class="icard"><div class="disc">&#129323;</div><div class="t">James, to customers</div><div class="s">Liam is always James in every customer-facing message, call and document. Internally he is Liam.</div></div>
+      <div class="icard"><div class="disc">&#9997;&#65039;</div><div class="t">The Barrel Sauna UK Team</div><div class="s">Every written sign-off, every time. No personal sign-offs on customer messages.</div></div>
+      <div class="icard"><div class="disc">&#127758;</div><div class="t">British spelling, our domain</div><div class="s">British spelling throughout, and the website is always barrelsaunauk.com when written anywhere.</div></div>
+    </div>
+    <div class="why-box">
+      <div class="plab">Why it is this strict</div>
+      <div class="wb">Customers meet BSUK across ads, WhatsApp, email, estimates and calls, often all five. <b>One voice across all of them is what makes a handcrafted company feel like one company.</b> The moment wording drifts per person, the seams show.</div>
+    </div>
+    <div class="work" data-sec="sp4" data-title="The words we use"></div>
+  </div>
+</section>
+
+<section class="chapter vis" id="sp5" data-roles="all" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Everyone &middot; Chapter 7 of 7</div>
+    <h2>When something <span>looks odd</span></h2>
+    <p class="lede">A card in a strange place, a message that should have sent and did not, a contact whose story does not add up. Whoever spots it, the drill is the same.</p>
+    <div class="step"><div class="n">1</div><div><div class="t">&#128247; Screenshot it as found</div><div class="s">Before anything changes. The state of the screen at that moment is usually the whole diagnosis.</div></div></div>
+    <div class="step"><div class="n">2</div><div><div class="t">&#128221; Note the contact, the time, and how you got there</div><div class="s">Those three details let Nikki replay exactly what the system did and find the wiring behind it.</div></div></div>
+    <div class="step"><div class="n">3</div><div><div class="t">&#128172; WhatsApp Nikki, then hands off</div><div class="s">Not because you could not fix it, but because a hand fix hides the evidence. The odd thing is a symptom, and it needs to stay intact so the cause gets cured, not the case.</div></div></div>
+    <div class="why-box">
+      <div class="plab">When in doubt, send it</div>
+      <div class="wb">A false alarm costs thirty seconds. A real problem caught early can save a customer. <b>There is no version of this where sending was the wrong call.</b></div>
+    </div>
+    <div class="work" data-sec="sp5" data-title="When something looks odd"></div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="interlude-block">
+      <p>The system does the remembering, the chasing and the routing. <span>People do the noticing, the judgement and the conversations.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OFFICE ================= -->
+
+<section class="chapter" id="of1" data-roles="office">
+  <div class="wrap">
+    <div class="chapkick">Office &middot; Chapter 1 of 6</div>
+    <h2>Log in <span>as you</span></h2>
+    <p class="lede">Everyone at BSUK works in GHL under their own login, never a shared inbox account. Everything else in the Office chapters depends on it.</p>
+    <p class="body">Here is the why. Every click in GHL is stamped with the logged-in user. On a shared login, the system cannot tell one person's work from another's: it cannot give a task to you by name, cannot credit a call or a note to you, and cannot notify you about your own contacts, because as far as GHL knows, you do not exist.</p>
+    <div class="info-grid">
+      <div class="icard"><div class="disc">&#128203;</div><div class="t">Tasks can find you</div><div class="s">The system can put your name on a task, and only what is genuinely yours shows in your list.</div></div>
+      <div class="icard"><div class="disc">&#129517;</div><div class="t">Work is routed properly</div><div class="s">Some things need Liam's authority, pricing, refunds, product calls. Separate logins keep his list holding only those, and yours holding the rest.</div></div>
+      <div class="icard"><div class="disc">&#128202;</div><div class="t">The record tells the truth</div><div class="s">Who called, who noted, who booked. When something needs unpicking later, the history says who actually did it.</div></div>
+      <div class="icard"><div class="disc">&#128274;</div><div class="t">And it is safer</div><div class="s">Your own password, and shared logins stop being handed around.</div></div>
+    </div>
+    <div class="why-box">
+      <div class="plab">From today</div>
+      <div class="wb">Always your login, never a shared account. <b>If you find a browser signed in as a shared inbox, log out and back in as yourself</b> before doing anything. The one minute it takes keeps the record honest.</div>
+    </div>
+    <div class="try-card">
+      <div class="tt">&#9997;&#65039; Prove it, thirty seconds</div>
+      <p class="body" style="margin-bottom:10px;">In GHL, click your avatar at the top right and look at the name on the account. Type that name here. The Got it tick below stays locked until you do, because this one matters more than any other rule in the Office chapters.</p>
+      <input type="text" id="loginname" data-note="of1name" placeholder="The name on your GHL login" style="width:100%;border:1px solid var(--hairline);border-radius:12px;padding:12px 14px;font-family:var(--face);font-size:14px;color:var(--ink);background:#ffffff;">
+    </div>
+    <div class="work" data-sec="of1" data-title="Office, Log in as you"></div>
+  </div>
+</section>
+
+<section class="chapter" id="of2" data-roles="office" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Office &middot; Chapter 2 of 6</div>
+    <h2>Smart <span>lists</span></h2>
+    <p class="lede">A smart list is a search that keeps itself current. Ours live as tabs along the top of Contacts, already up to date before you click them.</p>
+    <p class="body">Any contact who matches a list's filter is in it the moment they match, and out the moment they stop. The tabs in the screenshot are the ones we keep today. Click a tab and the answer is current, no searching, no rebuilding.</p>
+    <div class="cad">
+      <div class="cap">Smartlists, where to find and existing ones</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ab50d4b83b18bcfabffa0.png" alt="Contacts with the smart list tabs along the top, existing smart lists visible">
+    </div>
+    <div class="work" data-sec="of2" data-title="Office, Smart lists"></div>
+  </div>
+</section>
+
+<section class="chapter" id="of3" data-roles="office" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Office &middot; Chapter 3 of 6</div>
+    <h2>Tasks, the moments the system <span>asks for you</span></h2>
+    <p class="lede">Wave 2 was built to need people as little as possible. Chases, reminders, follow-ups all run on their own. When the system creates a task, it has hit something only a human can do.</p>
+    <p class="body">A lead replied after the chase gave up, a call needs making, a judgement needs a person. Tasks are rare by design, which is exactly why none should sit unseen: whatever is in the list is the only work the whole pipeline actually needs from a person that day. And because everyone is on their own login, your task list is truly yours.</p>
+    <h3>Finding yours</h3>
+    <div class="step"><div class="n">1</div><div><div class="t">Open Contacts in the left menu, then the Tasks tab along the top</div><div class="s">Tasks live inside the Contacts area, in the row of tabs above the list, alongside Smart Lists.</div></div></div>
+    <div class="step"><div class="n">2</div><div><div class="t">Click the filter button at the top right of the task list</div><div class="s">A panel opens with dropdowns for Assignee, Due date and Status.</div></div></div>
+    <div class="step"><div class="n">3</div><div><div class="t">Set Assignee to your name, Status to Pending, apply</div><div class="s">The list is now only your open work, and the filter holds until you change it.</div></div></div>
+    <div class="cad">
+      <div class="cap">Tasks, where to find and showing assignee</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ab50dac5d03a109537403.png" alt="The Tasks tab inside Contacts with the Assignee column highlighted">
+    </div>
+    <h3>Working one</h3>
+    <div class="step"><div class="n">1</div><div><div class="t">Open the task, then the contact it names</div><div class="s">Every task is pinned to a contact, so the full story is one click away. Read it before acting.</div></div></div>
+    <div class="step"><div class="n">2</div><div><div class="t">Do the thing, then mark the task completed</div><div class="s">Completing matters as much as doing. An open task reads as undone work to both people and future automations.</div></div></div>
+    <div class="step"><div class="n">3</div><div><div class="t">If it is genuinely not yours, reroute it, never sit on it</div><div class="s">Anything needing Liam's authority gets reassigned to him in the task's Assignee field. A task parked in the wrong list is invisible to the person who can actually do it.</div></div></div>
+    <div class="why-box">
+      <div class="plab">The rhythm</div>
+      <div class="wb">Twice a day, start of the morning and once after lunch. Most days the list is empty, and <b>empty is the system telling you it is coping.</b> When something is in there, it is the most important ten minutes in the building.</div>
+    </div>
+    <div class="work" data-sec="of3" data-title="Office, Tasks"></div>
+  </div>
+</section>
+
+<section class="chapter" id="of4" data-roles="office" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Office &middot; Chapter 4 of 6</div>
+    <h2>Assigning contacts, one name on <span>every person</span></h2>
+    <p class="lede">Every contact has an Owner, the one person at BSUK responsible for them. Office keeps that field honest, because Office sees every conversation come through.</p>
+    <p class="body">Why one name matters: the owner is who the system notifies when that contact does something, who calls and results are credited to, and who answers for them months later. An empty Owner field sends all three to nobody. The split works the other way too: Liam's name only on what genuinely needs him keeps his list short enough that he actually sees it.</p>
+    <div class="step"><div class="n">1</div><div><div class="t">On the contact record, find Owner in the left details column</div><div class="s">Click it and pick the person. Yourself, a closer, Liam, whoever it should be.</div></div></div>
+    <div class="step"><div class="n">2</div><div><div class="t">For several at once, use the list</div><div class="s">Tick contacts in any list or smart list, and the bulk actions bar that appears can assign them all in one go.</div></div></div>
+    <div class="cad">
+      <div class="cap">Contact, showing unassigned, how to add appointment, opportunities and alerts</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ab50d293d7637623b3d61.png" alt="A contact record with the Owner field showing Unassigned, the Add Appointment button, and the opportunities panel with an automated alert">
+    </div>
+    <div class="why-box">
+      <div class="plab">Who gets whom, and the weekly sweep</div>
+      <div class="wb">Whoever is already talking to them owns them. If it needs Liam's authority, it is Liam's. If it is not obvious, ask Nikki rather than guessing. And once a week, filter Contacts by Assigned left empty and give everyone who appears a name. <b>Ten minutes, and no lead in the business is unowned.</b></div>
+    </div>
+    <div class="work" data-sec="of4" data-title="Office, Assigning contacts"></div>
+  </div>
+</section>
+
+<section class="chapter" id="of5" data-roles="office" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Office &middot; Chapter 5 of 6</div>
+    <h2>WhatsApp templates and the <span>24 hour rule</span></h2>
+    <p class="lede">WhatsApp only lets a business message a customer freely within 24 hours of the customer's last message. Outside that window, only a pre-approved template will actually arrive.</p>
+    <p class="body">The trap is how it fails. A typed message outside the window does not bounce or warn you. It shows as sent on our side and simply never reaches them, so the customer thinks we ignored them and we think we replied. Templates exist because Meta requires the wording of that outreach to be approved in advance, and once approved, a template always delivers, any time.</p>
+    <div class="step"><div class="n">1</div><div><div class="t">In the conversation, check the channel and the clock</div><div class="s">WhatsApp selected as the channel, and a look at when the customer last wrote. Inside 24 hours, type freely. Outside it, template only.</div></div></div>
+    <div class="step"><div class="n">2</div><div><div class="t">Open the template picker in the message toolbar</div><div class="s">Pick the one that fits, fill in any blanks it asks for, and send.</div></div></div>
+    <div class="step"><div class="n">3</div><div><div class="t">Check it shows delivered, not just sent</div><div class="s">Delivered means it reached their phone. Sent alone, on an outside-window typed message, is the silent failure this chapter exists to avoid.</div></div></div>
+    <div class="cad">
+      <div class="cap">Creating and finding WhatsApp templates</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ab50d80583b8e705764fa.png" alt="Settings, WhatsApp, Templates tab showing the template list and the Create template button">
+    </div>
+    <div class="cad">
+      <div class="cap">WhatsApp, select a template</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ab50d4b83b18bcfabffa8.png" alt="A WhatsApp conversation with the template picker open">
+    </div>
+    <div class="why-box">
+      <div class="plab">Where templates come from</div>
+      <div class="wb">Templates are written in GHL and submitted to Meta for approval, which can take minutes or a day or two, so we keep a set ready. The wording is customer-facing, so it follows the usual path: <b>spot the gap, send Nikki the situation and rough wording, Liam signs off, Nikki builds and submits.</b> Whoever runs the inbox is the best placed person in the business to spot the gap.</div>
+    </div>
+    <div class="work" data-sec="of5" data-title="Office, WhatsApp templates"></div>
+  </div>
+</section>
+
+<section class="chapter" id="of6" data-roles="office" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Office &middot; Chapter 6 of 6</div>
+    <h2>Reading the board <span>day to day</span></h2>
+    <p class="lede">The pipeline chapter in the foundation explains why cards move themselves. This one is about what to do with the board as a reader.</p>
+    <div class="info-grid">
+      <div class="icard"><div class="disc">&#128064;</div><div class="t">Columns are workload</div><div class="s">A swelling Not Reached column means the chases are working hard. A swelling Estimate Sent column means the closers have decisions coming.</div></div>
+      <div class="icard"><div class="disc">&#8987;</div><div class="t">Age is the tell</div><div class="s">Cards show how long they have sat in a stage. A card that has been still far longer than its neighbours is the one to look at.</div></div>
+      <div class="icard"><div class="disc">&#128247;</div><div class="t">Stuck cards get reported, not moved</div><div class="s">The odd-things drill from the foundation: screenshot, details, WhatsApp Nikki, hands off.</div></div>
+      <div class="icard"><div class="disc">&#128172;</div><div class="t">The card opens the story</div><div class="s">Click any card to reach the contact behind it, their messages, notes and history, without leaving the board.</div></div>
+    </div>
+    <div class="work" data-sec="of6" data-title="Office, Reading the board"></div>
+  </div>
+</section>
+
+<!-- ================= SALES ================= -->
+
+<section class="chapter" id="sa1" data-roles="sales">
+  <div class="wrap">
+    <div class="chapkick">Sales &middot; Chapter 1 of 7</div>
+    <h2>Who <span>holds what</span></h2>
+    <p class="lede">The team WhatsApp group is where we all talk. Post there and tag whoever fits. Here is who holds what, and where your own setup comes from.</p>
+    <div class="info-grid">
+      <div class="icard"><div class="disc">&#129309;</div><div class="t">James, closer advice</div><div class="s">How to close. Objections, reading a buyer, pricing calls and escalations. He runs your sales training and will do live calls with you.</div></div>
+      <div class="icard"><div class="disc">&#129717;</div><div class="t">Millie, product and builds</div><div class="s">The builds, timelines, materials, and the business as a whole. Anything technical about the product itself.</div></div>
+      <div class="icard"><div class="disc">&#128203;</div><div class="t">Marta, contact and order facts</div><div class="s">The facts on a specific contact or order. What has happened, what has been paid, where a delivery stands. Off Thursdays, and only when the record itself cannot tell you.</div></div>
+      <div class="icard"><div class="disc">&#9881;&#65039;</div><div class="t">Nikki, GHL and access</div><div class="s">Your login, your GHL number, where to find things, and anything not behaving as expected.</div></div>
+    </div>
+    <div class="why-box">
+      <div class="plab">Before your first call</div>
+      <div class="wb">Your GHL login and your own GHL phone number come from Nikki, and the first login needs verifying from wherever you are, so do it before your first day of calls. Sales training comes from James. <b>Always your own login, never a shared one:</b> every call, note and booking is credited to whoever is signed in.</div>
+    </div>
+    <div class="work" data-sec="sa1" data-title="Sales, Who holds what"></div>
+  </div>
+</section>
+
+<section class="chapter" id="sa2" data-roles="sales" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Sales &middot; Chapter 2 of 7</div>
+    <h2>Your calendar, <span>your day</span></h2>
+    <p class="lede">Your booked sales calls land on a calendar named after you. Checking it is how you check your day.</p>
+    <p class="body">Bookings arrive from two directions. The call team books a warm lead straight into your calendar during their first call. Customers also book themselves through Book a Call Back on the website, and their answers to the four qualifying questions land on their contact as a note called Caller's Answers.</p>
+    <div class="step"><div class="n">1</div><div><div class="t">Open Calendars in the left menu, then Manage view on the right</div><div class="s">Under Calendars tick only your own, the one named after you, so you see just your calls.</div></div></div>
+    <div class="step"><div class="n">2</div><div><div class="t">A booked call shows as a block on the day</div><div class="s">Click it to see the contact and the time, then open the contact for the two minute read in the next chapter.</div></div></div>
+    <div class="step"><div class="n">3</div><div><div class="t">To book someone yourself, use New at the top right</div><div class="s">Pick your own calendar, the contact, the date and the slot. The booking is what moves their card. A promise on the phone moves nothing.</div></div></div>
+    <div class="cad">
+      <div class="cap">Where to find calendars, how to book a new appointment etc</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9abf02ac5d03a10954057a.png" alt="Calendars in the left menu, the New button, and the calendar tick list showing Showroom Bookings and Book a Call Back">
+    </div>
+    <div class="cad">
+      <div class="cap">Booking an appointment, choose the right calendar etc</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9abf02ac5d03a109540583.png" alt="The Book appointment modal with the calendar dropdown open, contact search, and the date, slot and status fields">
+    </div>
+    <div class="why-box">
+      <div class="plab">Three calendars, one job each</div>
+      <div class="wb">Your own calendar for your booked sales calls. Book a Call Back for customers booking their own callback. Showroom Bookings for visits to the showroom. <b>Book into the right one, every time,</b> since each calendar fires its own confirmations, reminders and card moves.</div>
+    </div>
+    <div class="linkrow">
+      <a class="lpill" href="https://app.gohighlevel.com/v2/location/J378Bt0d7JvG2rXks3zo/calendars/view" target="_blank" rel="noopener">Open your calendar</a>
+    </div>
+    <div class="work" data-sec="sa2" data-title="Sales, Your calendar"></div>
+  </div>
+</section>
+
+<section class="chapter" id="sa3" data-roles="sales" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Sales &middot; Chapter 3 of 7</div>
+    <h2>The two minute <span>read</span></h2>
+    <p class="lede">Two tabs on a contact hold everything you need before a call. Read both, every time, and you start the call already knowing.</p>
+    <p class="body">By the time a call reaches you a lot has already happened to that person. The system messaged them, the call team spoke to them, they may have replied on WhatsApp or booked themselves in. All of it is on the record.</p>
+    <div class="info-grid">
+      <div class="icard"><div class="disc">&#128172;</div><div class="t">Conversations tab</div><div class="s">The actual messages, whichever channel they came in on, plus every call recording with a View Transcript link under it. Recording under Conversations, summary under Notes.</div></div>
+      <div class="icard"><div class="disc">&#128221;</div><div class="t">Notes tab</div><div class="s">The tidy written version. The call team's note from the first call, the call summary the automation writes after every call, and Caller's Answers if they booked themselves. You create nothing here. Read it.</div></div>
+      <div class="icard"><div class="disc">&#127991;&#65039;</div><div class="t">Owner and tags</div><div class="s">Owner sits top left of the record, Tags just below. Tags are the system's memory of what has happened to this person. Read them, never remove one. The foundation chapter on tags says why.</div></div>
+      <div class="icard"><div class="disc">&#128269;</div><div class="t">Search</div><div class="s">The search bar at the top of Contacts finds anyone by name, email or phone.</div></div>
+    </div>
+    <div class="cad">
+      <div class="cap">Contact, showing tags, the conversation tab and what channel the conversation is in</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9a9f194f0181579a542821.png" alt="A contact record showing the tags panel and the Conversations tab with a WhatsApp thread">
+    </div>
+    <div class="cad">
+      <div class="cap">Notes section on contact, where the call summary lands</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9a9f194f0181579a542810.png" alt="The Notes tab on a contact record, with the tasks panel visible on the right">
+    </div>
+    <div class="try-card">
+      <div class="tt">&#127911; Listen to two real calls</div>
+      <p class="body" style="margin-bottom:12px;">Two records with full recordings and the summaries the automation wrote from them. Play each in full, then open the Notes tab and see how the summary was built from the call.</p>
+      <div class="linkrow" style="margin-top:0;">
+        <a class="lpill ghost" href="https://app.gohighlevel.com/v2/location/J378Bt0d7JvG2rXks3zo/contacts/detail/27wwOIHi2eBSNqU6FvMz" target="_blank" rel="noopener">Study record one</a>
+        <a class="lpill ghost" href="https://app.gohighlevel.com/v2/location/J378Bt0d7JvG2rXks3zo/contacts/detail/amYNq4gz8G8pGK1XoyXH" target="_blank" rel="noopener">Study record two</a>
+      </div>
+    </div>
+    <div class="work" data-sec="sa3" data-title="Sales, The two minute read"></div>
+  </div>
+</section>
+
+<section class="chapter" id="sa4" data-roles="sales" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Sales &middot; Chapter 4 of 7</div>
+    <h2>Calls go out <span>from GHL</span></h2>
+    <p class="lede">Every call you make goes out from inside GHL on your own GHL number, so every one is logged, recorded and read by the system afterwards.</p>
+    <div class="step"><div class="n">1</div><div><div class="t">Open the contact, then the conversation</div><div class="s">The action icons sit top right of the conversation. The phone icon starts the call.</div></div></div>
+    <div class="step"><div class="n">2</div><div><div class="t">When the call ends, the recording appears in the thread as Call completed</div><div class="s">The transcript follows a few minutes later, and the automation reads it. Chapter 6 covers what happens next.</div></div></div>
+    <div class="step"><div class="n">3</div><div><div class="t">Away from the desk, use the LeadConnector app</div><div class="s">Same dialler, same number, same logging. Your phone becomes a GHL phone.</div></div></div>
+    <div class="cad">
+      <div class="cap">Phone icon, top right of a conversation</div>
+      <div class="slot">&#128247; Screenshot to come: the action icons top right of a conversation, phone icon marked</div>
+    </div>
+    <div class="cad">
+      <div class="cap">Call completed, the recording in the thread</div>
+      <div class="slot">&#128247; Screenshot to come: a thread showing a Call completed recording with its View Transcript link</div>
+    </div>
+    <div class="why-box">
+      <div class="plab">Why never your own phone</div>
+      <div class="wb">A call from your own mobile leaves no recording, no transcript and no outcome. <b>The system cannot see a call it did not place,</b> so the card sits still, the follow-ups do not run, and the next person to open the record has no idea you spoke. The same goes for messages: reply from GHL, never from your own WhatsApp.</div>
+    </div>
+    <div class="try-card">
+      <div class="tt">&#127908; Your voicemail greeting</div>
+      <p class="body" style="margin-bottom:0;">Your GHL number carries its own voicemail. Record a short greeting on your phone, your name, Barrel Sauna UK, please leave your details or book a time, and send it to Nikki to upload. Clear and natural, nothing corny.</p>
+    </div>
+    <div class="work" data-sec="sa4" data-title="Sales, Calls go out from GHL"></div>
+  </div>
+</section>
+
+<section class="chapter" id="sa5" data-roles="sales" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Sales &middot; Chapter 5 of 7</div>
+    <h2>Your <span>inbox</span></h2>
+    <p class="lede">A contact whose Owner is you lands in your own inbox and your own views. Keep that field honest and the right conversations find you.</p>
+    <div class="step"><div class="n">1</div><div><div class="t">On the contact record, check Owner top left</div><div class="s">If it still says Unassigned after a booking has landed with you, set it to yourself.</div></div></div>
+    <div class="step"><div class="n">2</div><div><div class="t">In Conversations, use the person icon on the left</div><div class="s">Set it to Assigned to me. That is your list, and only your list.</div></div></div>
+    <div class="step"><div class="n">3</div><div><div class="t">Reply from the box at the bottom, in the channel the customer last used</div><div class="s">On WhatsApp, mind the 24 hour window. Outside it only an approved template actually delivers, a typed message shows as sent and never arrives.</div></div></div>
+    <div class="cad">
+      <div class="cap">Contact, showing unassigned, how to add appointment, opportunities and alerts</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ab50d293d7637623b3d61.png" alt="A contact record with the Owner field showing Unassigned, the Add Appointment button, and the opportunities panel with an automated alert">
+    </div>
+    <div class="cad">
+      <div class="cap">Conversations, the person icon set to Assigned to me</div>
+      <div class="slot">&#128247; Screenshot to come: the Conversations inbox with the person icon filter set to Assigned to me</div>
+    </div>
+    <div class="why-box">
+      <div class="plab">Whoever is talking to them owns them</div>
+      <div class="wb">The Owner is who the system notifies when that contact does something, who calls and results are credited to, and who answers for that customer months later. <b>An empty Owner field sends all three to nobody.</b> If it genuinely needs Liam's authority, it is Liam's. If it is not obvious, ask Nikki rather than guessing.</div>
+    </div>
+    <div class="linkrow">
+      <a class="lpill" href="https://app.gohighlevel.com/v2/location/J378Bt0d7JvG2rXks3zo/conversations/conversations?category=my-inbox&amp;subcategory=assigned-to-me&amp;tab=unread" target="_blank" rel="noopener">Open your inbox</a>
+    </div>
+    <div class="work" data-sec="sa5" data-title="Sales, Your inbox"></div>
+  </div>
+</section>
+
+<section class="chapter" id="sa6" data-roles="sales" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Sales &middot; Chapter 6 of 7</div>
+    <h2>After the call, <span>the system reads it</span></h2>
+    <p class="lede">You do not file an outcome. The automation reads your transcript and files it for you, which is why the words you use on the call matter.</p>
+    <p class="body">A few minutes after a call ends, the AI reads the transcript, writes a call summary into Notes, outcome, product discussed, objections, next touch, and sets a Call Outcome on the contact. Tags follow from that, and what the customer hears next runs off the tags.</p>
+    <div class="info-grid">
+      <div class="icard"><div class="disc">&#9989;</div><div class="t">Confirmed</div><div class="s">They are going ahead. Send the deposit link if you have not already, the next chapter covers it.</div></div>
+      <div class="icard"><div class="disc">&#129300;</div><div class="t">Thinking</div><div class="s">Interested, not decided. The system keeps them warm. What they are weighing up, in their own words, is the note that makes the next touch useful.</div></div>
+      <div class="icard"><div class="disc">&#10060;</div><div class="t">No</div><div class="s">Not for them. Sequences stop, and nobody chases a no.</div></div>
+      <div class="icard"><div class="disc">&#10067;</div><div class="t">Unclear</div><div class="s">Nearly always means the call never really happened: a voicemail, a hang-up, a wrong number. A missed connection message goes out inviting them to reply, WhatsApp or book a callback.</div></div>
+    </div>
+    <div class="why-box">
+      <div class="plab">Say it in plain words</div>
+      <div class="wb">The AI can only file what the transcript shows. <b>Draw the answer out of the customer and say it back to them:</b> so you are happy to go ahead, so you would like to think it over. A mumbled maybe cannot be filed, and a hopeful outcome books your own time against someone who will not show.</div>
+    </div>
+    <div class="work" data-sec="sa6" data-title="Sales, After the call"></div>
+  </div>
+</section>
+
+<section class="chapter" id="sa7" data-roles="sales" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Sales &middot; Chapter 7 of 7</div>
+    <h2>The estimate <span>and the deposit</span></h2>
+    <p class="lede">The estimate is the document, the deposit is the decision. Both are wired into the system, so what you send is what moves the card.</p>
+    <div class="step"><div class="n">1</div><div><div class="t">Price it on the call with the estimate builder</div><div class="s">Everything in it has been signed off. Anything outside it is case by case and goes to James first.</div></div></div>
+    <div class="step"><div class="n">2</div><div><div class="t">Build the estimate in Ecwid, our website shop system</div><div class="s">When the order is created the estimate email goes out to the customer on its own, with the deposit link inside it, and the card moves to Estimate Sent.</div></div></div>
+    <div class="step"><div class="n">3</div><div><div class="t">Follow up with the after-estimate page</div><div class="s">It walks the customer from their estimate to their deposit. Send it when the moment is right.</div></div></div>
+    <div class="step"><div class="n">4</div><div><div class="t">The deposit closes</div><div class="s">500 pounds, non-refundable, and it places them in the order queue. When it is paid the card moves to Deposit Paid and the thank-you messages run themselves.</div></div></div>
+    <p class="tagnote">Floating sauna estimates always show delivery and certification as separate customer borne lines, never inside the headline price.</p>
+    <div class="why-box">
+      <div class="plab">Proposals are the exception</div>
+      <div class="wb">A full proposal page is only built for a serious buyer with a complex order: a wellness space, a commercial install, a floating sauna. <b>Most leads never need one.</b> The two examples below show the level of detail, so you know what good looks like and what to ask Nikki for when one is needed.</div>
+    </div>
+    <div class="linkrow">
+      <a class="lpill" href="https://liamjameshq.github.io/admin/estimatebuilder.html" target="_blank" rel="noopener">Estimate builder</a>
+      <a class="lpill ghost" href="https://liamjameshq.github.io/admin/after-estimate-sent.html" target="_blank" rel="noopener">After-estimate page</a>
+      <a class="lpill ghost" href="https://www.barrelsaunauk.com/secure-your-build" target="_blank" rel="noopener">Deposit page</a>
+      <a class="lpill ghost" href="https://liamjameshq.github.io/bsuk-proposals/chrishollisv6.html" target="_blank" rel="noopener">Proposal example one</a>
+      <a class="lpill ghost" href="https://liamjameshq.github.io/bsuk-proposals/danbreeze.html" target="_blank" rel="noopener">Proposal example two</a>
+    </div>
+    <div class="try-card">
+      <div class="tt">&#128214; The Closer Guide</div>
+      <p class="body" style="margin-bottom:12px;">Scripts, the deposit gate pitch, do's and don'ts cross-referenced with your agreement, and the finance form for customers who want to spread the cost. Read it alongside this manual.</p>
+      <div class="linkrow" style="margin-top:0;">
+        <a class="lpill ghost" href="https://liamjameshq.github.io/BSUK_Closer_Guide/" target="_blank" rel="noopener">Open the Closer Guide</a>
+      </div>
+    </div>
+    <div class="work" data-sec="sa7" data-title="Sales, The estimate and the deposit"></div>
+  </div>
+</section>
+
+<!-- ================= CALL TEAM ================= -->
+
+<section class="chapter" id="ct1" data-roles="callteam">
+  <div class="wrap">
+    <div class="chapkick">Call Team &middot; Chapter 1 of 5</div>
+    <h2>The <span>first call</span></h2>
+    <p class="lede">You are the first human voice a lead hears after clicking an ad. Everything before you was automated, which makes the warmth of that first call the whole point of it.</p>
+    <div class="info-grid">
+      <div class="icard"><div class="disc">&#128337;</div><div class="t">Speed matters</div><div class="s">Leads are called while the ad they clicked is still fresh in their mind. The system queues them to you at the right moment, your part is taking the call when it comes.</div></div>
+      <div class="icard"><div class="disc">&#127793;</div><div class="t">You are Barrel Sauna UK</div><div class="s">A family manufacturer in Wales, handcrafted products, and a person on the phone who sounds pleased they enquired. That is the brand, delivered by voice.</div></div>
+      <div class="icard"><div class="disc">&#127919;</div><div class="t">The call has one goal</div><div class="s">Find out where they genuinely stand, and get warm leads booked with the sales team. Not to sell the product on this call.</div></div>
+      <div class="icard"><div class="disc">&#128221;</div><div class="t">The outcome is the deliverable</div><div class="s">However the call goes, what BSUK needs from it is an honest outcome and a useful note. Chapters 2 and 4.</div></div>
+    </div>
+    <div class="work" data-sec="ct1" data-title="Call Team, The first call"></div>
+  </div>
+</section>
+
+<section class="chapter" id="ct3" data-roles="callteam" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Call Team &middot; Chapter 2 of 5</div>
+    <h2>Booking <span>the closer</span></h2>
+    <p class="lede">A warm lead's next step is a diary slot with the sales team, and the booking itself is what moves their card forward. No booking, no movement.</p>
+    <div class="step"><div class="n">1</div><div><div class="t">Book while they are on the phone</div><div class="s">A warm lead who hangs up without a slot has to be caught again later. The moment of interest is the moment to book.</div></div></div>
+    <div class="step"><div class="n">2</div><div><div class="t">Use the booking calendar, never a promise</div><div class="s">A slot in the calendar triggers confirmations, reminders and the card move. A verbal we will call you Tuesday triggers nothing.</div></div></div>
+    <div class="step"><div class="n">3</div><div><div class="t">Confirm the details back</div><div class="s">Day, time, and that it will be a call from the sales team at Barrel Sauna UK. Reminders go automatically, but hearing it said lands it.</div></div></div>
+    <div class="cad">
+      <div class="cap">Where to find calendars, how to book a new appointment etc</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9abf02ac5d03a10954057a.png" alt="Calendars in the left menu, the New button, and the calendar tick list showing Showroom Bookings and Book a Call Back">
+    </div>
+    <div class="cad">
+      <div class="cap">Booking an appointment, choose the right calendar etc</div>
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9abf02ac5d03a109540583.png" alt="The Book appointment modal with the calendar dropdown open, contact search, and the date, slot and status fields">
+    </div>
+    <div class="work" data-sec="ct3" data-title="Call Team, Booking the closer"></div>
+  </div>
+</section>
+
+<section class="chapter" id="ct2" data-roles="callteam" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Call Team &middot; Chapter 3 of 5</div>
+    <h2>Call outcomes, and what <span>each one triggers</span></h2>
+    <p class="lede">Your outcome is a switch. The moment you record it, the system routes the lead down one of four roads, so the honest outcome is the helpful one.</p>
+    <div class="info-grid">
+      <div class="icard"><div class="disc">&#128293;</div><div class="t">Warm</div><div class="s">Interested. The system starts nurture messages and works towards a sales team booking. Warm is for genuine interest, not politeness.</div></div>
+      <div class="icard"><div class="disc">&#10060;</div><div class="t">No</div><div class="s">Not for them. Sequences stop, a polite close goes out, and nobody chases someone who said no.</div></div>
+      <div class="icard"><div class="disc">&#128245;</div><div class="t">No answer</div><div class="s">The retry and chase machinery starts on its own. You do not need to remember them, the system does.</div></div>
+      <div class="icard"><div class="disc">&#10067;</div><div class="t">Unclear</div><div class="s">Could not establish where they stand. The system flags unclear outcomes for follow-up so they cannot quietly drift.</div></div>
+    </div>
+    <div class="why-box">
+      <div class="plab">Why honest beats hopeful</div>
+      <div class="wb">Marking a polite-but-cold lead as warm does not help anyone. <b>It books sales team time against someone who will not show,</b> and it sends the lead messages that feel pushy because they never asked for them. The system amplifies whatever you record.</div>
+    </div>
+    <div class="work" data-sec="ct2" data-title="Call Team, Call outcomes"></div>
+  </div>
+</section>
+
+<section class="chapter" id="ct4" data-roles="callteam" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Call Team &middot; Chapter 4 of 5</div>
+    <h2>Notes that <span>help</span></h2>
+    <p class="lede">Your note is what the next person opens before they speak to this lead. Write it for them.</p>
+    <div class="info-grid">
+      <div class="icard"><div class="disc">&#128172;</div><div class="t">What they said, not a score</div><div class="s">Wants a sauna for the garden office, asked about hot tubs too, beats seemed keen. Their words are the useful part.</div></div>
+      <div class="icard"><div class="disc">&#128230;</div><div class="t">Which product came up</div><div class="s">Sauna, hot tub, ice bath, glamping pod. It changes who should speak to them and what gets prepared.</div></div>
+      <div class="icard"><div class="disc">&#128368;</div><div class="t">When to catch them</div><div class="s">Works shifts, only reachable after six. One line that saves three missed calls.</div></div>
+      <div class="icard"><div class="disc">&#9888;&#65039;</div><div class="t">Anything unusual</div><div class="s">A complaint, a special request, a mention of a competitor. If it made you pause, it belongs in the note.</div></div>
+    </div>
+    <div class="work" data-sec="ct4" data-title="Call Team, Notes that help"></div>
+  </div>
+</section>
+
+<section class="chapter" id="ct5" data-roles="callteam" style="padding-top:0;">
+  <div class="wrap">
+    <div class="chapkick">Call Team &middot; Chapter 5 of 5</div>
+    <h2>When to hand a caller <span>to BSUK</span></h2>
+    <p class="lede">Some things are not for the first call to solve, and passing them on quickly is the professional move, not a failure.</p>
+    <div class="step"><div class="n">1</div><div><div class="t">Pricing beyond the published list, discounts, refunds</div><div class="s">These need BSUK authority. Take the details, promise a call back from the team, record the outcome honestly.</div></div></div>
+    <div class="step"><div class="n">2</div><div><div class="t">Upset or complaining callers</div><div class="s">Acknowledge, take details, do not defend or explain the company's side. A named person from BSUK will come back to them.</div></div></div>
+    <div class="step"><div class="n">3</div><div><div class="t">Never guess an answer</div><div class="s">Build details, delivery timelines, technical specifics. A wrong answer travels further than a we will find out for you.</div></div></div>
+    <div class="why-box">
+      <div class="plab">One name to remember</div>
+      <div class="wb">To customers, the founder is <b>James.</b> If a caller asks for the owner or mentions James, that is normal, route it through the handover as usual.</div>
+    </div>
+    <div class="work" data-sec="ct5" data-title="Call Team, Escalations"></div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="interlude-block">
+      <p>Every rule in this manual exists for the same reason. <span>So the customer's experience is true to what actually happened to them.</span></p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="log-card">
+      <div class="disc">&#128220;</div>
+      <div>
+        <div class="t">Version 1.1, September 2026</div>
+        Sales chapters added, seven of them, for closers. The separate closer walkthrough from August is retired, this manual now covers every role.
+      </div>
+    </div>
+    <div class="log-card">
+      <div class="disc">&#128220;</div>
+      <div>
+        <div class="t">Version 1.0, September 2026</div>
+        First release. Foundation, Office and Call Team chapters live. Sales chapters are being built and will land in a later version. Changes land here so you always know what moved.
+      </div>
+    </div>
+    <div class="backtop"><a href="#top">&#8679; Back to the top</a></div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="footer-box">
+    <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a159cbca7ceea4e5718f77f.png" alt="Barrel Sauna UK">
+    <div class="signoff">BSUK GHL Manual</div>
+    <div class="dom">Internal training &middot; One manual, every role</div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+  var KEY='bsuk-ghl-manual-v1';
+  var WA='27695408842';
+  var ROLES={
+    office:{label:'Office', chapters:[
+      {id:'of1', e:'\uD83D\uDD11', t:'Log in as you', s:'Why your own login unlocks everything else'},
+      {id:'of2', e:'\uD83D\uDCCB', t:'Smart lists', s:'Searches that keep themselves fresh'},
+      {id:'of3', e:'\u2705', t:'Tasks', s:'The rare moments the pipeline asks for a person'},
+      {id:'of4', e:'\uD83E\uDD1D', t:'Assigning contacts', s:'One name on every person'},
+      {id:'of5', e:'\uD83D\uDCAC', t:'WhatsApp templates', s:'The 24 hour rule and the silent fail'},
+      {id:'of6', e:'\uD83D\uDCC8', t:'Reading the board', s:'The pipeline as the state of the business'}
+    ]},
+    sales:{label:'Sales', chapters:[
+      {id:'sa1', e:'\uD83E\uDD1D', t:'Who holds what', s:'The team, and where your setup comes from'},
+      {id:'sa2', e:'\uD83D\uDCC5', t:'Your calendar', s:'Where your booked calls land, and the three calendars'},
+      {id:'sa3', e:'\uD83D\uDCD6', t:'The two minute read', s:'Conversations, Notes, Owner and tags before every call'},
+      {id:'sa4', e:'\uD83D\uDCDE', t:'Calls go out from GHL', s:'Logged, recorded, read by the system'},
+      {id:'sa5', e:'\uD83D\uDCE5', t:'Your inbox', s:'Own the contact, filter to Assigned to me, reply in channel'},
+      {id:'sa6', e:'\uD83E\uDDE0', t:'After the call', s:'Confirmed, Thinking, No, Unclear, filed for you'},
+      {id:'sa7', e:'\uD83D\uDCB7', t:'The estimate and the deposit', s:'Builder, Ecwid, after-estimate page, deposit'}
+    ]},
+    callteam:{label:'Call Team', chapters:[
+      {id:'ct1', e:'\u2728', t:'The first call', s:'The first human voice after the ad'},
+      {id:'ct3', e:'\uD83D\uDCC5', t:'Booking the closer', s:'The booking is what moves the card'},
+      {id:'ct2', e:'\uD83C\uDFAF', t:'Call outcomes', s:'Warm, no, no answer, unclear, and what each triggers'},
+      {id:'ct4', e:'\uD83D\uDCDD', t:'Notes that help', s:'Written for the next person to open'},
+      {id:'ct5', e:'\uD83D\uDEA8', t:'Escalations', s:'When to hand a caller to BSUK'}
+    ]}
+  };
+  var SPINE=[
+    {id:'spA', t:'GoHighLevel, the one system'},
+    {id:'spB', t:'Wave 2, and why it exists'},
+    {id:'sp1', t:'How Wave 2 thinks'},
+    {id:'sp2', t:'Tags, the wiring'},
+    {id:'sp3', t:'The never-do list'},
+    {id:'sp4', t:'The words we use'},
+    {id:'sp5', t:'When something looks odd'}
+  ];
+  var state={role:'office', who:'', showAll:false, checks:{}, notes:{}, savedAt:null};
+  try{var raw=localStorage.getItem(KEY);if(raw){state=Object.assign(state,JSON.parse(raw));}}catch(e){}
+  var timer=null;
+  function persist(){
+    var d=new Date();
+    state.savedAt=d.toLocaleDateString('en-GB')+' '+d.toTimeString().slice(0,5);
+    try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
+    document.getElementById('savedLine').textContent='Everything saves itself in this browser \u00B7 Saved '+state.savedAt;
+  }
+  function queue(){clearTimeout(timer);timer=setTimeout(function(){persist();},400);}
+  function toast(msg){
+    var t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');
+    setTimeout(function(){t.classList.remove('on');},2200);
+  }
+
+  // build work blocks
+  document.querySelectorAll('.work').forEach(function(w){
+    var sec=w.dataset.sec, title=w.dataset.title;
+    w.innerHTML='<div class="wt">\uD83E\uDDE0 How was that?</div>'
+      +'<label><input type="checkbox" class="okbox" data-check="'+sec+'ok"> \u2705 Got it</label>'
+      +'<label><input type="checkbox" class="morebox" data-check="'+sec+'more"> \u274C I need more explaining</label>'
+      +'<textarea data-note="'+sec+'q" placeholder="Your question or note on this chapter"></textarea>'
+      +'<div class="sendrow"><span class="sendlab">Send to Nikki on WhatsApp</span><button class="sendbtn" type="button" data-sec="'+sec+'" data-title="'+title+'">Send</button></div>'
+      +'<div class="whisper">Saves automatically as you type. Sending opens WhatsApp with the message ready, you press send.</div>';
+  });
+
+  function chapterDone(id){return !!state.checks[id+'ok'];}
+
+  function render(){
+    document.querySelectorAll('.rcard').forEach(function(c){
+      c.classList.toggle('on', !state.showAll && c.dataset.role===state.role);
+    });
+    // visibility
+    document.querySelectorAll('.chapter').forEach(function(ch){
+      var r=ch.dataset.roles;
+      ch.classList.toggle('vis', r==='all' || state.showAll || r===state.role);
+    });
+    // TOC
+    var kick=document.getElementById('chapKick');
+    kick.textContent = state.showAll ? 'Every Chapter' : ('Your '+ROLES[state.role].label+' Chapters');
+    var grid=document.getElementById('chapGrid');
+    grid.innerHTML='';
+    var roleKeys = state.showAll ? Object.keys(ROLES) : [state.role];
+    roleKeys.forEach(function(rk){
+      ROLES[rk].chapters.forEach(function(ch){
+        var done=chapterDone(ch.id);
+        var a=document.createElement('a');
+        a.href='#'+ch.id;a.className='fcard'+(done?' done':'');
+        a.innerHTML='<div class="disc">'+ch.e+'</div><div><div class="t">'+ch.t+'</div><div class="s">'+ch.s+'</div></div><div class="state">'+(done?'Done \u2713':'To do')+'</div>';
+        grid.appendChild(a);
+      });
+    });
+    // journey: spine + role chapters for chosen role
+    var row=document.getElementById('jrow');
+    row.innerHTML='';
+    var chaps=ROLES[state.role].chapters, done=0;
+    chaps.forEach(function(ch){
+      var d=chapterDone(ch.id);
+      if(d)done++;
+      var cell=document.createElement('div');
+      cell.className='cell'+(d?' on':'');
+      cell.innerHTML='<div class="disc">'+ch.e+'</div><div class="cl">'+ch.t+'</div>';
+      cell.addEventListener('click',function(){document.getElementById(ch.id).scrollIntoView();});
+      row.appendChild(cell);
+    });
+    var sdone=0;
+    SPINE.forEach(function(s){if(chapterDone(s.id))sdone++;});
+    document.getElementById('jsum').textContent=done+' of '+chaps.length+' '+ROLES[state.role].label+' chapters done \u00B7 '+sdone+' of '+SPINE.length+' foundation chapters done';
+    // inputs
+    document.getElementById('who').value=state.who||'';
+    document.querySelectorAll('[data-check]').forEach(function(el){el.checked=!!state.checks[el.dataset.check];});
+    document.querySelectorAll('[data-note]').forEach(function(el){el.value=state.notes[el.dataset.note]||'';});
+    if(state.savedAt){document.getElementById('savedLine').textContent='Everything saves itself in this browser \u00B7 Saved '+state.savedAt;}
+  }
+
+  document.querySelectorAll('.rcard').forEach(function(c){
+    c.addEventListener('click',function(){
+      state.role=c.dataset.role;state.showAll=false;persist();render();
+    });
+  });
+  document.getElementById('btnAll').addEventListener('click',function(){
+    state.showAll=!state.showAll;persist();render();
+    this.textContent = state.showAll ? '\uD83C\uDFAF Back to just my chapters' : '\uD83D\uDC40 Show everything instead';
+  });
+  document.getElementById('who').addEventListener('input',function(){
+    state.who=this.value;queue();
+  });
+  document.addEventListener('change',function(e){
+    var t=e.target;
+    if(!t.matches('[data-check]'))return;
+    // mutual exclusion inside a work block
+    if(t.classList.contains('okbox')&&t.checked){
+      var mb=t.closest('.work').querySelector('.morebox');
+      if(mb){mb.checked=false;state.checks[mb.dataset.check]=false;}
+    }
+    if(t.classList.contains('morebox')&&t.checked){
+      var ob=t.closest('.work').querySelector('.okbox');
+      if(ob){ob.checked=false;state.checks[ob.dataset.check]=false;}
+    }
+    state.checks[t.dataset.check]=t.checked;
+    persist();render();
+    if(t.classList.contains('okbox')&&t.checked)toast('\uD83C\uDF89 Chapter done');
+  });
+  document.addEventListener('input',function(e){
+    if(e.target.matches('[data-note]')){
+      state.notes[e.target.dataset.note]=e.target.value;queue();
+    }
+  });
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('.sendbtn');
+    if(!b)return;
+    var sec=b.dataset.sec, title=b.dataset.title;
+    var q=(state.notes[sec+'q']||'').trim();
+    var more=!!state.checks[sec+'more'];
+    var lines=['\uD83D\uDCD6 BSUK GHL Manual \u00B7 '+title];
+    if(state.who)lines.push('\uD83D\uDC4B From '+state.who);
+    lines.push(more? '\uD83D\uDE4B I need more explaining on this chapter please!' : '\u2753 Question on this chapter:');
+    if(q)lines.push('\uD83D\uDCAC '+q);
+    lines.push('\uD83D\uDE4F Thanks Nikki!');
+    window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(lines.join('\n')),'_blank');
+  });
+  document.getElementById('btnDownload').addEventListener('click',function(){
+    persist();
+    var blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download='bsuk-ghl-manual-progress.json';document.body.appendChild(a);a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},500);
+    toast('\uD83D\uDCE5 Progress file downloaded');
+  });
+  document.getElementById('btnRestore').addEventListener('click',function(){document.getElementById('fileRestore').click();});
+  document.getElementById('fileRestore').addEventListener('change',function(e){
+    var f=e.target.files[0];if(!f)return;
+    var r=new FileReader();
+    r.onload=function(){
+      try{
+        var s=JSON.parse(r.result);
+        if(!s||typeof s!=='object'||!s.checks)throw new Error('bad');
+        state=Object.assign(state,{role:s.role||state.role, who:s.who||'', showAll:!!s.showAll, checks:s.checks||{}, notes:s.notes||{}, savedAt:s.savedAt||null});
+        persist();render();toast('\uD83D\uDD04 Progress restored');
+      }catch(err){toast('That file is not a saved progress file');}
+      e.target.value='';
+    };
+    r.readAsText(f);
+  });
+  document.getElementById('btnPrint').addEventListener('click',function(){persist();window.print();});
+  document.getElementById('btnReset').addEventListener('click',function(){
+    if(!confirm('Clear all ticks and notes on this page? Save your progress first if you want to keep it.'))return;
+    state={role:'office', who:'', showAll:false, checks:{}, notes:{}, savedAt:null};
+    try{localStorage.removeItem(KEY);}catch(e){}
+    render();toast('Cleared');
+  });
+
+  // login-check gate: of1's Got it stays locked until a name is typed
+  function gateLogin(){
+    var lg=document.getElementById('loginname');
+    var ob=document.querySelector("[data-check='of1ok']");
+    if(!lg||!ob)return;
+    var ok=lg.value.trim().length>1;
+    ob.disabled=!ok;
+    if(!ok&&ob.checked){ob.checked=false;state.checks['of1ok']=false;queue();}
+    var lab=ob.closest('label');if(lab){lab.style.opacity=ok?'1':'0.45';}
+  }
+  document.addEventListener('input',function(e){if(e.target&&e.target.id==='loginname')gateLogin();});
+
+  render();
+  gateLogin();
+})();
+</script>
+
+</body>
+</html>
