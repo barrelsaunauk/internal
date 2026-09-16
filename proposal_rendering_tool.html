@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layout tool | BSUK internal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#16261C; --forest-deep:#1F3D28; --forest:#2B5336; --mid:#417C51;
+    --sage:#50795F; --sage-pale:#8fae86; --honey:#C08B41; --honey-l:#D6A868;
+    --tint:#dbe7dd; --tint-l:#eef4ef; --ink:#2f3835; --ink-l:#5C6663;
+    --line:rgba(65,124,81,0.25);
+    --face:'Poppins', Arial, Helvetica, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;background:#ffffff;}
+  body{font-family:var(--face);font-weight:400;font-size:13px;color:var(--ink);display:flex;height:100vh;overflow:hidden;}
+
+  aside{width:320px;flex:0 0 320px;background:var(--tint-l);border-right:1px solid var(--line);padding:18px 18px 30px;overflow-y:auto;}
+  aside h1{font-size:16px;font-weight:600;color:var(--forest-deep);margin-bottom:2px;}
+  aside .sub{font-size:11px;color:var(--ink-l);margin-bottom:18px;}
+  .block{background:#ffffff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px;}
+  .block h2{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--honey);margin-bottom:10px;}
+  .row{display:flex;gap:6px;margin-bottom:8px;}
+  .row:last-child{margin-bottom:0;}
+  input[type=text]{flex:1;min-width:0;font-family:var(--face);font-size:12px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;color:var(--ink);}
+  input[type=file]{display:none;}
+  input[type=range]{width:100%;accent-color:var(--mid);}
+  button,label.btn{font-family:var(--face);font-size:12px;font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:#ffffff;color:var(--forest-deep);cursor:pointer;white-space:nowrap;}
+  button:hover,label.btn:hover{background:var(--tint);}
+  button.primary,label.btn.primary{background:var(--forest);border-color:var(--forest);color:#ffffff;}
+  button.primary:hover,label.btn.primary:hover{background:var(--forest-deep);}
+  button.honey{background:var(--honey);border-color:var(--honey);color:#ffffff;}
+  button.honey:hover{background:#a8782f;}
+  button.danger{color:#8b3a2f;}
+  button:disabled{opacity:0.45;cursor:default;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;}
+  .field{margin-bottom:10px;}
+  .field .lab{font-size:11px;color:var(--ink-l);margin-bottom:4px;display:flex;justify-content:space-between;}
+  .check{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink);margin-top:8px;}
+  .check input{accent-color:var(--mid);width:15px;height:15px;}
+  .hint{font-size:11px;color:var(--ink-l);line-height:1.5;margin-top:8px;}
+  .msg{font-size:11px;color:#8b3a2f;line-height:1.5;margin-top:8px;min-height:0;}
+  #pieceList{list-style:none;margin-top:6px;}
+  #pieceList li{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;cursor:pointer;font-size:12px;}
+  #pieceList li:hover{background:var(--tint-l);}
+  #pieceList li.sel{background:var(--tint);font-weight:600;}
+  #pieceList li img{width:30px;height:30px;object-fit:contain;background:#ffffff;border:1px solid var(--line);border-radius:6px;}
+  #pieceList li .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+  main{flex:1;display:flex;flex-direction:column;background:#e9ece9;min-width:0;}
+  .topbar{height:46px;flex:0 0 46px;display:flex;align-items:center;gap:14px;padding:0 18px;background:#ffffff;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink-l);}
+  .topbar .k{font-weight:600;color:var(--forest-deep);}
+  #viewport{flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;padding:24px;}
+  #stageWrap{position:relative;box-shadow:0 14px 40px rgba(22,38,28,0.25);background:#ffffff;}
+  #stage{position:relative;transform-origin:0 0;background-size:100% 100%;background-repeat:no-repeat;background-color:#dfe5df;overflow:hidden;}
+  #stage.empty{display:flex;align-items:center;justify-content:center;color:var(--ink-l);font-size:14px;}
+  .piece{position:absolute;left:0;top:0;transform-origin:0 0;cursor:grab;user-select:none;-webkit-user-drag:none;touch-action:none;}
+  .piece img{display:block;pointer-events:none;-webkit-user-drag:none;}
+  .piece.sel{outline:2px solid var(--honey);outline-offset:2px;}
+  .piece.dragging{cursor:grabbing;}
+</style>
+</head>
+<body>
+
+<aside>
+  <h1>Layout tool</h1>
+  <div class="sub">Drag rendered pieces onto a ground image, then export the arrangement.</div>
+
+  <div class="block">
+    <h2>Ground</h2>
+    <div class="row">
+      <label class="btn primary" for="groundFile">Load from computer</label>
+      <input type="file" id="groundFile" accept="image/*">
+    </div>
+    <div class="row">
+      <input type="text" id="groundUrl" placeholder="or paste an image link">
+      <button id="groundUrlBtn">Load</button>
+    </div>
+    <div class="hint" id="groundInfo">No ground loaded yet.</div>
+  </div>
+
+  <div class="block">
+    <h2>Pieces</h2>
+    <div class="row">
+      <label class="btn primary" for="pieceFiles">Add from computer</label>
+      <input type="file" id="pieceFiles" accept="image/*" multiple>
+    </div>
+    <div class="row">
+      <input type="text" id="pieceUrl" placeholder="or paste an image link">
+      <button id="pieceUrlBtn">Add</button>
+    </div>
+    <div class="check"><input type="checkbox" id="keyWhiteDefault" checked><label for="keyWhiteDefault">Erase white background on new pieces</label></div>
+    <ul id="pieceList"></ul>
+    <div class="hint">Click a piece to select it. Drag to move. Arrow keys nudge, hold Shift for bigger steps. Scroll over a selected piece to resize.</div>
+  </div>
+
+  <div class="block" id="selBlock">
+    <h2>Selected piece</h2>
+    <div class="field"><div class="lab"><span>Name</span></div><input type="text" id="selName" placeholder="Select a piece"></div>
+    <div class="field"><div class="lab"><span>Size</span><span id="selScaleVal">100%</span></div><input type="range" id="selScale" min="5" max="300" value="100"></div>
+    <div class="grid3" style="margin-bottom:6px;">
+      <button id="btnFlip">Flip</button>
+      <button id="btnFwd">Forward</button>
+      <button id="btnBack">Back</button>
+    </div>
+    <div class="grid3">
+      <button id="btnDup">Duplicate</button>
+      <button id="btnCentre">Centre</button>
+      <button id="btnRemove" class="danger">Remove</button>
+    </div>
+    <div class="check"><input type="checkbox" id="selKey"><label for="selKey">Erase white background</label></div>
+    <div class="field" style="margin-top:10px;"><div class="lab"><span>Erase strength</span><span id="selThrVal">225</span></div><input type="range" id="selThr" min="150" max="250" value="225"></div>
+    <div class="hint">Push it up if a soft shadow is left behind, pull it down if grey parts of the piece disappear.</div>
+  </div>
+
+  <div class="block">
+    <h2>Export</h2>
+    <div class="row"><input type="text" id="exportName" value="layout"><button id="btnExport" class="honey">Save PNG</button></div>
+    <div class="hint">Exports at the ground image's full size, with the pieces drawn on top.</div>
+    <div class="msg" id="exportMsg"></div>
+  </div>
+
+  <div class="block">
+    <h2>Layout file</h2>
+    <div class="grid2">
+      <button id="btnSaveLayout">Save layout</button>
+      <label class="btn" for="layoutFile">Load layout</label>
+      <input type="file" id="layoutFile" accept="application/json">
+    </div>
+    <div class="hint">Keeps the ground, every piece and its position in one file, so you can come back to an arrangement later.</div>
+  </div>
+</aside>
+
+<main>
+  <div class="topbar">
+    <span><span class="k">Ground</span> <span id="tbGround">none</span></span>
+    <span><span class="k">Pieces</span> <span id="tbPieces">0</span></span>
+    <span><span class="k">Zoom</span> <span id="tbZoom">fit</span></span>
+    <span style="margin-left:auto;">BSUK internal</span>
+  </div>
+  <div id="viewport">
+    <div id="stageWrap">
+      <div id="stage" class="empty">Load a ground image to begin</div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  var ground={img:null,w:0,h:0,src:'',name:''};
+  var pieces=[];
+  var selected=null;
+  var fit=1;
+  var uid=0;
+
+  var stage=document.getElementById('stage');
+  var stageWrap=document.getElementById('stageWrap');
+  var viewport=document.getElementById('viewport');
+  var listEl=document.getElementById('pieceList');
+
+  function loadImage(src,cb,err){
+    var im=new Image();
+    if(!/^data:/.test(src)) im.crossOrigin='anonymous';
+    im.onload=function(){cb(im);};
+    im.onerror=function(){
+      if(im.crossOrigin){
+        var im2=new Image();
+        im2.onload=function(){cb(im2);};
+        im2.onerror=function(){if(err)err();};
+        im2.src=src;
+      } else if(err){err();}
+    };
+    im.src=src;
+  }
+
+  function fileToDataUrl(file,cb){
+    var r=new FileReader();
+    r.onload=function(){cb(r.result);};
+    r.readAsDataURL(file);
+  }
+
+  function setGround(src,name){
+    loadImage(src,function(im){
+      ground.img=im; ground.w=im.naturalWidth; ground.h=im.naturalHeight; ground.src=src; ground.name=name||'ground';
+      stage.classList.remove('empty'); stage.textContent='';
+      stage.style.width=ground.w+'px'; stage.style.height=ground.h+'px';
+      stage.style.backgroundImage='url("'+src.replace(/"/g,'%22')+'")';
+      document.getElementById('groundInfo').textContent=ground.name+', '+ground.w+' by '+ground.h+' px';
+      document.getElementById('tbGround').textContent=ground.name;
+      pieces.forEach(function(p){stage.appendChild(p.el);});
+      fitStage();
+    },function(){
+      document.getElementById('groundInfo').textContent='That image could not be loaded. Try saving it to your computer and loading it from there.';
+    });
+  }
+
+  function fitStage(){
+    if(!ground.w) return;
+    var vw=viewport.clientWidth-48, vh=viewport.clientHeight-48;
+    fit=Math.min(vw/ground.w, vh/ground.h, 1);
+    stage.style.transform='scale('+fit+')';
+    stageWrap.style.width=(ground.w*fit)+'px';
+    stageWrap.style.height=(ground.h*fit)+'px';
+    document.getElementById('tbZoom').textContent=Math.round(fit*100)+'%';
+  }
+  window.addEventListener('resize',fitStage);
+
+  function keyWhite(im,thr){
+    thr=thr||225;
+    var w=im.naturalWidth, h=im.naturalHeight;
+    var c=document.createElement('canvas'); c.width=w; c.height=h;
+    var ctx=c.getContext('2d'); ctx.drawImage(im,0,0);
+    var data;
+    try{ data=ctx.getImageData(0,0,w,h); }catch(e){ return null; }
+    var d=data.data;
+    var visited=new Uint8Array(w*h);
+    var queue=new Int32Array(w*h);
+    var head=0, tail=0;
+    function nearWhite(i){ var o=i*4; var mx=Math.max(d[o],d[o+1],d[o+2]), mn=Math.min(d[o],d[o+1],d[o+2]); return mn>=thr && (mx-mn)<=22; }
+    function push(i){ if(!visited[i] && nearWhite(i)){ visited[i]=1; queue[tail++]=i; } }
+    for(var x=0;x<w;x++){ push(x); push((h-1)*w+x); }
+    for(var y=0;y<h;y++){ push(y*w); push(y*w+w-1); }
+    while(head<tail){
+      var i=queue[head++];
+      var px=i%w, py=(i-px)/w;
+      if(px>0) push(i-1);
+      if(px<w-1) push(i+1);
+      if(py>0) push(i-w);
+      if(py<h-1) push(i+w);
+    }
+    for(var k=0;k<w*h;k++){
+      if(visited[k]){
+        var o=k*4;
+        var m=Math.min(d[o],d[o+1],d[o+2]);
+        d[o+3]= m>=thr+10 ? 0 : Math.round((thr+10-m)/10*255);
+      }
+    }
+    ctx.putImageData(data,0,0);
+    return c;
+  }
+
+  function addPiece(src,name,opts){
+    opts=opts||{};
+    loadImage(src,function(im){
+      var p={id:++uid,name:name||('piece '+uid),src:src,img:im,w:im.naturalWidth,h:im.naturalHeight,
+             x:opts.x!=null?opts.x:0,y:opts.y!=null?opts.y:0,scale:opts.scale||1,flip:!!opts.flip,
+             key:opts.key!=null?opts.key:document.getElementById('keyWhiteDefault').checked,thr:opts.thr||225,keyed:null,el:null};
+      if(p.key){ p.keyed=keyWhite(im,p.thr); if(!p.keyed){ p.key=false; document.getElementById('exportMsg').textContent='White erase needs the image loaded from your computer; used the original instead.'; } }
+      var el=document.createElement('div'); el.className='piece';
+      var tag=document.createElement('img'); el.appendChild(tag);
+      p.el=el;
+      refreshPieceImage(p);
+      if(opts.x==null && ground.w){
+        var defScale=Math.min(1,(ground.h*0.45)/p.h);
+        p.scale=defScale;
+        p.x=Math.round(ground.w/2-p.w*p.scale/2); p.y=Math.round(ground.h*0.62-p.h*p.scale);
+      }
+      el.addEventListener('pointerdown',function(e){startDrag(e,p);});
+      el.addEventListener('wheel',function(e){
+        if(selected!==p) return;
+        e.preventDefault();
+        var f=e.deltaY<0?1.03:0.97;
+        setScale(p,p.scale*f,true);
+      },{passive:false});
+      pieces.push(p);
+      if(ground.w) stage.appendChild(el);
+      place(p);
+      select(p);
+      renderList();
+    },function(){
+      document.getElementById('exportMsg').textContent='That piece could not be loaded. Try saving it to your computer and adding it from there.';
+    });
+  }
+
+  function refreshPieceImage(p){
+    var tag=p.el.querySelector('img');
+    if(p.key && p.keyed){ tag.src=p.keyed.toDataURL('image/png'); }
+    else{ tag.src=p.src; }
+    tag.style.width=p.w+'px'; tag.style.height=p.h+'px';
+  }
+
+  function place(p){
+    var t='translate('+p.x+'px,'+p.y+'px) scale('+p.scale+')';
+    if(p.flip){ t='translate('+(p.x+p.w*p.scale)+'px,'+p.y+'px) scale('+(-p.scale)+','+p.scale+')'; }
+    p.el.style.transform=t;
+    p.el.style.zIndex=String(10+pieces.indexOf(p));
+  }
+
+  function setScale(p,s,anchorCentre){
+    s=Math.max(0.05,Math.min(3,s));
+    if(anchorCentre){
+      var cx=p.x+p.w*p.scale/2, cy=p.y+p.h*p.scale;
+      p.scale=s;
+      p.x=cx-p.w*s/2; p.y=cy-p.h*s;
+    } else { p.scale=s; }
+    place(p); syncSel();
+  }
+
+  var drag=null;
+  function startDrag(e,p){
+    e.preventDefault();
+    select(p);
+    drag={p:p,sx:e.clientX,sy:e.clientY,ox:p.x,oy:p.y};
+    p.el.classList.add('dragging');
+    p.el.setPointerCapture(e.pointerId);
+  }
+  document.addEventListener('pointermove',function(e){
+    if(!drag) return;
+    drag.p.x=drag.ox+(e.clientX-drag.sx)/fit;
+    drag.p.y=drag.oy+(e.clientY-drag.sy)/fit;
+    place(drag.p);
+  });
+  document.addEventListener('pointerup',function(){
+    if(!drag) return;
+    drag.p.el.classList.remove('dragging'); drag=null;
+  });
+
+  function select(p){
+    selected=p;
+    pieces.forEach(function(q){ q.el.classList.toggle('sel',q===p); });
+    syncSel(); renderList();
+  }
+  function syncSel(){
+    var has=!!selected;
+    ['selName','selScale','btnFlip','btnFwd','btnBack','btnDup','btnCentre','btnRemove','selKey','selThr'].forEach(function(id){ document.getElementById(id).disabled=!has; });
+    if(!has){ document.getElementById('selName').value=''; document.getElementById('selScale').value=100; document.getElementById('selScaleVal').textContent='100%'; document.getElementById('selKey').checked=false; return; }
+    document.getElementById('selName').value=selected.name;
+    document.getElementById('selScale').value=Math.round(selected.scale*100);
+    document.getElementById('selScaleVal').textContent=Math.round(selected.scale*100)+'%';
+    document.getElementById('selKey').checked=selected.key;
+    document.getElementById('selThr').value=selected.thr; document.getElementById('selThrVal').textContent=String(selected.thr);
+  }
+  function renderList(){
+    listEl.innerHTML='';
+    pieces.slice().reverse().forEach(function(p){
+      var li=document.createElement('li'); if(p===selected) li.className='sel';
+      var im=document.createElement('img'); im.src=p.el.querySelector('img').src;
+      var nm=document.createElement('span'); nm.className='nm'; nm.textContent=p.name;
+      li.appendChild(im); li.appendChild(nm);
+      li.addEventListener('click',function(){select(p);});
+      listEl.appendChild(li);
+    });
+    document.getElementById('tbPieces').textContent=String(pieces.length);
+  }
+
+  document.getElementById('selName').addEventListener('input',function(){ if(selected){ selected.name=this.value; renderList(); } });
+  document.getElementById('selScale').addEventListener('input',function(){ if(selected){ setScale(selected,this.value/100,true); } });
+  document.getElementById('btnFlip').addEventListener('click',function(){ if(selected){ selected.flip=!selected.flip; place(selected); } });
+  document.getElementById('btnFwd').addEventListener('click',function(){ if(!selected) return; var i=pieces.indexOf(selected); if(i<pieces.length-1){ pieces.splice(i,1); pieces.splice(i+1,0,selected); pieces.forEach(place); renderList(); } });
+  document.getElementById('btnBack').addEventListener('click',function(){ if(!selected) return; var i=pieces.indexOf(selected); if(i>0){ pieces.splice(i,1); pieces.splice(i-1,0,selected); pieces.forEach(place); renderList(); } });
+  document.getElementById('btnDup').addEventListener('click',function(){ if(!selected) return; var p=selected; addPiece(p.src,p.name+' copy',{x:p.x+40,y:p.y+40,scale:p.scale,flip:p.flip,key:p.key,thr:p.thr}); });
+  document.getElementById('selThr').addEventListener('input',function(){ if(!selected) return; document.getElementById('selThrVal').textContent=this.value; });
+  document.getElementById('selThr').addEventListener('change',function(){ if(!selected) return; selected.thr=parseInt(this.value,10); if(selected.key){ selected.keyed=keyWhite(selected.img,selected.thr); refreshPieceImage(selected); renderList(); } });
+  document.getElementById('btnCentre').addEventListener('click',function(){ if(!selected||!ground.w) return; selected.x=Math.round(ground.w/2-selected.w*selected.scale/2); place(selected); });
+  document.getElementById('btnRemove').addEventListener('click',function(){ if(!selected) return; var p=selected; pieces.splice(pieces.indexOf(p),1); if(p.el.parentNode) p.el.parentNode.removeChild(p.el); selected=null; pieces.forEach(place); syncSel(); renderList(); });
+  document.getElementById('selKey').addEventListener('change',function(){ if(!selected) return; selected.key=this.checked; if(selected.key){ selected.keyed=keyWhite(selected.img,selected.thr); if(!selected.keyed){ selected.key=false; this.checked=false; document.getElementById('exportMsg').textContent='White erase needs the image loaded from your computer.'; } } refreshPieceImage(selected); renderList(); });
+
+  document.addEventListener('keydown',function(e){
+    if(!selected) return;
+    var tagName=(e.target&&e.target.tagName)||'';
+    if(tagName==='INPUT'||tagName==='TEXTAREA') return;
+    var step=e.shiftKey?20:2;
+    var moved=true;
+    if(e.key==='ArrowLeft') selected.x-=step; else if(e.key==='ArrowRight') selected.x+=step;
+    else if(e.key==='ArrowUp') selected.y-=step; else if(e.key==='ArrowDown') selected.y+=step;
+    else if(e.key==='Delete'||e.key==='Backspace'){ document.getElementById('btnRemove').click(); moved=false; }
+    else moved=false;
+    if(moved){ e.preventDefault(); place(selected); }
+  });
+
+  document.getElementById('groundFile').addEventListener('change',function(){ var f=this.files[0]; if(!f) return; fileToDataUrl(f,function(u){ setGround(u,f.name); }); this.value=''; });
+  document.getElementById('groundUrlBtn').addEventListener('click',function(){ var u=document.getElementById('groundUrl').value.trim(); if(u) setGround(u,u.split('/').pop()); });
+  document.getElementById('pieceFiles').addEventListener('change',function(){ var files=Array.prototype.slice.call(this.files); files.forEach(function(f){ fileToDataUrl(f,function(u){ addPiece(u,f.name.replace(/\.[^.]+$/,'')); }); }); this.value=''; });
+  document.getElementById('pieceUrlBtn').addEventListener('click',function(){ var u=document.getElementById('pieceUrl').value.trim(); if(u) addPiece(u,u.split('/').pop().replace(/\.[^.]+$/,'')); });
+
+  function compose(){
+    var c=document.createElement('canvas'); c.width=ground.w; c.height=ground.h;
+    var ctx=c.getContext('2d');
+    ctx.drawImage(ground.img,0,0,ground.w,ground.h);
+    pieces.forEach(function(p){
+      var src=(p.key&&p.keyed)?p.keyed:p.img;
+      ctx.save();
+      if(p.flip){ ctx.translate(p.x+p.w*p.scale,p.y); ctx.scale(-1,1); ctx.drawImage(src,0,0,p.w*p.scale,p.h*p.scale); }
+      else { ctx.drawImage(src,p.x,p.y,p.w*p.scale,p.h*p.scale); }
+      ctx.restore();
+    });
+    return c;
+  }
+  document.getElementById('btnExport').addEventListener('click',function(){
+    var msg=document.getElementById('exportMsg'); msg.textContent='';
+    if(!ground.w){ msg.textContent='Load a ground image first.'; return; }
+    var c;
+    try{ c=compose(); c.toBlob(function(b){
+        if(!b){ msg.textContent='Export failed. If the ground or a piece came from a link, load it from your computer instead.'; return; }
+        var a=document.createElement('a'); a.href=URL.createObjectURL(b);
+        a.download=(document.getElementById('exportName').value.trim()||'layout')+'.png';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      },'image/png'); }
+    catch(e){ msg.textContent='Export failed. If the ground or a piece came from a link, load it from your computer instead.'; }
+  });
+
+  document.getElementById('btnSaveLayout').addEventListener('click',function(){
+    var data={ground:{src:ground.src,name:ground.name},pieces:pieces.map(function(p){ return {src:p.src,name:p.name,x:p.x,y:p.y,scale:p.scale,flip:p.flip,key:p.key,thr:p.thr}; })};
+    var b=new Blob([JSON.stringify(data)],{type:'application/json'});
+    var a=document.createElement('a'); a.href=URL.createObjectURL(b);
+    a.download=(document.getElementById('exportName').value.trim()||'layout')+'.layout.json';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  });
+  document.getElementById('layoutFile').addEventListener('change',function(){
+    var f=this.files[0]; if(!f) return;
+    var r=new FileReader();
+    r.onload=function(){
+      var data; try{ data=JSON.parse(r.result); }catch(e){ return; }
+      pieces.forEach(function(p){ if(p.el.parentNode) p.el.parentNode.removeChild(p.el); });
+      pieces=[]; selected=null; syncSel(); renderList();
+      if(data.ground&&data.ground.src){ setGround(data.ground.src,data.ground.name); }
+      (data.pieces||[]).forEach(function(q){ addPiece(q.src,q.name,{x:q.x,y:q.y,scale:q.scale,flip:q.flip,key:q.key,thr:q.thr}); });
+    };
+    r.readAsText(f); this.value='';
+  });
+
+  syncSel();
+})();
+</script>
+</body>
+</html>
