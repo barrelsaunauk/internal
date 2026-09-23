@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wave 2 Contact Journey</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial, Helvetica, sans-serif;font-weight:400;font-size:16px;line-height:1.65;}
+.wrap{max-width:820px;margin:0 auto;padding:0 22px 40px;}
+.hero{padding:44px 22px 36px;text-align:center;}
+.hero h1{font-size:34px;font-weight:700;letter-spacing:-0.5px;}
+.hero .sub{margin-top:8px;font-size:15px;}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px;}
+.btn{cursor:pointer;padding:9px 20px;border-radius:6px;font-family:inherit;font-weight:700;font-size:13px;letter-spacing:1px;}
+.saved-line{text-align:center;margin-top:10px;font-size:13px;color:var(--mut);}
+section.band{margin:30px 0;}
+.band-header{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0 10px;border-top:none;border-left:none;border-right:none;background:none;cursor:pointer;font-size:20px;font-weight:700;text-align:left;font-family:inherit;}
+.band-tag{border-radius:20px;padding:4px 14px;font-size:13px;font-weight:400;white-space:nowrap;}
+.band-body{padding:14px 0 0;}
+.band-intro{color:var(--mut);font-size:14.5px;padding:0 0 12px;}
+.jstep{display:flex;gap:14px;border-radius:10px;padding:14px 18px;margin:10px 0;align-items:flex-start;}
+.jnum{flex:0 0 30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+.jmain{flex:1;} .jtitle{font-size:16px;font-weight:400;color:var(--ink);}
+.jdesc{color:var(--mut);font-size:14px;margin-top:3px;}
+.notes-card{border-radius:10px;padding:14px 18px;margin:16px 0 4px;}
+.notes-title{font-size:14px;font-weight:700;margin-bottom:8px;color:var(--ink);}
+.note-box{width:100%;min-height:80px;border-radius:8px;padding:10px 12px;font-family:inherit;font-size:14px;color:#111417;background:#ffffff;resize:vertical;}
+footer{text-align:center;font-size:12px;letter-spacing:1px;padding:24px 0 8px;}
+@media print{.toolbar,.saved-line{display:none;}.band-body{display:block !important;}}
+
+:root{--ink:#111417;--ink2:#3A4240;--mut:#5C6663;--green:#417C51;--sage:#50795F;--honey:#C08B41;--tint:#dbe7dd;--line:#111417;}
+body{background:#ffffff;color:var(--ink2);}
+.hero{background:#ffffff;border-bottom:3px solid var(--honey);color:var(--ink);}
+.hero h1{color:var(--ink);} .hero .sub{color:var(--sage);}
+.band-header{color:var(--ink);border-bottom:1px solid rgba(17,20,23,0.6);}
+.band-tag{background:var(--tint);border:none;color:#1F3D28;}
+.jstep{border:1px solid rgba(17,20,23,0.18);border-left:3px solid var(--green);background:#ffffff;}
+.jnum{background:var(--honey);border:none;color:#ffffff;}
+.jtitle{color:var(--ink);} .kick{color:var(--sage);}
+.band-intro{color:var(--sage);}
+.btn{border:1px solid var(--line);background:#ffffff;color:var(--ink);}
+.btn:hover{background:var(--tint);}
+.notes-card{border:1px dashed var(--green);background:#ffffff;}
+.note-box{border:1px solid rgba(65,124,81,0.5);}
+footer{color:var(--mut);}
+
+</style>
+</head>
+<body>
+<div class="hero">
+<h1>🗺️ Wave 2 Contact Journey ✨</h1>
+<p class="sub">every step a Wave 2 lead takes, workflow by workflow 🧭</p>
+<div class="toolbar">
+<button class="btn" id="btnSnapshot" type="button">💾 SAVE SNAPSHOT</button>
+<button class="btn" id="btnRestore" type="button">📂 RESTORE</button>
+<button class="btn" id="btnPdf" type="button">📄 PDF</button>
+<input type="file" id="fileRestore" accept="application/json" style="display:none">
+</div>
+<p class="saved-line">notes autosave on every keystroke · last saved: <span id="lastSaved">not yet</span></p>
+</div>
+<div class="wrap">
+<section class="band" id="w1">
+<button class="band-header" type="button" data-band="w1"><span>1️⃣ W1: Lead Intake 🚪</span><span class="band-tag">the front door</span></button>
+<div class="band-body" id="body-w1">
+<p class="band-intro">A new Facebook lead is captured, tagged, handed to AMP and greeted within a minute, whatever the hour.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">📋 Facebook lead form submitted</div><div class="jdesc">The customer completes the Meta lead form and enters the system.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">🏷️ Tagged as a Wave 2 lead</div><div class="jdesc">The tag wave 2 facebook/meta lead is applied. This tag gates everything downstream.</div></div></div>
+<div class="jstep"><div class="jnum">3</div><div class="jmain"><div class="jtitle">📊 Moved to New Lead stage</div><div class="jdesc">The opportunity is created at the top of the pipeline.</div></div></div>
+<div class="jstep"><div class="jnum">4</div><div class="jmain"><div class="jtitle">☎️ Assigned to AMP</div><div class="jdesc">The external call team owns the contact from this point.</div></div></div>
+<div class="jstep"><div class="jnum">5</div><div class="jmain"><div class="jtitle">💬 Instant greeting WhatsApp</div><div class="jdesc">Fires the moment the form arrives, day or night, while the enquiry is still warm.</div></div></div>
+<div class="jstep"><div class="jnum">6</div><div class="jmain"><div class="jtitle">⏰ Hold until open hours</div><div class="jdesc">If the WhatsApp delivered: a short hold so the rest lands between 10:30am and 5pm on weekdays, then the branded greeting email and the first AMP call is bridged.</div></div></div>
+<div class="jstep"><div class="jnum">7</div><div class="jmain"><div class="jtitle">📲 Fallback path</div><div class="jdesc">If the WhatsApp did not deliver: the same greeting goes by SMS, then the email, the AMP call, and a day later the Deal of the Month email.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 1️⃣ W1</div><textarea class="note-box" data-note="w1" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w2">
+<button class="band-header" type="button" data-band="w2"><span>2️⃣ W2: Call Status Router 📞</span><span class="band-tag">what happened on the call?</span></button>
+<div class="band-body" id="body-w2">
+<p class="band-intro">Three sibling workflows listen to every call and route the lead by outcome. Each acts only on Wave 2 leads and knows whether the lead has already been reached, so nobody gets pulled backwards.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">📗 W2(a) call connected</div><div class="jdesc">First connected call only: the lead moves to contacted by office and is stamped with the reached tag every other workflow reads.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">📙 W2(b) call not answered</div><div class="jdesc">A missed call moves the lead to Not Reached and records the outcome. Two days later the team gets a follow up email and AMP gets a call-again task. If the lead is reached in the meantime, it ends early and both are skipped.</div></div></div>
+<div class="jstep"><div class="jnum">3</div><div class="jmain"><div class="jtitle">📘 W2(c) lead rings us back</div><div class="jdesc">An inbound call that connects counts as the first conversation: moved to Contacted, stamped as reached, and pulled out of the no-answer net.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 2️⃣ W2</div><textarea class="note-box" data-note="w2" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w3">
+<button class="band-header" type="button" data-band="w3"><span>3️⃣ W3: Call Outcome Router 🎧</span><span class="band-tag">how did the chat go?</span></button>
+<div class="band-body" id="body-w3">
+<p class="band-intro">After every AMP conversation the call is transcribed and classified by AI as Confirmed, Thinking, No or Unclear, and the outcome routes what happens next. Leads with a call already booked are left alone.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">🔥 Warm (Confirmed or Thinking)</div><div class="jdesc">Moved to reached and warm, a 5 minute pause, then the was-great-speaking-with-you WhatsApp with the workshop video and SMS fallback, followed by the Get To Know Us email.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">🧊 Cold (No)</div><div class="jdesc">Moved to reached but cold, then the cross sell WhatsApp: we do more than just barrel saunas. SMS fallback plus a hand-written style cross sell email.</div></div></div>
+<div class="jstep"><div class="jnum">3</div><div class="jmain"><div class="jtitle">❓ Unclear</div><div class="jdesc">Tagged for the follow up net, which picks the lead up 48 hours later if nothing resolves.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 3️⃣ W3</div><textarea class="note-box" data-note="w3" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w4">
+<button class="band-header" type="button" data-band="w4"><span>4️⃣ W4: Warm Nurture & Cold Revival 🕯️</span><span class="band-tag">keeping the flame lit</span></button>
+<div class="band-body" id="body-w4">
+<p class="band-intro">Warm leads get a gentle, human paced sequence from Marta. Cold leads who reply get promoted straight back into it.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">🌱 Warm nurture</div><div class="jdesc">3 days after going warm: how's it going? 4 days later: can I help with anything? 3 days more: sorry, forgot to mention, with the Book a Call Back link. 7 quiet days later the lead is tagged as gone quiet and moves to the 8 week list. Full WhatsApp, SMS and email fallbacks, and booking a call pulls the lead out instantly.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">🔄 Cold revival</div><div class="jdesc">Any reply from a cold lead removes the cold tag, promotes them to warm, and they flow into nurture like any other warm lead.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 4️⃣ W4</div><textarea class="note-box" data-note="w4" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w5">
+<button class="band-header" type="button" data-band="w5"><span>5️⃣ W5: No Answer Follow Up 📵</span><span class="band-tag">we tried to call</span></button>
+<div class="band-body" id="body-w5">
+<p class="band-intro">When the first AMP call goes unanswered the system retries once, then chases politely, and knows exactly when to stop.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">☎️ Automatic retry next day</div><div class="jdesc">The day after the miss, at lunchtime, a fresh AMP call is bridged. First time through only.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">🛡️ Did anything land?</div><div class="jdesc">A day later: if the retry connected, or the lead replied, booked or paid, the chase ends silently.</div></div></div>
+<div class="jstep"><div class="jnum">3</div><div class="jmain"><div class="jtitle">💬 The chase</div><div class="jdesc">Otherwise: we tried giving you a ring, with the Book a call back link; 2 days later are you still looking; 3 days later a last chance. Every message mirrored on SMS and email, and a reply pulls the lead out instantly.</div></div></div>
+<div class="jstep"><div class="jnum">4</div><div class="jmain"><div class="jtitle">📊 Chase exhausted</div><div class="jdesc">Silent leads are marked exhausted and move to Cold. Leads who received every message also carry the revival tag, so a reply weeks later still promotes them back to warm.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 5️⃣ W5</div><textarea class="note-box" data-note="w5" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w6">
+<button class="band-header" type="button" data-band="w6"><span>6️⃣ W6: Call Booked for Closer 📅</span><span class="band-tag">it's in the diary</span></button>
+<div class="band-body" id="body-w6">
+<p class="band-intro">A confirmed booking on the Book a Call Back calendar switches the lead from being chased to being prepared for the closer.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">🏷️ Booking tagged</div><div class="jdesc">The wave 2 call booked tag is applied and every other workflow stands down.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">🎣 Pulled out of nurture</div><div class="jdesc">Removed from warm nurture and the no answer chase, stage moves to call booked with closer.</div></div></div>
+<div class="jstep"><div class="jnum">3</div><div class="jmain"><div class="jtitle">💬 Confirmation from Marta</div><div class="jdesc">A WhatsApp confirms the time with a reschedule link, with SMS and email fallbacks.</div></div></div>
+<div class="jstep"><div class="jnum">4</div><div class="jmain"><div class="jtitle">🔔 Team warned about quiet leads</div><div class="jdesc">The confirmation email is watched for 2 days: leads who open but don't reschedule, and leads who never engage at all, both trigger a heads up so the closer knows who might not show.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 6️⃣ W6</div><textarea class="note-box" data-note="w6" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w7">
+<button class="band-header" type="button" data-band="w7"><span>7️⃣ W7: Closer Call Outcome Router 🤝</span><span class="band-tag">after the big call</span></button>
+<div class="band-body" id="body-w7">
+<p class="band-intro">The closer call is classified the same way as the first, and only leads with a booked call are routed here.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">✅ Confirmed</div><div class="jdesc">The deposit link email goes out.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">🤔 Thinking</div><div class="jdesc">2 quiet days, then have you had a chance to think it over, with the lead-times nudge, on every channel. If the lead stays quiet the team is alerted, immediately when no channel delivers.</div></div></div>
+<div class="jstep"><div class="jnum">3</div><div class="jmain"><div class="jtitle">🚫 No</div><div class="jdesc">The lead is tagged cold with 7 days of grace. Any sign of life, a reply, a deposit, an estimate, a booking, being away or saving for later, flags them for human follow up with a team alert. Everyone else moves to the 8 week list.</div></div></div>
+<div class="jstep"><div class="jnum">4</div><div class="jmain"><div class="jtitle">❓ Unclear</div><div class="jdesc">The team is alerted directly, a person handles the nuance rather than automation.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 7️⃣ W7</div><textarea class="note-box" data-note="w7" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w8">
+<button class="band-header" type="button" data-band="w8"><span>8️⃣ W8: 8 & 12 Week Follow Up 📬</span><span class="band-tag">the long game</span></button>
+<div class="band-body" id="body-w8">
+<p class="band-intro">Leads parked on the marketing list rest, then get two well spaced touches.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">📧 8 weeks: where are you at with your build?</div><div class="jdesc">A personal check-in that lands with the team when they reply.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">📧 12 weeks: we build more than saunas</div><div class="jdesc">The full range email: hot tubs, ice baths, glamping pods, mobile saunas, grill cabins.</div></div></div>
+<div class="jstep"><div class="jnum">3</div><div class="jmain"><div class="jtitle">🏁 Instant exit</div><div class="jdesc">Booking a call or paying a deposit at any point ends the sequence immediately and quietly.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 8️⃣ W8</div><textarea class="note-box" data-note="w8" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w9">
+<button class="band-header" type="button" data-band="w9"><span>9️⃣ W9: Warm Pending 🕰️</span><span class="band-tag">parked, not forgotten</span></button>
+<div class="band-body" id="body-w9">
+<p class="band-intro">Warm leads who go quiet are parked where the team can see them, and a single reply brings them back.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">🚪 Entry</div><div class="jdesc">7 quiet days after going warm, and only if no conversation is running, the lead is tagged, moved to warm pending, and the team is alerted.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">🔄 Exit on reply</div><div class="jdesc">Any reply moves them straight back to reached and warm and removes the pending tag.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 9️⃣ W9</div><textarea class="note-box" data-note="w9" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w10">
+<button class="band-header" type="button" data-band="w10"><span>🔟 W10: Showroom Family 🏠</span><span class="band-tag">come and have a feel</span></button>
+<div class="band-body" id="body-w10">
+<p class="band-intro">Three workflows cover the showroom visit end to end. The showroom calendar sends its own confirmation and reminder emails, so these stay out of the customer's inbox.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">📅 W10(a) visit booked</div><div class="jdesc">A confirmed booking on the Showroom Bookings calendar tags the lead and pulls them out of nurture and the chase.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">👣 W10(b) visited</div><div class="jdesc">When the appointment is marked as showed, the lead is tagged visited showroom and the stage moves to match.</div></div></div>
+<div class="jstep"><div class="jnum">3</div><div class="jmain"><div class="jtitle">🔔 W10(c) outcome</div><div class="jdesc">After the appointment ends: no-shows trigger a team alert, visitors end quiet.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 🔟 W10</div><textarea class="note-box" data-note="w10" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w11">
+<button class="band-header" type="button" data-band="w11"><span>1️⃣1️⃣ W11: Unclear Call 48hr Net 🕸️</span><span class="band-tag">nothing slips through</span></button>
+<div class="band-body" id="body-w11">
+<p class="band-intro">An unclear outcome from either router starts a 48 hour clock.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">⏳ 48 hours of grace</div><div class="jdesc">If anything resolves in that window, a reply, a booking, a payment, a clean outcome, the net lets go silently.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">🔔 Unresolved</div><div class="jdesc">Otherwise the team is alerted: unclear call, still unresolved, human needed.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 1️⃣1️⃣ W11</div><textarea class="note-box" data-note="w11" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w12">
+<button class="band-header" type="button" data-band="w12"><span>1️⃣2️⃣ W12: Natural Call Silencer 🤫</span><span class="band-tag">a real chat beats a sequence</span></button>
+<div class="band-body" id="body-w12">
+<p class="band-intro">Any completed call with a Wave 2 lead means a real conversation happened, so the automation steps back.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">🎣 Pulled from the sequences</div><div class="jdesc">The lead is removed from warm nurture and the no answer chase.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">🔥 Cold leads warm up</div><div class="jdesc">A cold lead who has an actual conversation is promoted back to reached and warm.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 1️⃣2️⃣ W12</div><textarea class="note-box" data-note="w12" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w13">
+<button class="band-header" type="button" data-band="w13"><span>1️⃣3️⃣ W13: Estimate Sent 📄</span><span class="band-tag">the home straight</span></button>
+<div class="band-body" id="body-w13">
+<p class="band-intro">The estimate stage starts a short, polite countdown to the deposit.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">📧 Deposit link email</div><div class="jdesc">The estimate is followed by the securing-your-build email with the deposit link, and the team is notified.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">💬 3 days: friendly check-in</div><div class="jdesc">Unpaid leads get a light WhatsApp and a personal style email: just checking in, reply if anything has changed.</div></div></div>
+<div class="jstep"><div class="jnum">3</div><div class="jmain"><div class="jtitle">🔔 2 more days: team alert</div><div class="jdesc">Still unpaid and quiet, a person takes over.</div></div></div>
+<div class="jstep"><div class="jnum">4</div><div class="jmain"><div class="jtitle">🏁 Payment ends everything</div><div class="jdesc">A successful £500 deposit at any moment ends the chase instantly.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 1️⃣3️⃣ W13</div><textarea class="note-box" data-note="w13" aria-label="Notes"></textarea></div>
+</div></section>
+<section class="band" id="w14">
+<button class="band-header" type="button" data-band="w14"><span>1️⃣4️⃣ Deposit Paid 🎉</span><span class="band-tag">we won them over</span></button>
+<div class="band-body" id="body-w14">
+<p class="band-intro">The moment the £500 deposit clears, on any pipeline, the celebration and the handover begin.</p>
+<div class="jstep"><div class="jnum">1</div><div class="jmain"><div class="jtitle">🏷️ Tagged and moved</div><div class="jdesc">The deposit paid tag fires every guard in the system, and the stage moves to deposit paid.</div></div></div>
+<div class="jstep"><div class="jnum">2</div><div class="jmain"><div class="jtitle">💬 Just a quick thanks</div><div class="jdesc">A short WhatsApp from Marta confirms it landed and points to the email.</div></div></div>
+<div class="jstep"><div class="jnum">3</div><div class="jmain"><div class="jtitle">📧 Branded thank you email</div><div class="jdesc">Deposit received, the journey circles showing deposit paid as the active stage, and what happens next.</div></div></div>
+<div class="jstep"><div class="jnum">4</div><div class="jmain"><div class="jtitle">🥳 Team celebration alert</div><div class="jdesc">The good-news internal email goes to the assigned user and Marta: contact details, £500 received, next steps, open in GHL.</div></div></div>
+
+<div class="notes-card"><div class="notes-title">📝 My notes on 1️⃣4️⃣ Deposit Paid 🎉</div><textarea class="note-box" data-note="w14" aria-label="Notes"></textarea></div>
+</div></section>
+
+<footer>WAVE 2 CONTACT JOURNEY · BARREL SAUNA UK INTERNAL · THE FULL SYSTEM, W1 TO DEPOSIT PAID 🏁</footer>
+</div>
+<script>
+(function(){
+  var KEY="wave2-journey-v1";
+  var lastSavedEl=document.getElementById("lastSaved");
+  function collect(){var s={notes:{}};document.querySelectorAll(".note-box").forEach(function(t){s.notes[t.dataset.note]=t.value;});return s;}
+  function stamp(){lastSavedEl.textContent=new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(collect()));stamp();}catch(e){}}
+  function load(){var raw;try{raw=localStorage.getItem(KEY);}catch(e){return;}if(!raw)return;var s;try{s=JSON.parse(raw);}catch(e){return;}if(!s||!s.notes)return;document.querySelectorAll(".note-box").forEach(function(t){if(typeof s.notes[t.dataset.note]==="string")t.value=s.notes[t.dataset.note];});lastSavedEl.textContent="restored from last visit";}
+  document.querySelectorAll(".note-box").forEach(function(t){t.addEventListener("input",save);});
+  document.querySelectorAll(".band-header").forEach(function(h){h.addEventListener("click",function(){var b=document.getElementById("body-"+h.dataset.band);b.style.display=(b.style.display==="none")?"":"none";});});
+  document.getElementById("btnSnapshot").addEventListener("click",function(){var blob=new Blob([JSON.stringify(collect(),null,2)],{type:"application/json"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="wave2-journey-notes.json";a.click();URL.revokeObjectURL(a.href);});
+  document.getElementById("btnRestore").addEventListener("click",function(){document.getElementById("fileRestore").click();});
+  document.getElementById("fileRestore").addEventListener("change",function(ev){var f=ev.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){var s;try{s=JSON.parse(r.result);}catch(e){alert("That file is not a valid snapshot.");return;}if(!s||!s.notes){alert("That file is not a valid snapshot.");return;}document.querySelectorAll(".note-box").forEach(function(t){if(typeof s.notes[t.dataset.note]==="string")t.value=s.notes[t.dataset.note];});save();};r.readAsText(f);ev.target.value="";});
+  document.getElementById("btnPdf").addEventListener("click",function(){window.print();});
+  load();
+})();
+</script>
+</body>
+</html>
