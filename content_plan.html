@@ -93,18 +93,48 @@ h2 .hl{color:var(--honey)}
 .ck.done .tx{color:var(--muted)}
 .ck label:hover .bx{border-color:var(--forest-deep)}
 
-/* notes */
-.notesblock{margin-top:32px;background:var(--panel);border-radius:14px;padding:18px 20px}
-.notesblock .nl{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--honey);font-weight:600;margin-bottom:8px}
-.notesblock textarea{width:100%;min-height:130px;resize:vertical;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:14.5px;line-height:1.55;padding:12px 14px;outline:none}
-.notesblock textarea:focus{border-color:var(--forest-deep)}
-.notesblock .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:10px}
-.sendbtn{border:0;background:var(--honey);color:#fff;border-radius:999px;padding:10px 18px;font:inherit;font-weight:600;font-size:13.5px;cursor:pointer;line-height:1.2}
+/* print-only ruled notes on day sheets */
+.notes{display:none}
+
+/* the plan panel */
+.plan{position:fixed;z-index:50;background:var(--surface);color:var(--ink);box-shadow:0 -2px 18px rgba(22,38,28,.14);display:flex;flex-direction:column;font-size:14px}
+.plan .ph{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);cursor:pointer;flex:0 0 auto}
+.plan .ph .k{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--honey);font-weight:600}
+.plan .ph .n{font-size:13px;color:var(--muted);font-weight:600}
+.plan .ph .chev{width:10px;height:10px;border:solid var(--muted);border-width:0 2px 2px 0;transform:rotate(-135deg);transition:transform .2s;margin-right:4px}
+.plan .pb{overflow:auto;padding:12px 18px 16px;flex:1 1 auto;display:flex;flex-direction:column;gap:14px}
+.plan .empty{color:var(--muted);font-size:13.5px;padding:6px 0}
+.plan .pg .gl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:6px 0 4px}
+.plan .pg ul{list-style:none;margin:0;padding:0}
+.plan .pg li{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.45}
+.plan .pg li span{flex:1 1 auto}
+.plan .pg li button{flex:0 0 auto;border:0;background:none;color:var(--muted);font:inherit;font-size:16px;line-height:1;cursor:pointer;padding:0 2px;margin-top:1px}
+.plan .pg li button:hover{color:var(--ink)}
+.plan .nl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:4px 0 6px}
+.plan textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font:inherit;font-size:13.5px;line-height:1.5;padding:10px 12px;outline:none}
+.plan textarea:focus{border-color:var(--forest-deep)}
+.plan .pf{padding:12px 18px 14px;border-top:1px solid var(--line);flex:0 0 auto;display:grid;gap:6px}
+.sendbtn{border:0;background:var(--honey);color:#fff;border-radius:999px;padding:12px 18px;font:inherit;font-weight:600;font-size:14px;cursor:pointer;line-height:1.2;width:100%}
 .sendbtn:hover{filter:brightness(.95)}
 .sendbtn:disabled{opacity:.6;cursor:default}
-.notesblock .st{font-size:12.5px;color:var(--muted)}
-.notesprint{display:none}
-.lines{display:none}
+.plan .st{font-size:12px;color:var(--muted);min-height:1.2em}
+.plan .save{font-size:11.5px;color:var(--muted)}
+@media (min-width:1100px){
+  body{padding-right:356px}
+  .plan{top:16px;right:16px;bottom:16px;width:320px;border-radius:16px;border:1px solid var(--line)}
+  .plan .ph{cursor:default}
+  .plan .ph .chev{display:none}
+}
+@media (max-width:1099px){
+  body{padding-bottom:96px}
+  .plan{left:0;right:0;bottom:0;border-radius:16px 16px 0 0;max-height:56px;transition:max-height .25s}
+  .plan.open{max-height:78vh}
+  .plan.open .ph .chev{transform:rotate(45deg)}
+  .plan:not(.open) .pb,.plan:not(.open) .pf{display:none}
+}
+
+/* print-only plan page */
+.planprint{display:none}
 
 .theme{margin-top:36px}
 .theme .th{display:flex;align-items:center;gap:14px;margin-bottom:4px}
@@ -121,15 +151,7 @@ h2 .hl{color:var(--honey)}
 .circ img{width:132px;height:132px;border-radius:50%;object-fit:cover;flex:0 0 auto;box-shadow:var(--shadow)}
 .circ .cap{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;line-height:1.7}
 
-.internal{margin-top:48px;padding-top:28px;border-top:1px solid var(--line)}
-.internal h2{font-size:20px}
-.internal table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
-.internal th{text-align:left;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 0;border-bottom:1px solid var(--line)}
-.internal td{padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top}
-.internal td:nth-child(2){color:var(--muted)}
 
-.decisions{margin-top:48px}
-.decisions .notesblock{margin-top:14px}
 
 .vers{margin-top:40px;font-size:12px;color:var(--muted)}
 .savestate{margin-top:6px;font-size:12px;color:var(--muted)}
@@ -139,9 +161,9 @@ h2 .hl{color:var(--honey)}
   @page{size:A4 portrait;margin:13mm 14mm 13mm}
   :root{--bg:#fff;--surface:#fff;--panel:#fff;--ink:#16261C;--muted:#50795F;--line:#c9d6cc;--forest-deep:#1F3D28;--honey:#C08B41;--honey-light:#C08B41;--shadow:none}
   html,body{background:#fff;color:#16261C}
-  body{padding:0;font-size:11.5pt;line-height:1.45}
+  body{padding:0 !important;font-size:11.5pt;line-height:1.45}
   .wrap{max-width:none}
-  .hero,.strip,.tabs,.printbtn,.dayphoto,.circ,.vers,.savestate,.dayhead .count,.notesblock textarea,.notesblock .row{display:none !important}
+  .hero,.strip,.tabs,.printbtn,.dayphoto,.circ,.vers,.savestate,.dayhead .count,.plan{display:none !important}
   .sec{margin-top:0}
   .sec.days > h2,.sec.days > .intro{display:none}
   .day{display:block !important;break-before:page}
@@ -162,10 +184,8 @@ h2 .hl{color:var(--honey)}
   .ck.done .bx::after{left:3px;top:0;width:3px;height:6px;border-color:#16261C;border-width:0 1.5px 1.5px 0}
   .ck.done .tx,.idea.done .t{color:#16261C}
   .new{font-size:8.5pt}
-  .notesblock{display:block;margin-top:8px;background:#fff;border-radius:0;padding:0;break-inside:avoid}
-  .notesblock .nl{font-size:9pt;letter-spacing:.16em;text-transform:uppercase;color:#50795F;font-weight:600;margin-bottom:3px}
-  .notesprint{display:block;white-space:pre-wrap;font-size:10pt;color:#16261C;margin:0 0 4px}
-  .notesprint:empty{display:none}
+  .notes{display:block;margin-top:8px;break-inside:avoid}
+  .notes .nl{font-size:9pt;letter-spacing:.16em;text-transform:uppercase;color:#50795F;font-weight:600;margin-bottom:3px}
   .lines{display:block;height:21mm;border:1px solid #c9d6cc;border-radius:4px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 7mm,#dbe7dd 7mm,#dbe7dd calc(7mm + 1px));-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .after{break-before:page;margin-top:0}
   .after + .after{break-before:auto;margin-top:26px}
@@ -179,15 +199,16 @@ h2 .hl{color:var(--honey)}
   .idea{padding:6px 0;break-inside:avoid;border-bottom:1px solid #e3ebe5}
   .idea .t{font-size:10.5pt}
   .idea .d{font-size:9.5pt}
-  .internal{break-before:page;margin-top:0;border-top:0;padding-top:0}
-  .internal h2{font-size:15pt;color:#1F3D28}
-  .internal td,.internal th{font-size:10pt}
-  .decisions{margin-top:24px;break-inside:avoid}
-  .decisions h2{font-size:15pt;color:#1F3D28}
-  .decisions .lines{height:60mm}
+  .planprint{display:block;break-before:page}
+  .planprint h2{font-size:18pt;color:#1F3D28}
+  .planprint .gl{font-size:9.5pt;letter-spacing:.14em;text-transform:uppercase;color:#50795F;font-weight:600;margin:12px 0 4px}
+  .planprint ul{list-style:none;margin:0;padding:0}
+  .planprint li{padding:4px 0;border-bottom:1px solid #e3ebe5;font-size:10.5pt}
+  .planprint .pn{white-space:pre-wrap;font-size:10.5pt;margin-top:6px}
+  .planprint .empty{font-size:10.5pt;color:#50795F}
   a{color:inherit;text-decoration:none}
   body.print-one .day:not(.on){display:none !important}
-  body.print-one .after,body.print-one .internal,body.print-one .decisions{display:none !important}
+  body.print-one .after,body.print-one .planprint{display:none !important}
 }
 </style>
 </head>
@@ -198,7 +219,7 @@ h2 .hl{color:var(--honey)}
   <div class="inner">
     <div class="kicker">Barrel Sauna UK</div>
     <h1>Content <span>Plan</span></h1>
-    <p class="lede">Four filming days with Tim, then everything else we've talked about. Tick shots off as they're done and jot notes at the foot of each day.</p>
+    <p class="lede">Four filming days with Tim, then everything else we've talked about. Tick anything you want in the plan and it lands in the panel. One button sends it to Nikki.</p>
   </div>
 </header>
 
@@ -274,13 +295,7 @@ h2 .hl{color:var(--honey)}
         <li class="ck" data-id="d1-ws-google-verify"><label><input type="checkbox"><span class="bx"></span><span class="tx">Google Business verification: sign, keys, walk round the workshop</span></label></li>
       </ul></div>
 
-      <div class="notesblock" data-note="notes-day1">
-        <div class="nl">Notes on the day</div>
-        <textarea placeholder="Anything that came up, changed, or still needs doing"></textarea>
-        <div class="notesprint"></div>
-        <div class="lines"></div>
-        <div class="row"><button class="sendbtn" type="button">Send notes to Nikki</button><span class="st"></span></div>
-      </div>
+      <div class="notes"><div class="nl">Notes</div><div class="lines"></div></div>
     </div>
 
     <!-- DAY 2 -->
@@ -309,13 +324,7 @@ h2 .hl{color:var(--honey)}
         <li class="ck" data-id="d2-reviews"><label><input type="checkbox"><span class="bx"></span><span class="tx">Reviews and photos to take away</span></label></li>
       </ul></div>
 
-      <div class="notesblock" data-note="notes-day2">
-        <div class="nl">Notes on the day</div>
-        <textarea placeholder="Anything that came up, changed, or still needs doing"></textarea>
-        <div class="notesprint"></div>
-        <div class="lines"></div>
-        <div class="row"><button class="sendbtn" type="button">Send notes to Nikki</button><span class="st"></span></div>
-      </div>
+      <div class="notes"><div class="nl">Notes</div><div class="lines"></div></div>
     </div>
 
     <!-- DAY 3 -->
@@ -341,13 +350,7 @@ h2 .hl{color:var(--honey)}
         <li class="ck" data-id="d3-installer-shotlist"><label><input type="checkbox"><span class="bx"></span><span class="tx">Run the installer shot list: unload, taking shape, a nail going in, walk up, 360, open the door</span></label></li>
       </ul></div>
 
-      <div class="notesblock" data-note="notes-day3">
-        <div class="nl">Notes on the day</div>
-        <textarea placeholder="Anything that came up, changed, or still needs doing"></textarea>
-        <div class="notesprint"></div>
-        <div class="lines"></div>
-        <div class="row"><button class="sendbtn" type="button">Send notes to Nikki</button><span class="st"></span></div>
-      </div>
+      <div class="notes"><div class="nl">Notes</div><div class="lines"></div></div>
     </div>
 
     <!-- DAY 4 -->
@@ -374,13 +377,7 @@ h2 .hl{color:var(--honey)}
         <li class="ck" data-id="d4-beat-7"><label><input type="checkbox"><span class="bx"></span><span class="tx">Drone pulls up over the Welsh countryside, fades, the Barrel Sauna UK logo over it</span></label></li>
       </ol></div>
 
-      <div class="notesblock" data-note="notes-day4">
-        <div class="nl">Notes on the day</div>
-        <textarea placeholder="Anything that came up, changed, or still needs doing"></textarea>
-        <div class="notesprint"></div>
-        <div class="lines"></div>
-        <div class="row"><button class="sendbtn" type="button">Send notes to Nikki</button><span class="st"></span></div>
-      </div>
+      <div class="notes"><div class="nl">Notes</div><div class="lines"></div></div>
     </div>
   </section>
 
@@ -501,37 +498,35 @@ h2 .hl{color:var(--honey)}
     </div>
   </section>
 
-  <section class="internal">
-    <h2>Internal videos, <span class="hl">not for socials</span></h2>
-    <p class="intro">These came up too but are team training, so they stay off the videographer's list.</p>
-    <table>
-      <thead><tr><th>Video</th><th>For</th><th>Raised</th></tr></thead>
-      <tbody>
-        <tr><td>Loom walkthroughs in the GHL manual</td><td>John, AMP, the office</td><td>17 Sep</td></tr>
-        <tr><td>Recorded onboarding sessions for new sellers</td><td>New closers</td><td>8 Sep, 6 Aug</td></tr>
-        <tr><td>Loom onboarding for AMP</td><td>AMP call centre</td><td>4 Aug, 15 Jun</td></tr>
-        <tr><td>Live call examples, e.g. Stefano's same day deposit</td><td>Closer's guide</td><td>6 Aug, 15 Jul</td></tr>
-        <tr><td>Saving the estimate site to a phone home screen</td><td>Sellers</td><td>15 Jul</td></tr>
-      </tbody>
-    </table>
+
+
+  <section class="planprint" id="planprint">
+    <h2>Your <span class="hl">plan</span></h2>
+    <div id="planprint-body"></div>
   </section>
 
-  <section class="decisions" data-title="Decisions">
-    <h2>Decisions</h2>
-    <p class="intro">What gets agreed, with Jake or between us, so it's in one place.</p>
-    <div class="notesblock" data-note="notes-decisions">
-      <div class="nl">Decisions made</div>
-      <textarea placeholder="What was decided, by whom, and when"></textarea>
-      <div class="notesprint"></div>
-      <div class="lines"></div>
-      <div class="row"><button class="sendbtn" type="button">Send to Nikki</button><span class="st"></span></div>
-    </div>
-  </section>
-
-  <p class="vers">Content plan v7, 29 September 2026. Every idea from 61 calls (12 June to 21 September) plus the new ones from 28 September.</p>
-  <p class="savestate" id="savestate"></p>
+  <p class="vers">Content plan v8, 29 September 2026. Every idea from 61 calls (12 June to 21 September) plus the new ones from 28 September.</p>
 
 </main>
+
+<aside class="plan" id="plan">
+  <div class="ph" id="plan-toggle">
+    <div><div class="k">Your plan</div><div class="n" id="plan-count">Nothing ticked yet</div></div>
+    <div class="chev"></div>
+  </div>
+  <div class="pb">
+    <div id="plan-list"></div>
+    <div>
+      <div class="nl">Notes for the meeting</div>
+      <textarea id="plan-notes" placeholder="What came up, what changed, what still needs deciding"></textarea>
+    </div>
+  </div>
+  <div class="pf">
+    <button class="sendbtn" type="button" id="plan-send">Email to Nikki</button>
+    <div class="st" id="plan-status"></div>
+    <div class="save" id="savestate"></div>
+  </div>
+</aside>
 
 <script>
 (function(){
@@ -541,6 +536,7 @@ h2 .hl{color:var(--honey)}
 
   var KEY_T = 'bsuk-content-plan-ticks';
   var KEY_N = 'bsuk-content-plan-notes';
+  var NOTE_ID = 'notes-plan';
   var ticks = {}, notes = {};
   try { ticks = JSON.parse(localStorage.getItem(KEY_T) || '{}') || {}; } catch (e) { ticks = {}; }
   try { notes = JSON.parse(localStorage.getItem(KEY_N) || '{}') || {}; } catch (e) { notes = {}; }
@@ -568,7 +564,7 @@ h2 .hl{color:var(--honey)}
     window.matchMedia('print').addEventListener('change', function(m){ if (!m.matches) { document.body.classList.remove('print-one'); } });
   }
 
-  /* storage helpers */
+  /* storage */
   function saveLocal(){
     try { localStorage.setItem(KEY_T, JSON.stringify(ticks)); } catch (e) {}
     try { localStorage.setItem(KEY_N, JSON.stringify(notes)); } catch (e) {}
@@ -579,14 +575,56 @@ h2 .hl{color:var(--honey)}
       .then(function(){ return true; }).catch(function(){ return false; });
   }
 
+  /* where an item lives, for grouping */
+  function groupOf(li){
+    var day = li.closest('.day');
+    if (day) return day.getAttribute('data-title') || day.id;
+    var sec = li.closest('section');
+    if (sec) { var h = sec.querySelector('h2'); return h ? h.textContent.replace(/\s+/g,' ').trim() : 'Other'; }
+    return 'Other';
+  }
+  function labelOf(li){
+    var el = li.querySelector('.t') || li.querySelector('.tx');
+    var clone = el.cloneNode(true);
+    clone.querySelectorAll('.new').forEach(function(n){ n.remove(); });
+    return clone.textContent.replace(/\s+/g,' ').trim();
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
   /* ticks */
-  function updateCounts(){
+  function collect(){
+    var groups = [], map = {};
+    document.querySelectorAll('.ck.done').forEach(function(li){
+      var g = groupOf(li);
+      if (!map[g]) { map[g] = { name: g, items: [] }; groups.push(map[g]); }
+      map[g].items.push({ id: li.getAttribute('data-id'), label: labelOf(li) });
+    });
+    return groups;
+  }
+  function renderPlan(){
+    var groups = collect();
+    var total = groups.reduce(function(n,g){ return n + g.items.length; }, 0);
+    document.getElementById('plan-count').textContent = total ? (total + ' ticked') : 'Nothing ticked yet';
+    var list = document.getElementById('plan-list');
+    if (!total) {
+      list.innerHTML = '<div class="empty">Tick anything on the page and it lands here.</div>';
+    } else {
+      list.innerHTML = groups.map(function(g){
+        return '<div class="pg"><div class="gl">' + esc(g.name) + '</div><ul>' + g.items.map(function(it){
+          return '<li><span>' + esc(it.label) + '</span><button type="button" data-untick="' + esc(it.id) + '" title="Remove">\u00d7</button></li>';
+        }).join('') + '</ul></div>';
+      }).join('');
+    }
+    /* print page */
+    var pp = document.getElementById('planprint-body');
+    var noteText = notes[NOTE_ID] || '';
+    pp.innerHTML = (total ? groups.map(function(g){
+      return '<div class="gl">' + esc(g.name) + '</div><ul>' + g.items.map(function(it){ return '<li>' + esc(it.label) + '</li>'; }).join('') + '</ul>';
+    }).join('') : '<div class="empty">Nothing ticked yet.</div>') + '<div class="gl">Notes</div><div class="pn">' + (noteText ? esc(noteText) : '<span class="empty">None yet.</span>') + '</div>';
     document.querySelectorAll('.count').forEach(function(c){
       var day = document.getElementById(c.getAttribute('data-count-for'));
       if (!day) return;
-      var all = day.querySelectorAll('.ck').length;
-      var done = day.querySelectorAll('.ck.done').length;
-      c.textContent = done + ' of ' + all + ' shots ticked';
+      c.textContent = day.querySelectorAll('.ck.done').length + ' of ' + day.querySelectorAll('.ck').length + ' shots ticked';
     });
   }
   function applyTicks(){
@@ -596,97 +634,78 @@ h2 .hl{color:var(--honey)}
       var inp = li.querySelector('input');
       if (inp) inp.checked = on;
     });
-    updateCounts();
+    renderPlan();
+  }
+  function setTick(id, on){
+    if (on) { ticks[id] = 1; } else { delete ticks[id]; }
+    saveLocal();
+    applyTicks();
+    post({ type: 'tick', id: id, checked: on ? 1 : 0 });
   }
   document.querySelectorAll('.ck input').forEach(function(inp){
-    inp.addEventListener('change', function(){
-      var id = inp.closest('.ck').getAttribute('data-id');
-      if (inp.checked) { ticks[id] = 1; } else { delete ticks[id]; }
-      saveLocal();
-      applyTicks();
-      post({ type: 'tick', id: id, checked: inp.checked ? 1 : 0 });
-    });
+    inp.addEventListener('change', function(){ setTick(inp.closest('.ck').getAttribute('data-id'), inp.checked); });
+  });
+  document.getElementById('plan-list').addEventListener('click', function(ev){
+    var b = ev.target.closest('button[data-untick]');
+    if (b) setTick(b.getAttribute('data-untick'), false);
   });
 
   /* notes */
-  function applyNotes(){
-    document.querySelectorAll('.notesblock').forEach(function(nb){
-      var id = nb.getAttribute('data-note');
-      var ta = nb.querySelector('textarea');
-      var pr = nb.querySelector('.notesprint');
-      var val = notes[id] || '';
-      if (ta && ta.value !== val) ta.value = val;
-      if (pr) pr.textContent = val;
-    });
-  }
-  var timers = {};
-  document.querySelectorAll('.notesblock').forEach(function(nb){
-    var id = nb.getAttribute('data-note');
-    var ta = nb.querySelector('textarea');
-    var pr = nb.querySelector('.notesprint');
-    var st = nb.querySelector('.st');
-    var btn = nb.querySelector('.sendbtn');
-    if (ta) {
-      ta.addEventListener('input', function(){
-        notes[id] = ta.value;
-        if (pr) pr.textContent = ta.value;
-        saveLocal();
-        if (st) st.textContent = 'Saving';
-        clearTimeout(timers[id]);
-        timers[id] = setTimeout(function(){
-          post({ type: 'note', id: id, text: ta.value }).then(function(ok){
-            if (st) st.textContent = ok ? 'Saved' : 'Saved on this device';
-          });
-        }, 900);
-      });
-    }
-    if (btn) {
-      btn.addEventListener('click', function(){
-        var scope = nb.closest('.day') || nb.closest('section');
-        var title = scope ? (scope.getAttribute('data-title') || 'Content plan') : 'Content plan';
-        var ticked = [], open = [];
-        if (scope) {
-          scope.querySelectorAll('.ck').forEach(function(li){
-            var label = (li.querySelector('.t') || li.querySelector('.tx')).textContent.replace(/\s+/g, ' ').trim();
-            (li.classList.contains('done') ? ticked : open).push(label);
-          });
-        }
-        var text = (ta && ta.value) ? ta.value : '';
-        if (!text && !ticked.length) { if (st) st.textContent = 'Nothing to send yet'; return; }
-        if (SHEET_URL) {
-          btn.disabled = true;
-          if (st) st.textContent = 'Sending';
-          post({ type: 'send', id: id, title: title, notes: text, ticked: ticked, open: open, to: NOTIFY_EMAIL })
-            .then(function(ok){
-              btn.disabled = false;
-              if (st) st.textContent = ok ? 'Sent to Nikki' : 'Could not send. Try again in a moment';
-            });
-        } else {
-          var body = title + '\n\nNotes:\n' + (text || '(none)') + '\n\nTicked (' + ticked.length + '):\n' + (ticked.length ? '- ' + ticked.join('\n- ') : '(none)') + '\n\nNot yet ticked (' + open.length + '):\n' + (open.length ? '- ' + open.join('\n- ') : '(none)');
-          window.location.href = 'mailto:' + NOTIFY_EMAIL + '?subject=' + encodeURIComponent('BSUK content plan: ' + title) + '&body=' + encodeURIComponent(body);
-          if (st) st.textContent = 'Opened in your email app';
-        }
-      });
+  var ta = document.getElementById('plan-notes');
+  var status = document.getElementById('plan-status');
+  var timer = null;
+  function applyNotes(){ var v = notes[NOTE_ID] || ''; if (ta.value !== v) ta.value = v; }
+  ta.addEventListener('input', function(){
+    notes[NOTE_ID] = ta.value;
+    saveLocal();
+    renderPlan();
+    status.textContent = 'Saving';
+    clearTimeout(timer);
+    timer = setTimeout(function(){
+      post({ type: 'note', id: NOTE_ID, text: ta.value }).then(function(ok){ status.textContent = ok ? 'Saved' : 'Saved on this device'; });
+    }, 900);
+  });
+
+  /* panel open/close on phones */
+  var plan = document.getElementById('plan');
+  document.getElementById('plan-toggle').addEventListener('click', function(){
+    if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) return;
+    plan.classList.toggle('open');
+  });
+
+  /* email */
+  var sendBtn = document.getElementById('plan-send');
+  sendBtn.addEventListener('click', function(){
+    var groups = collect();
+    var lines = [];
+    groups.forEach(function(g){ g.items.forEach(function(it){ lines.push(g.name + ': ' + it.label); }); });
+    var text = ta.value || '';
+    if (!lines.length && !text) { status.textContent = 'Nothing to send yet'; return; }
+    if (SHEET_URL) {
+      sendBtn.disabled = true;
+      status.textContent = 'Sending';
+      post({ type: 'send', id: NOTE_ID, title: 'Content plan', notes: text, ticked: lines, open: [], to: NOTIFY_EMAIL })
+        .then(function(ok){ sendBtn.disabled = false; status.textContent = ok ? 'Sent to Nikki' : 'Could not send. Try again in a moment'; });
+    } else {
+      var body = 'Content plan\n\nNotes:\n' + (text || '(none)') + '\n\nTicked (' + lines.length + '):\n' + (lines.length ? '- ' + lines.join('\n- ') : '(none)');
+      window.location.href = 'mailto:' + NOTIFY_EMAIL + '?subject=' + encodeURIComponent('BSUK content plan') + '&body=' + encodeURIComponent(body);
+      status.textContent = 'Opened in your email app';
     }
   });
 
   /* load from the shared sheet */
   function loadRemote(){
     var st = document.getElementById('savestate');
-    if (!SHEET_URL) { st.textContent = 'Ticks and notes save on this device only until the shared sheet is linked.'; return; }
+    if (!SHEET_URL) { st.textContent = 'Saving on this device only until the shared sheet is linked.'; return; }
     fetch(SHEET_URL + '?t=' + Date.now(), { method: 'GET' })
       .then(function(r){ return r.json(); })
       .then(function(data){
         data = data || {};
         var t = data.ticks || {}, n = data.notes || {};
-        ticks = {};
-        Object.keys(t).forEach(function(k){ if (t[k]) ticks[k] = 1; });
-        notes = {};
-        Object.keys(n).forEach(function(k){ if (n[k]) notes[k] = String(n[k]); });
-        saveLocal();
-        applyTicks();
-        applyNotes();
-        st.textContent = 'Ticks and notes are shared. Anyone with the link sees the same list.';
+        ticks = {}; Object.keys(t).forEach(function(k){ if (t[k]) ticks[k] = 1; });
+        notes = {}; Object.keys(n).forEach(function(k){ if (n[k]) notes[k] = String(n[k]); });
+        saveLocal(); applyTicks(); applyNotes();
+        st.textContent = 'Shared. Anyone with the link sees the same plan.';
       })
       .catch(function(){ st.textContent = 'Could not reach the shared sheet just now. Showing what is saved on this device.'; });
   }
