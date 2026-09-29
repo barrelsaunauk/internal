@@ -92,6 +92,27 @@ h2 .hl{color:var(--honey)}
 .ck .tx{flex:1 1 auto}
 .ck.done .tx{color:var(--muted)}
 .ck label:hover .bx{border-color:var(--forest-deep)}
+/* per shot scripts */
+.ck{display:flex;flex-wrap:wrap;align-items:flex-start;gap:6px 10px}
+.ck label{flex:1 1 auto;min-width:0}
+.scrbtn{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:3px 10px;font:inherit;font-size:11.5px;font-weight:600;letter-spacing:.04em;cursor:pointer;line-height:1.3;margin-top:2px}
+.scrbtn:hover{border-color:var(--forest-deep);color:var(--ink)}
+.ck.has-script .scrbtn{background:var(--forest-deep);border-color:var(--forest-deep);color:#fff}
+.scrview{flex:1 1 100%;display:none;margin:0 0 2px 32px;padding:8px 12px;border-left:3px solid var(--honey);background:var(--panel);border-radius:0 10px 10px 0;font-size:13.5px;line-height:1.55;color:var(--ink);white-space:pre-wrap}
+.ck.has-script .scrview{display:block}
+.scredit{flex:1 1 100%;display:none;margin:0 0 4px 32px}
+.ck.editing .scredit{display:block}
+.ck.editing .scrview{display:none}
+.scredit textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px;line-height:1.5;padding:10px 12px;outline:none}
+.scredit textarea:focus{border-color:var(--forest-deep)}
+.scrrow{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.scrsave{border:0;background:var(--forest-deep);color:#fff;border-radius:999px;padding:8px 16px;font:inherit;font-weight:600;font-size:13px;cursor:pointer;line-height:1.2}
+.scrcancel{border:0;background:none;color:var(--muted);font:inherit;font-size:13px;cursor:pointer;padding:8px 4px}
+.scrst{font-size:12px;color:var(--muted)}
+.plan .sc .gl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:8px 0 4px}
+.plan .sc ul{list-style:none;margin:0;padding:0}
+.plan .sc li{padding:6px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.45;cursor:pointer}
+.plan .sc li:hover{color:var(--honey)}
 
 /* print-only ruled notes on day sheets */
 .notes{display:none}
@@ -196,6 +217,10 @@ h2 .hl{color:var(--honey)}
   .ck.done .bx{background:#fff;border-color:#16261C}
   .ck.done .bx::after{left:3px;top:0;width:3px;height:6px;border-color:#16261C;border-width:0 1.5px 1.5px 0}
   .ck.done .tx,.idea.done .t{color:#16261C}
+  .scrbtn,.scredit{display:none !important}
+  .ck{display:block}
+  .scrview{display:none;margin:3px 0 2px 20px;padding:4px 10px;border-left:2px solid #C08B41;background:#fff;border-radius:0;font-size:9.5pt;line-height:1.45;color:#16261C;white-space:pre-wrap;break-inside:avoid}
+  .ck.has-script .scrview{display:block}
   .new{font-size:8.5pt}
   .notes{display:block;margin-top:8px;break-inside:avoid}
   .notes .nl{font-size:9pt;letter-spacing:.16em;text-transform:uppercase;color:#50795F;font-weight:600;margin-bottom:3px}
@@ -519,7 +544,7 @@ h2 .hl{color:var(--honey)}
     <div id="planprint-body"></div>
   </section>
 
-  <p class="vers">Content plan v11, 29 September 2026. Every idea from 61 calls (12 June to 21 September) plus the new ones from 28 September.</p>
+  <p class="vers">Content plan v12, 29 September 2026. Every idea from 61 calls (12 June to 21 September) plus the new ones from 28 September.</p>
 
 </main>
 
@@ -534,6 +559,10 @@ h2 .hl{color:var(--honey)}
       <textarea id="plan-notes" placeholder="Type a note, then press Save note. One note per point, as many as you like."></textarea>
       <div class="nrow"><button class="savebtn" type="button" id="plan-save">Save note</button><span class="nst" id="plan-nst"></span></div>
       <div class="notelist" id="plan-notelist"></div>
+    </div>
+    <div>
+      <div class="nl">Scripts</div>
+      <div id="plan-scripts" class="sc"></div>
     </div>
     <div>
       <div class="nl">In the plan</div>
@@ -621,7 +650,7 @@ h2 .hl{color:var(--honey)}
     return groups;
   }
   function noteList(){
-    return Object.keys(notes).filter(function(k){ return notes[k] && String(notes[k]).trim(); })
+    return Object.keys(notes).filter(function(k){ return k.indexOf('script-') !== 0 && notes[k] && String(notes[k]).trim(); })
       .sort().map(function(k){ return { id: k, text: String(notes[k]), time: noteTime(k) }; });
   }
   function noteTime(id){
@@ -654,6 +683,7 @@ h2 .hl{color:var(--honey)}
       }).join('');
     }
     renderNotes();
+    renderScripts();
     /* print page */
     var pp = document.getElementById('planprint-body');
     pp.innerHTML = '<div class="gl">Notes</div>' + (nl.length ? nl.map(function(n){ return '<div class="pt">' + esc(n.time || 'Saved note') + '</div><div class="pn">' + esc(n.text) + '</div>'; }).join('') : '<div class="empty">None yet.</div>')
@@ -689,6 +719,59 @@ h2 .hl{color:var(--honey)}
     if (b) setTick(b.getAttribute('data-untick'), false);
   });
 
+  /* per shot scripts */
+  function scriptOf(id){ var v = notes['script-' + id]; return v ? String(v) : ''; }
+  function scriptList(){
+    var out = [];
+    document.querySelectorAll('.ck').forEach(function(li){
+      var id = li.getAttribute('data-id'); var t = scriptOf(id);
+      if (t.trim()) out.push({ id: id, group: groupOf(li), label: labelOf(li), text: t });
+    });
+    return out;
+  }
+  document.querySelectorAll('.ck').forEach(function(li){
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'scrbtn'; b.textContent = 'Script';
+    var v = document.createElement('div'); v.className = 'scrview';
+    var e = document.createElement('div'); e.className = 'scredit';
+    e.innerHTML = '<textarea placeholder="The final script or note for this shot"></textarea><div class="scrrow"><button type="button" class="scrsave">Save</button><button type="button" class="scrcancel">Cancel</button><span class="scrst"></span></div>';
+    li.appendChild(b); li.appendChild(v); li.appendChild(e);
+    var ta2 = e.querySelector('textarea'), st2 = e.querySelector('.scrst');
+    b.addEventListener('click', function(){ ta2.value = scriptOf(li.getAttribute('data-id')); li.classList.add('editing'); ta2.focus(); });
+    e.querySelector('.scrcancel').addEventListener('click', function(){ li.classList.remove('editing'); });
+    e.querySelector('.scrsave').addEventListener('click', function(){
+      var id = li.getAttribute('data-id'); var text = ta2.value.trim();
+      if (text) { notes['script-' + id] = text; } else { delete notes['script-' + id]; }
+      saveLocal(); li.classList.remove('editing'); applyScripts(); renderPlan();
+      st2.textContent = 'Saving';
+      post({ type: 'note', id: 'script-' + id, text: text }).then(function(ok){ st2.textContent = ok ? 'Saved' : 'Saved on this device'; });
+    });
+  });
+  function applyScripts(){
+    document.querySelectorAll('.ck').forEach(function(li){
+      var t = scriptOf(li.getAttribute('data-id'));
+      li.classList.toggle('has-script', !!t.trim());
+      li.querySelector('.scrview').textContent = t;
+      li.querySelector('.scrbtn').textContent = t.trim() ? 'Edit script' : 'Script';
+    });
+  }
+  function renderScripts(){
+    var list = scriptList();
+    var el = document.getElementById('plan-scripts');
+    if (!list.length) { el.innerHTML = '<div class="empty">No scripts yet. Press Script on any shot to add one.</div>'; return; }
+    var groups = [], map = {};
+    list.forEach(function(sc){ if (!map[sc.group]) { map[sc.group] = { name: sc.group, items: [] }; groups.push(map[sc.group]); } map[sc.group].items.push(sc); });
+    el.innerHTML = groups.map(function(g){
+      return '<div class="pg"><div class="gl">' + esc(g.name) + '</div><ul>' + g.items.map(function(sc){ return '<li data-jump="' + esc(sc.id) + '">' + esc(sc.label) + '</li>'; }).join('') + '</ul></div>';
+    }).join('');
+  }
+  document.getElementById('plan-scripts').addEventListener('click', function(ev){
+    var li = ev.target.closest('li[data-jump]'); if (!li) return;
+    var target = document.querySelector('.ck[data-id="' + li.getAttribute('data-jump') + '"]'); if (!target) return;
+    var day = target.closest('.day'); if (day) showDay(day.id);
+    if (window.matchMedia && !window.matchMedia('(min-width:1100px)').matches) plan.classList.remove('open');
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
   /* notes */
   var ta = document.getElementById('plan-notes');
   var status = document.getElementById('plan-status');
@@ -696,7 +779,7 @@ h2 .hl{color:var(--honey)}
   var saveBtn = document.getElementById('plan-save');
   try { ta.value = localStorage.getItem(KEY_D) || ''; } catch (e) {}
   ta.addEventListener('input', function(){ try { localStorage.setItem(KEY_D, ta.value); } catch (e) {} nst.textContent = ''; });
-  function applyNotes(){ renderNotes(); }
+  function applyNotes(){ renderNotes(); applyScripts(); renderPlan(); }
   saveBtn.addEventListener('click', function(){
     var text = ta.value.trim();
     if (!text) { nst.textContent = 'Type something first'; return; }
@@ -734,14 +817,15 @@ h2 .hl{color:var(--honey)}
     groups.forEach(function(g){ g.items.forEach(function(it){ lines.push(g.name + ': ' + it.label); }); });
     var nl = noteList();
     var text = nl.map(function(n){ return (n.time ? n.time + '\n' : '') + n.text; }).join('\n\n');
-    if (!lines.length && !text) { status.textContent = 'Nothing to send yet'; return; }
+    if (!lines.length && !text && !scriptList().length) { status.textContent = 'Nothing to send yet'; return; }
     if (SHEET_URL) {
       sendBtn.disabled = true;
       status.textContent = 'Sending';
-      post({ type: 'send', id: 'plan', title: 'Content plan', notes: text, ticked: lines, open: [], to: NOTIFY_EMAIL, noteList: nl.map(function(n){ return { time: n.time, text: n.text }; }), groups: groups.map(function(g){ return { name: g.name, items: g.items.map(function(it){ return it.label; }) }; }) })
+      post({ type: 'send', id: 'plan', title: 'Content plan', notes: text, ticked: lines, open: [], to: NOTIFY_EMAIL, noteList: nl.map(function(n){ return { time: n.time, text: n.text }; }), groups: groups.map(function(g){ return { name: g.name, items: g.items.map(function(it){ return { label: it.label, script: scriptOf(it.id) }; }) }; }), scripts: scriptList().map(function(sc){ return { group: sc.group, label: sc.label, text: sc.text }; }) })
         .then(function(ok){ sendBtn.disabled = false; status.textContent = ok ? 'Sent to Nikki' : 'Could not send. Try again in a moment'; });
     } else {
-      var body = 'Content plan\n\nNotes:\n' + (text || '(none)') + '\n\nIn the plan (' + lines.length + '):\n' + (lines.length ? '- ' + lines.join('\n- ') : '(none)');
+      var scl = scriptList();
+      var body = 'Content plan\n\nNotes:\n' + (text || '(none)') + '\n\nIn the plan (' + lines.length + '):\n' + (lines.length ? '- ' + lines.join('\n- ') : '(none)') + '\n\nScripts (' + scl.length + '):\n' + (scl.length ? scl.map(function(sc){ return sc.group + ': ' + sc.label + '\n' + sc.text; }).join('\n\n') : '(none)');
       window.location.href = 'mailto:' + NOTIFY_EMAIL + '?subject=' + encodeURIComponent('BSUK content plan') + '&body=' + encodeURIComponent(body);
       status.textContent = 'Opened in your email app';
     }
