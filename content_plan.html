@@ -97,40 +97,53 @@ h2 .hl{color:var(--honey)}
 .notes{display:none}
 
 /* the plan panel */
+:root{--panelw:clamp(340px,33vw,680px)}
 .plan{position:fixed;z-index:50;background:var(--surface);color:var(--ink);box-shadow:0 -2px 18px rgba(22,38,28,.14);display:flex;flex-direction:column;font-size:14px}
-.plan .ph{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);cursor:pointer;flex:0 0 auto}
+.plan .ph{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 20px;border-bottom:1px solid var(--line);cursor:pointer;flex:0 0 auto}
 .plan .ph .k{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--honey);font-weight:600}
 .plan .ph .n{font-size:13px;color:var(--muted);font-weight:600}
 .plan .ph .chev{width:10px;height:10px;border:solid var(--muted);border-width:0 2px 2px 0;transform:rotate(-135deg);transition:transform .2s;margin-right:4px}
-.plan .pb{overflow:auto;padding:12px 18px 16px;flex:1 1 auto;display:flex;flex-direction:column;gap:14px}
-.plan .empty{color:var(--muted);font-size:13.5px;padding:6px 0}
-.plan .pg .gl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:6px 0 4px}
+.plan .pb{overflow:auto;padding:16px 20px 18px;flex:1 1 auto;display:flex;flex-direction:column;gap:22px}
+.plan .nl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 8px}
+.plan textarea{width:100%;min-height:170px;resize:vertical;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);font:inherit;font-size:14.5px;line-height:1.55;padding:12px 14px;outline:none}
+.plan textarea:focus{border-color:var(--forest-deep)}
+.plan .nrow{display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap}
+.savebtn{border:0;background:var(--forest-deep);color:#fff;border-radius:999px;padding:10px 18px;font:inherit;font-weight:600;font-size:13.5px;cursor:pointer;line-height:1.2}
+.savebtn:hover{filter:brightness(1.1)}
+.savebtn:disabled{opacity:.5;cursor:default}
+.plan .nst{font-size:12px;color:var(--muted)}
+.notelist{display:grid;gap:10px;margin-top:14px}
+.note{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);position:relative}
+.note .nt{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--honey);font-weight:600;margin-bottom:4px;padding-right:24px}
+.note .nx{white-space:pre-wrap;font-size:14px;line-height:1.5}
+.note button{position:absolute;top:8px;right:10px;border:0;background:none;color:var(--muted);font:inherit;font-size:18px;line-height:1;cursor:pointer;padding:2px 4px}
+.note button:hover{color:var(--ink)}
+.plan .empty{color:var(--muted);font-size:13.5px;padding:4px 0}
+.plan .pg .gl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:8px 0 4px}
 .plan .pg ul{list-style:none;margin:0;padding:0}
 .plan .pg li{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.45}
 .plan .pg li span{flex:1 1 auto}
 .plan .pg li button{flex:0 0 auto;border:0;background:none;color:var(--muted);font:inherit;font-size:16px;line-height:1;cursor:pointer;padding:0 2px;margin-top:1px}
 .plan .pg li button:hover{color:var(--ink)}
-.plan .nl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:4px 0 6px}
-.plan textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font:inherit;font-size:13.5px;line-height:1.5;padding:10px 12px;outline:none}
-.plan textarea:focus{border-color:var(--forest-deep)}
-.plan .pf{padding:12px 18px 14px;border-top:1px solid var(--line);flex:0 0 auto;display:grid;gap:6px}
+.plan .pf{padding:12px 20px 14px;border-top:1px solid var(--line);flex:0 0 auto;display:grid;gap:6px}
 .sendbtn{border:0;background:var(--honey);color:#fff;border-radius:999px;padding:12px 18px;font:inherit;font-weight:600;font-size:14px;cursor:pointer;line-height:1.2;width:100%}
 .sendbtn:hover{filter:brightness(.95)}
 .sendbtn:disabled{opacity:.6;cursor:default}
 .plan .st{font-size:12px;color:var(--muted);min-height:1.2em}
 .plan .save{font-size:11.5px;color:var(--muted)}
 @media (min-width:1100px){
-  body{padding-right:356px}
-  .plan{top:16px;right:16px;bottom:16px;width:320px;border-radius:16px;border:1px solid var(--line)}
+  body{padding-right:calc(var(--panelw) + 32px)}
+  .plan{top:16px;right:16px;bottom:16px;width:var(--panelw);border-radius:16px;border:1px solid var(--line)}
   .plan .ph{cursor:default}
   .plan .ph .chev{display:none}
 }
 @media (max-width:1099px){
   body{padding-bottom:96px}
   .plan{left:0;right:0;bottom:0;border-radius:16px 16px 0 0;max-height:56px;transition:max-height .25s}
-  .plan.open{max-height:78vh}
+  .plan.open{max-height:82vh}
   .plan.open .ph .chev{transform:rotate(45deg)}
   .plan:not(.open) .pb,.plan:not(.open) .pf{display:none}
+  .plan textarea{min-height:120px}
 }
 
 /* print-only plan page */
@@ -204,7 +217,8 @@ h2 .hl{color:var(--honey)}
   .planprint .gl{font-size:9.5pt;letter-spacing:.14em;text-transform:uppercase;color:#50795F;font-weight:600;margin:12px 0 4px}
   .planprint ul{list-style:none;margin:0;padding:0}
   .planprint li{padding:4px 0;border-bottom:1px solid #e3ebe5;font-size:10.5pt}
-  .planprint .pn{white-space:pre-wrap;font-size:10.5pt;margin-top:6px}
+  .planprint .pn{white-space:pre-wrap;font-size:10.5pt;margin:4px 0 10px}
+  .planprint .pt{font-size:9pt;letter-spacing:.08em;text-transform:uppercase;color:#C08B41;font-weight:600;margin-top:8px}
   .planprint .empty{font-size:10.5pt;color:#50795F}
   a{color:inherit;text-decoration:none}
   body.print-one .day:not(.on){display:none !important}
@@ -505,7 +519,7 @@ h2 .hl{color:var(--honey)}
     <div id="planprint-body"></div>
   </section>
 
-  <p class="vers">Content plan v9, 29 September 2026. Every idea from 61 calls (12 June to 21 September) plus the new ones from 28 September.</p>
+  <p class="vers">Content plan v10, 29 September 2026. Every idea from 61 calls (12 June to 21 September) plus the new ones from 28 September.</p>
 
 </main>
 
@@ -515,10 +529,15 @@ h2 .hl{color:var(--honey)}
     <div class="chev"></div>
   </div>
   <div class="pb">
-    <div id="plan-list"></div>
     <div>
-      <div class="nl">Notes for the meeting</div>
-      <textarea id="plan-notes" placeholder="What came up, what changed, what still needs deciding"></textarea>
+      <div class="nl">Notes</div>
+      <textarea id="plan-notes" placeholder="Type a note, then press Save note. One note per point, as many as you like."></textarea>
+      <div class="nrow"><button class="savebtn" type="button" id="plan-save">Save note</button><span class="nst" id="plan-nst"></span></div>
+      <div class="notelist" id="plan-notelist"></div>
+    </div>
+    <div>
+      <div class="nl">In the plan</div>
+      <div id="plan-list"></div>
     </div>
   </div>
   <div class="pf">
@@ -536,7 +555,7 @@ h2 .hl{color:var(--honey)}
 
   var KEY_T = 'bsuk-content-plan-ticks';
   var KEY_N = 'bsuk-content-plan-notes';
-  var NOTE_ID = 'notes-plan';
+  var KEY_D = 'bsuk-content-plan-draft';
   var ticks = {}, notes = {};
   try { ticks = JSON.parse(localStorage.getItem(KEY_T) || '{}') || {}; } catch (e) { ticks = {}; }
   try { notes = JSON.parse(localStorage.getItem(KEY_N) || '{}') || {}; } catch (e) { notes = {}; }
@@ -601,10 +620,29 @@ h2 .hl{color:var(--honey)}
     });
     return groups;
   }
+  function noteList(){
+    return Object.keys(notes).filter(function(k){ return notes[k] && String(notes[k]).trim(); })
+      .sort().map(function(k){ return { id: k, text: String(notes[k]), time: noteTime(k) }; });
+  }
+  function noteTime(id){
+    var m = /^note-(\d+)$/.exec(id);
+    if (!m) return '';
+    var d = new Date(Number(m[1]));
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }) + ', ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  }
+  function renderNotes(){
+    var list = noteList();
+    var el = document.getElementById('plan-notelist');
+    el.innerHTML = list.length ? list.map(function(n){
+      return '<div class="note"><div class="nt">' + (n.time ? esc(n.time) : 'Saved note') + '</div><div class="nx">' + esc(n.text) + '</div><button type="button" data-delnote="' + esc(n.id) + '" title="Remove">\u00d7</button></div>';
+    }).join('') : '';
+  }
   function renderPlan(){
     var groups = collect();
     var total = groups.reduce(function(n,g){ return n + g.items.length; }, 0);
-    document.getElementById('plan-count').textContent = total ? (total + ' ticked') : 'Nothing ticked yet';
+    var nl = noteList();
+    document.getElementById('plan-count').textContent = (total ? total + ' ticked' : 'Nothing ticked yet') + (nl.length ? ' \u00b7 ' + nl.length + (nl.length === 1 ? ' note' : ' notes') : '');
     var list = document.getElementById('plan-list');
     if (!total) {
       list.innerHTML = '<div class="empty">Tick anything on the page and it lands here.</div>';
@@ -615,12 +653,13 @@ h2 .hl{color:var(--honey)}
         }).join('') + '</ul></div>';
       }).join('');
     }
+    renderNotes();
     /* print page */
     var pp = document.getElementById('planprint-body');
-    var noteText = notes[NOTE_ID] || '';
-    pp.innerHTML = (total ? groups.map(function(g){
+    pp.innerHTML = '<div class="gl">Notes</div>' + (nl.length ? nl.map(function(n){ return '<div class="pt">' + esc(n.time || 'Saved note') + '</div><div class="pn">' + esc(n.text) + '</div>'; }).join('') : '<div class="empty">None yet.</div>')
+      + (total ? groups.map(function(g){
       return '<div class="gl">' + esc(g.name) + '</div><ul>' + g.items.map(function(it){ return '<li>' + esc(it.label) + '</li>'; }).join('') + '</ul>';
-    }).join('') : '<div class="empty">Nothing ticked yet.</div>') + '<div class="gl">Notes</div><div class="pn">' + (noteText ? esc(noteText) : '<span class="empty">None yet.</span>') + '</div>';
+    }).join('') : '<div class="gl">In the plan</div><div class="empty">Nothing ticked yet.</div>');
     document.querySelectorAll('.count').forEach(function(c){
       var day = document.getElementById(c.getAttribute('data-count-for'));
       if (!day) return;
@@ -653,17 +692,31 @@ h2 .hl{color:var(--honey)}
   /* notes */
   var ta = document.getElementById('plan-notes');
   var status = document.getElementById('plan-status');
-  var timer = null;
-  function applyNotes(){ var v = notes[NOTE_ID] || ''; if (ta.value !== v) ta.value = v; }
-  ta.addEventListener('input', function(){
-    notes[NOTE_ID] = ta.value;
+  var nst = document.getElementById('plan-nst');
+  var saveBtn = document.getElementById('plan-save');
+  try { ta.value = localStorage.getItem(KEY_D) || ''; } catch (e) {}
+  ta.addEventListener('input', function(){ try { localStorage.setItem(KEY_D, ta.value); } catch (e) {} nst.textContent = ''; });
+  function applyNotes(){ renderNotes(); }
+  saveBtn.addEventListener('click', function(){
+    var text = ta.value.trim();
+    if (!text) { nst.textContent = 'Type something first'; return; }
+    var id = 'note-' + Date.now();
+    notes[id] = text;
+    saveLocal();
+    ta.value = '';
+    try { localStorage.removeItem(KEY_D); } catch (e) {}
+    renderPlan();
+    nst.textContent = 'Saving';
+    post({ type: 'note', id: id, text: text }).then(function(ok){ nst.textContent = ok ? 'Saved' : 'Saved on this device'; });
+  });
+  document.getElementById('plan-notelist').addEventListener('click', function(ev){
+    var b = ev.target.closest('button[data-delnote]');
+    if (!b) return;
+    var id = b.getAttribute('data-delnote');
+    delete notes[id];
     saveLocal();
     renderPlan();
-    status.textContent = 'Saving';
-    clearTimeout(timer);
-    timer = setTimeout(function(){
-      post({ type: 'note', id: NOTE_ID, text: ta.value }).then(function(ok){ status.textContent = ok ? 'Saved' : 'Saved on this device'; });
-    }, 900);
+    post({ type: 'note', id: id, text: '' });
   });
 
   /* panel open/close on phones */
@@ -679,15 +732,16 @@ h2 .hl{color:var(--honey)}
     var groups = collect();
     var lines = [];
     groups.forEach(function(g){ g.items.forEach(function(it){ lines.push(g.name + ': ' + it.label); }); });
-    var text = ta.value || '';
+    var nl = noteList();
+    var text = nl.map(function(n){ return (n.time ? n.time + '\n' : '') + n.text; }).join('\n\n');
     if (!lines.length && !text) { status.textContent = 'Nothing to send yet'; return; }
     if (SHEET_URL) {
       sendBtn.disabled = true;
       status.textContent = 'Sending';
-      post({ type: 'send', id: NOTE_ID, title: 'Content plan', notes: text, ticked: lines, open: [], to: NOTIFY_EMAIL })
+      post({ type: 'send', id: 'plan', title: 'Content plan', notes: text, ticked: lines, open: [], to: NOTIFY_EMAIL })
         .then(function(ok){ sendBtn.disabled = false; status.textContent = ok ? 'Sent to Nikki' : 'Could not send. Try again in a moment'; });
     } else {
-      var body = 'Content plan\n\nNotes:\n' + (text || '(none)') + '\n\nTicked (' + lines.length + '):\n' + (lines.length ? '- ' + lines.join('\n- ') : '(none)');
+      var body = 'Content plan\n\nNotes:\n' + (text || '(none)') + '\n\nIn the plan (' + lines.length + '):\n' + (lines.length ? '- ' + lines.join('\n- ') : '(none)');
       window.location.href = 'mailto:' + NOTIFY_EMAIL + '?subject=' + encodeURIComponent('BSUK content plan') + '&body=' + encodeURIComponent(body);
       status.textContent = 'Opened in your email app';
     }
