@@ -97,7 +97,7 @@ h2 .hl{color:var(--honey)}
 .notes{display:none}
 
 /* the plan panel */
-:root{--panelw:clamp(340px,33vw,680px)}
+:root{--panelw:clamp(340px,26vw,520px)}
 .plan{position:fixed;z-index:50;background:var(--surface);color:var(--ink);box-shadow:0 -2px 18px rgba(22,38,28,.14);display:flex;flex-direction:column;font-size:14px}
 .plan .ph{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 20px;border-bottom:1px solid var(--line);cursor:pointer;flex:0 0 auto}
 .plan .ph .k{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--honey);font-weight:600}
@@ -519,7 +519,7 @@ h2 .hl{color:var(--honey)}
     <div id="planprint-body"></div>
   </section>
 
-  <p class="vers">Content plan v10, 29 September 2026. Every idea from 61 calls (12 June to 21 September) plus the new ones from 28 September.</p>
+  <p class="vers">Content plan v11, 29 September 2026. Every idea from 61 calls (12 June to 21 September) plus the new ones from 28 September.</p>
 
 </main>
 
@@ -738,7 +738,7 @@ h2 .hl{color:var(--honey)}
     if (SHEET_URL) {
       sendBtn.disabled = true;
       status.textContent = 'Sending';
-      post({ type: 'send', id: 'plan', title: 'Content plan', notes: text, ticked: lines, open: [], to: NOTIFY_EMAIL })
+      post({ type: 'send', id: 'plan', title: 'Content plan', notes: text, ticked: lines, open: [], to: NOTIFY_EMAIL, noteList: nl.map(function(n){ return { time: n.time, text: n.text }; }), groups: groups.map(function(g){ return { name: g.name, items: g.items.map(function(it){ return it.label; }) }; }) })
         .then(function(ok){ sendBtn.disabled = false; status.textContent = ok ? 'Sent to Nikki' : 'Could not send. Try again in a moment'; });
     } else {
       var body = 'Content plan\n\nNotes:\n' + (text || '(none)') + '\n\nIn the plan (' + lines.length + '):\n' + (lines.length ? '- ' + lines.join('\n- ') : '(none)');
