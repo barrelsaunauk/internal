@@ -249,6 +249,83 @@ h2 .hl{color:var(--honey)}
   body.print-one .day:not(.on){display:none !important}
   body.print-one .after,body.print-one .planprint{display:none !important}
 }
+
+/* ---------- Builds tab (v13) ---------- */
+.bl-legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:16px 0 6px;font-size:12.5px;color:var(--muted)}
+.bl-legend span{display:inline-flex;align-items:center;gap:6px}
+.bl-legend i{display:inline-block;width:18px;height:10px;border-radius:3px}
+.bl-legend i.due{background:var(--honey)}
+.bl-legend i.open{background:var(--forest-deep)}
+.bl-legend i.hold{background:repeating-linear-gradient(135deg,#8fae86 0 4px,#dbe7dd 4px 8px)}
+.bl-legend i.mark{width:3px;height:14px;border-radius:0;background:#fff;outline:1px solid var(--muted)}
+.bl-legend i.today{width:2px;height:14px;border-radius:0;background:#C08B41}
+.bl-status{font-size:12.5px;color:var(--muted);margin:6px 0 0;min-height:1.4em}
+.bl-wrap{margin-top:14px;overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.bl-grid{min-width:860px;position:relative}
+.bl-months{display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid var(--line)}
+.bl-months .lab{padding:10px 12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.bl-months .mo{position:relative;height:34px}
+.bl-months .mo > span{position:absolute;top:2px;height:16px;line-height:16px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;border-left:1px solid var(--line);padding-left:8px;white-space:nowrap}
+.bl-row{display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid var(--line);min-height:44px}
+.bl-row:last-child{border-bottom:0}
+.bl-row .who{padding:8px 12px;font-size:13.5px;line-height:1.3;display:flex;flex-direction:column;justify-content:center}
+.bl-row .who .nm{font-weight:600;color:var(--ink)}
+.bl-row .who .sub{font-size:11.5px;color:var(--muted)}
+.bl-row .track{position:relative}
+.bl-row .track::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to right,transparent 0,transparent calc(var(--wk) - 1px),var(--line) calc(var(--wk) - 1px),var(--line) var(--wk));opacity:.55;pointer-events:none}
+.bl-bar{position:absolute;top:12px;height:20px;border-radius:999px;background:var(--forest-deep);color:#fff;font-size:11px;line-height:20px;font-weight:600;white-space:nowrap;padding:0 8px;overflow:visible}
+.bl-bar.due{background:var(--honey)}
+.bl-bar.hold{background:repeating-linear-gradient(135deg,#8fae86 0 4px,#dbe7dd 4px 8px);color:var(--ink)}
+.bl-bar .d{position:absolute;right:-6px;top:50%;transform:translate(100%,-50%);color:var(--ink);font-weight:600;font-size:11px}
+.bl-bar.due .d{color:var(--honey)}
+.bl-mk{position:absolute;top:10px;width:3px;height:24px;background:#fff;outline:1px solid var(--muted);border-radius:1px;z-index:2}
+.bl-eta{position:absolute;top:8px;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid var(--honey);transform:translateX(-7px);z-index:3}
+.bl-today{position:absolute;top:0;bottom:0;width:2px;background:#C08B41;z-index:4;opacity:.9}
+.bl-today span{position:absolute;top:18px;left:6px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#C08B41;font-weight:700;white-space:nowrap;line-height:14px}
+.bl-months .mo .bl-today{top:0;bottom:0}
+.bl-months .mo .bl-today span{top:18px;height:14px;border:0;padding:0}
+.bl-table{margin-top:22px;width:100%;border-collapse:collapse;font-size:13px;table-layout:auto}
+.bl-table th{text-align:left;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 8px;border-bottom:2px solid var(--forest-deep)}
+.bl-table td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.bl-table td.n{font-weight:600;white-space:nowrap}
+.bl-table td.n .wh{display:block;white-space:normal;font-weight:400;color:var(--muted);font-size:12px}
+.bl-table td.n .pl{display:block;margin-top:4px;white-space:normal}
+.bl-table td.n .nt{display:block;white-space:normal;font-weight:400;color:var(--muted);font-size:12px;max-width:240px;margin-top:4px}
+.bl-table td.n{max-width:260px}
+.bl-table td.dt{white-space:nowrap}
+.bl-table td.due{font-weight:700;color:var(--honey);white-space:nowrap}
+.bl-table tr.ready td.due{color:var(--honey)}
+.bl-pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.03em;background:var(--panel);color:var(--muted);white-space:nowrap}
+.bl-pill.local{background:#dbe7dd;color:var(--forest-deep)}
+.bl-pill.far{background:#eeeeee;color:#555}
+.bl-pill.hold{background:#f3e6d2;color:#7a5620}
+.bl-pill.full{background:var(--forest-deep);color:#fff}
+.bl-how{margin-top:22px;padding:14px 16px;background:var(--panel);border-radius:12px;font-size:13.5px}
+.bl-how p{margin:0 0 6px}
+.bl-how p:last-child{margin:0}
+@media (max-width:760px){
+  .bl-table thead{display:none}
+  .bl-table,.bl-table tbody,.bl-table tr,.bl-table td{display:block}
+  .bl-table tr{border:1px solid var(--line);border-radius:12px;margin:0 0 10px;padding:6px 10px}
+  .bl-table td{border:0;padding:3px 0}
+  .bl-table td::before{content:attr(data-l);display:block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+}
+@media print{
+  .bl-wrap{overflow:visible;border-color:#c9d6cc}
+  .bl-grid{min-width:0}
+  .bl-months{grid-template-columns:150px 1fr}
+  .bl-row{grid-template-columns:150px 1fr;min-height:34px}
+  .bl-row .who{font-size:9.5pt;padding:4px 8px}
+  .bl-bar{top:8px;height:16px;line-height:16px;font-size:8pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .bl-bar.hold,.bl-legend i,.bl-pill,.bl-today,.bl-mk,.bl-eta{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .bl-mk{top:6px;height:20px}
+  .bl-table{font-size:9pt;margin-top:12px;break-before:page}
+  .bl-table th{font-size:8pt}
+  .bl-table td{padding:4px 6px}
+  .bl-status,.bl-how{display:none}
+  .bl-legend{font-size:8.5pt}
+  #day5 .dayhead p{font-size:10pt}
+}
 </style>
 </head>
 <body>
@@ -258,7 +335,7 @@ h2 .hl{color:var(--honey)}
   <div class="inner">
     <div class="kicker">Barrel Sauna UK</div>
     <h1>Content <span>Plan</span></h1>
-    <p class="lede">Four filming days with Tim, then everything else we've talked about. Tick anything you want in the plan and it lands in the panel. One button sends it to Nikki.</p>
+    <p class="lede">Four filming days with Tim, the builds calendar, then everything else we've talked about. Tick anything you want in the plan and it lands in the panel. One button sends it to Nikki.</p>
   </div>
 </header>
 
@@ -275,6 +352,7 @@ h2 .hl{color:var(--honey)}
       <button class="tab" type="button" data-day="day2"><span class="n">Day 2</span>Local installs</button>
       <button class="tab" type="button" data-day="day3"><span class="n">Day 3</span>Calvin Clark, mid build</button>
       <button class="tab" type="button" data-day="day4"><span class="n">Day 4</span>Try before you buy</button>
+      <button class="tab" type="button" data-day="day5"><span class="n">Builds</span>Who should be ready when</button>
     </div>
 
     <!-- DAY 1 -->
@@ -418,6 +496,41 @@ h2 .hl{color:var(--honey)}
 
       <div class="notes"><div class="nl">Notes</div><div class="lines"></div></div>
     </div>
+
+    <!-- BUILDS (v13) -->
+    <div class="day" id="day5" data-title="Builds: who should be ready when">
+      <div class="runhead"><span>Barrel Sauna UK · Content Plan</span><span class="rh">Builds</span></div>
+      <div class="dayhead">
+        <div class="k">Builds</div>
+        <h3>Who should be ready when</h3>
+        <button class="printbtn" type="button">Print this page</button>
+        <p><span class="l">The 10 week model:</span> every paid deposit is plotted from the day it landed to ten weeks later, when the build should be ready. Week 6 is the production update call, week 9 the pre install check.</p>
+        <p><span class="l">What it's for:</span> see at a glance which installs are coming up, so filming is planned before the build leaves the workshop, and the review ask goes out once it is in.</p>
+        <p class="depends"><span class="l">Where the rows come from:</span> the builds tab of the BSUK content plan sheet. The Deposit Paid workflow adds a row the moment a deposit lands. Marta can type a real ETA into the sheet and it shows here as a honey marker.</p>
+        <div class="bl-status" id="bl-status"></div>
+      </div>
+
+      <div class="bl-legend">
+        <span><i class="open"></i> on the 10 week clock</span>
+        <span><i class="due"></i> week 10 has passed, should be ready</span>
+        <span><i class="hold"></i> on hold (grant or invoice)</span>
+        <span><i class="mark"></i> week 6 and week 9 touchpoints</span>
+        <span><i class="today"></i> today</span>
+        <span>&#9650; Marta's ETA</span>
+      </div>
+
+      <div class="bl-wrap"><div class="bl-grid" id="bl-grid"></div></div>
+
+      <table class="bl-table" id="bl-table">
+        <thead><tr><th>Customer</th><th>Build</th><th>Deposit</th><th>Week 6 and 9</th><th>Week 10 due</th><th>Marta's ETA</th></tr></thead>
+        <tbody></tbody>
+      </table>
+
+      <div class="bl-how">
+        <p>Local means under an hour from Caerphilly, an easy content day for Jake and Tim. Far means over two hours, so brief a local videographer or ask the customer for footage.</p>
+        <p>Rows with no build recorded need their spec written into GHL. The sheet is the record: anything typed there wins over what is baked into this page.</p>
+      </div>
+    </div>
   </section>
 
   <section class="sec after">
@@ -546,7 +659,7 @@ h2 .hl{color:var(--honey)}
     <div id="planprint-body"></div>
   </section>
 
-  <p class="vers">Content plan v12, 29 September 2026. Every idea from 61 calls (12 June to 21 September) plus the new ones from 28 September.</p>
+  <p class="vers">Content plan v13, 3 October 2026. Every idea from 61 calls (12 June to 21 September) plus the new ones from 28 September, and the builds calendar.</p>
 
 </main>
 
@@ -580,7 +693,7 @@ h2 .hl{color:var(--honey)}
 
 <script>
 (function(){
-  /* Paste the Google Apps Script web app URL between the quotes to share ticks and notes across devices. Leave empty to save on this device only. */
+  /* Paste the Google Apps Script web app URL between the speech marks to share ticks and notes across devices. Leave empty to save on this device only. */
   var SHEET_URL = "https://script.google.com/macros/s/AKfycbzrcP-9iZ6570sK6sXnc6xHwi1i6MuUDUe4GzZbC4huiDt00NiRx2BaTgH_cy6jaCPr/exec";
   var NOTIFY_EMAIL = "njfeldmann44@gmail.com";
 
@@ -846,9 +959,128 @@ h2 .hl{color:var(--honey)}
         notes = {}; Object.keys(n).forEach(function(k){ if (n[k]) notes[k] = String(n[k]); });
         saveLocal(); applyTicks(); applyNotes();
         st.textContent = 'Shared. Anyone with the link sees the same plan.';
+        buildsFromRemote(data);
       })
-      .catch(function(){ st.textContent = 'Could not reach the shared sheet just now. Showing what is saved on this device.'; });
+      .catch(function(){ st.textContent = 'Could not reach the shared sheet just now. Showing what is saved on this device.'; renderBuilds(BUILDS_SEED, 'Could not reach the sheet. Showing the rows built into this page.'); });
   }
+
+
+  /* ---------- Builds tab (v13) ---------- */
+  /* Built in rows: the 17 deposits paid up to 2 October 2026. The sheet is the record; these are the fallback and the seed. */
+  var BUILDS_SEED = [
+    { key: 'jvYksiWM2xlScnvOFUJg', name: 'John Williams', where: 'Pitchside Sauna', product: 'Not recorded in GHL', deposit_date: '2026-06-30', actual_eta: '', status: 'deposit paid', distance: 'unknown', note: 'Date from the deposit email, paid before the payment link existed', deal_id: 'jvYksiWM2xlScnvOFUJg', contact_id: 'k5R7OiWUyCosO2el5jrJ' },
+    { key: 'VKpYygCzR0OTrecDW01u', name: 'Tanya Aplin', where: '', product: '2.5m barrel sauna, porch, half glass, electric wifi heater, build on site', deposit_date: '2026-07-01', actual_eta: 'Mid to end October (Marta, 24 Sep)', status: 'deposit paid', distance: 'unknown', note: 'Base ready by about 3 Oct', deal_id: 'VKpYygCzR0OTrecDW01u', contact_id: 'TldeLOrH7qSv4Aw6g55p' },
+    { key: '1Ix2WJeKIeW7pWFu7plV', name: 'Fairview Apiary (Rod)', where: '', product: 'Not recorded in GHL', deposit_date: '2026-08-03', actual_eta: '', status: 'paid in full', distance: 'unknown', note: 'Full balance by bank transfer 3 Aug, deposit date before that not recorded', deal_id: '1Ix2WJeKIeW7pWFu7plV', contact_id: 'nYKipjdDFFGBhU4nYXM7' },
+    { key: 'jzaPj77DXEMEyF7esmQt', name: 'Stefano Capaldo', where: 'Lochgoilhead, Scotland', product: 'Sauna with custom window layout plus 8 seater square hot tub', deposit_date: '2026-08-03', actual_eta: '', status: 'deposit paid', distance: 'far', note: '', deal_id: 'jzaPj77DXEMEyF7esmQt', contact_id: '27wwOIHi2eBSNqU6FvMz' },
+    { key: 'zWp8NybXHhnyeYrYPCp2', name: 'Neil Savage (Breeze Gym)', where: 'Folkestone', product: 'Not recorded in GHL', deposit_date: '2026-08-18', actual_eta: '', status: 'deposit paid', distance: 'far', note: 'Content missed, named on the 29 Sep call', deal_id: 'zWp8NybXHhnyeYrYPCp2', contact_id: 'ByvUxdR18vS8n6e5qzfh' },
+    { key: 'aSrLZujHcJb209qmMCy0', name: 'Joe Lewis (Reload Recovery)', where: 'Ammanford', product: 'Not recorded in GHL', deposit_date: '2026-08-24', actual_eta: '', status: 'deposit paid', distance: 'mid', note: '', deal_id: 'aSrLZujHcJb209qmMCy0', contact_id: 'bETYDtRVfm63cz7bW2QG' },
+    { key: 'WnEhPoo4WAT2MHBvSQF4', name: 'Mark Appleton', where: 'Princes Risborough', product: '2m compact barrel sauna, 1.8m plus porch, 9kW Harvia heater', deposit_date: '2026-08-24', actual_eta: '', status: 'deposit paid', distance: 'far', note: '', deal_id: 'WnEhPoo4WAT2MHBvSQF4', contact_id: 'amYNq4gz8G8pGK1XoyXH' },
+    { key: 'g0wzWJuixPp0WpIKbRmo', name: 'Peter Ward', where: 'Camberley', product: '3m barrel sauna, porch, blackout globe, electric wifi heater, decking base', deposit_date: '2026-08-25', actual_eta: 'October, on site build', status: 'deposit paid', distance: 'far', note: 'Wants proper notice of the date', deal_id: 'g0wzWJuixPp0WpIKbRmo', contact_id: 'Qy3D4Gu6amHWhkZsoAXZ' },
+    { key: 'qVXhaKbuuorfI7bAJAPz', name: 'Nikki Burnett', where: 'Ynysddu', product: '4m x 2.3m barrel sauna with changing room and wood burner, plus 6 person ice bath', deposit_date: '2026-08-27', actual_eta: '', status: 'deposit paid', distance: 'local', note: 'Sauna and ice bath in one garden', deal_id: 'qVXhaKbuuorfI7bAJAPz', contact_id: 'CF7190OHUJsaWQPHm9jT' },
+    { key: 'a4TxzaiJVOvb9vW9b2We', name: 'Carla McHugh', where: 'Llanidloes', product: 'Not recorded in GHL', deposit_date: '2026-08-31', actual_eta: '', status: 'deposit paid', distance: 'mid', note: '', deal_id: 'a4TxzaiJVOvb9vW9b2We', contact_id: 'ZBxuTMMnAJjHbruITxag' },
+    { key: 'nFInhIn69Vy6056eTkAu', name: 'Patrick Coyle', where: 'Cardiff', product: 'Two person barrel sauna and outdoor shower on a 3m x 3m plinth', deposit_date: '2026-09-09', actual_eta: '', status: 'paid in full', distance: 'local', note: 'Ready at his end, 30 Sep', deal_id: 'nFInhIn69Vy6056eTkAu', contact_id: 'Gv9B1TgerHEiBw8Wknwy' },
+    { key: 'OOHJdw7o492Yyfsqz9Qs', name: 'Cwmdu Campsite (Sarah Farr, Calvin Clark)', where: 'Crickhowell', product: '4m mobile barrel sauna on a trailer plus two commercial ice baths', deposit_date: '2026-09-16', actual_eta: '', status: 'awaiting grant', distance: 'local', note: 'Grant decision early October, invoice unpaid', deal_id: 'OOHJdw7o492Yyfsqz9Qs', contact_id: 'pLCTIyQE9SsSkYe4GcXw' },
+    { key: 'kmpkX9nn3Lqr8m8f6lDn', name: 'James McCarthy', where: 'Bartley, New Forest', product: '3.4m x 2.3m sauna with 1m changing room', deposit_date: '2026-09-17', actual_eta: '', status: 'deposit paid', distance: 'far', note: '', deal_id: 'kmpkX9nn3Lqr8m8f6lDn', contact_id: 'g46WL3KgIijoFXeuHpHa' },
+    { key: 'HCmnW1MIhKyTLZl911NJ', name: 'Verity Johnson', where: 'Brockenhurst', product: 'Not recorded in GHL', deposit_date: '2026-09-18', actual_eta: '', status: 'deposit paid', distance: 'far', note: '', deal_id: 'HCmnW1MIhKyTLZl911NJ', contact_id: 'oUlaxQ5L8Q7poRZVuRYO' },
+    { key: 'mwTrpXxtL5VracKVMWXq', name: 'Eleanor Matthews', where: 'Woodstock, Oxfordshire', product: 'Compact barrel sauna 1.8m x 2m, on site build, ice bath discussed', deposit_date: '2026-09-23', actual_eta: '', status: 'deposit paid', distance: 'far', note: 'Video review owed', deal_id: 'mwTrpXxtL5VracKVMWXq', contact_id: 'kPXojAbWmAJHBP3c8WAB' },
+    { key: 'F6RisnNpYYma9SAbXYai', name: 'Paul Averley', where: 'Newcastle upon Tyne', product: '2.7m barrel sauna, wood burning, tint globe, flush full glass', deposit_date: '2026-09-25', actual_eta: '', status: 'deposit paid', distance: 'far', note: '', deal_id: 'F6RisnNpYYma9SAbXYai', contact_id: 'e3eBiic1e2VP7814sNEr' },
+    { key: 'jkic6D40Dkn359bEMj4L', name: 'Christopher Longcroft', where: 'Danehill, Sussex', product: '3.2m x 2.3m barrel sauna, porch, Harvia Cilindro wifi heater', deposit_date: '2026-09-30', actual_eta: '', status: 'deposit paid', distance: 'far', note: '', deal_id: 'jkic6D40Dkn359bEMj4L', contact_id: 'AguDiMkkOPQWLnSY9j5b' }
+  ];
+  var DAY_MS = 86400000;
+  function isoToDate(s){ var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(s || '')); return m ? new Date(Date.UTC(+m[1], +m[2] - 1, +m[3])) : null; }
+  function addDays(d, n){ return new Date(d.getTime() + n * DAY_MS); }
+  function fmtShort(d){ return d ? d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' }) : ''; }
+  function fmtLong(d){ return d ? d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }) : ''; }
+  function todayUTC(){ var n = new Date(); return new Date(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate())); }
+  function normBuild(b){
+    var dep = isoToDate(b.deposit_date);
+    var o = {};
+    Object.keys(b).forEach(function(k){ o[k] = b[k] == null ? '' : String(b[k]); });
+    o.dep = dep;
+    o.w6 = dep ? addDays(dep, 42) : null;
+    o.w9 = dep ? addDays(dep, 63) : null;
+    o.w10 = dep ? addDays(dep, 70) : null;
+    o.etaDate = isoToDate(o.actual_eta);
+    var st = (o.status || '').toLowerCase();
+    o.hold = /grant|hold|unpaid|invoice/.test(st);
+    o.full = /full/.test(st);
+    return o;
+  }
+  function renderBuilds(rows, sourceText){
+    var grid = document.getElementById('bl-grid');
+    var tbody = document.querySelector('#bl-table tbody');
+    var st = document.getElementById('bl-status');
+    if (!grid || !tbody) return;
+    var list = rows.map(normBuild).filter(function(r){ return r.dep; }).sort(function(a,b){ return a.dep - b.dep; });
+    if (!list.length) { grid.innerHTML = ''; tbody.innerHTML = '<tr><td colspan="6">No builds yet.</td></tr>'; if (st) st.textContent = sourceText || ''; return; }
+    var today = todayUTC();
+    /* range: Monday of the first deposit week to the Sunday after the last week 10, at least to the end of this year */
+    var first = list[0].dep; var dow = (first.getUTCDay() + 6) % 7; var start = addDays(first, -dow);
+    var last = list.reduce(function(m, r){ var e = r.etaDate && r.etaDate > r.w10 ? r.etaDate : r.w10; return e > m ? e : m; }, list[0].w10);
+    var yearEnd = new Date(Date.UTC(today.getUTCFullYear(), 11, 31));
+    if (yearEnd > last) last = yearEnd;
+    if (today > last) last = today;
+    last = addDays(last, 14);
+    var span = last - start;
+    function pct(d){ return Math.max(0, Math.min(100, (d - start) / span * 100)); }
+    var weeks = Math.round(span / (7 * DAY_MS));
+    var wk = (100 / weeks) + '%';
+    /* months */
+    var months = '';
+    var m = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), 1));
+    while (m <= last) {
+      if (m >= start) months += '<span style="left:' + pct(m).toFixed(2) + '%">' + m.toLocaleDateString('en-GB', { month: 'short', timeZone: 'UTC' }) + (m.getUTCMonth() === 0 ? ' ' + m.getUTCFullYear() : '') + '</span>';
+      m = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() + 1, 1));
+    }
+    var todayLeft = pct(today).toFixed(2) + '%';
+    var h = '<div class="bl-months"><div class="lab">' + list.length + (list.length === 1 ? ' build' : ' builds') + '</div><div class="mo">' + months + '<div class="bl-today" style="left:' + todayLeft + '"><span>today ' + esc(fmtShort(today)) + '</span></div></div></div>';
+    list.forEach(function(r){
+      var due = r.w10 <= today && !r.hold;
+      var cls = 'bl-bar' + (r.hold ? ' hold' : due ? ' due' : '');
+      var l = pct(r.dep), w = pct(r.w10) - l;
+      var label = r.hold ? 'on hold' : due ? 'should be ready' : 'week 10: ' + fmtShort(r.w10);
+      h += '<div class="bl-row"><div class="who"><span class="nm">' + esc(r.name) + '</span>' + (r.where ? '<span class="sub">' + esc(r.where) + '</span>' : '') + '</div><div class="track" style="--wk:' + wk + '">';
+      h += '<div class="' + cls + '" style="left:' + l.toFixed(2) + '%;width:' + Math.max(w, 2).toFixed(2) + '%" title="Deposit ' + esc(fmtLong(r.dep)) + ', week 10 ' + esc(fmtLong(r.w10)) + '">' + (w > 14 ? esc(fmtShort(r.dep)) : '') + '<span class="d">' + esc(label) + '</span></div>';
+      h += '<div class="bl-mk" style="left:' + pct(r.w6).toFixed(2) + '%" title="Week 6 production update ' + esc(fmtLong(r.w6)) + '"></div>';
+      h += '<div class="bl-mk" style="left:' + pct(r.w9).toFixed(2) + '%" title="Week 9 pre install check ' + esc(fmtLong(r.w9)) + '"></div>';
+      if (r.etaDate) h += '<div class="bl-eta" style="left:' + pct(r.etaDate).toFixed(2) + '%" title="ETA ' + esc(fmtLong(r.etaDate)) + '"></div>';
+      h += '<div class="bl-today" style="left:' + todayLeft + '"></div>';
+      h += '</div></div>';
+    });
+    grid.innerHTML = h;
+    tbody.innerHTML = list.map(function(r){
+      var due = r.w10 <= today && !r.hold;
+      var dist = r.distance && r.distance !== 'unknown' ? '<span class="bl-pill ' + (r.distance === 'local' ? 'local' : r.distance === 'far' ? 'far' : '') + '">' + esc(r.distance) + '</span>' : '';
+      var stat = '<span class="bl-pill ' + (r.hold ? 'hold' : r.full ? 'full' : '') + '">' + esc(r.status || 'deposit paid') + '</span>';
+      return '<tr class="' + (due ? 'ready' : 'row') + '"><td class="n" data-l="Customer">' + esc(r.name) + (r.where ? '<span class="wh">' + esc(r.where) + '</span>' : '') + '<span class="pl">' + stat + (dist ? ' ' + dist : '') + '</span>' + (r.note ? '<span class="nt">' + esc(r.note) + '</span>' : '') + '</td>'
+        + '<td data-l="Build">' + esc(r.product) + '</td>'
+        + '<td class="dt" data-l="Deposit">' + esc(fmtLong(r.dep)) + '</td>'
+        + '<td class="dt" data-l="Week 6 and 9">' + esc(fmtShort(r.w6)) + '<br>' + esc(fmtShort(r.w9)) + '</td>'
+        + '<td class="' + (due ? 'due' : 'dt') + '" data-l="Week 10 due">' + esc(fmtShort(r.w10)) + (due ? '<br><span style="font-size:11px">passed</span>' : '') + '</td>'
+        + '<td data-l="Marta\'s ETA">' + esc(r.etaDate ? fmtLong(r.etaDate) : r.actual_eta) + '</td></tr>';
+    }).join('');
+    if (st) st.textContent = sourceText || '';
+  }
+  /* Push any built in row the sheet does not have yet. The script upserts by key, so this never duplicates. */
+  function seedBuilds(remote){
+    var have = {};
+    (remote || []).forEach(function(r){ have[String(r.key || '')] = 1; });
+    var missing = BUILDS_SEED.filter(function(s){ return !have[s.key]; });
+    missing.forEach(function(s){ var p = {}; Object.keys(s).forEach(function(k){ p[k] = s[k]; }); p.type = 'build'; p.source = 'page seed'; post(p); });
+    return missing;
+  }
+  function buildsFromRemote(data){
+    if (!data || !Array.isArray(data.builds)) {
+      renderBuilds(BUILDS_SEED, 'Showing the rows built into this page. The sheet script needs v6 before the builds tab can read from the sheet.');
+      return;
+    }
+    var missing = seedBuilds(data.builds);
+    var rows = data.builds.concat(missing);
+    var txt = data.builds.length ? 'Live from the sheet, ' + data.builds.length + (data.builds.length === 1 ? ' build.' : ' builds.') : 'Sheet connected. ';
+    if (missing.length) txt += ' Adding ' + missing.length + ' built in ' + (missing.length === 1 ? 'row' : 'rows') + ' to the sheet now, refresh in a minute to see them from the sheet.';
+    renderBuilds(rows, txt);
+  }
+  renderBuilds(BUILDS_SEED, 'Loading from the sheet.');
 
   applyTicks();
   applyNotes();
