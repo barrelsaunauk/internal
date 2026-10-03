@@ -3,702 +3,764 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Handover Sign-Off — Barrel Sauna UK</title>
-<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap" rel="stylesheet">
+<title>Handover Sign-Off | Barrel Sauna UK</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root {
+  --ground: #16261C;
+  --forest-deep: #1F3D28;
   --forest: #2B5336;
-  --forest-dark: #243d29;
+  --mid: #417C51;
   --sage: #50795F;
   --sage-pale: #8fae86;
-  --sage-muted: #7d9a86;
-  --terracotta: #C08B41;
-  --terracotta-bg: #fdf6ec;
-  --bone: #F1F2EC;
-  --bone-dark: #e8eae2;
-  --panel: #f7f8f3;
-  --body: #4a4a4a;
-  --sub: #999999;
-  --fine: #bbbbbb;
-  --dead-border: #d8d3cb;
-  --hairline: rgba(43,83,54,0.12);
-  --card-border: rgba(58,82,52,0.15);
-  --face: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --gutter: 32px;
-  --radius: 8px;
+  --honey: #C08B41;
+  --honey-d: #b07d38;
+  --honey-l: #D6A868;
+  --tint: #dbe7dd;
+  --tint-l: #eef4ef;
+  --ink: #3A4240;
+  --ink-l: #5C6663;
+  --body-dark: #dfe9df;
+  --dead: #8a938f;
+  --dead-border: #c9cfcb;
+  --hairline: rgba(65,124,81,0.30);
+  --rule-soft: rgba(65,124,81,0.12);
+  --shadow: 0 10px 30px rgba(22,38,28,0.12);
+  --face: 'Raleway', Arial, Helvetica, sans-serif;
+  --pad: 28px;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
 html, body { max-width: 100%; overflow-x: hidden; }
-
 body {
   margin: 0;
-  padding: 0 16px 80px 16px;
-  background: var(--bone-dark);
+  background: #ffffff;
   font-family: var(--face);
-  color: var(--body);
+  color: var(--ink);
   font-weight: 400;
-  width: 100%;
+  -webkit-font-smoothing: antialiased;
 }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+.bleed { width: 100vw; margin-left: calc(50% - 50vw); }
 
-.wrap { max-width: 720px; width: 100%; margin: 0 auto; }
+/* ================= HERO ================= */
+.hero {
+  position: relative;
+  min-height: 56vh;
+  display: flex;
+  align-items: flex-end;
+  background:
+    linear-gradient(180deg, rgba(22,38,28,0.42) 0%, rgba(22,38,28,0.18) 45%, rgba(22,38,28,0.88) 100%),
+    url('https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa5d13449f830e49beed1bd.jpg') center 35% / cover no-repeat,
+    var(--forest-deep);
+}
+.hero__logo {
+  position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 760px; padding: 0 16px;
+}
+.hero__logo img { width: 92px; height: auto; display: block; }
+.hero__inner {
+  width: 100%; max-width: 760px; margin: 0 auto; padding: 120px 16px 44px 16px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+}
+.hero__text { flex: 1 1 auto; min-width: 0; }
+.hero__dash { width: 44px; height: 2px; background: var(--honey-l); margin: 0 0 14px 0; }
+.hero__kicker {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--honey-l); margin: 0 0 10px 0;
+}
+.hero h1 {
+  font-size: 46px; font-weight: 700; line-height: 1.06; letter-spacing: -0.5px;
+  color: #fff; margin: 0 0 12px 0;
+}
+.hero h1 span { color: var(--honey-l); }
+.hero__lede { font-size: 16px; color: #e9eee4; line-height: 1.6; margin: 0; max-width: 460px; }
+.hero__draw { flex: 0 0 170px; display: flex; justify-content: flex-end; }
+.hero__draw img { width: 170px; height: auto; display: block; }
+.hero__draw img[src=""] { display: none; }
 
-/* ---------- MODE SWITCH (sticky) ---------- */
-.switchbar {
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  background: var(--bone-dark);
-  padding: 16px 0 12px 0;
-  margin: 0 0 20px 0;
-  width: 100%;
+/* ================= STICKY BAR ================= */
+.bar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255,255,255,0.96);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule-soft);
 }
+.bar .wrap { padding-top: 12px; padding-bottom: 12px; }
+.modes {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  background: var(--tint-l); border-radius: 30px; padding: 5px; margin: 0 0 12px 0;
+}
+.modes button {
+  font-family: var(--face); font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; border: 0; border-radius: 30px; padding: 11px 8px;
+  background: transparent; color: var(--ink-l); cursor: pointer;
+}
+.modes button.on { background: var(--forest-deep); color: #fff; }
+.modes button .tick { font-weight: 400; letter-spacing: 0.5px; opacity: 0.75; margin-left: 4px; }
 
-.switch {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  background: #fff;
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  width: 100%;
+.steps { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.steps::-webkit-scrollbar { display: none; }
+.steps button {
+  flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  background: transparent; border: 0; cursor: pointer; padding: 2px 6px; font-family: var(--face);
+  position: relative;
 }
-.switch button {
-  font-family: var(--face);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  padding: 16px 8px 14px 8px;
-  border: 0;
-  background: #fff;
-  color: var(--sub);
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  transition: none;
-  line-height: 1.3;
+.steps button:not(:last-child)::after {
+  content: ''; position: absolute; top: 14px; left: calc(50% + 18px); right: calc(-50% + 18px);
+  height: 2px; background: var(--tint);
 }
-.switch button.on {
-  color: var(--forest);
-  border-bottom-color: var(--terracotta);
-  background: var(--panel);
+.steps button.done:not(:last-child)::after { background: var(--mid); }
+.steps .sd {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--tint);
+  color: var(--forest-deep); font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;
 }
-.switch button .tick {
-  display: block;
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: var(--sage);
-  margin: 4px 0 0 0;
-  font-weight: 400;
-  min-height: 13px;
+.steps .sl {
+  font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--dead); white-space: nowrap;
 }
-.switch button.on .tick { color: var(--sage-muted); }
+.steps button.done .sd { background: var(--mid); color: #fff; }
+.steps button.now .sd { background: var(--honey); color: #fff; }
+.steps button.now .sl, .steps button.done .sl { color: var(--forest-deep); }
 
-/* progress rail */
-.rail {
-  height: 3px;
-  background: var(--dead-border);
-  border-radius: 2px;
-  margin: 10px 0 0 0;
-  overflow: hidden;
-  width: 100%;
-}
-.rail__fill {
-  height: 100%;
-  background: var(--sage);
-  width: 0%;
-  border-radius: 2px;
-}
-.rail__fill.done { background: var(--terracotta); }
-
-/* ---------- RESTORE BANNER ---------- */
+/* ================= RESTORE ================= */
 .restore {
-  display: none;
-  background: var(--terracotta-bg);
-  border: 1px solid rgba(192,139,65,0.3);
-  border-radius: var(--radius);
-  padding: 14px 18px;
-  margin: 0 0 20px 0;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  width: 100%;
+  display: none; align-items: center; justify-content: space-between; gap: 14px;
+  background: #fff; border: 1px solid var(--hairline); border-radius: 16px;
+  padding: 14px 18px; margin: 22px 0 0 0;
 }
 .restore.show { display: flex; }
-.restore p { margin: 0; font-size: 13px; color: var(--body); line-height: 1.6; flex: 1 1 auto; min-width: 0; }
+.restore p { margin: 0; font-size: 14px; color: var(--ink); line-height: 1.6; }
 
-/* ---------- CARD ---------- */
+/* ================= SECTIONS ================= */
+.sec { padding: 34px 0 0 0; }
+.sec__head { display: flex; align-items: flex-start; gap: 14px; margin: 0 0 18px 0; }
+.sec__num {
+  flex: 0 0 34px; height: 34px; border-radius: 50%; background: var(--forest-deep);
+  color: #fff; font-size: 14px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.kicker {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--honey); margin: 0 0 6px 0;
+}
+.sec h2 { font-size: 26px; font-weight: 700; line-height: 1.2; color: var(--forest-deep); margin: 0; }
+.sec h2 span { color: var(--honey); }
+.sec__count { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--sage); white-space: nowrap; padding-top: 8px; }
+
 .card {
-  background: #fff;
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin: 0 0 20px 0;
-  width: 100%;
+  background: #fff; border: 1px solid var(--rule-soft); border-radius: 22px;
+  box-shadow: var(--shadow); padding: var(--pad);
 }
-.card__head {
-  background: var(--forest);
-  padding: 20px var(--gutter);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.card__head h2 {
-  font-size: 11px; font-weight: 400; color: var(--sage-pale);
-  letter-spacing: 2.5px; text-transform: uppercase; margin: 0;
-  word-break: break-word;
-}
-.card__head .count {
-  font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.55);
-  letter-spacing: 1px; margin: 0; white-space: nowrap; flex-shrink: 0;
-}
-.card__body { padding: var(--gutter); }
+.card + .card { margin-top: 14px; }
 
-/* ---------- MASTHEAD ---------- */
-.masthead {
-  background: var(--forest);
-  border-radius: var(--radius);
-  padding: 32px var(--gutter);
-  margin: 0 0 20px 0;
-  text-align: center;
-  width: 100%;
-}
-.masthead img { max-width: 142px; width: 100%; height: auto; display: block; margin: 0 auto 20px auto; }
-.masthead .kicker {
-  font-size: 11px; font-weight: 400; color: var(--sage-pale);
-  letter-spacing: 2.5px; text-transform: uppercase; margin: 0 0 10px 0;
-}
-.masthead h1 { font-size: 24px; font-weight: 400; color: #fff; margin: 0; line-height: 1.3; }
-
-/* ---------- TYPE ---------- */
 .label {
-  font-size: 11px; font-weight: 400; color: var(--sage-muted);
-  letter-spacing: 2px; text-transform: uppercase; margin: 0 0 8px 0;
+  font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--sage); margin: 0 0 8px 0;
 }
-.focal { font-size: 16px; font-weight: 400; color: var(--terracotta); line-height: 1.5; margin: 0; }
-.prose { font-size: 15px; font-weight: 400; color: var(--body); line-height: 1.8; margin: 0 0 18px 0; }
-.sub   { font-size: 14px; font-weight: 400; color: var(--sub); line-height: 1.75; margin: 0; }
-.fine  { font-size: 12px; font-weight: 400; color: var(--fine); line-height: 1.7; margin: 0; }
+.prose { font-size: 15px; color: var(--ink); line-height: 1.75; margin: 0 0 16px 0; }
+.sub { font-size: 14px; color: var(--ink-l); line-height: 1.7; margin: 0; }
+.fine { font-size: 12px; color: var(--dead); line-height: 1.7; margin: 0; }
+.empty { font-size: 14px; color: var(--dead); line-height: 1.7; margin: 0; }
 
-/* ---------- FIELDS ---------- */
-.field { margin: 0 0 20px 0; width: 100%; }
+/* ================= FIELDS ================= */
+.field { margin: 0 0 18px 0; }
 .field:last-child { margin-bottom: 0; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.grid .field { margin-bottom: 0; }
+.grid + .grid, .grid + .field, .field + .grid { margin-top: 18px; }
 
 .input, select.input, textarea.input {
-  width: 100%;
-  max-width: 100%;
-  font-family: var(--face);
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--body);
-  background: #fff;
-  border: 1px solid var(--card-border);
-  border-radius: 6px;
-  padding: 13px 14px;
-  -webkit-appearance: none;
-  appearance: none;
+  width: 100%; max-width: 100%; font-family: var(--face); font-size: 16px; font-weight: 400;
+  color: var(--ink); background: #fff; border: 1px solid var(--hairline); border-radius: 12px;
+  padding: 13px 14px; -webkit-appearance: none; appearance: none;
 }
-.input:focus { outline: 0; border-color: var(--sage); }
-.input:disabled, .input[readonly] {
-  background: var(--panel);
-  color: var(--sub);
-  border-color: var(--hairline);
-}
-textarea.input { line-height: 1.7; resize: vertical; min-height: 74px; }
-
+.input:focus { outline: 0; border-color: var(--mid); box-shadow: 0 0 0 3px rgba(65,124,81,0.12); }
+textarea.input { line-height: 1.7; resize: vertical; min-height: 80px; }
 select.input {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%2350795F' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  padding-right: 38px;
+  background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px;
 }
-select.input:disabled { background-image: none; }
+.chip {
+  display: none; align-items: center; gap: 8px; background: var(--tint-l); color: var(--forest-deep);
+  border-radius: 30px; padding: 7px 14px; font-size: 12px; font-weight: 700; margin: 0 0 18px 0;
+}
+.chip.show { display: inline-flex; }
+.chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mid); }
 
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
-
-/* ---------- CHECK ROWS ---------- */
+/* ================= CHECK ROWS ================= */
 .checkrow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 14px 0;
-  border-bottom: 1px solid rgba(43,83,54,0.08);
-  width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 14px 0; border-bottom: 1px solid var(--rule-soft);
 }
+.checkrow:first-child { padding-top: 0; }
 .checkrow:last-child { border-bottom: 0; padding-bottom: 0; }
-.checkrow__text {
-  font-size: 14px; font-weight: 400; color: var(--body); line-height: 1.6;
-  flex: 1 1 auto; min-width: 0; overflow-wrap: break-word; word-break: break-word; margin: 0;
-}
+.checkrow__text { font-size: 14px; color: var(--ink); line-height: 1.6; flex: 1 1 auto; min-width: 0; margin: 0; }
 
 .toggle { display: flex; gap: 6px; flex-shrink: 0; }
 .toggle button {
-  font-family: var(--face);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  padding: 9px 14px;
-  min-width: 52px;
-  border: 1px solid var(--card-border);
-  border-radius: 6px;
-  background: #fff;
-  color: var(--sub);
-  cursor: pointer;
-  white-space: nowrap;
+  font-family: var(--face); font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+  padding: 9px 14px; min-width: 56px; border: 1px solid var(--hairline); border-radius: 30px;
+  background: #fff; color: var(--ink-l); cursor: pointer; white-space: nowrap;
 }
-.toggle button.on-pass { background: var(--sage); border-color: var(--sage); color: #fff; }
-.toggle button.on-fail { background: var(--terracotta); border-color: var(--terracotta); color: #fff; }
-.toggle button.on-na   { background: var(--bone-dark); border-color: var(--dead-border); color: var(--sub); }
+.toggle button.on-pass { background: var(--mid); border-color: var(--mid); color: #fff; }
+.toggle button.on-fail { background: var(--honey); border-color: var(--honey); color: #fff; }
+.toggle button.on-na   { background: var(--tint); border-color: var(--tint); color: var(--forest-deep); }
 
-.empty { font-size: 14px; font-weight: 400; color: var(--fine); line-height: 1.75; margin: 0; }
+/* walkthrough lift cards */
+.walk { display: grid; gap: 12px; }
+.wcard {
+  display: flex; align-items: center; gap: 16px; background: #fff; border-radius: 18px;
+  box-shadow: var(--shadow); padding: 16px 18px;
+}
+.wcard__disc {
+  flex: 0 0 46px; height: 46px; border-radius: 50%; background: var(--forest);
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+.wcard__text { flex: 1 1 auto; min-width: 0; font-size: 14px; font-weight: 700; color: var(--forest-deep); line-height: 1.5; margin: 0; }
 
-/* ---------- SUMMARY STRIP (customer view of build checks) ---------- */
-.strip {
-  display: flex;
-  gap: 12px;
-  width: 100%;
-  flex-wrap: wrap;
+/* ================= SNAGS ================= */
+.snag {
+  border: 1px solid var(--hairline); border-radius: 16px; padding: 14px; margin: 0 0 12px 0;
 }
-.strip__cell {
-  flex: 1 1 0;
-  min-width: 88px;
-  background: var(--panel);
-  border-radius: 6px;
-  padding: 18px 14px;
-  text-align: center;
-}
-.strip__cell .n {
-  font-size: 22px; font-weight: 400; line-height: 1.2; margin: 0 0 4px 0; color: var(--forest);
-}
-.strip__cell .k {
-  font-size: 10px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--sage-muted); margin: 0;
-}
-.strip__cell.pass .n { color: var(--sage); }
-.strip__cell.fail .n { color: var(--terracotta); }
-.strip__cell.na .n   { color: var(--fine); }
-
-/* ---------- SNAGS ---------- */
-.snag { display: flex; gap: 10px; margin: 0 0 12px 0; align-items: flex-start; width: 100%; }
-.snag .input { flex: 1 1 auto; min-width: 0; }
+.snag__top { display: flex; gap: 10px; align-items: flex-start; }
+.snag__top .input { flex: 1 1 auto; min-width: 0; }
+.snag__meta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.snag__meta .label { margin-bottom: 6px; font-size: 10px; }
 .snag__kill {
-  font-family: var(--face); font-size: 18px; font-weight: 400; color: var(--fine);
-  background: transparent; border: 1px solid var(--card-border); border-radius: 6px;
-  width: 48px; height: 48px; flex: 0 0 48px; cursor: pointer; line-height: 1;
+  font-family: var(--face); font-size: 18px; color: var(--dead); background: #fff;
+  border: 1px solid var(--hairline); border-radius: 50%; width: 46px; height: 46px; flex: 0 0 46px;
+  cursor: pointer; line-height: 1;
 }
-.snag__kill:hover { color: var(--terracotta); border-color: var(--terracotta); }
+.snag__kill:hover { color: var(--honey); border-color: var(--honey); }
 
-/* outstanding list, customer view */
-.out { margin: 0; padding: 0; list-style: none; }
+/* ================= STRIP ================= */
+.strip { display: flex; gap: 12px; flex-wrap: wrap; }
+.strip__cell {
+  flex: 1 1 0; min-width: 90px; background: #fff; border: 1px solid var(--hairline);
+  border-radius: 16px; padding: 18px 12px; text-align: center;
+}
+.strip__cell .n { font-size: 30px; font-weight: 700; line-height: 1.1; margin: 0 0 4px 0; color: var(--mid); }
+.strip__cell .k { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--sage); margin: 0; }
+.strip__cell.fail .n { color: var(--honey); }
+.strip__cell.na .n { color: var(--dead); }
+
+/* outstanding */
+.panel {
+  background: var(--tint); border-left: 3px solid var(--forest-deep); border-radius: 14px; padding: 20px 22px;
+}
+.panel--clean { background: var(--tint-l); border-left-color: var(--mid); }
+.panel .focal { font-size: 17px; font-weight: 700; color: var(--forest-deep); margin: 0; line-height: 1.4; }
+.out { margin: 18px 0 0 0; padding: 0; list-style: none; }
 .out li {
-  font-size: 14px; color: var(--body); line-height: 1.7;
-  padding: 10px 0 10px 22px; position: relative;
-  border-bottom: 1px solid rgba(43,83,54,0.08);
-  overflow-wrap: break-word;
+  font-size: 14px; color: var(--ink); line-height: 1.6; padding: 12px 0 12px 22px; position: relative;
+  border-bottom: 1px solid var(--rule-soft);
 }
 .out li:last-child { border-bottom: 0; }
-.out li:before {
-  content: '—';
-  position: absolute; left: 0; top: 10px;
-  color: var(--terracotta);
-}
+.out li:before { content: ''; position: absolute; left: 4px; top: 20px; width: 7px; height: 7px; border-radius: 50%; background: var(--honey); }
+.out li .when { display: block; font-size: 12px; color: var(--sage); margin-top: 2px; }
 
-/* ---------- SIGNATURE ---------- */
-.sigbox { margin: 0; width: 100%; }
+/* cover panel (warranty + check-in) */
+.cover { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cover__cell { background: var(--tint-l); border-radius: 16px; padding: 18px 20px; }
+.cover__cell .v { font-size: 17px; font-weight: 700; color: var(--forest-deep); margin: 0 0 4px 0; line-height: 1.35; }
+
+/* ================= CONSENT / CHOICE ================= */
+.choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.choice button {
+  font-family: var(--face); font-size: 14px; font-weight: 700; padding: 14px 12px;
+  border: 1px solid var(--hairline); border-radius: 30px; background: #fff; color: var(--ink-l); cursor: pointer;
+}
+.choice button.on-yes { background: var(--mid); border-color: var(--mid); color: #fff; }
+.choice button.on-no  { background: var(--tint); border-color: var(--tint); color: var(--forest-deep); }
+
+.tickline { display: flex; gap: 12px; align-items: flex-start; margin-top: 14px; cursor: pointer; }
+.tickline input {
+  appearance: none; -webkit-appearance: none; flex: 0 0 22px; height: 22px; margin: 1px 0 0 0;
+  border: 2px solid var(--mid); border-radius: 6px; background: #fff; cursor: pointer; position: relative;
+}
+.tickline input:checked { background: var(--mid); }
+.tickline input:checked::after {
+  content: ''; position: absolute; left: 6px; top: 2px; width: 5px; height: 10px;
+  border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg);
+}
+.tickline span { font-size: 14px; color: var(--ink); line-height: 1.6; }
+
+/* ================= SIGNATURE ================= */
 .sigpad {
-  width: 100%; max-width: 100%; height: 170px;
-  background: var(--panel);
-  border: 1px solid var(--card-border);
-  border-radius: 6px;
-  display: block;
-  touch-action: none;
-  cursor: crosshair;
+  width: 100%; height: 170px; background: var(--tint-l); border: 1px dashed var(--hairline);
+  border-radius: 16px; display: block; touch-action: none; cursor: crosshair;
 }
-.sigbar {
-  display: flex; justify-content: space-between; align-items: center;
-  gap: 12px; margin: 8px 0 0 0; flex-wrap: nowrap;
-}
-.sigbar .fine { flex: 1 1 auto; min-width: 0; }
-.sigbar .btn--sm { flex: 0 0 auto; }
-
-/* signed confirmation, shown when other party's sig exists */
+.sigbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 8px 0 0 0; }
 .signed {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--panel); border-radius: 6px; padding: 16px 18px;
-  width: 100%;
+  display: flex; align-items: center; gap: 12px; background: var(--tint-l); border-radius: 14px;
+  padding: 14px 18px; margin: 0 0 18px 0;
 }
-.signed .dot {
-  width: 8px; height: 8px; border-radius: 50%; background: var(--sage); flex: 0 0 8px;
-}
-.signed p { margin: 0; font-size: 13px; color: var(--sub); line-height: 1.6; }
+.signed .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mid); flex: 0 0 8px; }
+.signed p { margin: 0; font-size: 13px; color: var(--forest-deep); line-height: 1.6; }
 
-/* ---------- PANEL ---------- */
-.panel {
-  background: var(--panel);
-  border-left: 3px solid var(--terracotta);
-  border-radius: 6px;
-  padding: 22px 26px;
-  width: 100%;
-}
-.panel--clean { border-left-color: var(--sage); }
-.panel .label { margin-bottom: 6px; }
-
-/* ---------- BUTTONS ---------- */
+/* ================= BUTTONS ================= */
 .btn {
-  display: inline-block;
-  background: var(--terracotta);
-  color: #fff;
-  border: 0;
-  border-radius: 6px;
-  padding: 15px 36px;
-  font-family: var(--face);
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  text-decoration: none;
-  cursor: pointer;
-  text-align: center;
-  max-width: 100%;
+  display: inline-block; background: var(--honey); color: #fff; border: 0; border-radius: 30px;
+  padding: 15px 34px; font-family: var(--face); font-size: 15px; font-weight: 700; letter-spacing: 0.5px;
+  text-decoration: none; cursor: pointer; text-align: center; max-width: 100%;
 }
-.btn:hover { background: #b07d38; }
+.btn:hover { background: var(--honey-d); }
 .btn:disabled { background: var(--dead-border); cursor: not-allowed; }
-.btn--ghost {
-  background: transparent; color: var(--sage);
-  border: 1px solid var(--card-border); font-weight: 400;
+.btn--ghost { background: #fff; color: var(--forest-deep); border: 1px solid var(--hairline); }
+.btn--ghost:hover { background: var(--tint-l); }
+.btn--sm { padding: 9px 18px; font-size: 12px; }
+.actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+/* ================= DARK BANDS ================= */
+.dark {
+  background: var(--ground); color: var(--body-dark);
 }
-.btn--ghost:hover { background: var(--panel); }
-.btn--sm { padding: 9px 16px; font-size: 12px; }
+.dark .inner { max-width: 760px; margin: 0 auto; padding: 46px 16px; }
+.dark .kicker { color: var(--honey-l); }
+.dark h3 { font-size: 30px; font-weight: 700; color: #fff; line-height: 1.15; margin: 0 0 10px 0; }
+.dark h3 span { color: var(--honey-l); }
+.dark p { font-size: 15px; line-height: 1.7; margin: 0; color: var(--body-dark); }
 
-.actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; width: 100%; }
-
-/* ---------- HANDOFF PROMPT ---------- */
-.handoff {
-  background: var(--forest);
-  border-radius: var(--radius);
-  padding: 28px var(--gutter);
-  text-align: center;
-  margin: 0 0 20px 0;
-  width: 100%;
+/* journey */
+.journey { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 26px; position: relative; }
+.journey__cell { text-align: center; position: relative; }
+.journey__cell:not(:last-child)::after {
+  content: ''; position: absolute; top: 26px; left: calc(50% + 30px); right: calc(-50% + 30px);
+  height: 2px; background: rgba(143,174,134,0.45);
 }
-.handoff .label { color: var(--sage-pale); margin-bottom: 10px; }
-.handoff p.big { margin: 0 0 20px 0; font-size: 17px; color: #fff; line-height: 1.5; }
-.handoff .btn { background: var(--terracotta); }
+.journey__disc {
+  width: 52px; height: 52px; border-radius: 50%; background: var(--mid); margin: 0 auto 10px auto;
+  display: flex; align-items: center; justify-content: center; font-size: 22px; position: relative; z-index: 1;
+}
+.journey__cell.on .journey__disc { background: var(--honey-d); box-shadow: 0 0 0 6px rgba(214,168,104,0.18); }
+.journey__lab { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--honey-l); }
+.journey__cell.on .journey__lab { color: #fff; }
 
-/* ---------- STATUS ---------- */
+/* handoff + welcome */
+.handoff { border-radius: 22px; text-align: center; margin-top: 30px; }
+.handoff .inner { padding: 34px 24px; }
+.welcome { text-align: center; margin-top: 34px; }
+.welcome img { width: 150px; height: auto; display: block; margin: 0 auto 18px auto; }
+.welcome img[src=""] { display: none; }
+
+/* stars */
+.stars { display: flex; gap: 6px; margin: 4px 0 16px 0; }
+.stars button {
+  font-family: var(--face); font-size: 30px; line-height: 1; background: transparent; border: 0;
+  color: var(--tint); cursor: pointer; padding: 2px;
+}
+.stars button.on { color: var(--honey); }
+
+.review__btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.review__btns .btn { width: 100%; }
+.note { margin: 14px 0 0 0; min-height: 20px; font-size: 13px; color: var(--sage); }
+.incentive {
+  display: none; border: 1px solid var(--hairline); border-radius: 14px; padding: 14px 18px;
+  font-size: 14px; color: var(--ink); line-height: 1.6; margin: 0 0 16px 0;
+}
+.incentive.show { display: block; }
+
+/* status */
 .status { margin: 16px 0 0 0; text-align: center; min-height: 22px; }
-.status p { margin: 0; font-size: 14px; font-weight: 400; line-height: 1.6; overflow-wrap: break-word; }
-.status--ok p   { color: var(--sage); }
-.status--bad p  { color: var(--terracotta); }
-.status--wait p { color: var(--sub); }
+.status p { margin: 0; font-size: 14px; line-height: 1.6; }
+.status--ok p { color: var(--mid); }
+.status--bad p { color: var(--honey); }
+.status--wait p { color: var(--ink-l); }
 
-/* ---------- FOOTER ---------- */
-.foot {
-  background: var(--forest); border-radius: var(--radius);
-  padding: 16px var(--gutter); text-align: center; width: 100%;
-}
-.foot p {
-  margin: 0; font-size: 11px; font-weight: 400;
-  color: rgba(255,255,255,0.7); letter-spacing: 0.5px; overflow-wrap: break-word;
-}
+/* ================= FOOTER ================= */
+.foot { margin-top: 56px; text-align: center; border-radius: 22px 22px 0 0; }
+.foot .inner { padding: 40px 16px 34px 16px; }
+.foot__icons { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 0 0 20px 0; }
+.foot__icons img { height: 38px; width: auto; display: block; }
+.foot__logo { width: 84px; height: auto; display: block; margin: 0 auto 14px auto; }
+.foot__signoff { font-size: 15px; font-weight: 700; color: #fff; margin: 0 0 4px 0; }
+.foot__dom { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--sage-pale); margin: 0 0 24px 0; }
+.foot__sig { max-width: 560px; margin: 0 auto; background: #fff; border-radius: 18px; padding: 10px; }
+.foot__sig img { width: 100%; height: auto; display: block; border-radius: 10px; }
 
-/* ---------- MODE VISIBILITY ---------- */
+/* ================= MODE VISIBILITY ================= */
 [data-mode] { display: none; }
 body.m-builder  [data-mode~="builder"]  { display: block; }
 body.m-customer [data-mode~="customer"] { display: block; }
+body.m-customer .after-sign { display: none; }
+body.m-customer.c-signed .after-sign { display: block; }
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
-@media (max-width: 600px) {
-  :root { --gutter: 20px; }
-
-  body { padding: 0 12px 60px 12px; }
-
-  .switchbar { padding: 12px 0 10px 0; margin-bottom: 16px; }
-  .switch button { font-size: 11px; letter-spacing: 0.5px; padding: 14px 6px 12px 6px; }
-  .switch button .tick { font-size: 9px; }
-
-  .masthead { padding: 26px 20px; }
-  .masthead h1 { font-size: 21px; }
-
-  .grid { grid-template-columns: 1fr; gap: 18px; }
-
-  .checkrow { display: block; padding: 16px 0; }
+/* ================= MOBILE ================= */
+@media (max-width: 640px) {
+  :root { --pad: 20px; }
+  .hero { min-height: 62vh; }
+  .hero__inner { flex-direction: column-reverse; align-items: flex-start; padding: 100px 16px 34px 16px; gap: 14px; }
+  .hero__draw { flex: none; justify-content: flex-start; }
+  .hero__draw img { width: 110px; }
+  .hero h1 { font-size: 32px; }
+  .hero__lede { font-size: 15px; }
+  .grid, .cover, .snag__meta, .review__btns { grid-template-columns: 1fr; }
+  .sec h2 { font-size: 22px; }
+  .checkrow { display: block; }
   .checkrow__text { margin: 0 0 12px 0; }
   .toggle { width: 100%; }
   .toggle button { flex: 1 1 0; min-width: 0; padding: 12px 4px; font-size: 13px; }
-
+  .wcard { flex-wrap: wrap; }
+  .wcard .toggle { width: 100%; }
   .actions { grid-template-columns: 1fr; }
-  .btn { width: 100%; display: block; padding: 16px 20px; }
-  .btn--sm { width: auto; display: inline-block; padding: 9px 16px; }
-
-  .panel { padding: 20px; }
-  .sigpad { height: 150px; }
-
-  .card__head { padding: 18px 20px; }
-  .strip__cell { padding: 16px 10px; }
-  .strip__cell .n { font-size: 19px; }
-
-  .handoff { padding: 24px 20px; }
-  .handoff p.big { font-size: 16px; }
+  .btn { width: 100%; display: block; }
+  .btn--sm { width: auto; display: inline-block; }
+  .dark h3 { font-size: 24px; }
+  .journey__disc { width: 44px; height: 44px; font-size: 19px; }
+  .journey__cell:not(:last-child)::after { top: 22px; left: calc(50% + 26px); right: calc(-50% + 26px); }
+  .journey__lab { font-size: 9px; letter-spacing: 1px; }
+  .steps .sl { font-size: 9px; letter-spacing: 0.8px; }
+  .modes button { font-size: 11px; letter-spacing: 1px; }
 }
-
 @media (max-width: 380px) {
-  .toggle button { padding: 12px 2px; font-size: 12px; letter-spacing: 0; }
-  .masthead h1 { font-size: 19px; }
-  .strip__cell { min-width: 72px; }
+  .hero h1 { font-size: 28px; }
+  .toggle button { font-size: 12px; padding: 12px 2px; }
 }
 </style>
 </head>
 <body class="m-builder">
 
-<div class="wrap">
-
-  <!-- ============ MODE SWITCH ============ -->
-  <div class="switchbar">
-    <div class="switch">
-      <button type="button" id="tab-builder" class="on">
-        Builder Checks
-        <span class="tick" id="tick-builder"></span>
-      </button>
-      <button type="button" id="tab-customer">
-        Customer Walkthrough
-        <span class="tick" id="tick-customer"></span>
-      </button>
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="hero__logo"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a159cbca7ceea4e5718f77f.png" alt="Barrel Sauna UK"></div>
+  <div class="hero__inner">
+    <div class="hero__text">
+      <div class="hero__dash"></div>
+      <p class="hero__kicker" id="h-kicker">Handover sign-off</p>
+      <h1 id="h-title">Build completion <span>record</span></h1>
+      <p class="hero__lede" id="h-lede">Checks, snags and both signatures, all in one place.</p>
     </div>
-    <div class="rail"><div class="rail__fill" id="rail"></div></div>
+    <div class="hero__draw"><img id="h-draw" src="" alt=""></div>
   </div>
+</header>
 
-  <!-- ============ RESTORE BANNER ============ -->
+<!-- ================= STICKY BAR ================= -->
+<div class="bar">
+  <div class="wrap">
+    <div class="modes">
+      <button type="button" id="tab-builder" class="on">Builder<span class="tick" id="tick-builder"></span></button>
+      <button type="button" id="tab-customer">Customer<span class="tick" id="tick-customer"></span></button>
+    </div>
+    <div class="steps" id="steps"></div>
+  </div>
+</div>
+
+<main class="wrap">
+
   <div class="restore" id="restore">
     <p>Picked up where you left off. Nothing was lost.</p>
     <button class="btn btn--ghost btn--sm" id="restore-dismiss" type="button">Got it</button>
   </div>
 
-  <!-- ============ MASTHEAD ============ -->
-  <div class="masthead">
-    <img src="https://static.wixstatic.com/media/c71fcd_8399ae781d144665a26f8567a63d4e6f~mv2.png/v1/crop/x_0,y_51,w_1024,h_701/fill/w_284,h_194,al_c,q_85,usm_0.66_1.00_0.01/_edited.png" alt="Barrel Sauna UK">
-    <p class="kicker" id="mast-kicker">Handover Sign-Off</p>
-    <h1 id="mast-title">Build Completion Record</h1>
-  </div>
+  <!-- ================= BUILDER 1: THE JOB ================= -->
+  <section class="sec" id="b-job" data-mode="builder">
+    <div class="sec__head">
+      <div class="sec__num">1</div>
+      <div><p class="kicker">The job</p><h2>Who and <span>what</span></h2></div>
+    </div>
+    <div class="card">
+      <div class="chip" id="ghl-chip"><span class="dot"></span>Filled in from GHL</div>
+      <div class="grid">
+        <div class="field"><p class="label">Customer name</p><input class="input" id="f-name" type="text" placeholder="Full name"></div>
+        <div class="field"><p class="label">Order number</p><input class="input" id="f-order" type="text" placeholder="e.g. 3NFDW"></div>
+      </div>
+      <div class="grid">
+        <div class="field"><p class="label">Customer email</p><input class="input" id="f-email" type="email" placeholder="name@example.com"></div>
+        <div class="field"><p class="label">Customer phone</p><input class="input" id="f-phone" type="tel" placeholder="07..."></div>
+      </div>
+      <div class="field"><p class="label">Install address</p><textarea class="input" id="f-address" rows="2" placeholder="Street, town, postcode"></textarea></div>
+      <div class="grid">
+        <div class="field"><p class="label">Product</p><select class="input" id="f-product"><option value="">Select a product...</option></select></div>
+        <div class="field"><p class="label">Handover date</p><input class="input" id="f-date" type="date"></div>
+      </div>
+      <div class="grid">
+        <div class="field"><p class="label">Builder on site</p><input class="input" id="f-builder" type="text" placeholder="Name"></div>
+        <div class="field"><p class="label">Serial / batch reference</p><input class="input" id="f-serial" type="text" placeholder="If applicable"></div>
+      </div>
+    </div>
+  </section>
 
-  <!-- ============ THE JOB ============ -->
-  <div class="card">
-    <div class="card__head">
-      <h2>The Job</h2>
-      <p class="count" id="job-lock"></p>
+  <!-- ================= BUILDER 2: CHECKS ================= -->
+  <section class="sec" id="b-checks" data-mode="builder">
+    <div class="sec__head">
+      <div class="sec__num">2</div>
+      <div><p class="kicker">Build checks</p><h2>Tested before <span>handover</span></h2></div>
+      <span class="sec__count" id="checks-count"></span>
     </div>
-    <div class="card__body">
-      <div class="grid">
-        <div class="field">
-          <p class="label">Customer name</p>
-          <input class="input j" id="f-name" type="text" placeholder="Full name">
-        </div>
-        <div class="field">
-          <p class="label">Order number</p>
-          <input class="input j" id="f-order" type="text" placeholder="e.g. 1042">
-        </div>
-      </div>
-      <div class="grid">
-        <div class="field">
-          <p class="label">Customer email</p>
-          <input class="input j" id="f-email" type="email" placeholder="name@example.com">
-        </div>
-        <div class="field">
-          <p class="label">Customer phone</p>
-          <input class="input j" id="f-phone" type="tel" placeholder="07…">
-        </div>
-      </div>
-      <div class="field">
-        <p class="label">Install address</p>
-        <textarea class="input j" id="f-address" rows="2" placeholder="Street, town, postcode"></textarea>
-      </div>
-      <div class="grid">
-        <div class="field">
-          <p class="label">Product</p>
-          <select class="input j" id="f-product">
-            <option value="">Select a product…</option>
-          </select>
-        </div>
-        <div class="field">
-          <p class="label">Handover date</p>
-          <input class="input j" id="f-date" type="date">
-        </div>
-      </div>
-      <div class="grid">
-        <div class="field">
-          <p class="label">Builder on site</p>
-          <input class="input j" id="f-builder" type="text" placeholder="Name">
-        </div>
-        <div class="field">
-          <p class="label">Serial / batch reference</p>
-          <input class="input j" id="f-serial" type="text" placeholder="If applicable">
-        </div>
-      </div>
-    </div>
-  </div>
+    <div class="card"><div id="checks"><p class="empty">Select a product above to load the build checks.</p></div></div>
+  </section>
 
-  <!-- ============ BUILDER — BUILD CHECKS ============ -->
-  <div class="card" data-mode="builder">
-    <div class="card__head">
-      <h2>Build Checks</h2>
-      <p class="count" id="checks-count"></p>
+  <!-- ================= BUILDER 3: SNAGS + NOTES ================= -->
+  <section class="sec" id="b-snags" data-mode="builder">
+    <div class="sec__head">
+      <div class="sec__num">3</div>
+      <div><p class="kicker">Snags and notes</p><h2>Anything <span>outstanding</span></h2></div>
     </div>
-    <div class="card__body">
-      <div id="checks">
-        <p class="empty">Select a product above to load the build checks.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============ BUILDER — SNAGS ============ -->
-  <div class="card" data-mode="builder">
-    <div class="card__head"><h2>Snag List</h2></div>
-    <div class="card__body">
-      <p class="prose">Anything left outstanding. Leave blank for a clean handover.</p>
+    <div class="card">
+      <p class="prose">Leave this empty for a clean handover. Every snag needs someone to own it and a date to fix it by, so the reminder loop can chase it.</p>
       <div id="snags"></div>
       <button class="btn btn--ghost btn--sm" id="add-snag" type="button">Add a snag</button>
     </div>
-  </div>
-
-  <!-- ============ BUILDER — NOTES ============ -->
-  <div class="card" data-mode="builder">
-    <div class="card__head"><h2>Notes</h2></div>
-    <div class="card__body">
-      <div class="field">
-        <p class="label">Anything worth recording</p>
-        <textarea class="input" id="f-notes" rows="4" placeholder="Site access, customer requests, follow-up needed…"></textarea>
-      </div>
+    <div class="card">
+      <p class="label">Notes for the team</p>
+      <textarea class="input" id="f-notes" rows="4" placeholder="Site access, customer requests, follow-up needed..."></textarea>
     </div>
-  </div>
+    <datalist id="owners">
+      <option value="Workshop team"></option>
+      <option value="Builder on site"></option>
+      <option value="Office team"></option>
+      <option value="Customer's electrician"></option>
+    </datalist>
+  </section>
 
-  <!-- ============ BUILDER — SIGNATURE ============ -->
-  <div class="card" data-mode="builder">
-    <div class="card__head"><h2>Builder Sign-Off</h2></div>
-    <div class="card__body">
-      <div class="panel">
+  <!-- ================= BUILDER 4: SIGN-OFF ================= -->
+  <section class="sec" id="b-sign" data-mode="builder">
+    <div class="sec__head">
+      <div class="sec__num">4</div>
+      <div><p class="kicker">Builder sign-off</p><h2>Built, tested, <span>ready</span></h2></div>
+    </div>
+    <div class="card">
+      <div class="panel" style="margin-bottom:22px;">
         <p class="label">What signing means</p>
         <p class="focal">The unit is built, tested and ready to hand over</p>
       </div>
-      <div class="sigbox" style="margin-top:24px;">
-        <p class="label">Builder signature</p>
-        <canvas class="sigpad" id="sig-builder"></canvas>
-        <div class="sigbar">
-          <p class="fine">Signed on behalf of Barrel Sauna UK</p>
-          <button class="btn btn--ghost btn--sm" data-clear="sig-builder" type="button">Clear</button>
-        </div>
+      <p class="label">Builder signature</p>
+      <canvas class="sigpad" id="sig-builder"></canvas>
+      <div class="sigbar">
+        <p class="fine">Signed on behalf of Barrel Sauna UK</p>
+        <button class="btn btn--ghost btn--sm" data-clear="sig-builder" type="button">Clear</button>
       </div>
     </div>
-  </div>
 
-  <!-- ============ BUILDER — HANDOFF PROMPT ============ -->
-  <div class="handoff" data-mode="builder" id="handoff">
-    <p class="label">Builder side sorted</p>
-    <p class="big">Walk the customer round, then hand them the phone.</p>
-    <button class="btn" id="go-customer" type="button">Open the customer walkthrough</button>
-  </div>
-
-  <!-- ============ CUSTOMER — WHAT WAS CHECKED ============ -->
-  <div class="card" data-mode="customer">
-    <div class="card__head">
-      <h2>What We Checked</h2>
-      <p class="count" id="strip-total"></p>
+    <div class="dark handoff" id="handoff">
+      <div class="inner">
+        <p class="kicker">Builder side sorted</p>
+        <h3>Walk them round, then <span>hand over</span> the phone</h3>
+        <p style="margin-bottom:22px;">The customer side opens with everything you have just checked.</p>
+        <button class="btn" id="go-customer" type="button">Open the customer walkthrough</button>
+      </div>
     </div>
-    <div class="card__body">
-      <p class="prose">Every item on your build was tested before handover.</p>
+  </section>
+
+  <!-- ================= CUSTOMER: JOURNEY ================= -->
+  <section class="dark bleed" data-mode="customer" style="margin-top:0;">
+    <div class="inner">
+      <p class="kicker">Where you are right now</p>
+      <h3>The last step: <span>built at yours</span></h3>
+      <div class="journey">
+        <div class="journey__cell"><div class="journey__disc">&#128176;</div><div class="journey__lab">Deposit</div></div>
+        <div class="journey__cell"><div class="journey__disc">&#128221;</div><div class="journey__lab">Spec call</div></div>
+        <div class="journey__cell"><div class="journey__disc">&#128296;</div><div class="journey__lab">In build</div></div>
+        <div class="journey__cell on"><div class="journey__disc">&#127968;</div><div class="journey__lab">Built at yours</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CUSTOMER 1: WHAT WE CHECKED ================= -->
+  <section class="sec" id="c-checked" data-mode="customer">
+    <div class="sec__head">
+      <div class="sec__num">1</div>
+      <div><p class="kicker">What we checked</p><h2>Tested before you <span>got the keys</span></h2></div>
+      <span class="sec__count" id="strip-total"></span>
+    </div>
+    <div class="card">
       <div class="strip" id="strip"></div>
+      <div id="outstanding" style="margin-top:20px;"></div>
     </div>
-  </div>
-
-  <!-- ============ CUSTOMER — OUTSTANDING ============ -->
-  <div class="card" data-mode="customer">
-    <div class="card__head"><h2>Outstanding</h2></div>
-    <div class="card__body" id="outstanding"></div>
-  </div>
-
-  <!-- ============ CUSTOMER — WALKTHROUGH ============ -->
-  <div class="card" data-mode="customer">
-    <div class="card__head">
-      <h2>Your Walkthrough</h2>
-      <p class="count" id="walk-count"></p>
-    </div>
-    <div class="card__body">
-      <p class="prose">Confirm each of these was shown to you in person.</p>
-      <div id="walkthrough"></div>
-    </div>
-  </div>
-
-  <!-- ============ CUSTOMER — SIGNATURE ============ -->
-  <div class="card" data-mode="customer">
-    <div class="card__head"><h2>Customer Sign-Off</h2></div>
-    <div class="card__body">
-
-      <div class="signed" id="builder-signed" style="display:none;">
-        <span class="dot"></span>
-        <p id="builder-signed-txt">Signed by the builder</p>
+    <div class="card">
+      <p class="label">Your cover</p>
+      <div class="cover">
+        <div class="cover__cell"><p class="label">Warranty starts</p><p class="v" id="w-start"></p><p class="sub" id="w-length"></p></div>
+        <div class="cover__cell"><p class="label">First check-in</p><p class="v" id="w-check"></p><p class="sub">We will be in touch around then to see how you are getting on.</p></div>
       </div>
-
-      <p class="prose" style="margin-top:20px;">By signing, you confirm the unit has been delivered, you have been shown how to use and look after it, and anything still outstanding is listed above.</p>
-
-      <div class="sigbox">
-        <p class="label">Customer signature</p>
-        <canvas class="sigpad" id="sig-customer"></canvas>
-        <div class="sigbar">
-          <p class="fine">Signed by the customer</p>
-          <button class="btn btn--ghost btn--sm" data-clear="sig-customer" type="button">Clear</button>
-        </div>
-      </div>
-
     </div>
-  </div>
+  </section>
 
-  <!-- ============ FINISH (customer mode) ============ -->
-  <div class="card" data-mode="customer">
-    <div class="card__head"><h2>Finish</h2></div>
-    <div class="card__body">
+  <!-- ================= CUSTOMER 2: WALKTHROUGH ================= -->
+  <section class="sec" id="c-walk" data-mode="customer">
+    <div class="sec__head">
+      <div class="sec__num">2</div>
+      <div><p class="kicker">Your walkthrough</p><h2>Shown to you <span>in person</span></h2></div>
+      <span class="sec__count" id="walk-count"></span>
+    </div>
+    <div class="walk" id="walkthrough"></div>
+  </section>
+
+  <!-- ================= CUSTOMER 3: PHOTOS ================= -->
+  <section class="sec" id="c-photos" data-mode="customer">
+    <div class="sec__head">
+      <div class="sec__num">3</div>
+      <div><p class="kicker">Photos of your build</p><h2>Can we <span>share</span> it?</h2></div>
+    </div>
+    <div class="card">
+      <p class="prose" style="margin:0;">Our builder takes photos and short videos of every finished build. Are you happy for us to use them on our website and social media?</p>
+      <div class="choice" id="media-choice">
+        <button type="button" data-media="yes">Yes, happy</button>
+        <button type="button" data-media="no">No thanks</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CUSTOMER 4: SIGN ================= -->
+  <section class="sec" id="c-sign" data-mode="customer">
+    <div class="sec__head">
+      <div class="sec__num">4</div>
+      <div><p class="kicker">Customer sign-off</p><h2>Make it <span>yours</span></h2></div>
+    </div>
+    <div class="card">
+      <div class="signed" id="builder-signed" style="display:none;"><span class="dot"></span><p id="builder-signed-txt">Signed by the builder</p></div>
+      <p class="prose">By signing, you confirm the unit has been delivered, you have been shown how to use and look after it, and anything still outstanding is listed above.</p>
+      <p class="label">Your signature</p>
+      <canvas class="sigpad" id="sig-customer"></canvas>
+      <div class="sigbar">
+        <p class="fine">Signed by the customer</p>
+        <button class="btn btn--ghost btn--sm" data-clear="sig-customer" type="button">Clear</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CUSTOMER: WELCOME (after signing) ================= -->
+  <!-- NEW COPY from here down: welcome band, testimonial, review and referral wording all need sign-off before go-live -->
+  <section class="dark bleed welcome after-sign" data-mode="customer">
+    <div class="inner">
+      <img id="w-draw" src="" alt="">
+      <p class="kicker">Handover complete</p>
+      <h3>Welcome to the <span>family</span></h3>
+      <p id="w-line">Your build is finished, signed and yours.</p>
+    </div>
+  </section>
+
+  <!-- ================= CUSTOMER 5: REVIEW ================= -->
+  <section class="sec after-sign" id="c-review" data-mode="customer">
+    <div class="sec__head">
+      <div class="sec__num">5</div>
+      <div><p class="kicker">Your thoughts</p><h2>How did we <span>do</span>?</h2></div>
+    </div>
+    <div class="card">
+      <p class="label">Your rating</p>
+      <div class="stars" id="stars"></div>
+      <p class="label">In your own words</p>
+      <textarea class="input" id="t-text" rows="3" placeholder="What did you think of the build and the team?"></textarea>
+      <label class="tickline"><input type="checkbox" id="t-share"><span>Happy for Barrel Sauna UK to share this, with my first name only.</span></label>
+    </div>
+    <div class="card">
+      <p class="label">Leave a review</p>
+      <p class="prose">If you are happy with your build, a review helps other families find us. We copy your words above so you can paste them straight in.</p>
+      <div class="incentive" id="review-incentive"></div>
+      <div class="review__btns">
+        <a class="btn" id="rv-google" href="#" target="_blank" rel="noopener">Review us on Google</a>
+        <a class="btn btn--ghost" id="rv-trustpilot" href="#" target="_blank" rel="noopener">Review us on Trustpilot</a>
+      </div>
+      <p class="note" id="review-note"></p>
+    </div>
+  </section>
+
+  <!-- ================= CUSTOMER: REFER ================= -->
+  <section class="sec after-sign" id="c-refer" data-mode="customer">
+    <div class="sec__head">
+      <div class="sec__num">6</div>
+      <div><p class="kicker">Know someone?</p><h2>Pass it <span>on</span></h2></div>
+    </div>
+    <div class="card">
+      <p class="prose">If a friend or neighbour has been eyeing up your build, leave their details and we will give them a call. This part is optional.</p>
+      <div class="incentive" id="refer-reward"></div>
+      <div class="grid">
+        <div class="field"><p class="label">Their name</p><input class="input" id="r-name" type="text" placeholder="Name"></div>
+        <div class="field"><p class="label">Their phone</p><input class="input" id="r-phone" type="tel" placeholder="07..."></div>
+      </div>
+      <label class="tickline"><input type="checkbox" id="r-ok"><span>They know I am passing on their number and are happy to hear from you.</span></label>
+    </div>
+  </section>
+
+  <!-- ================= CUSTOMER: FINISH ================= -->
+  <section class="sec" id="c-finish" data-mode="customer">
+    <div class="sec__head">
+      <div class="sec__num">7</div>
+      <div><p class="kicker">Finish</p><h2>Save the <span>record</span></h2></div>
+    </div>
+    <div class="card">
       <div class="actions">
         <button class="btn" id="btn-pdf" type="button">Download PDF</button>
         <button class="btn btn--ghost" id="btn-save" type="button">Save to GHL</button>
         <button class="btn btn--ghost" id="btn-reset" type="button">Reset form</button>
       </div>
       <div class="status" id="status"><p></p></div>
-      <p class="fine" style="margin-top:20px; text-align:center;">Download the PDF, then WhatsApp it to the customer and attach it to their contact in GHL.</p>
+      <p class="fine" style="margin-top:14px; text-align:center;">Download the PDF, then WhatsApp it to the customer and attach it to their contact in GHL.</p>
     </div>
-  </div>
+  </section>
 
-  <div class="foot">
-    <p>Barrel Sauna UK &nbsp;&bull;&nbsp; Handcrafted in Wales &nbsp;&bull;&nbsp; barrelsaunauk.co.uk</p>
-  </div>
+</main>
 
-</div>
+<!-- ================= FOOTER ================= -->
+<footer class="dark foot">
+  <div class="inner">
+    <div class="foot__icons">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11ff484614db7528f5.png" alt="Glamping pod">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14de8ed1c29f9e137f.png" alt="Shepherd's hut">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11bdaa5e26a9690935.png" alt="Hot tub">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14bdaa5e26a969097d.png" alt="Mobile sauna">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cde8ed1c29f9e1305.png" alt="Barrel sauna">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cbdaa5e26a96908f0.png" alt="Double Dipper">
+    </div>
+    <img class="foot__logo" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a159cbca7ceea4e5718f77f.png" alt="Barrel Sauna UK">
+    <p class="foot__signoff">The Barrel Sauna UK Team</p>
+    <p class="foot__dom">barrelsaunauk.com &nbsp;&middot;&nbsp; Handcrafted in Wales</p>
+    <div class="foot__sig"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a96e859fac7854efe0a2fdc.jpeg" alt="Barrel Sauna UK, info@barrelsaunauk.com, +44 2920 676731, WhatsApp +44 7360 274142, www.barrelsaunauk.com"></div>
+  </div>
+</footer>
 
 <script>
 /* =========================================================
    CONFIG
    ========================================================= */
 var WEBHOOK_URL = 'PASTE_GHL_INBOUND_WEBHOOK_URL_HERE';
-var LOGO_URL = 'https://static.wixstatic.com/media/c71fcd_8399ae781d144665a26f8567a63d4e6f~mv2.png/v1/crop/x_0,y_51,w_1024,h_701/fill/w_284,h_194,al_c,q_85,usm_0.66_1.00_0.01/_edited.png';
-var SAVE_KEY = 'bsuk_handover_draft_v1';
+var LOGO_URL = 'https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a159cbca7ceea4e5718f77f.png';
+var SAVE_KEY = 'bsuk_handover_draft_v3';
+
+/* Review links. GOOGLE_REVIEW_URL is a placeholder: swap in the Google Business
+   Profile "Get more reviews" link (g.page/r/...) when you have it. */
+var GOOGLE_REVIEW_URL = 'https://www.google.com/search?q=barrel+sauna+uk+reviews#lrd=0x486e037b22af3203:0x4f5ca840ef4e374e,1,,,,';
+var TRUSTPILOT_URL = 'https://uk.trustpilot.com/review/www.barrelsaunauk.co.uk';
+
+/* Figures still to agree. Leave empty and nothing shows on the page.
+   REVIEW_INCENTIVE and REFERRAL_REWARD: the approved sentence.
+   WARRANTY_YEARS: years of cover per product key, e.g. 'barrel-sauna': 2 */
+var REVIEW_INCENTIVE = '';
+var REFERRAL_REWARD = '';
+var WARRANTY_YEARS = {};
+
+/* First check-in after handover, in days. Weekends roll on to Monday. */
+var CHECKIN_DAYS = 42;
+
+/* One-tap open from GHL: a custom link on the contact pointing at this page with
+   ?contact={{contact.id}}&name={{contact.name}}&email={{contact.email}}&phone={{contact.phone}}
+   &address={{contact.address1}}, {{contact.city}}, {{contact.postal_code}}&order=ORDER_NUMBER_FIELD
+   &product=barrel-sauna (or the product name). Every value is optional. */
 
 /* =========================================================
-   BRAND — PDF colour tokens
+   PDF COLOURS
    ========================================================= */
 var C = {
-  forest:     [43, 83, 54],
-  sage:       [80, 121, 95],
-  sageMuted:  [125, 154, 134],
-  sagePale:   [143, 174, 134],
-  terracotta: [192, 139, 65],
-  body:       [74, 74, 74],
-  sub:        [153, 153, 153],
-  fine:       [187, 187, 187],
-  panel:      [247, 248, 243],
-  hairline:   [222, 227, 220]
+  ground: [22, 38, 28], forestDeep: [31, 61, 40], mid: [65, 124, 81], sage: [80, 121, 95],
+  sagePale: [143, 174, 134], honey: [192, 139, 65], honeyL: [214, 168, 104],
+  body: [58, 66, 64], sub: [92, 102, 99], fine: [138, 147, 143], panel: [238, 244, 239], hairline: [219, 231, 221]
+};
+
+/* =========================================================
+   LINE DRAWINGS (honey light, for dark grounds)
+   ========================================================= */
+var CDN = 'https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/';
+var DRAW = {
+  'barrel-sauna': '6ab0ee0cde8ed1c29f9e1305.png',
+  'sauna-hot-tub-combo': '6ab0ee0cde8ed1c29f9e1305.png',
+  'hot-tub': '6ab0ee11bdaa5e26a9690935.png',
+  'ice-bath': '6ab0ee1130b0f957ccb86ce3.png',
+  'mobile-trailer': '6ab0ee14bdaa5e26a969097d.png',
+  'shepherds-hut': '6ab0ee14de8ed1c29f9e137f.png',
+  'outdoor-shower': '6ab0ee0c30b0f957ccb86c6f.png'
 };
 
 /* =========================================================
@@ -713,146 +775,117 @@ var SHARED_CHECKS = [
   'Site left clean, all packaging and offcuts removed'
 ];
 
-var WALKTHROUGH_CHECKS = [
-  'Controls demonstrated and I operated them myself once',
-  'Safe use explained, heat, water, electrics as applicable',
-  'Routine maintenance and cleaning explained',
-  'Winter care and shutdown explained',
-  'Warranty document handed over',
-  'Care and maintenance guide handed over',
-  'I know who to ring if something goes wrong'
+var WALKTHROUGH = [
+  { t: 'Controls demonstrated and I operated them myself once', e: '&#127899;&#65039;' },
+  { t: 'Safe use explained, heat, water, electrics as applicable', e: '&#128293;' },
+  { t: 'Routine maintenance and cleaning explained', e: '&#129533;' },
+  { t: 'Winter care and shutdown explained', e: '&#10052;&#65039;' },
+  { t: 'Warranty document handed over', e: '&#128220;' },
+  { t: 'Care and maintenance guide handed over', e: '&#128216;' },
+  { t: 'I know who to ring if something goes wrong', e: '&#128222;' }
 ];
+var WALKTHROUGH_CHECKS = WALKTHROUGH.map(function(w){ return w.t; });
 
 var PRODUCTS = {
-  'barrel-sauna': {
-    name: 'Barrel Sauna',
-    checks: [
-      'Heater mounted, guarded and tested to temperature',
-      'Stones loaded and correctly spaced',
-      'Thermometer and hygrometer fitted and reading',
-      'Benches secure, no flex under load',
-      'Backrests and headrests fitted',
-      'Vents open and close freely, inlet and outlet',
-      'Roof shingles or covering watertight',
-      'Electrical connection tested by a qualified person',
-      'Bucket, ladle and accessories handed over'
-    ]
-  },
-  'cube-sauna': {
-    name: 'Cube Sauna',
-    checks: [
-      'Heater mounted, guarded and tested to temperature',
-      'Stones loaded and correctly spaced',
-      'Thermometer and hygrometer fitted and reading',
-      'Benches secure, no flex under load',
-      'Glass front and door seals checked',
-      'Vents open and close freely, inlet and outlet',
-      'Roof watertight, no standing water',
-      'Electrical connection tested by a qualified person',
-      'Bucket, ladle and accessories handed over'
-    ]
-  },
-  'hot-tub': {
-    name: 'Hot Tub',
-    checks: [
-      'Tub filled and held for a full pressure test, no leaks',
-      'Stove or heater fired and brought to temperature',
-      'Flue fitted, sealed and drawing correctly',
-      'Heat shield or guard fitted around the stove',
-      'Drain valve operates and seals',
-      'Liner seated correctly, no creasing or pinching',
-      'Steps and grab handles secure',
-      'Lid fits and latches',
-      'Thermometer fitted and reading'
-    ]
-  },
-  'ice-bath': {
-    name: 'Ice Bath',
-    checks: [
-      'Bath filled and held, no leaks at seams or fittings',
-      'Chiller unit run for a full cycle and reaching target temperature',
-      'Filtration running, no airlocks',
-      'Drain valve operates and seals',
-      'Insulation and lid fitted correctly',
-      'Electrical connection tested by a qualified person',
-      'Thermometer or digital readout fitted and correct'
-    ]
-  },
-  'sauna-hot-tub-combo': {
-    name: 'Sauna plus Hot Tub Combination',
-    checks: [
-      'Sauna heater mounted, guarded and tested to temperature',
-      'Sauna stones loaded and correctly spaced',
-      'Sauna benches and vents checked',
-      'Tub filled and held for a full pressure test, no leaks',
-      'Tub stove fired, flue fitted and drawing correctly',
-      'Heat shield fitted around the tub stove',
-      'Both drain points operate and seal',
-      'Electrical connection tested by a qualified person',
-      'Accessories for both units handed over'
-    ]
-  },
-  'mobile-trailer': {
-    name: 'Mobile Sauna Trailer',
-    checks: [
-      'Chassis and axle inspected, no damage',
-      'Road lights tested, indicators, brake, tail, number plate',
-      'Tyre pressures and tread checked',
-      'Wheel nuts torqued',
-      'Coupling, breakaway cable and jockey wheel checked',
-      'Stabiliser legs deploy and hold',
-      'Load restrained, nothing loose inside for transit',
-      'Heater mounted, guarded and tested to temperature',
-      'Flue secure and sealed for travel',
-      'Number plate fitted and matching',
-      'Towing weight confirmed and given to the customer'
-    ]
-  },
-  'shepherds-hut': {
-    name: "Shepherd's Hut",
-    checks: [
-      'Wheels and chassis inspected, hut sitting level',
-      'Roof watertight, no standing water, flashing sealed',
-      'Windows and stable door operate and seal',
-      'Internal fit-out secure, units, shelving, bed base',
-      'Stove installed, flue sealed, heat shields fitted',
-      'Carbon monoxide alarm fitted and tested',
-      'Smoke alarm fitted and tested',
-      'Electrics tested by a qualified person, RCD tripping correctly',
-      'Plumbing filled, run and checked for leaks',
-      'Insulation and vapour barrier signed off before close-up'
-    ]
-  },
-  'changing-room': {
-    name: 'Changing Room',
-    checks: [
-      'Unit sited level, door swings clear',
-      'Benches and hooks secure',
-      'Roof watertight',
-      'Lighting fitted and tested',
-      'Ventilation clear',
-      'Flooring laid and sealed'
-    ]
-  },
-  'outdoor-shower': {
-    name: 'Outdoor Shower',
-    checks: [
-      'Plumbing connected, run and checked for leaks',
-      'Hot and cold both flowing and mixing correctly',
-      'Drainage running away cleanly, no pooling',
-      'Fixings secure, no movement in the frame',
-      'Timber treated and sealed at all cut ends',
-      'Isolation valve fitted and shown to the customer'
-    ]
-  },
-  'other': {
-    name: 'Other / Bespoke',
-    checks: [
-      'Build matches the agreed specification',
-      'All bespoke elements checked against the drawing',
-      'Any powered or plumbed elements tested by a qualified person'
-    ]
-  }
+  'barrel-sauna': { name: 'Barrel Sauna', checks: [
+    'Heater mounted, guarded and tested to temperature',
+    'Stones loaded and correctly spaced',
+    'Thermometer and hygrometer fitted and reading',
+    'Benches secure, no flex under load',
+    'Backrests and headrests fitted',
+    'Vents open and close freely, inlet and outlet',
+    'Roof shingles or covering watertight',
+    'Electrical connection tested by a qualified person',
+    'Bucket, ladle and accessories handed over'
+  ]},
+  'cube-sauna': { name: 'Cube Sauna', checks: [
+    'Heater mounted, guarded and tested to temperature',
+    'Stones loaded and correctly spaced',
+    'Thermometer and hygrometer fitted and reading',
+    'Benches secure, no flex under load',
+    'Glass front and door seals checked',
+    'Vents open and close freely, inlet and outlet',
+    'Roof watertight, no standing water',
+    'Electrical connection tested by a qualified person',
+    'Bucket, ladle and accessories handed over'
+  ]},
+  'hot-tub': { name: 'Hot Tub', checks: [
+    'Tub filled and held for a full pressure test, no leaks',
+    'Stove or heater fired and brought to temperature',
+    'Flue fitted, sealed and drawing correctly',
+    'Heat shield or guard fitted around the stove',
+    'Drain valve operates and seals',
+    'Liner seated correctly, no creasing or pinching',
+    'Steps and grab handles secure',
+    'Lid fits and latches',
+    'Thermometer fitted and reading'
+  ]},
+  'ice-bath': { name: 'Ice Bath', checks: [
+    'Bath filled and held, no leaks at seams or fittings',
+    'Chiller unit run for a full cycle and reaching target temperature',
+    'Filtration running, no airlocks',
+    'Drain valve operates and seals',
+    'Insulation and lid fitted correctly',
+    'Electrical connection tested by a qualified person',
+    'Thermometer or digital readout fitted and correct'
+  ]},
+  'sauna-hot-tub-combo': { name: 'Sauna plus Hot Tub Combination', checks: [
+    'Sauna heater mounted, guarded and tested to temperature',
+    'Sauna stones loaded and correctly spaced',
+    'Sauna benches and vents checked',
+    'Tub filled and held for a full pressure test, no leaks',
+    'Tub stove fired, flue fitted and drawing correctly',
+    'Heat shield fitted around the tub stove',
+    'Both drain points operate and seal',
+    'Electrical connection tested by a qualified person',
+    'Accessories for both units handed over'
+  ]},
+  'mobile-trailer': { name: 'Mobile Sauna Trailer', checks: [
+    'Chassis and axle inspected, no damage',
+    'Road lights tested, indicators, brake, tail, number plate',
+    'Tyre pressures and tread checked',
+    'Wheel nuts torqued',
+    'Coupling, breakaway cable and jockey wheel checked',
+    'Stabiliser legs deploy and hold',
+    'Load restrained, nothing loose inside for transit',
+    'Heater mounted, guarded and tested to temperature',
+    'Flue secure and sealed for travel',
+    'Number plate fitted and matching',
+    'Towing weight confirmed and given to the customer'
+  ]},
+  'shepherds-hut': { name: "Shepherd's Hut", checks: [
+    'Wheels and chassis inspected, hut sitting level',
+    'Roof watertight, no standing water, flashing sealed',
+    'Windows and stable door operate and seal',
+    'Internal fit-out secure, units, shelving, bed base',
+    'Stove installed, flue sealed, heat shields fitted',
+    'Carbon monoxide alarm fitted and tested',
+    'Smoke alarm fitted and tested',
+    'Electrics tested by a qualified person, RCD tripping correctly',
+    'Plumbing filled, run and checked for leaks',
+    'Insulation and vapour barrier signed off before close-up'
+  ]},
+  'changing-room': { name: 'Changing Room', checks: [
+    'Unit sited level, door swings clear',
+    'Benches and hooks secure',
+    'Roof watertight',
+    'Lighting fitted and tested',
+    'Ventilation clear',
+    'Flooring laid and sealed'
+  ]},
+  'outdoor-shower': { name: 'Outdoor Shower', checks: [
+    'Plumbing connected, run and checked for leaks',
+    'Hot and cold both flowing and mixing correctly',
+    'Drainage running away cleanly, no pooling',
+    'Fixings secure, no movement in the frame',
+    'Timber treated and sealed at all cut ends',
+    'Isolation valve fitted and shown to the customer'
+  ]},
+  'other': { name: 'Other / Bespoke', checks: [
+    'Build matches the agreed specification',
+    'All bespoke elements checked against the drawing',
+    'Any powered or plumbed elements tested by a qualified person'
+  ]}
 };
 
 var JOB_FIELDS = ['f-name','f-order','f-email','f-phone','f-address','f-product','f-date','f-builder','f-serial'];
@@ -860,17 +893,30 @@ var JOB_FIELDS = ['f-name','f-order','f-email','f-phone','f-address','f-product'
 /* =========================================================
    STATE
    ========================================================= */
-var state = { checks: {}, walkthrough: {}, snags: [] };
+function blank() {
+  return {
+    checks: {}, walkthrough: {}, snags: [],
+    review: { google: false, trustpilot: false },
+    testimonial: { rating: 0, text: '', share: false },
+    referral: { name: '', phone: '', ok: false },
+    media: '',
+    signedAt: {},
+    finished: { pdf: false, sent: false }
+  };
+}
+var state = blank();
 var pads = {};
 var logoData = null;
 var mode = 'builder';
 var booting = true;
+var CONTACT_ID = '';
 
-/* =========================================================
-   HELPERS
-   ========================================================= */
 function $(id) { return document.getElementById(id); }
 function esc(s) { return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function ukDate(iso) { if (!iso) return ''; var p = iso.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
+function longDate(d) { return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); }
+function isoOf(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function parseIso(iso) { if (!iso) return null; var p = iso.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
 
 function setStatus(msg, kind) {
   var el = $('status');
@@ -878,10 +924,25 @@ function setStatus(msg, kind) {
   el.querySelector('p').textContent = msg;
 }
 
-function ukDate(iso) {
-  if (!iso) return '';
-  var p = iso.split('-');
-  return p[2] + '/' + p[1] + '/' + p[0];
+/* =========================================================
+   DATES: warranty start + first check-in
+   ========================================================= */
+function handoverDate() { return parseIso($('f-date').value) || new Date(); }
+function checkinDate() {
+  var d = new Date(handoverDate().getTime());
+  d.setDate(d.getDate() + CHECKIN_DAYS);
+  if (d.getDay() === 6) d.setDate(d.getDate() + 2);
+  if (d.getDay() === 0) d.setDate(d.getDate() + 1);
+  return d;
+}
+function warrantyText() {
+  var y = WARRANTY_YEARS[$('f-product').value];
+  return y ? y + ' year' + (y === 1 ? '' : 's') + ' of cover from today.' : 'Your cover is set out in your warranty document.';
+}
+function renderCover() {
+  $('w-start').textContent = longDate(handoverDate());
+  $('w-length').textContent = warrantyText();
+  $('w-check').textContent = longDate(checkinDate());
 }
 
 /* =========================================================
@@ -892,50 +953,57 @@ function save() {
   var job = {};
   JOB_FIELDS.forEach(function(id){ job[id] = $(id).value; });
   job['f-notes'] = $('f-notes').value;
-
   var blob = {
-    v: 1,
-    at: Date.now(),
-    mode: mode,
-    job: job,
-    checks: state.checks,
-    walkthrough: state.walkthrough,
-    snags: state.snags,
-    sigB: pads['sig-builder']  ? pads['sig-builder'].data()  : '',
+    v: 3, at: Date.now(), mode: mode, contact: CONTACT_ID, job: job, s: state,
+    sigB: pads['sig-builder'] ? pads['sig-builder'].data() : '',
     sigC: pads['sig-customer'] ? pads['sig-customer'].data() : ''
   };
-
   try { localStorage.setItem(SAVE_KEY, JSON.stringify(blob)); } catch (e) {}
 }
 
 function load() {
   var blob;
   try { blob = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); } catch (e) { return false; }
-  if (!blob || blob.v !== 1) return false;
-
+  if (!blob || blob.v !== 3) return false;
   if (Date.now() - (blob.at || 0) > 7 * 24 * 60 * 60 * 1000) {
     try { localStorage.removeItem(SAVE_KEY); } catch (e) {}
     return false;
   }
-
-  Object.keys(blob.job || {}).forEach(function(id){
-    var el = $(id);
-    if (el) el.value = blob.job[id];
-  });
-
-  state.checks      = blob.checks      || {};
-  state.walkthrough = blob.walkthrough || {};
-  state.snags       = blob.snags       || [];
-
+  Object.keys(blob.job || {}).forEach(function(id){ var el = $(id); if (el) el.value = blob.job[id]; });
+  var b = blank();
+  Object.keys(b).forEach(function(k){ if (blob.s && blob.s[k] !== undefined) b[k] = blob.s[k]; });
+  state = b;
+  state.snags = (state.snags || []).map(function(s){ return typeof s === 'string' ? { text: s, owner: '', due: '' } : s; });
+  if (blob.contact && !CONTACT_ID) CONTACT_ID = blob.contact;
   if (blob.sigB) pads['sig-builder'].restore(blob.sigB);
   if (blob.sigC) pads['sig-customer'].restore(blob.sigC);
-
   mode = blob.mode === 'customer' ? 'customer' : 'builder';
   return true;
 }
 
-function wipe() {
-  try { localStorage.removeItem(SAVE_KEY); } catch (e) {}
+function wipe() { try { localStorage.removeItem(SAVE_KEY); } catch (e) {} }
+
+/* =========================================================
+   HERO + DRAWINGS
+   ========================================================= */
+function productName() { var k = $('f-product').value; return k ? PRODUCTS[k].name : ''; }
+function drawSrc() { var f = DRAW[$('f-product').value]; return f ? CDN + f : ''; }
+
+function renderHero() {
+  var src = drawSrc();
+  $('h-draw').setAttribute('src', src);
+  $('w-draw').setAttribute('src', src);
+  if (mode === 'builder') {
+    $('h-kicker').textContent = 'Handover sign-off';
+    $('h-title').innerHTML = 'Build completion <span>record</span>';
+    $('h-lede').textContent = 'Checks, snags and both signatures, all in one place.';
+  } else {
+    var name = $('f-name').value.trim();
+    var p = productName();
+    $('h-kicker').textContent = name ? 'Prepared for ' + name : 'Your handover';
+    $('h-title').innerHTML = p ? 'Welcome to your new <span>' + esc(p.toLowerCase()) + '</span>' : 'Your <span>handover</span>';
+    $('h-lede').textContent = 'Handed over on ' + longDate(handoverDate()) + '.';
+  }
 }
 
 /* =========================================================
@@ -943,85 +1011,80 @@ function wipe() {
    ========================================================= */
 function setMode(m) {
   mode = m;
-  document.body.className = 'm-' + m;
+  document.body.classList.remove('m-builder', 'm-customer');
+  document.body.classList.add('m-' + m);
   $('tab-builder').classList.toggle('on', m === 'builder');
   $('tab-customer').classList.toggle('on', m === 'customer');
-
-  if (m === 'builder') {
-    $('mast-kicker').textContent = 'Handover Sign-Off';
-    $('mast-title').textContent  = 'Build Completion Record';
-    $('job-lock').textContent    = '';
-    JOB_FIELDS.forEach(function(id){ $(id).disabled = false; });
-  } else {
-    $('mast-kicker').textContent = 'Handover Sign-Off';
-    $('mast-title').textContent  = 'Your Handover';
-    $('job-lock').textContent    = 'LOCKED';
-    JOB_FIELDS.forEach(function(id){ $(id).disabled = true; });
-    renderStrip();
-    renderOutstanding();
-    renderBuilderSigned();
-  }
-
+  if (m === 'customer') { renderStrip(); renderOutstanding(); renderBuilderSigned(); renderCover(); }
+  renderHero();
   refresh();
   save();
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
-
-$('tab-builder').addEventListener('click',  function(){ setMode('builder'); });
+$('tab-builder').addEventListener('click', function(){ setMode('builder'); });
 $('tab-customer').addEventListener('click', function(){ setMode('customer'); });
-$('go-customer').addEventListener('click',  function(){ setMode('customer'); });
+$('go-customer').addEventListener('click', function(){ setMode('customer'); });
 
 /* =========================================================
-   PROGRESS
+   PROGRESS + STEPPER
    ========================================================= */
-function builderDone() {
-  var jobOk = $('f-name').value.trim() && $('f-product').value && $('f-builder').value.trim();
-  var checkKeys = Object.keys(state.checks);
-  var checksOk = checkKeys.length && checkKeys.every(function(k){ return state.checks[k]; });
-  var sigOk = pads['sig-builder'] && pads['sig-builder'].isSigned();
-  return !!(jobOk && checksOk && sigOk);
+function allSet(obj) { var k = Object.keys(obj); return k.length > 0 && k.every(function(x){ return obj[x]; }); }
+function signed(id) { return !!(pads[id] && pads[id].isSigned()); }
+function jobOk() { return !!($('f-name').value.trim() && $('f-product').value && $('f-builder').value.trim()); }
+function builderDone() { return jobOk() && allSet(state.checks) && signed('sig-builder'); }
+
+function stepList() {
+  if (mode === 'builder') {
+    return [
+      { id: 'b-job', l: 'Job', done: jobOk() },
+      { id: 'b-checks', l: 'Checks', done: allSet(state.checks) },
+      { id: 'b-snags', l: 'Snags', done: allSet(state.checks) },
+      { id: 'b-sign', l: 'Sign', done: signed('sig-builder') }
+    ];
+  }
+  var cs = signed('sig-customer');
+  return [
+    { id: 'c-checked', l: 'Checked', done: true },
+    { id: 'c-walk', l: 'Walk', done: allSet(state.walkthrough) },
+    { id: 'c-photos', l: 'Photos', done: !!state.media },
+    { id: 'c-sign', l: 'Sign', done: cs },
+    { id: 'c-review', l: 'Review', done: cs && (state.testimonial.rating > 0 || state.review.google || state.review.trustpilot) },
+    { id: 'c-finish', l: 'Finish', done: state.finished.pdf || state.finished.sent }
+  ];
 }
 
-function builderProgress() {
-  var keys = Object.keys(state.checks);
-  var t = 2 + keys.length;
-  var d = 0;
-  if ($('f-name').value.trim() && $('f-product').value && $('f-builder').value.trim()) d++;
-  d += keys.filter(function(k){ return state.checks[k]; }).length;
-  if (pads['sig-builder'] && pads['sig-builder'].isSigned()) d++;
-  return { done: d, total: t };
+function renderSteps() {
+  var list = stepList();
+  var nowIdx = list.findIndex(function(s){ return !s.done; });
+  $('steps').innerHTML = list.map(function(s, i){
+    var cls = s.done ? 'done' : (i === nowIdx ? 'now' : '');
+    return '<button type="button" class="' + cls + '" data-go="' + s.id + '"><span class="sd">' + (s.done ? '&#10003;' : (i + 1)) + '</span><span class="sl">' + s.l + '</span></button>';
+  }).join('');
 }
 
-function customerProgress() {
-  var keys = Object.keys(state.walkthrough);
-  var t = keys.length + 1;
-  var d = keys.filter(function(k){ return state.walkthrough[k]; }).length;
-  if (pads['sig-customer'] && pads['sig-customer'].isSigned()) d++;
-  return { done: d, total: t };
-}
+$('steps').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-go]');
+  if (!b) return;
+  var el = $(b.dataset.go);
+  if (!el || el.offsetParent === null) return;
+  var top = el.getBoundingClientRect().top + window.pageYOffset - 130;
+  window.scrollTo({ top: top, behavior: 'smooth' });
+});
 
 function refresh() {
-  var b = builderProgress();
-  var c = customerProgress();
-
-  $('tick-builder').textContent  = b.total ? b.done + ' / ' + b.total : '';
-  $('tick-customer').textContent = c.total ? c.done + ' / ' + c.total : '';
-
-  var p = mode === 'builder' ? b : c;
-  var pct = p.total ? Math.round((p.done / p.total) * 100) : 0;
-  var rail = $('rail');
-  rail.style.width = pct + '%';
-  rail.classList.toggle('done', pct === 100);
+  var bList = (function(){ var m = mode; mode = 'builder'; var l = stepList(); mode = m; return l; })();
+  var cList = (function(){ var m = mode; mode = 'customer'; var l = stepList(); mode = m; return l; })();
+  $('tick-builder').textContent = ' ' + bList.filter(function(s){ return s.done; }).length + '/' + bList.length;
+  $('tick-customer').textContent = ' ' + cList.filter(function(s){ return s.done; }).length + '/' + cList.length;
 
   var ck = Object.keys(state.checks);
-  $('checks-count').textContent = ck.length
-    ? ck.filter(function(k){ return state.checks[k]; }).length + ' / ' + ck.length
-    : '';
-
+  $('checks-count').textContent = ck.length ? ck.filter(function(k){ return state.checks[k]; }).length + ' / ' + ck.length : '';
   var wk = Object.keys(state.walkthrough);
   $('walk-count').textContent = wk.filter(function(k){ return state.walkthrough[k]; }).length + ' / ' + wk.length;
 
-  $('handoff').style.display = (mode === 'builder' && builderDone()) ? 'block' : 'none';
+  $('handoff').style.display = builderDone() ? 'block' : 'none';
+  document.body.classList.toggle('c-signed', signed('sig-customer'));
+  renderSteps();
 }
 
 /* =========================================================
@@ -1031,21 +1094,25 @@ function buildProductList() {
   var sel = $('f-product');
   Object.keys(PRODUCTS).forEach(function(key){
     var o = document.createElement('option');
-    o.value = key;
-    o.textContent = PRODUCTS[key].name;
+    o.value = key; o.textContent = PRODUCTS[key].name;
     sel.appendChild(o);
   });
+}
+function matchProduct(v) {
+  if (!v) return '';
+  var low = v.toLowerCase().trim();
+  if (PRODUCTS[low]) return low;
+  var hit = Object.keys(PRODUCTS).find(function(k){ return PRODUCTS[k].name.toLowerCase() === low; });
+  return hit || '';
 }
 
 /* =========================================================
    CHECK ROWS
    ========================================================= */
 function renderToggle(scope, id, current) {
-  var opts = [
-    { v: 'pass', l: 'Pass', c: 'on-pass' },
-    { v: 'fail', l: 'Fail', c: 'on-fail' },
-    { v: 'na',   l: 'N/A',  c: 'on-na'   }
-  ];
+  var opts = scope === 'walkthrough'
+    ? [{ v: 'pass', l: 'Yes', c: 'on-pass' }, { v: 'fail', l: 'Not yet', c: 'on-fail' }, { v: 'na', l: 'N/A', c: 'on-na' }]
+    : [{ v: 'pass', l: 'Pass', c: 'on-pass' }, { v: 'fail', l: 'Fail', c: 'on-fail' }, { v: 'na', l: 'N/A', c: 'on-na' }];
   return '<div class="toggle">' + opts.map(function(o){
     return '<button type="button" data-scope="' + scope + '" data-id="' + id + '" data-v="' + o.v + '" class="' + (current === o.v ? o.c : '') + '">' + o.l + '</button>';
   }).join('') + '</div>';
@@ -1054,30 +1121,26 @@ function renderToggle(scope, id, current) {
 function renderChecks() {
   var key = $('f-product').value;
   var box = $('checks');
-
   if (!key) {
     box.innerHTML = '<p class="empty">Select a product above to load the build checks.</p>';
     state.checks = {};
     refresh();
     return;
   }
-
   var list = PRODUCTS[key].checks.concat(SHARED_CHECKS);
   var fresh = {};
   list.forEach(function(t){ fresh[t] = state.checks[t] || ''; });
   state.checks = fresh;
-
   box.innerHTML = list.map(function(t){
     return '<div class="checkrow"><p class="checkrow__text">' + esc(t) + '</p>' + renderToggle('checks', esc(t), state.checks[t]) + '</div>';
   }).join('');
-
   refresh();
 }
 
 function renderWalkthrough() {
   WALKTHROUGH_CHECKS.forEach(function(t){ if (!(t in state.walkthrough)) state.walkthrough[t] = ''; });
-  $('walkthrough').innerHTML = WALKTHROUGH_CHECKS.map(function(t){
-    return '<div class="checkrow"><p class="checkrow__text">' + esc(t) + '</p>' + renderToggle('walkthrough', esc(t), state.walkthrough[t]) + '</div>';
+  $('walkthrough').innerHTML = WALKTHROUGH.map(function(w){
+    return '<div class="wcard"><div class="wcard__disc">' + w.e + '</div><p class="wcard__text">' + esc(w.t) + '</p>' + renderToggle('walkthrough', esc(w.t), state.walkthrough[w.t]) + '</div>';
   }).join('');
   refresh();
 }
@@ -1086,66 +1149,51 @@ document.addEventListener('click', function(e){
   var b = e.target.closest('button[data-scope]');
   if (!b) return;
   var scope = b.dataset.scope;
-  var v = b.dataset.v;
   var key = Object.keys(state[scope]).find(function(k){ return esc(k) === b.dataset.id; });
   if (!key) return;
-  state[scope][key] = state[scope][key] === v ? '' : v;
-  if (scope === 'checks') { renderChecks(); } else { renderWalkthrough(); }
+  state[scope][key] = state[scope][key] === b.dataset.v ? '' : b.dataset.v;
+  if (scope === 'checks') renderChecks(); else renderWalkthrough();
   save();
 });
 
 /* =========================================================
-   CUSTOMER SUMMARY STRIP
+   CUSTOMER STRIP + OUTSTANDING
    ========================================================= */
+function cleanSnags() { return state.snags.filter(function(s){ return s.text && s.text.trim(); }); }
+
 function renderStrip() {
   var keys = Object.keys(state.checks);
   var pass = keys.filter(function(k){ return state.checks[k] === 'pass'; }).length;
   var fail = keys.filter(function(k){ return state.checks[k] === 'fail'; }).length;
-  var na   = keys.filter(function(k){ return state.checks[k] === 'na'; }).length;
-
-  $('strip-total').textContent = keys.length ? keys.length + ' CHECKS' : '';
-
-  var html = '<div class="strip__cell pass"><p class="n">' + pass + '</p><p class="k">Passed</p></div>';
+  var na = keys.filter(function(k){ return state.checks[k] === 'na'; }).length;
+  $('strip-total').textContent = keys.length ? keys.length + ' checks' : '';
+  var html = '<div class="strip__cell"><p class="n">' + pass + '</p><p class="k">Passed</p></div>';
   if (fail) html += '<div class="strip__cell fail"><p class="n">' + fail + '</p><p class="k">Outstanding</p></div>';
-  if (na)   html += '<div class="strip__cell na"><p class="n">' + na + '</p><p class="k">Not applicable</p></div>';
-
+  if (na) html += '<div class="strip__cell na"><p class="n">' + na + '</p><p class="k">Not applicable</p></div>';
   $('strip').innerHTML = html;
 }
 
-/* =========================================================
-   CUSTOMER OUTSTANDING PANEL
-   ========================================================= */
 function renderOutstanding() {
   var fails = Object.keys(state.checks).filter(function(k){ return state.checks[k] === 'fail'; });
-  var snags = state.snags.map(function(s){ return s.trim(); }).filter(Boolean);
+  var snags = cleanSnags();
   var box = $('outstanding');
-
   if (!fails.length && !snags.length) {
-    box.innerHTML =
-      '<div class="panel panel--clean">' +
-      '<p class="label">Nothing outstanding</p>' +
-      '<p class="sub">Everything was checked and passed. Your build is finished.</p>' +
-      '</div>';
+    box.innerHTML = '<div class="panel panel--clean"><p class="label">Nothing outstanding</p><p class="focal">Everything was checked and passed. Your build is finished.</p></div>';
     return;
   }
-
-  var items = fails.concat(snags);
+  var n = fails.length + snags.length;
+  var items = fails.map(function(f){ return '<li>' + esc(f) + '</li>'; }).concat(snags.map(function(s){
+    var when = s.due ? '<span class="when">To be sorted by ' + esc(longDate(parseIso(s.due))) + '</span>' : '';
+    return '<li>' + esc(s.text.trim()) + when + '</li>';
+  }));
   box.innerHTML =
-    '<div class="panel">' +
-    '<p class="label">Still to sort</p>' +
-    '<p class="focal">' + items.length + ' item' + (items.length === 1 ? '' : 's') + ' outstanding</p>' +
-    '</div>' +
-    '<ul class="out" style="margin-top:20px;">' +
-    items.map(function(i){ return '<li>' + esc(i) + '</li>'; }).join('') +
-    '</ul>' +
-    '<p class="fine" style="margin-top:18px;">We will be in touch to arrange these. Nothing here stops you using your build unless we have told you otherwise.</p>';
+    '<div class="panel"><p class="label">Still to sort</p><p class="focal">' + n + ' item' + (n === 1 ? '' : 's') + ' outstanding</p></div>' +
+    '<ul class="out">' + items.join('') + '</ul>' +
+    '<p class="fine" style="margin-top:14px;">We will be in touch to arrange these. Nothing here stops you using your build unless we have told you otherwise.</p>';
 }
 
-/* =========================================================
-   BUILDER SIGNED CONFIRMATION
-   ========================================================= */
 function renderBuilderSigned() {
-  var on = pads['sig-builder'] && pads['sig-builder'].isSigned();
+  var on = signed('sig-builder');
   $('builder-signed').style.display = on ? 'flex' : 'none';
   if (on) {
     var who = $('f-builder').value.trim() || 'the builder';
@@ -1158,32 +1206,109 @@ function renderBuilderSigned() {
    ========================================================= */
 function renderSnags() {
   $('snags').innerHTML = state.snags.map(function(s, i){
-    return '<div class="snag"><input class="input" type="text" data-snag="' + i + '" value="' + esc(s) + '" placeholder="Describe the snag and who is fixing it"><button class="snag__kill" type="button" data-kill="' + i + '">&times;</button></div>';
+    return '<div class="snag">' +
+      '<div class="snag__top"><input class="input" type="text" data-snag="' + i + '" data-k="text" value="' + esc(s.text) + '" placeholder="What needs sorting"><button class="snag__kill" type="button" data-kill="' + i + '">&times;</button></div>' +
+      '<div class="snag__meta">' +
+        '<div><p class="label">Who owns it</p><input class="input" list="owners" type="text" data-snag="' + i + '" data-k="owner" value="' + esc(s.owner) + '" placeholder="Name or team"></div>' +
+        '<div><p class="label">Fix by</p><input class="input" type="date" data-snag="' + i + '" data-k="due" value="' + esc(s.due) + '"></div>' +
+      '</div></div>';
   }).join('');
 }
-
 $('add-snag').addEventListener('click', function(){
-  state.snags.push('');
-  renderSnags();
-  save();
-  var inputs = document.querySelectorAll('input[data-snag]');
+  state.snags.push({ text: '', owner: '', due: '' });
+  renderSnags(); save();
+  var inputs = document.querySelectorAll('input[data-k="text"]');
   if (inputs.length) inputs[inputs.length - 1].focus();
 });
-
 document.addEventListener('input', function(e){
-  if (e.target.matches('input[data-snag]')) {
-    state.snags[+e.target.dataset.snag] = e.target.value;
-    save();
-  }
+  var t = e.target;
+  if (t.matches('input[data-snag]')) { state.snags[+t.dataset.snag][t.dataset.k] = t.value; save(); }
 });
-
+document.addEventListener('change', function(e){
+  var t = e.target;
+  if (t.matches('input[data-snag]')) { state.snags[+t.dataset.snag][t.dataset.k] = t.value; save(); }
+});
 document.addEventListener('click', function(e){
   var b = e.target.closest('button[data-kill]');
   if (!b) return;
   state.snags.splice(+b.dataset.kill, 1);
-  renderSnags();
-  save();
+  renderSnags(); save();
 });
+
+/* =========================================================
+   MEDIA CONSENT
+   ========================================================= */
+function renderMedia() {
+  document.querySelectorAll('#media-choice button').forEach(function(b){
+    b.className = state.media === b.dataset.media ? (b.dataset.media === 'yes' ? 'on-yes' : 'on-no') : '';
+  });
+}
+$('media-choice').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-media]');
+  if (!b) return;
+  state.media = b.dataset.media;
+  renderMedia(); refresh(); save();
+});
+
+/* =========================================================
+   TESTIMONIAL + REVIEW
+   ========================================================= */
+function renderStars() {
+  var r = state.testimonial.rating;
+  var html = '';
+  for (var i = 1; i <= 5; i++) {
+    html += '<button type="button" data-star="' + i + '" class="' + (i <= r ? 'on' : '') + '" aria-label="' + i + ' star' + (i > 1 ? 's' : '') + '">&#9733;</button>';
+  }
+  $('stars').innerHTML = html;
+}
+$('stars').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-star]');
+  if (!b) return;
+  var v = +b.dataset.star;
+  state.testimonial.rating = state.testimonial.rating === v ? 0 : v;
+  renderStars(); refresh(); save();
+});
+$('t-text').addEventListener('input', function(){ state.testimonial.text = this.value; save(); });
+$('t-share').addEventListener('change', function(){ state.testimonial.share = this.checked; save(); });
+
+function copyWords() {
+  var txt = state.testimonial.text.trim();
+  if (!txt) { $('review-note').textContent = 'Thank you.'; return; }
+  var ok = function(){ $('review-note').textContent = 'Your words are copied. Just paste them in.'; };
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt).then(ok, function(){}); }
+  } catch (e) {}
+}
+function initReview() {
+  $('rv-google').href = GOOGLE_REVIEW_URL;
+  $('rv-trustpilot').href = TRUSTPILOT_URL;
+  if (REVIEW_INCENTIVE) { $('review-incentive').textContent = REVIEW_INCENTIVE; $('review-incentive').classList.add('show'); }
+  if (REFERRAL_REWARD) { $('refer-reward').textContent = REFERRAL_REWARD; $('refer-reward').classList.add('show'); }
+  $('rv-google').addEventListener('click', function(){ state.review.google = true; copyWords(); refresh(); save(); });
+  $('rv-trustpilot').addEventListener('click', function(){ state.review.trustpilot = true; copyWords(); refresh(); save(); });
+}
+function reviewSummary() {
+  var r = state.review;
+  if (r.google && r.trustpilot) return 'Opened Google and Trustpilot';
+  if (r.google) return 'Opened Google';
+  if (r.trustpilot) return 'Opened Trustpilot';
+  return 'Links shown, not opened';
+}
+
+/* =========================================================
+   REFERRAL
+   ========================================================= */
+$('r-name').addEventListener('input', function(){ state.referral.name = this.value; save(); });
+$('r-phone').addEventListener('input', function(){ state.referral.phone = this.value; save(); });
+$('r-ok').addEventListener('change', function(){ state.referral.ok = this.checked; save(); });
+
+function paintCustomerInputs() {
+  $('t-text').value = state.testimonial.text || '';
+  $('t-share').checked = !!state.testimonial.share;
+  $('r-name').value = state.referral.name || '';
+  $('r-phone').value = state.referral.phone || '';
+  $('r-ok').checked = !!state.referral.ok;
+}
 
 /* =========================================================
    SIGNATURE PADS
@@ -1191,8 +1316,7 @@ document.addEventListener('click', function(e){
 function initPad(id) {
   var canvas = $(id);
   var ctx = canvas.getContext('2d');
-  var drawing = false;
-  var dirty = false;
+  var drawing = false, dirty = false;
 
   function reset() {
     var r = canvas.getBoundingClientRect();
@@ -1201,33 +1325,38 @@ function initPad(id) {
     canvas.width = Math.round(r.width * dpr);
     canvas.height = Math.round(r.height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.strokeStyle = '#2B5336';
+    ctx.lineWidth = 2.2; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#1F3D28';
     return r;
   }
-
+  var pending = null;
   function size() {
-    var img = dirty ? canvas.toDataURL() : null;
+    var img = dirty ? (pending || canvas.toDataURL()) : null;
     var r = reset();
     if (!r) return;
     if (img) {
       var i = new Image();
-      i.onload = function(){ ctx.drawImage(i, 0, 0, r.width, r.height); };
+      i.onload = function(){ ctx.drawImage(i, 0, 0, r.width, r.height); pending = null; };
       i.src = img;
     }
   }
-
   function pt(e) {
     var r = canvas.getBoundingClientRect();
     var s = e.touches ? e.touches[0] : e;
     return { x: s.clientX - r.left, y: s.clientY - r.top };
   }
-
-  function start(e) { e.preventDefault(); drawing = true; dirty = true; var p = pt(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }
-  function move(e)  { if (!drawing) return; e.preventDefault(); var p = pt(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }
-  function stop()   { if (!drawing) return; drawing = false; refresh(); save(); }
+  function start(e) {
+    e.preventDefault();
+    if (!canvas.width || canvas.width < 10) reset();
+    drawing = true; dirty = true;
+    var p = pt(e); ctx.beginPath(); ctx.moveTo(p.x, p.y);
+  }
+  function move(e) { if (!drawing) return; e.preventDefault(); var p = pt(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }
+  function stop() {
+    if (!drawing) return;
+    drawing = false;
+    if (!state.signedAt[id]) state.signedAt[id] = new Date().toISOString();
+    refresh(); save();
+  }
 
   canvas.addEventListener('mousedown', start);
   canvas.addEventListener('mousemove', move);
@@ -1240,42 +1369,31 @@ function initPad(id) {
   var t;
   window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(size, 150); });
   window.addEventListener('orientationchange', function(){ clearTimeout(t); t = setTimeout(size, 300); });
-
   reset();
 
   return {
     clear: function() {
       var r = canvas.getBoundingClientRect();
       ctx.clearRect(0, 0, r.width, r.height);
-      dirty = false;
-      refresh();
-      save();
+      dirty = false; pending = null;
+      delete state.signedAt[id];
+      refresh(); save();
     },
-    restore: function(data) {
-      var r = reset();
-      var i = new Image();
-      i.onload = function(){
-        var rr = canvas.getBoundingClientRect();
-        ctx.drawImage(i, 0, 0, rr.width, rr.height);
-      };
-      i.src = data;
-      dirty = true;
-    },
+    restore: function(data) { pending = data; dirty = true; size(); },
+    redraw: function() { if (dirty) size(); },
     isSigned: function() { return dirty; },
     data: function() {
       if (!dirty) return '';
+      if (pending) return pending;
       var out = document.createElement('canvas');
-      out.width = canvas.width;
-      out.height = canvas.height;
-      var octx = out.getContext('2d');
-      octx.fillStyle = '#ffffff';
-      octx.fillRect(0, 0, out.width, out.height);
-      octx.drawImage(canvas, 0, 0);
+      out.width = canvas.width; out.height = canvas.height;
+      var o = out.getContext('2d');
+      o.fillStyle = '#ffffff'; o.fillRect(0, 0, out.width, out.height);
+      o.drawImage(canvas, 0, 0);
       return out.toDataURL('image/png');
     }
   };
 }
-
 document.addEventListener('click', function(e){
   var b = e.target.closest('button[data-clear]');
   if (b) pads[b.dataset.clear].clear();
@@ -1286,34 +1404,30 @@ document.addEventListener('click', function(e){
    ========================================================= */
 JOB_FIELDS.concat(['f-notes']).forEach(function(id){
   var el = $(id);
-  el.addEventListener('input',  function(){ refresh(); save(); });
-  el.addEventListener('change', function(){ refresh(); save(); });
+  var fn = function(){ renderHero(); renderCover(); refresh(); save(); };
+  el.addEventListener('input', fn);
+  el.addEventListener('change', fn);
 });
-
-$('f-product').addEventListener('change', function(){ renderChecks(); save(); });
+$('f-product').addEventListener('change', function(){ renderChecks(); renderHero(); save(); });
+$('restore-dismiss').addEventListener('click', function(){ $('restore').classList.remove('show'); });
 
 /* =========================================================
-   RESTORE BANNER
-   ========================================================= */
-$('restore-dismiss').addEventListener('click', function(){
-  $('restore').classList.remove('show');
-});
-
-/* =========================================================
-   PRE-FILL FROM URL
+   PRE-FILL FROM URL (one-tap open from GHL)
    ========================================================= */
 function prefill() {
   var p = new URLSearchParams(window.location.search);
-  var map = {
-    name: 'f-name', order: 'f-order', email: 'f-email', phone: 'f-phone',
-    address: 'f-address', product: 'f-product', builder: 'f-builder', serial: 'f-serial'
-  };
+  var map = { name: 'f-name', order: 'f-order', email: 'f-email', phone: 'f-phone', address: 'f-address', builder: 'f-builder', serial: 'f-serial' };
   var any = false;
   Object.keys(map).forEach(function(k){
     var v = p.get(k);
-    if (v) { $(map[k]).value = v; any = true; }
+    if (v && v.indexOf('{{') === -1) { $(map[k]).value = v; any = true; }
   });
-  if (!$('f-date').value) $('f-date').value = new Date().toISOString().slice(0, 10);
+  var prod = matchProduct(p.get('product'));
+  if (prod) { $('f-product').value = prod; any = true; }
+  var cid = p.get('contact');
+  if (cid && cid.indexOf('{{') === -1) { CONTACT_ID = cid; any = true; }
+  if (!$('f-date').value) $('f-date').value = isoOf(new Date());
+  if (any) $('ghl-chip').classList.add('show');
   return any;
 }
 
@@ -1322,42 +1436,39 @@ function prefill() {
    ========================================================= */
 function validate() {
   var missing = [];
-  if (!$('f-name').value.trim())    missing.push('customer name');
-  if (!$('f-product').value)        missing.push('product');
+  if (!$('f-name').value.trim()) missing.push('customer name');
+  if (!$('f-product').value) missing.push('product');
   if (!$('f-builder').value.trim()) missing.push('builder name');
-
   var a = Object.keys(state.checks).filter(function(k){ return !state.checks[k]; }).length;
   if (a) missing.push(a + ' build check' + (a > 1 ? 's' : ''));
-
   var b = Object.keys(state.walkthrough).filter(function(k){ return !state.walkthrough[k]; }).length;
   if (b) missing.push(b + ' walkthrough item' + (b > 1 ? 's' : ''));
-
-  if (!pads['sig-builder'].isSigned())  missing.push('builder signature');
-  if (!pads['sig-customer'].isSigned()) missing.push('customer signature');
-
+  var noOwner = cleanSnags().filter(function(s){ return !s.owner.trim() || !s.due; }).length;
+  if (noOwner) missing.push('an owner and fix-by date on ' + noOwner + ' snag' + (noOwner > 1 ? 's' : ''));
+  if (!state.media) missing.push('the photo question');
+  if (!signed('sig-builder')) missing.push('builder signature');
+  if (!signed('sig-customer')) missing.push('customer signature');
   return missing;
 }
 
 function collect() {
-  var snags = state.snags.map(function(s){ return s.trim(); }).filter(Boolean);
+  var snags = cleanSnags().map(function(s){ return { text: s.text.trim(), owner: s.owner.trim(), due: s.due }; });
   var fails = Object.keys(state.checks).filter(function(k){ return state.checks[k] === 'fail'; });
   var key = $('f-product').value;
-
   return {
-    name: $('f-name').value.trim(),
-    email: $('f-email').value.trim(),
-    phone: $('f-phone').value.trim(),
-    order: $('f-order').value.trim(),
-    product: key ? PRODUCTS[key].name : '',
-    productKey: key,
-    address: $('f-address').value.trim(),
-    serial: $('f-serial').value.trim(),
-    date: $('f-date').value,
-    builder: $('f-builder').value.trim(),
-    notes: $('f-notes').value.trim(),
-    snags: snags,
-    fails: fails,
-    status: (snags.length || fails.length) ? 'Snagged' : 'Clean'
+    name: $('f-name').value.trim(), email: $('f-email').value.trim(), phone: $('f-phone').value.trim(),
+    order: $('f-order').value.trim(), product: key ? PRODUCTS[key].name : '', productKey: key,
+    address: $('f-address').value.trim(), serial: $('f-serial').value.trim(), date: $('f-date').value,
+    builder: $('f-builder').value.trim(), notes: $('f-notes').value.trim(),
+    snags: snags, fails: fails,
+    status: (snags.length || fails.length) ? 'Snagged' : 'Clean',
+    warrantyStart: isoOf(handoverDate()), warrantyYears: WARRANTY_YEARS[key] || '',
+    checkin: isoOf(checkinDate()),
+    media: state.media,
+    rating: state.testimonial.rating, words: state.testimonial.text.trim(), shareOk: !!state.testimonial.share,
+    refName: state.referral.name.trim(), refPhone: state.referral.phone.trim(), refOk: !!state.referral.ok,
+    review: reviewSummary(),
+    signedB: state.signedAt['sig-builder'] || '', signedC: state.signedAt['sig-customer'] || ''
   };
 }
 
@@ -1366,17 +1477,21 @@ function filename(d) {
   var order = d.order ? '-' + d.order.replace(/[^A-Za-z0-9-]/g, '') : '';
   return 'BSUK-Handover' + order + '-' + surname + '-' + (d.date || 'undated') + '.pdf';
 }
+function stamp(iso) {
+  if (!iso) return '';
+  var d = new Date(iso);
+  return d.toLocaleDateString('en-GB') + ' ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+}
 
 /* =========================================================
-   LOGO
+   LOGO FOR PDF
    ========================================================= */
 function loadLogo() {
   var img = new Image();
   img.crossOrigin = 'anonymous';
   img.onload = function() {
     var c = document.createElement('canvas');
-    c.width = img.width;
-    c.height = img.height;
+    c.width = img.width; c.height = img.height;
     c.getContext('2d').drawImage(img, 0, 0);
     try { logoData = c.toDataURL('image/png'); } catch (e) { logoData = null; }
   };
@@ -1388,298 +1503,235 @@ function loadLogo() {
    PDF
    ========================================================= */
 var PG = { w: 210, h: 297, m: 18 };
-var CW = PG.w - (PG.m * 2);
+var CW = PG.w - PG.m * 2;
 
 function makePDF(d) {
-  var jsPDF = window.jspdf.jsPDF;
-  var doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  var doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
   var y = 0;
 
   function footer() {
-    doc.setFillColor.apply(doc, C.forest);
+    doc.setFillColor.apply(doc, C.ground);
     doc.rect(0, PG.h - 14, PG.w, 14, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(7);
+    doc.setTextColor.apply(doc, C.sagePale);
+    doc.text('BARREL SAUNA UK    HANDCRAFTED IN WALES    BARRELSAUNAUK.COM', PG.w / 2, PG.h - 5.5, { align: 'center', charSpace: 0.4 });
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7.5);
-    doc.setTextColor(255, 255, 255);
-    doc.text('Barrel Sauna UK    Handcrafted in Wales    barrelsaunauk.co.uk', PG.w / 2, PG.h - 5.5, { align: 'center' });
   }
-
   function page() { doc.addPage(); footer(); y = PG.m; }
   function room(n) { if (y + n > PG.h - 22) page(); }
-
-  function sectionLabel(txt) {
-    room(14);
+  function label(txt, x, yy) {
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5); doc.setTextColor.apply(doc, C.sage);
+    doc.text(txt.toUpperCase(), x, yy, { charSpace: 0.5 });
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8);
-    doc.setTextColor.apply(doc, C.sageMuted);
-    doc.text(txt.toUpperCase(), PG.m, y, { charSpace: 0.6 });
+  }
+  function section(txt) {
+    room(14);
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); doc.setTextColor.apply(doc, C.forestDeep);
+    doc.text(txt.toUpperCase(), PG.m, y, { charSpace: 0.7 });
+    doc.setFont('helvetica', 'normal');
     y += 2.5;
-    doc.setDrawColor.apply(doc, C.hairline);
-    doc.setLineWidth(0.2);
+    doc.setDrawColor.apply(doc, C.hairline); doc.setLineWidth(0.25);
     doc.line(PG.m, y, PG.m + CW, y);
     y += 6;
   }
-
-  function rowPair(l1, v1, l2, v2) {
+  function pair(l1, v1, l2, v2) {
     room(11);
     var half = CW / 2;
-    doc.setFontSize(7.5);
-    doc.setTextColor.apply(doc, C.sageMuted);
-    doc.text(l1.toUpperCase(), PG.m, y, { charSpace: 0.5 });
-    if (l2) doc.text(l2.toUpperCase(), PG.m + half, y, { charSpace: 0.5 });
+    label(l1, PG.m, y); if (l2) label(l2, PG.m + half, y);
     y += 4;
-    doc.setFontSize(10);
-    doc.setTextColor.apply(doc, C.body);
+    doc.setFontSize(10); doc.setTextColor.apply(doc, C.body);
     doc.text(v1 || '-', PG.m, y, { maxWidth: half - 6 });
     if (l2) doc.text(v2 || '-', PG.m + half, y, { maxWidth: half - 6 });
     y += 7;
   }
-
-  function rowFull(l, v) {
+  function full(l, v) {
     var lines = doc.splitTextToSize(v || '-', CW);
     room(8 + lines.length * 5);
-    doc.setFontSize(7.5);
-    doc.setTextColor.apply(doc, C.sageMuted);
-    doc.text(l.toUpperCase(), PG.m, y, { charSpace: 0.5 });
-    y += 4;
-    doc.setFontSize(10);
-    doc.setTextColor.apply(doc, C.body);
+    label(l, PG.m, y); y += 4;
+    doc.setFontSize(10); doc.setTextColor.apply(doc, C.body);
     doc.text(lines, PG.m, y);
     y += lines.length * 5 + 2;
   }
-
-  function checkLine(txt, verdict) {
+  function checkLine(txt, verdict, yes) {
     var lines = doc.splitTextToSize(txt, CW - 26);
     var h = Math.max(lines.length * 4.6, 6);
     room(h + 3);
-
-    var badge = { pass: 'PASS', fail: 'FAIL', na: 'N/A' }[verdict] || '-';
-    var tone = verdict === 'pass' ? C.sage : verdict === 'fail' ? C.terracotta : C.fine;
-
-    doc.setFontSize(9.5);
-    doc.setTextColor.apply(doc, C.body);
+    var words = yes ? { pass: 'YES', fail: 'NOT YET', na: 'N/A' } : { pass: 'PASS', fail: 'FAIL', na: 'N/A' };
+    var tone = verdict === 'pass' ? C.mid : verdict === 'fail' ? C.honey : C.fine;
+    doc.setFontSize(9.5); doc.setTextColor.apply(doc, C.body);
     doc.text(lines, PG.m, y + 3.4);
-
-    doc.setFontSize(7.5);
-    doc.setTextColor.apply(doc, tone);
-    doc.text(badge, PG.m + CW, y + 3.4, { align: 'right', charSpace: 0.4 });
-
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5); doc.setTextColor.apply(doc, tone);
+    doc.text(words[verdict] || '-', PG.m + CW, y + 3.4, { align: 'right', charSpace: 0.4 });
+    doc.setFont('helvetica', 'normal');
     y += h + 1.5;
-    doc.setDrawColor(240, 242, 238);
-    doc.setLineWidth(0.15);
+    doc.setDrawColor.apply(doc, C.hairline); doc.setLineWidth(0.15);
     doc.line(PG.m, y, PG.m + CW, y);
     y += 3;
   }
-
-  /* band */
-  doc.setFillColor.apply(doc, C.forest);
-  doc.rect(0, 0, PG.w, 58, 'F');
-
-  if (logoData) {
-    try { doc.addImage(logoData, 'PNG', PG.m, 12, 34, 23); } catch (e) {}
-  } else {
-    doc.setFontSize(13);
-    doc.setTextColor(255, 255, 255);
-    doc.text('BARREL SAUNA UK', PG.m, 24, { charSpace: 1.2 });
+  function para(txt, tone) {
+    var lines = doc.splitTextToSize(txt, CW);
+    room(lines.length * 5 + 3);
+    doc.setFontSize(9.5); doc.setTextColor.apply(doc, tone || C.body);
+    doc.text(lines, PG.m, y + 3.4);
+    y += lines.length * 5 + 3;
   }
 
+  /* band */
+  doc.setFillColor.apply(doc, C.ground);
+  doc.rect(0, 0, PG.w, 60, 'F');
+  if (logoData) { try { doc.addImage(logoData, 'PNG', PG.m, 10, 26, 26); } catch (e) {} }
+  else { doc.setFont('helvetica', 'bold'); doc.setFontSize(12); doc.setTextColor(255, 255, 255); doc.text('BARREL SAUNA UK', PG.m, 22, { charSpace: 1.2 }); }
+  doc.setFillColor.apply(doc, C.honeyL);
+  doc.rect(PG.m, 41, 14, 0.6, 'F');
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor.apply(doc, C.honeyL);
+  doc.text('HANDOVER SIGN-OFF', PG.m, 46.5, { charSpace: 1.6 });
+  doc.setFontSize(19); doc.setTextColor(255, 255, 255);
+  doc.text('Build Completion Record', PG.m, 54.5);
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor.apply(doc, C.sagePale);
-  doc.text('HANDOVER SIGN-OFF', PG.m, 44, { charSpace: 1.6 });
-
-  doc.setFontSize(19);
-  doc.setTextColor(255, 255, 255);
-  doc.text('Build Completion Record', PG.m, 52);
-
   footer();
-  y = 72;
+  y = 74;
 
-  /* the job */
-  sectionLabel('The Job');
-  rowPair('Customer', d.name, 'Order number', d.order);
-  rowPair('Product', d.product, 'Handover date', ukDate(d.date));
-  rowPair('Builder on site', d.builder, 'Serial / batch', d.serial);
-  rowPair('Email', d.email, 'Phone', d.phone);
-  rowFull('Install address', d.address);
+  section('The Job');
+  pair('Customer', d.name, 'Order number', d.order);
+  pair('Product', d.product, 'Handover date', ukDate(d.date));
+  pair('Builder on site', d.builder, 'Serial / batch', d.serial);
+  pair('Email', d.email, 'Phone', d.phone);
+  full('Install address', d.address);
   y += 3;
 
-  /* outcome, the one focal */
+  /* outcome */
   room(26);
-  doc.setFillColor.apply(doc, C.panel);
-  doc.rect(PG.m, y, CW, 20, 'F');
-  doc.setFillColor.apply(doc, C.terracotta);
-  doc.rect(PG.m, y, 1.1, 20, 'F');
-  doc.setFontSize(7.5);
-  doc.setTextColor.apply(doc, C.sageMuted);
-  doc.text('HANDOVER OUTCOME', PG.m + 6, y + 7, { charSpace: 0.5 });
-  doc.setFontSize(12.5);
-  doc.setTextColor.apply(doc, C.terracotta);
+  doc.setFillColor.apply(doc, C.panel); doc.rect(PG.m, y, CW, 20, 'F');
+  doc.setFillColor.apply(doc, C.forestDeep); doc.rect(PG.m, y, 1.1, 20, 'F');
+  label('Handover outcome', PG.m + 6, y + 7);
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(12.5); doc.setTextColor.apply(doc, C.forestDeep);
   var n = d.snags.length + d.fails.length;
-  doc.text(
-    d.status === 'Clean'
-      ? 'Clean handover, nothing outstanding'
-      : n + ' item' + (n === 1 ? '' : 's') + ' outstanding',
-    PG.m + 6, y + 14.5
-  );
+  doc.text(d.status === 'Clean' ? 'Clean handover, nothing outstanding' : n + ' item' + (n === 1 ? '' : 's') + ' outstanding', PG.m + 6, y + 14.5);
+  doc.setFont('helvetica', 'normal');
   y += 28;
 
-  /* build checks */
-  sectionLabel('Build Checks');
-  Object.keys(state.checks).forEach(function(k){ checkLine(k, state.checks[k]); });
+  section('Warranty and aftercare');
+  pair('Warranty starts', ukDate(d.warrantyStart), 'Cover', d.warrantyYears ? d.warrantyYears + ' years' : 'As per warranty document');
+  pair('First check-in', ukDate(d.checkin), 'Photo and video consent', d.media === 'yes' ? 'Yes' : 'No');
+  y += 2;
+
+  section('Build Checks');
+  Object.keys(state.checks).forEach(function(k){ checkLine(k, state.checks[k], false); });
   y += 4;
 
-  /* snags */
-  sectionLabel('Snag List');
+  section('Snag List');
   if (d.snags.length) {
     d.snags.forEach(function(s, i){
-      var lines = doc.splitTextToSize(s, CW - 8);
-      room(lines.length * 5 + 4);
-      doc.setFontSize(9.5);
-      doc.setTextColor.apply(doc, C.terracotta);
+      var lines = doc.splitTextToSize(s.text, CW - 8);
+      room(lines.length * 5 + 9);
+      doc.setFontSize(9.5); doc.setTextColor.apply(doc, C.honey);
       doc.text(String(i + 1) + '.', PG.m, y + 3.4);
       doc.setTextColor.apply(doc, C.body);
       doc.text(lines, PG.m + 7, y + 3.4);
-      y += lines.length * 5 + 3;
+      y += lines.length * 5;
+      doc.setFontSize(8); doc.setTextColor.apply(doc, C.sub);
+      doc.text('Owner: ' + (s.owner || '-') + '    Fix by: ' + (s.due ? ukDate(s.due) : '-'), PG.m + 7, y + 3);
+      y += 7;
     });
   } else {
-    room(8);
-    doc.setFontSize(9.5);
-    doc.setTextColor.apply(doc, C.sub);
-    doc.text('No snags recorded. Clean handover.', PG.m, y + 3.4);
-    y += 8;
+    para('No snags recorded. Clean handover.', C.sub);
   }
+  y += 3;
+
+  section('Customer Walkthrough');
+  Object.keys(state.walkthrough).forEach(function(k){ checkLine(k, state.walkthrough[k], true); });
   y += 4;
 
-  /* walkthrough */
-  sectionLabel('Customer Walkthrough');
-  Object.keys(state.walkthrough).forEach(function(k){ checkLine(k, state.walkthrough[k]); });
-  y += 4;
+  if (d.notes) { section('Notes'); para(d.notes); y += 3; }
 
-  /* notes */
-  if (d.notes) {
-    sectionLabel('Notes');
-    var nlines = doc.splitTextToSize(d.notes, CW);
-    room(nlines.length * 5 + 4);
-    doc.setFontSize(9.5);
-    doc.setTextColor.apply(doc, C.body);
-    doc.text(nlines, PG.m, y + 3.4);
-    y += nlines.length * 5 + 8;
+  section('Customer Feedback');
+  pair('Rating', d.rating ? d.rating + ' out of 5' : 'Not given', 'Happy to share', d.words ? (d.shareOk ? 'Yes, first name only' : 'No') : '-');
+  if (d.words) full('In their words', d.words);
+  full('Review request', 'Google and Trustpilot links shown. ' + d.review + '.');
+  if (d.refName || d.refPhone) {
+    pair('Referral', d.refName, 'Referral phone', d.refPhone);
+    full('Referral consent', d.refOk ? 'Customer confirmed their friend is happy to be contacted.' : 'Not confirmed. Do not call until confirmed.');
   }
+  y += 3;
 
   /* sign-off */
-  if (y + 78 > PG.h - 22) page();
-  sectionLabel('Sign-Off');
-
-  var dec = doc.splitTextToSize(
-    'Both parties confirm the unit has been delivered, checked and handed over in the condition recorded on this form, with any items listed above still outstanding.',
-    CW
-  );
-  doc.setFontSize(9.5);
-  doc.setTextColor.apply(doc, C.body);
-  doc.text(dec, PG.m, y);
-  y += dec.length * 5 + 8;
-
-  var half = (CW - 10) / 2;
-  var sigH = 26;
-
-  function sigSlot(x, label, sub, pad) {
-    doc.setFontSize(7.5);
-    doc.setTextColor.apply(doc, C.sageMuted);
-    doc.text(label.toUpperCase(), x, y, { charSpace: 0.5 });
+  if (y + 80 > PG.h - 22) page();
+  section('Sign-Off');
+  para('Both parties confirm the unit has been delivered, checked and handed over in the condition recorded on this form, with any items listed above still outstanding.');
+  y += 5;
+  var half = (CW - 10) / 2, sigH = 26;
+  function slot(x, lab, who, when, pad) {
+    label(lab, x, y);
     var top = y + 3;
-    if (pad.isSigned()) {
-      try { doc.addImage(pad.data(), 'PNG', x, top, half, sigH); } catch (e) {}
-    }
-    doc.setDrawColor.apply(doc, C.hairline);
-    doc.setLineWidth(0.3);
+    if (pad.isSigned()) { try { doc.addImage(pad.data(), 'PNG', x, top, half, sigH); } catch (e) {} }
+    doc.setDrawColor.apply(doc, C.hairline); doc.setLineWidth(0.3);
     doc.line(x, top + sigH + 1, x + half, top + sigH + 1);
-    doc.setFontSize(8);
-    doc.setTextColor.apply(doc, C.sub);
-    doc.text(sub, x, top + sigH + 6, { maxWidth: half });
+    doc.setFontSize(8); doc.setTextColor.apply(doc, C.sub);
+    doc.text(who, x, top + sigH + 6, { maxWidth: half });
+    if (when) { doc.setTextColor.apply(doc, C.fine); doc.text('Signed ' + when, x, top + sigH + 10.5, { maxWidth: half }); }
   }
-
-  sigSlot(PG.m, 'Builder signature', d.builder || 'Barrel Sauna UK', pads['sig-builder']);
-  sigSlot(PG.m + half + 10, 'Customer signature', d.name || 'Customer', pads['sig-customer']);
-  y += sigH + 16;
-
-  doc.setFontSize(8);
-  doc.setTextColor.apply(doc, C.fine);
-  doc.text('Signed ' + ukDate(d.date) + '    Reference ' + (d.order || 'not given'), PG.m, y);
+  slot(PG.m, 'Builder signature', d.builder || 'Barrel Sauna UK', stamp(d.signedB), pads['sig-builder']);
+  slot(PG.m + half + 10, 'Customer signature', d.name || 'Customer', stamp(d.signedC), pads['sig-customer']);
+  y += sigH + 20;
+  doc.setFontSize(8); doc.setTextColor.apply(doc, C.fine);
+  doc.text('Reference ' + (d.order || 'not given'), PG.m, y);
 
   var total = doc.internal.getNumberOfPages();
   for (var i = 1; i <= total; i++) {
-    doc.setPage(i);
-    doc.setFontSize(7.5);
-    doc.setTextColor.apply(doc, C.fine);
+    doc.setPage(i); doc.setFontSize(7.5); doc.setTextColor.apply(doc, C.fine);
     doc.text(i + ' of ' + total, PG.w - PG.m, PG.h - 18, { align: 'right' });
   }
-
   return doc;
 }
 
 /* =========================================================
-   DOWNLOAD PDF
+   FINISH ACTIONS
    ========================================================= */
 $('btn-pdf').addEventListener('click', function(){
   var missing = validate();
-  if (missing.length) {
-    setStatus('Still needed, ' + missing.join(', ') + '.', 'bad');
-    return;
-  }
+  if (missing.length) { setStatus('Still needed: ' + missing.join(', ') + '.', 'bad'); return; }
   try {
     var d = collect();
     makePDF(d).save(filename(d));
+    state.finished.pdf = true; refresh(); save();
     setStatus('PDF downloaded. WhatsApp it to the customer and attach it to their GHL contact.', 'ok');
   } catch (err) {
     setStatus('Could not build the PDF. Try again, or reload the page.', 'bad');
   }
 });
 
-/* =========================================================
-   SAVE TO GHL
-   ========================================================= */
 $('btn-save').addEventListener('click', function(){
   var missing = validate();
-  if (missing.length) {
-    setStatus('Still needed, ' + missing.join(', ') + '.', 'bad');
-    return;
-  }
-  if (WEBHOOK_URL.indexOf('PASTE_') === 0) {
-    setStatus('No webhook set yet. Download the PDF and attach it by hand for now.', 'bad');
-    return;
-  }
-
+  if (missing.length) { setStatus('Still needed: ' + missing.join(', ') + '.', 'bad'); return; }
+  if (WEBHOOK_URL.indexOf('PASTE_') === 0) { setStatus('No webhook set yet. Download the PDF and attach it by hand for now.', 'bad'); return; }
   var d = collect();
   var btn = $('btn-save');
   btn.disabled = true;
   setStatus('Sending to GHL...', 'wait');
-
   fetch(WEBHOOK_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
+    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       event: 'handover_complete',
-      first_name: d.name.split(' ')[0] || '',
-      full_name: d.name,
-      email: d.email,
-      phone: d.phone,
-      order_number: d.order,
-      product: d.product,
-      install_address: d.address,
-      serial_reference: d.serial,
-      handover_date: d.date,
-      handover_builder: d.builder,
-      handover_status: d.status,
-      handover_snags: d.snags.length ? d.snags.join(' | ') : 'None',
+      contact_id: CONTACT_ID,
+      first_name: d.name.split(' ')[0] || '', full_name: d.name, email: d.email, phone: d.phone,
+      order_number: d.order, product: d.product, install_address: d.address, serial_reference: d.serial,
+      handover_date: d.date, handover_builder: d.builder, handover_status: d.status,
+      handover_snags: d.snags.length ? d.snags.map(function(s){ return s.text + ' (owner: ' + (s.owner || '-') + ', fix by: ' + (s.due || '-') + ')'; }).join(' | ') : 'None',
       handover_snag_count: d.snags.length,
+      handover_snag_next_due: d.snags.map(function(s){ return s.due; }).filter(Boolean).sort()[0] || '',
       handover_failed_checks: d.fails.length ? d.fails.join(' | ') : 'None',
-      handover_notes: d.notes,
-      handover_pdf_filename: filename(d),
+      handover_notes: d.notes, handover_pdf_filename: filename(d),
+      warranty_start: d.warrantyStart, warranty_years: d.warrantyYears,
+      first_checkin_date: d.checkin,
+      media_consent: d.media,
+      testimonial_rating: d.rating, testimonial_text: d.words, testimonial_share_ok: d.shareOk,
+      review_google_opened: !!state.review.google, review_trustpilot_opened: !!state.review.trustpilot, review_summary: d.review,
+      referral_name: d.refName, referral_phone: d.refPhone, referral_consent: d.refOk,
+      builder_signed_at: d.signedB, customer_signed_at: d.signedC,
       submitted_at: new Date().toISOString()
     })
   }).then(function(){
+    state.finished.sent = true; refresh(); save();
     setStatus('Sent to GHL. Now download the PDF and attach it to the contact.', 'ok');
     btn.textContent = 'Sent';
   }).catch(function(){
@@ -1688,9 +1740,6 @@ $('btn-save').addEventListener('click', function(){
   });
 });
 
-/* =========================================================
-   RESET
-   ========================================================= */
 $('btn-reset').addEventListener('click', function(){
   if (!confirm('Clear the whole form and start again? Everything saved on this device will go.')) return;
   wipe();
@@ -1702,23 +1751,28 @@ $('btn-reset').addEventListener('click', function(){
    ========================================================= */
 loadLogo();
 buildProductList();
-pads['sig-builder']  = initPad('sig-builder');
+initReview();
+pads['sig-builder'] = initPad('sig-builder');
 pads['sig-customer'] = initPad('sig-customer');
 
-var urlHadData = prefill();
 var restored = load();
-
-if (restored && !urlHadData) {
-  $('restore').classList.add('show');
-}
+var urlHadData = prefill();
+if (restored && !urlHadData) $('restore').classList.add('show');
 
 renderChecks();
 renderWalkthrough();
 renderSnags();
+renderStars();
+renderMedia();
+paintCustomerInputs();
+renderCover();
 
 booting = false;
 setMode(mode);
-save();
+setTimeout(function(){ pads['sig-builder'].redraw(); pads['sig-customer'].redraw(); }, 50);
+document.getElementById('tab-builder').addEventListener('click', function(){ setTimeout(function(){ pads['sig-builder'].redraw(); }, 30); });
+document.getElementById('tab-customer').addEventListener('click', function(){ setTimeout(function(){ pads['sig-customer'].redraw(); }, 30); });
+document.getElementById('go-customer').addEventListener('click', function(){ setTimeout(function(){ pads['sig-customer'].redraw(); }, 30); });
 </script>
 
 </body>
