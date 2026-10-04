@@ -616,15 +616,15 @@ body.m-customer.c-signed .after-sign { display: block; }
   <section class="sec" id="b-finish" data-mode="builder">
     <div class="sec__head">
       <div class="sec__num">6</div>
-      <div><p class="kicker">Finish</p><h2>Save to <span>GHL</span></h2></div>
+      <div><p class="kicker">Finish</p><h2>Saved to GHL <span>automatically</span></h2></div>
     </div>
     <div class="card">
       <div class="panel" id="save-wait" style="margin-bottom:20px;">
         <p class="label">Waiting for the customer</p>
-        <p class="focal">This unlocks once the customer has signed on their side.</p>
+        <p class="focal">Nothing to tap. The record saves itself the moment the customer signs.</p>
       </div>
-      <p class="prose">Saving sends the full record to the customer's contact in GHL, puts the PDF in their folder with the photos, and moves the job on.</p>
-      <button class="btn" id="btn-save" type="button" style="width:100%;">Save to GHL</button>
+      <p class="prose">When the customer signs, the full record goes to their contact in GHL and the PDF goes in their folder with the photos. Anything they add afterwards, like a review or a referral, follows on its own.</p>
+      <button class="btn" id="btn-save" type="button" style="width:100%; display:none;">Send again</button>
       <div class="status" id="status"><p></p></div>
       <p class="fine" id="pdf-fallback" style="display:none; text-align:center; margin-top:10px;"><a href="#" id="btn-pdf" style="color:#1F3D28; font-weight:700;">Download the PDF instead</a></p>
     </div>
@@ -806,7 +806,7 @@ body.m-customer.c-signed .after-sign { display: block; }
 /* =========================================================
    CONFIG
    ========================================================= */
-var WEBHOOK_URL = 'PASTE_GHL_INBOUND_WEBHOOK_URL_HERE';
+var WEBHOOK_URL = 'https://ghl-mcp.njfeldmann44.workers.dev/handover/record';
 var LOGO_URL = 'https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a159cbca7ceea4e5718f77f.png';
 var SAVE_KEY = 'bsuk_handover_draft_v4';
 var DB_NAME = 'bsuk_handover_media_v4';
@@ -1065,6 +1065,7 @@ function blank() {
     signedAt: {},
     finished: { sent: false, emailed: false },
     recordUrl: '',
+    saveFailed: false,
     copyEmail: ''
   };
 }
@@ -1625,7 +1626,8 @@ function refresh() {
   var cs = signed('sig-customer');
   document.body.classList.toggle('c-signed', cs);
   $('save-wait').style.display = cs ? 'none' : 'block';
-  $('btn-save').style.opacity = cs ? '1' : '0.45';
+  $('btn-save').style.display = (cs && state.saveFailed) ? 'block' : 'none';
+  if (!booting) maybeAutoSave();
   renderSteps();
 }
 
@@ -2220,16 +2222,6 @@ function makePDF(d) {
     skipped.forEach(function(s){ para(s.label + ': not possible on this site.', C.sub); });
   }
 
-  section('Customer Feedback');
-  pair('Rating', d.rating ? d.rating + ' out of 5' : 'Not given', 'Happy to share', d.words ? (d.shareOk ? 'Yes, first name only' : 'No') : '-');
-  if (d.words) full('In their words', d.words);
-  full('Review request', 'Google and Trustpilot links shown. ' + d.review + '.');
-  if (d.refName || d.refPhone) {
-    pair('Referral', d.refName, 'Referral phone', d.refPhone);
-    full('Referral consent', d.refOk ? 'Customer confirmed their friend is happy to be contacted.' : 'Not confirmed. Do not call until confirmed.');
-  }
-  y += 3;
-
   /* sign-off */
   if (y + 80 > PG.h - 22) page();
   section('Sign-Off');
@@ -2292,14 +2284,23 @@ function payload(d, event, pdfUrl, extra) {
     builder_signed_at: d.signedB, customer_signed_at: d.signedC,
     submitted_at: new Date().toISOString()
   };
+  body.key = UPLOAD_KEY;
+  body.snag_list = d.snags;
   Object.keys(extra || {}).forEach(function(k){ body[k] = extra[k]; });
   return body;
 }
 
 function webhookReady() { return WEBHOOK_URL.indexOf('PASTE_') !== 0; }
 
-function postWebhook(body) {
-  return fetch(WEBHOOK_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+function postWebhook(body, keepalive) {
+  return fetch(WEBHOOK_URL, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), keepalive: !!keepalive
+  }).then(function(r){
+    return r.json().catch(function(){ return {}; }).then(function(j){
+      if (!r.ok || !j.ok) throw new Error((j && j.error) || ('HTTP ' + r.status));
+      return j;
+    });
+  });
 }
 
 /* Make the PDF on the phone and put it in the customer's GHL folder. Answers the link. */
@@ -2335,30 +2336,78 @@ $('btn-pdf').addEventListener('click', function(e){
   catch (err) { setStatus('Could not build the PDF. Try again, or reload the page.', 'bad'); }
 });
 
-/* BUILDER: the only finish action */
-$('btn-save').addEventListener('click', function(){
-  if (!signed('sig-customer')) { setStatus('The customer has not signed yet. Open the customer side and hand them the phone.', 'bad'); return; }
-  var missing = validate();
-  if (missing.length) { setStatus('Still needed: ' + missing.join(', ') + '.', 'bad'); return; }
-  if (!webhookReady()) { setStatus('Not connected to GHL yet. Everything is saved on this phone.', 'bad'); showFallback(true); return; }
+/* AUTOSAVE TO GHL
+   First send happens the moment the customer signs and the record is complete.
+   After that, anything the customer adds (rating, words, referral, answers) is sent
+   again a few seconds after they stop, and once more if the page is closed. */
+var saving = false, dirtyAfterSave = false, updateTimer = null;
+
+function unsentPhotos() {
+  return Object.keys(state.photos).filter(function(k){ var st = state.photos[k].status; return st === 'saved' || st === 'failed' || st === 'sending'; }).length;
+}
+
+function maybeAutoSave() {
+  if (saving || state.finished.sent || state.saveFailed) return;
+  if (!signed('sig-customer') || !webhookReady()) return;
+  if (validate().length) return;
+  doSave();
+}
+
+function doSave() {
   var d = collect();
-  var btn = $('btn-save');
-  btn.disabled = true;
+  saving = true;
   setStatus('Saving the record to GHL...', 'wait');
-  var unsent = Object.keys(state.photos).filter(function(k){ var st = state.photos[k].status; return st === 'saved' || st === 'failed' || st === 'sending'; }).length;
   (state.recordUrl ? Promise.resolve(state.recordUrl) : uploadRecord(d)).catch(function(){ return ''; }).then(function(url){
     return postWebhook(payload(d, 'handover_complete', url)).then(function(){ return url; });
   }).then(function(url){
-    state.finished.sent = true; refresh(); save();
-    btn.textContent = 'Saved';
+    saving = false;
+    state.finished.sent = true; state.saveFailed = false;
+    refresh(); save();
+    var unsent = unsentPhotos();
     if (!url) { setStatus('Saved to GHL, but the PDF did not upload. Download it below and attach it by hand.', 'bad'); showFallback(true); }
     else if (unsent) { setStatus('Saved to GHL. ' + unsent + ' photo' + (unsent > 1 ? 's are' : ' is') + ' still sending. Keep this page open until they show as saved.', 'ok'); }
     else { setStatus('Saved to GHL. Record, photos and PDF are all in the customer\'s folder.', 'ok'); }
-  }).catch(function(){
-    btn.disabled = false;
-    setStatus('Could not reach GHL. Everything is still saved on this phone, try again when you have signal.', 'bad');
+    if (dirtyAfterSave) { dirtyAfterSave = false; queueUpdate(); }
+  }).catch(function(err){
+    saving = false;
+    state.saveFailed = true;
+    refresh(); save();
+    setStatus('Could not reach GHL (' + (err && err.message ? err.message : 'no signal') + '). Everything is still on this phone. Tap Send again when you have signal.', 'bad');
     showFallback(true);
   });
+}
+
+function sendUpdate(keepalive) {
+  if (!state.finished.sent || !webhookReady()) return;
+  postWebhook(payload(collect(), 'handover_complete', state.recordUrl), keepalive).catch(function(){});
+}
+
+function queueUpdate() {
+  if (!state.finished.sent) { dirtyAfterSave = saving; return; }
+  clearTimeout(updateTimer);
+  updateTimer = setTimeout(function(){ sendUpdate(false); }, 8000);
+}
+
+['t-text', 't-share', 'r-name', 'r-phone', 'r-ok'].forEach(function(id){
+  $(id).addEventListener('change', queueUpdate);
+  $(id).addEventListener('input', queueUpdate);
+});
+['stars', 'cust-choice', 'media-choice', 'rv-google', 'rv-trustpilot'].forEach(function(id){
+  $(id).addEventListener('click', queueUpdate);
+});
+document.addEventListener('visibilitychange', function(){
+  if (document.visibilityState === 'hidden' && updateTimer) { clearTimeout(updateTimer); updateTimer = null; sendUpdate(true); }
+});
+
+/* Fallback button, only shown after a failed send */
+$('btn-save').addEventListener('click', function(){
+  state.saveFailed = false;
+  setStatus('Trying again...', 'wait');
+  maybeAutoSave();
+  if (!saving) {
+    var missing = validate();
+    setStatus(missing.length ? 'Still needed: ' + missing.join(', ') + '.' : 'Could not send. Check the signal and try again.', 'bad');
+  }
 });
 
 /* CUSTOMER: email me a copy */
