@@ -378,8 +378,45 @@ select.input {
 .foot__logo { width: 84px; height: auto; display: block; margin: 0 auto 14px auto; }
 .foot__signoff { font-size: 15px; font-weight: 700; color: #fff; margin: 0 0 4px 0; }
 .foot__dom { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--sage-pale); margin: 0 0 24px 0; }
-.foot__sig { max-width: 560px; margin: 0 auto; background: #fff; border-radius: 18px; padding: 10px; }
+.foot__sig { max-width: 560px; margin: 0 auto; border: 1px solid rgba(143,174,134,0.45); border-radius: 14px; padding: 4px; }
 .foot__sig img { width: 100%; height: auto; display: block; border-radius: 10px; }
+
+/* ================= PHOTO TILES ================= */
+.shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.shot { display: flex; flex-direction: column; min-width: 0; }
+.shot__frame {
+  position: relative; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px;
+  width: 100%; aspect-ratio: 16 / 10; border: 1.5px dashed var(--hairline); border-radius: 16px;
+  background: var(--tint-l) center / cover no-repeat; cursor: pointer; overflow: hidden; text-align: center;
+}
+.shot.port .shot__frame { aspect-ratio: 4 / 5; }
+.shot__frame input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.shot__icon svg { display: block; }
+.shot__empty { font-size: 12px; font-weight: 700; color: var(--forest-deep); padding: 0 8px; }
+.shot.has .shot__frame { border-style: solid; border-color: var(--mid); }
+.shot.has .shot__icon, .shot.has .shot__empty { display: none; }
+.shot.bad .shot__frame { border-color: var(--honey); border-style: solid; background-color: #fff; }
+.shot.skip .shot__frame { opacity: 0.45; }
+.shot__badge {
+  position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--mid); color: #fff; font-size: 13px; font-weight: 700; display: none;
+  align-items: center; justify-content: center;
+}
+.shot.has .shot__badge { display: flex; }
+.shot__lab { font-size: 13px; font-weight: 700; color: var(--forest-deep); line-height: 1.4; margin: 10px 0 2px 0; }
+.shot__lab em { font-style: normal; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--sage); margin-left: 4px; }
+.shot__st { font-size: 12px; color: var(--sage); line-height: 1.5; margin: 0; }
+.shot.bad .shot__st { color: var(--honey); font-weight: 700; }
+.shot__skip {
+  align-self: flex-start; margin-top: 6px; font-family: var(--face); font-size: 11px; font-weight: 700;
+  background: #fff; color: var(--ink-l); border: 1px solid var(--hairline); border-radius: 30px; padding: 6px 12px; cursor: pointer;
+}
+.shot.skip .shot__skip { background: var(--tint); color: var(--forest-deep); border-color: var(--tint); }
+.shots__group { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--sage); margin: 24px 0 12px 0; }
+.shots__group:first-child { margin-top: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 20px 0; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-l); }
+.photo-count { font-size: 13px; font-weight: 700; color: var(--forest-deep); margin: 18px 0 0 0; }
 
 /* ================= MODE VISIBILITY ================= */
 [data-mode] { display: none; }
@@ -390,6 +427,9 @@ body.m-customer.c-signed .after-sign { display: block; }
 
 /* ================= MOBILE ================= */
 @media (max-width: 640px) {
+  .shots { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .foot__dom { font-size: 9px; letter-spacing: 1px; white-space: nowrap; }
+  .foot__icons img { height: 30px; }
   :root { --pad: 20px; }
   .hero { min-height: 62vh; }
   .hero__inner { flex-direction: column-reverse; align-items: flex-start; padding: 100px 16px 34px 16px; gap: 14px; }
@@ -517,9 +557,36 @@ body.m-customer.c-signed .after-sign { display: block; }
   </section>
 
   <!-- ================= BUILDER 4: SIGN-OFF ================= -->
-  <section class="sec" id="b-sign" data-mode="builder">
+  <section class="sec" id="b-photos" data-mode="builder">
     <div class="sec__head">
       <div class="sec__num">4</div>
+      <div><p class="kicker">Set shots</p><h2>Photos of the <span>finished build</span></h2></div>
+      <span class="sec__count" id="photos-count"></span>
+    </div>
+    <div class="card">
+      <p class="prose">Tap a tile to open the camera. Every photo saves on this phone straight away and sends to the customer's folder in GHL as soon as there is signal.</p>
+      <div class="legend">
+        <span><svg width="26" height="18" viewBox="0 0 26 18" aria-hidden="true"><rect x="1" y="1" width="24" height="16" rx="3" fill="none" stroke="#417C51" stroke-width="2"/><circle cx="21" cy="9" r="1.4" fill="#417C51"/></svg>Hold the phone sideways. Required for these.</span>
+        <span><svg width="18" height="26" viewBox="0 0 18 26" aria-hidden="true"><rect x="1" y="1" width="16" height="24" rx="3" fill="none" stroke="#50795F" stroke-width="2"/><circle cx="9" cy="21" r="1.4" fill="#50795F"/></svg>Upright works best for these.</span>
+      </div>
+      <div id="shots"><p class="empty">Select a product above to load the shot list.</p></div>
+      <p class="photo-count" id="photo-summary"></p>
+    </div>
+    <div class="card">
+      <p class="label">Customer with their build</p>
+      <p class="prose">Ask the customer to stand in front of their new build and take the picture. Then ask whether we can share it, and tap their answer.</p>
+      <div class="shots" id="cust-shot" style="grid-template-columns:minmax(0,240px);"></div>
+      <p class="prose" style="margin:18px 0 0 0;">Did they say yes to sharing it?</p>
+      <div class="choice" id="cust-choice">
+        <button type="button" data-cust="yes">Yes, share it</button>
+        <button type="button" data-cust="no">Keep it private</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="b-sign" data-mode="builder">
+    <div class="sec__head">
+      <div class="sec__num">5</div>
       <div><p class="kicker">Builder sign-off</p><h2>Built, tested, <span>ready</span></h2></div>
     </div>
     <div class="card">
@@ -543,6 +610,25 @@ body.m-customer.c-signed .after-sign { display: block; }
         <button class="btn" id="go-customer" type="button">Open the customer walkthrough</button>
       </div>
     </div>
+  </section>
+
+  <!-- ================= BUILDER 6: SAVE ================= -->
+  <section class="sec" id="b-finish" data-mode="builder">
+    <div class="sec__head">
+      <div class="sec__num">6</div>
+      <div><p class="kicker">Finish</p><h2>Save to <span>GHL</span></h2></div>
+    </div>
+    <div class="card">
+      <div class="panel" id="save-wait" style="margin-bottom:20px;">
+        <p class="label">Waiting for the customer</p>
+        <p class="focal">This unlocks once the customer has signed on their side.</p>
+      </div>
+      <p class="prose">Saving sends the full record to the customer's contact in GHL, puts the PDF in their folder with the photos, and moves the job on.</p>
+      <button class="btn" id="btn-save" type="button" style="width:100%;">Save to GHL</button>
+      <div class="status" id="status"><p></p></div>
+      <p class="fine" id="pdf-fallback" style="display:none; text-align:center; margin-top:10px;"><a href="#" id="btn-pdf" style="color:#1F3D28; font-weight:700;">Download the PDF instead</a></p>
+    </div>
+    <p class="fine" style="text-align:center; margin-top:24px;"><a href="#" id="btn-reset" style="color:#8a938f;">Reset the form for a new job</a></p>
   </section>
 
   <!-- ================= CUSTOMER: JOURNEY ================= -->
@@ -676,19 +762,23 @@ body.m-customer.c-signed .after-sign { display: block; }
   </section>
 
   <!-- ================= CUSTOMER: FINISH ================= -->
-  <section class="sec" id="c-finish" data-mode="customer">
+  <section class="sec after-sign" id="c-finish" data-mode="customer">
     <div class="sec__head">
       <div class="sec__num">7</div>
-      <div><p class="kicker">Finish</p><h2>Save the <span>record</span></h2></div>
+      <div><p class="kicker">Your copy</p><h2>Keep your <span>record</span></h2></div>
     </div>
     <div class="card">
-      <div class="actions">
-        <button class="btn" id="btn-pdf" type="button">Download PDF</button>
-        <button class="btn btn--ghost" id="btn-save" type="button">Save to GHL</button>
-        <button class="btn btn--ghost" id="btn-reset" type="button">Reset form</button>
+      <p class="prose">We will email you your handover record, with everything we checked, both signatures and the photos of your build.</p>
+      <div class="field"><p class="label">Your email</p><input class="input" id="c-email" type="email" placeholder="name@example.com"></div>
+      <button class="btn" id="btn-email" type="button" style="width:100%; margin-top:18px;">Email me a copy</button>
+      <div class="status" id="c-status"><p></p></div>
+    </div>
+    <div class="dark handoff">
+      <div class="inner">
+        <p class="kicker">All done</p>
+        <h3>Hand the phone back to <span>your builder</span></h3>
+        <p>Thank you for having us.</p>
       </div>
-      <div class="status" id="status"><p></p></div>
-      <p class="fine" style="margin-top:14px; text-align:center;">Download the PDF, then WhatsApp it to the customer and attach it to their contact in GHL.</p>
     </div>
   </section>
 
@@ -718,7 +808,20 @@ body.m-customer.c-signed .after-sign { display: block; }
    ========================================================= */
 var WEBHOOK_URL = 'PASTE_GHL_INBOUND_WEBHOOK_URL_HERE';
 var LOGO_URL = 'https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a159cbca7ceea4e5718f77f.png';
-var SAVE_KEY = 'bsuk_handover_draft_v3';
+var SAVE_KEY = 'bsuk_handover_draft_v4';
+var DB_NAME = 'bsuk_handover_media_v4';
+
+/* Photo upload door on the Cloudflare server. Until it is live, photos stay saved
+   on the phone and send automatically the next time the page opens with these set.
+   The server receives multipart fields: key, contactId, name, order, email, phone,
+   folder, shot, label, file. It answers JSON { ok: true, url: '...' }. */
+var UPLOAD_URL = 'PASTE_UPLOAD_URL_HERE';
+var UPLOAD_KEY = 'PASTE_UPLOAD_KEY_HERE';
+
+/* Video limits. GHL takes up to 25MB per file; bigger clips are shrunk on the phone. */
+var VIDEO_MAX_SECONDS = 20.5;
+var VIDEO_MAX_BYTES = 24 * 1024 * 1024;
+var PHOTO_LONG_SIDE = 2000;
 
 /* Review links. GOOGLE_REVIEW_URL is a placeholder: swap in the Google Business
    Profile "Get more reviews" link (g.page/r/...) when you have it. */
@@ -888,6 +991,63 @@ var PRODUCTS = {
   ]}
 };
 
+/* =========================================================
+   SHOT LIST
+   o: 'land' = must be landscape, 'port' = upright suggested, 'vid' = video
+   ========================================================= */
+var NO_DOOR = ['hot-tub', 'ice-bath', 'outdoor-shower'];
+
+function shotsFor(key) {
+  if (!key) return [];
+  var door = NO_DOOR.indexOf(key) === -1;
+  var out = [];
+  function add(id, label, o, req, extra) { out.push(Object.assign({ id: id, label: label, o: o, req: req }, extra || {})); }
+
+  add('before', 'Before: the site on arrival', 'land', true, { g: 'Outside, landscape' });
+  if (door) {
+    add('front-closed', 'Front, straight on, door closed', 'land', true);
+    add('front-open', 'Front, door open', 'land', true);
+  } else {
+    add('front', 'Front, straight on', 'land', true);
+  }
+  add('side-angle', 'Down the side at an angle, full length', 'land', true);
+  add('side-straight', 'Straight side view', 'land', true, { skip: 'Not possible on this site' });
+  add('back', 'Back wall, full, nothing cropped', 'land', true);
+  add('wide', 'Wide shot in the garden', 'land', true);
+
+  var g2 = { g: 'Close up, upright' };
+  if (key === 'hot-tub') {
+    add('lid', 'Lid on', 'port', true, g2);
+    add('stove', 'Stove and flue close-up', 'port', true);
+    add('inside', 'Inside the tub, lid off', 'port', true);
+  } else if (key === 'ice-bath') {
+    add('lid', 'Lid on', 'port', true, g2);
+    add('chiller', 'Chiller unit close-up', 'port', true);
+    add('inside', 'Inside the bath, lid off', 'port', true);
+  } else if (key === 'outdoor-shower') {
+    add('taps', 'Taps and shower head', 'port', true, g2);
+  } else {
+    add('inside', 'Inside, benches and backrest', 'port', true, g2);
+    if (key !== 'changing-room') add('heater', key === 'shepherds-hut' ? 'Stove close-up' : 'Heater or stove close-up', 'port', true);
+    if (key === 'sauna-hot-tub-combo') add('tub-stove', 'Hot tub stove and flue', 'port', true);
+    if (key === 'shepherds-hut') add('fitout', 'Inside fit-out, kitchen and bed', 'port', true);
+  }
+  add('base', 'Base and feet, sitting level', 'port', true);
+  add('clean', 'Site left clean', 'port', true);
+  if (key === 'mobile-trailer') add('coupling', 'Coupling and lights', 'port', true);
+
+  add('serial', 'Serial plate, if there is one', 'port', false, { g: 'Optional' });
+  add('video', '15 to 20 second video, hold your phone upright', 'vid', false);
+  return out;
+}
+var CUST_SHOT = { id: 'customer', label: 'You with your build', o: 'port', req: false };
+var SHOT_INDEX = {};
+var THUMBS = {};
+
+var ICON_LAND = '<svg width="34" height="24" viewBox="0 0 34 24" aria-hidden="true"><rect x="1.5" y="1.5" width="31" height="21" rx="4" fill="none" stroke="#417C51" stroke-width="2.4"/><circle cx="28" cy="12" r="1.8" fill="#417C51"/></svg>';
+var ICON_PORT = '<svg width="24" height="34" viewBox="0 0 24 34" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="31" rx="4" fill="none" stroke="#50795F" stroke-width="2.4"/><circle cx="12" cy="28" r="1.8" fill="#50795F"/></svg>';
+var ICON_VID = '<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="none" stroke="#417C51" stroke-width="2.4"/><path d="M12 10l9 5-9 5z" fill="#417C51"/></svg>';
+
 var JOB_FIELDS = ['f-name','f-order','f-email','f-phone','f-address','f-product','f-date','f-builder','f-serial'];
 
 /* =========================================================
@@ -900,8 +1060,12 @@ function blank() {
     testimonial: { rating: 0, text: '', share: false },
     referral: { name: '', phone: '', ok: false },
     media: '',
+    custShare: '',
+    photos: {},
     signedAt: {},
-    finished: { pdf: false, sent: false }
+    finished: { sent: false, emailed: false },
+    recordUrl: '',
+    copyEmail: ''
   };
 }
 var state = blank();
@@ -946,6 +1110,378 @@ function renderCover() {
 }
 
 /* =========================================================
+   MEDIA STORE ON THE PHONE (IndexedDB)
+   Photos are too big for normal page storage, so they live here
+   until they reach GHL. A reload or a dead battery loses nothing.
+   ========================================================= */
+var dbp = null;
+function db() {
+  if (dbp) return dbp;
+  dbp = new Promise(function(res, rej){
+    if (!window.indexedDB) { rej(new Error('no idb')); return; }
+    var r = indexedDB.open(DB_NAME, 1);
+    r.onupgradeneeded = function(){ r.result.createObjectStore('media'); };
+    r.onsuccess = function(){ res(r.result); };
+    r.onerror = function(){ rej(r.error); };
+  });
+  return dbp;
+}
+function dbDo(modeRW, fn) {
+  return db().then(function(d){
+    return new Promise(function(res, rej){
+      var tx = d.transaction('media', modeRW);
+      var req = fn(tx.objectStore('media'));
+      tx.oncomplete = function(){ res(req ? req.result : undefined); };
+      tx.onerror = function(){ rej(tx.error); };
+    });
+  });
+}
+function dbPut(k, v) { return dbDo('readwrite', function(s){ return s.put(v, k); }); }
+function dbGet(k) { return dbDo('readonly', function(s){ return s.get(k); }); }
+function dbDel(k) { return dbDo('readwrite', function(s){ return s.delete(k); }); }
+function dbClear() { return dbDo('readwrite', function(s){ return s.clear(); }); }
+
+/* =========================================================
+   PHOTO STATUS
+   status: bad (portrait on a landscape shot), saved (on phone),
+   sending, sent, failed, skip
+   ========================================================= */
+var DONE_ST = ['saved', 'sending', 'sent', 'failed', 'skip'];
+function shotDone(id) { var p = state.photos[id]; return !!(p && DONE_ST.indexOf(p.status) > -1); }
+function uploadReady() { return UPLOAD_URL.indexOf('PASTE_') !== 0; }
+function folderName() {
+  var n = $('f-name').value.trim();
+  if (!n) return '';
+  var o = $('f-order').value.trim();
+  return (n.replace(/\s+/g, ' ') + (o ? ' ' + o : '')).replace(/[\\\/:*?"<>|]/g, '');
+}
+function stText(id) {
+  var p = state.photos[id];
+  if (!p) return '';
+  switch (p.status) {
+    case 'bad': return 'This one needs to be landscape. Turn your phone sideways and retake.';
+    case 'working': return p.note || 'Preparing...';
+    case 'saved': return uploadReady() ? (folderName() ? 'Waiting to send' : 'Saved. Add the customer name to send') : 'Saved on this phone';
+    case 'sending': return 'Sending to GHL...';
+    case 'sent': return 'Saved to GHL';
+    case 'failed': return 'Not sent yet, will retry';
+    case 'skip': return 'Marked not possible on this site';
+  }
+  return '';
+}
+
+function requiredShots() { return shotsFor($('f-product').value).filter(function(s){ return s.req; }); }
+function photosDone() { var r = requiredShots(); return r.length > 0 && r.every(function(s){ return shotDone(s.id); }); }
+
+/* =========================================================
+   RENDER TILES
+   ========================================================= */
+function tileHTML(s) {
+  var p = state.photos[s.id] || {};
+  var cls = ['shot', s.o === 'land' ? 'land' : 'port'];
+  if (p.status === 'bad') cls.push('bad');
+  else if (p.status === 'skip') cls.push('skip');
+  else if (shotDone(s.id) && p.status !== 'skip') cls.push('has');
+  var bg = THUMBS[s.id] && shotDone(s.id) && p.status !== 'skip' ? ' style="background-image:url(' + THUMBS[s.id] + ')"' : '';
+  var icon = s.o === 'land' ? ICON_LAND : s.o === 'vid' ? ICON_VID : ICON_PORT;
+  var tap = s.o === 'land' ? 'Phone sideways, tap to take' : s.o === 'vid' ? 'Tap to record' : 'Tap to take';
+  var accept = s.o === 'vid' ? 'video/*' : 'image/*';
+  var tag = s.req ? '<em>Required</em>' : '<em>Optional</em>';
+  var skip = s.skip ? '<button type="button" class="shot__skip" data-skipshot="' + s.id + '">' + esc(s.skip) + '</button>' : '';
+  return '<div class="' + cls.join(' ') + '" data-shot="' + s.id + '">' +
+    '<label class="shot__frame"' + bg + '>' +
+      '<input type="file" accept="' + accept + '" capture="environment" data-cap="' + s.id + '">' +
+      '<span class="shot__icon">' + icon + '</span><span class="shot__empty">' + tap + '</span>' +
+      '<span class="shot__badge">' + (s.o === 'vid' ? '&#9654;' : '&#10003;') + '</span>' +
+    '</label>' +
+    '<p class="shot__lab">' + esc(s.label) + tag + '</p>' +
+    '<p class="shot__st" data-st="' + s.id + '">' + esc(stText(s.id)) + '</p>' + skip +
+  '</div>';
+}
+
+function renderShots() {
+  var list = shotsFor($('f-product').value);
+  SHOT_INDEX = {};
+  list.concat([CUST_SHOT]).forEach(function(s){ SHOT_INDEX[s.id] = s; });
+  var box = $('shots');
+  if (!list.length) {
+    box.innerHTML = '<p class="empty">Select a product above to load the shot list.</p>';
+  } else {
+    var html = '', open = false;
+    list.forEach(function(s){
+      if (s.g) { if (open) html += '</div>'; html += '<p class="shots__group">' + esc(s.g) + '</p><div class="shots">'; open = true; }
+      html += tileHTML(s);
+    });
+    if (open) html += '</div>';
+    box.innerHTML = html;
+  }
+  $('cust-shot').innerHTML = tileHTML(CUST_SHOT);
+  renderPhotoCount();
+}
+
+function renderPhotoCount() {
+  var r = requiredShots();
+  var d = r.filter(function(s){ return shotDone(s.id); }).length;
+  $('photos-count').textContent = r.length ? d + ' / ' + r.length : '';
+  var all = Object.keys(state.photos).filter(function(k){ return shotDone(k) && state.photos[k].status !== 'skip'; });
+  var sent = all.filter(function(k){ return state.photos[k].status === 'sent'; }).length;
+  $('photo-summary').textContent = all.length
+    ? all.length + ' saved on this phone' + (uploadReady() ? ', ' + sent + ' in GHL' : '') + (folderName() ? '. Folder: ' + folderName() : '')
+    : '';
+}
+
+function updateTile(id) {
+  var s = SHOT_INDEX[id];
+  if (!s) return;
+  document.querySelectorAll('[data-shot="' + id + '"]').forEach(function(el){
+    var tmp = document.createElement('div');
+    tmp.innerHTML = tileHTML(s);
+    el.replaceWith(tmp.firstChild);
+  });
+  renderPhotoCount();
+}
+
+/* =========================================================
+   PHOTO CAPTURE: shrink, check orientation, store
+   ========================================================= */
+function loadImg(file) {
+  return new Promise(function(res, rej){
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function(){ res({ img: img, url: url }); };
+    img.onerror = function(){ URL.revokeObjectURL(url); rej(new Error('Could not read that photo')); };
+    img.src = url;
+  });
+}
+function canvasOf(img, longSide) {
+  var w = img.naturalWidth, h = img.naturalHeight;
+  var k = Math.min(1, longSide / Math.max(w, h));
+  var c = document.createElement('canvas');
+  c.width = Math.round(w * k); c.height = Math.round(h * k);
+  c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+  return c;
+}
+function toBlob(c, q) { return new Promise(function(res){ c.toBlob(res, 'image/jpeg', q); }); }
+
+function handlePhoto(id, file) {
+  var s = SHOT_INDEX[id];
+  return loadImg(file).then(function(o){
+    var w = o.img.naturalWidth, h = o.img.naturalHeight;
+    if (s.o === 'land' && h > w) {
+      URL.revokeObjectURL(o.url);
+      state.photos[id] = { status: 'bad' };
+      updateTile(id); refresh(); save();
+      return;
+    }
+    var big = canvasOf(o.img, PHOTO_LONG_SIDE);
+    var thumb = canvasOf(o.img, 520).toDataURL('image/jpeg', 0.72);
+    URL.revokeObjectURL(o.url);
+    return toBlob(big, 0.85).then(function(blob){
+      THUMBS[id] = thumb;
+      return dbPut(id, { blob: blob, thumb: thumb, type: 'image/jpeg', w: big.width, h: big.height }).then(function(){
+        state.photos[id] = { status: 'saved', at: new Date().toISOString(), w: big.width, h: big.height, url: '' };
+        updateTile(id); refresh(); save();
+        pump();
+      });
+    });
+  });
+}
+
+/* =========================================================
+   VIDEO: 15 to 20 seconds, shrunk on the phone if over 24MB
+   ========================================================= */
+function videoMeta(url) {
+  return new Promise(function(res, rej){
+    var v = document.createElement('video');
+    v.preload = 'metadata'; v.muted = true; v.playsInline = true;
+    v.onloadedmetadata = function(){ res(v); };
+    v.onerror = function(){ rej(new Error('Could not read that video')); };
+    v.src = url;
+  });
+}
+function grabFrame(v) {
+  return new Promise(function(res){
+    var done = function(){
+      var k = Math.min(1, 520 / Math.max(v.videoWidth, v.videoHeight));
+      var c = document.createElement('canvas');
+      c.width = Math.round(v.videoWidth * k); c.height = Math.round(v.videoHeight * k);
+      try { c.getContext('2d').drawImage(v, 0, 0, c.width, c.height); res(c.toDataURL('image/jpeg', 0.72)); } catch (e) { res(''); }
+    };
+    v.onseeked = done;
+    try { v.currentTime = Math.min(0.5, (v.duration || 1) / 2); } catch (e) { done(); }
+    setTimeout(done, 2500);
+  });
+}
+function pickMime() {
+  if (!window.MediaRecorder) return '';
+  var list = ['video/mp4;codecs=avc1', 'video/mp4', 'video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
+  for (var i = 0; i < list.length; i++) { if (MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(list[i])) return list[i]; }
+  return '';
+}
+function shrinkVideo(v, onProgress) {
+  return new Promise(function(res, rej){
+    var mime = pickMime();
+    var c = document.createElement('canvas');
+    if (!mime || !c.captureStream) { rej(new Error('This phone cannot shrink video')); return; }
+    var k = Math.min(1, 1280 / Math.max(v.videoWidth, v.videoHeight));
+    c.width = Math.round(v.videoWidth * k / 2) * 2; c.height = Math.round(v.videoHeight * k / 2) * 2;
+    var ctx = c.getContext('2d');
+    var rec = new MediaRecorder(c.captureStream(30), { mimeType: mime, videoBitsPerSecond: 2500000 });
+    var chunks = [];
+    rec.ondataavailable = function(e){ if (e.data && e.data.size) chunks.push(e.data); };
+    rec.onstop = function(){ res(new Blob(chunks, { type: mime.split(';')[0] })); };
+    var stopped = false;
+    function draw() {
+      if (stopped) return;
+      ctx.drawImage(v, 0, 0, c.width, c.height);
+      if (onProgress && v.duration) onProgress(Math.min(99, Math.round(v.currentTime / v.duration * 100)));
+      if (v.ended) { stopped = true; rec.stop(); return; }
+      requestAnimationFrame(draw);
+    }
+    v.onended = function(){ if (!stopped) { stopped = true; rec.stop(); } };
+    v.currentTime = 0;
+    rec.start(500);
+    v.play().then(draw).catch(function(){ stopped = true; try { rec.stop(); } catch (e) {} rej(new Error('Could not play the clip to shrink it')); });
+  });
+}
+
+function handleVideo(id, file) {
+  var url = URL.createObjectURL(file);
+  var setNote = function(t){ state.photos[id] = { status: 'working', note: t }; var el = document.querySelector('[data-st="' + id + '"]'); if (el) el.textContent = t; else updateTile(id); };
+  return videoMeta(url).then(function(v){
+    if (v.duration > VIDEO_MAX_SECONDS) {
+      URL.revokeObjectURL(url);
+      state.photos[id] = { status: 'bad' };
+      updateTile(id);
+      var el = document.querySelector('[data-st="' + id + '"]');
+      if (el) el.textContent = 'That clip is ' + Math.round(v.duration) + ' seconds. Keep it to 15 to 20 seconds and record again.';
+      return;
+    }
+    setNote('Preparing your clip...');
+    return grabFrame(v).then(function(thumb){
+      var go = file.size <= VIDEO_MAX_BYTES
+        ? Promise.resolve(file)
+        : shrinkVideo(v, function(pc){ setNote('Preparing your clip... ' + pc + '%'); });
+      return go.then(function(blob){
+        URL.revokeObjectURL(url);
+        if (blob.size > VIDEO_MAX_BYTES) throw new Error('Clip still too big after shrinking');
+        THUMBS[id] = thumb;
+        return dbPut(id, { blob: blob, thumb: thumb, type: blob.type || file.type || 'video/mp4', w: v.videoWidth, h: v.videoHeight }).then(function(){
+          state.photos[id] = { status: 'saved', at: new Date().toISOString(), url: '', secs: Math.round(v.duration) };
+          updateTile(id); refresh(); save(); pump();
+        });
+      });
+    });
+  }).catch(function(err){
+    URL.revokeObjectURL(url);
+    state.photos[id] = { status: 'bad' };
+    updateTile(id);
+    var el = document.querySelector('[data-st="' + id + '"]');
+    if (el) el.textContent = (err && err.message ? err.message : 'Something went wrong') + '. Try a shorter clip.';
+  });
+}
+
+document.addEventListener('change', function(e){
+  var inp = e.target;
+  if (!inp.matches('input[data-cap]')) return;
+  var id = inp.dataset.cap;
+  var file = inp.files && inp.files[0];
+  inp.value = '';
+  if (!file) return;
+  var s = SHOT_INDEX[id];
+  if (!s) return;
+  var job = s.o === 'vid' || /^video\//.test(file.type) ? handleVideo(id, file) : handlePhoto(id, file);
+  Promise.resolve(job).catch(function(){
+    state.photos[id] = { status: 'bad' }; updateTile(id);
+    var el = document.querySelector('[data-st="' + id + '"]');
+    if (el) el.textContent = 'Could not save that one. Try again.';
+  });
+});
+
+document.addEventListener('click', function(e){
+  var b = e.target.closest('button[data-skipshot]');
+  if (!b) return;
+  var id = b.dataset.skipshot;
+  var p = state.photos[id];
+  if (p && p.status === 'skip') { delete state.photos[id]; }
+  else { state.photos[id] = { status: 'skip' }; dbDel(id).catch(function(){}); delete THUMBS[id]; }
+  updateTile(id); refresh(); save();
+});
+
+/* =========================================================
+   UPLOAD QUEUE: one at a time, retries on its own
+   ========================================================= */
+var pumping = false;
+function pump() {
+  if (pumping || !uploadReady() || !folderName() || !navigator.onLine) return;
+  var next = Object.keys(state.photos).find(function(k){ var st = state.photos[k].status; return st === 'saved' || st === 'failed'; });
+  if (!next) return;
+  pumping = true;
+  state.photos[next].status = 'sending';
+  updateTile(next);
+  dbGet(next).then(function(rec){
+    if (!rec || !rec.blob) throw new Error('missing');
+    var s = SHOT_INDEX[next] || { label: next };
+    var ext = /video/.test(rec.type) ? (/webm/.test(rec.type) ? 'webm' : 'mp4') : 'jpg';
+    var fd = new FormData();
+    fd.append('key', UPLOAD_KEY);
+    fd.append('contactId', CONTACT_ID);
+    fd.append('name', $('f-name').value.trim());
+    fd.append('order', $('f-order').value.trim());
+    fd.append('email', $('f-email').value.trim());
+    fd.append('phone', $('f-phone').value.trim());
+    fd.append('folder', folderName());
+    fd.append('shot', next);
+    fd.append('label', s.label);
+    fd.append('file', rec.blob, folderName() + ' - ' + next + '.' + ext);
+    return fetch(UPLOAD_URL, { method: 'POST', body: fd }).then(function(r){
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function(j){
+      if (!j || !j.ok) throw new Error('refused');
+      state.photos[next].status = 'sent';
+      state.photos[next].url = j.url || '';
+    });
+  }).catch(function(){
+    if (state.photos[next]) state.photos[next].status = 'failed';
+  }).then(function(){
+    pumping = false;
+    updateTile(next); refresh(); save();
+    var failed = state.photos[next] && state.photos[next].status === 'failed';
+    setTimeout(pump, failed ? 15000 : 200);
+  });
+}
+window.addEventListener('online', pump);
+
+function loadThumbs() {
+  Object.keys(state.photos).forEach(function(k){
+    var st = state.photos[k].status;
+    if (st === 'working' || st === 'bad') delete state.photos[k];
+    else if (st === 'sending') state.photos[k].status = 'saved';
+  });
+  var ids = Object.keys(state.photos).filter(function(k){ return shotDone(k) && state.photos[k].status !== 'skip'; });
+  return Promise.all(ids.map(function(id){
+    return dbGet(id).then(function(rec){
+      if (rec && rec.thumb) THUMBS[id] = rec.thumb;
+      else if (state.photos[id].status !== 'sent') delete state.photos[id];
+    }).catch(function(){});
+  }));
+}
+
+/* customer share choice */
+function renderCustChoice() {
+  document.querySelectorAll('#cust-choice button').forEach(function(b){
+    b.className = state.custShare === b.dataset.cust ? (b.dataset.cust === 'yes' ? 'on-yes' : 'on-no') : '';
+  });
+}
+$('cust-choice').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-cust]');
+  if (!b) return;
+  state.custShare = state.custShare === b.dataset.cust ? '' : b.dataset.cust;
+  renderCustChoice(); save();
+});
+
+/* =========================================================
    AUTOSAVE
    ========================================================= */
 function save() {
@@ -954,7 +1490,7 @@ function save() {
   JOB_FIELDS.forEach(function(id){ job[id] = $(id).value; });
   job['f-notes'] = $('f-notes').value;
   var blob = {
-    v: 3, at: Date.now(), mode: mode, contact: CONTACT_ID, job: job, s: state,
+    v: 4, at: Date.now(), mode: mode, contact: CONTACT_ID, job: job, s: state,
     sigB: pads['sig-builder'] ? pads['sig-builder'].data() : '',
     sigC: pads['sig-customer'] ? pads['sig-customer'].data() : ''
   };
@@ -964,7 +1500,7 @@ function save() {
 function load() {
   var blob;
   try { blob = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); } catch (e) { return false; }
-  if (!blob || blob.v !== 3) return false;
+  if (!blob || blob.v !== 4) return false;
   if (Date.now() - (blob.at || 0) > 7 * 24 * 60 * 60 * 1000) {
     try { localStorage.removeItem(SAVE_KEY); } catch (e) {}
     return false;
@@ -1015,6 +1551,7 @@ function setMode(m) {
   document.body.classList.add('m-' + m);
   $('tab-builder').classList.toggle('on', m === 'builder');
   $('tab-customer').classList.toggle('on', m === 'customer');
+  if (m === 'customer' && !$('c-email').value) $('c-email').value = $('f-email').value;
   if (m === 'customer') { renderStrip(); renderOutstanding(); renderBuilderSigned(); renderCover(); }
   renderHero();
   refresh();
@@ -1031,7 +1568,7 @@ $('go-customer').addEventListener('click', function(){ setMode('customer'); });
 function allSet(obj) { var k = Object.keys(obj); return k.length > 0 && k.every(function(x){ return obj[x]; }); }
 function signed(id) { return !!(pads[id] && pads[id].isSigned()); }
 function jobOk() { return !!($('f-name').value.trim() && $('f-product').value && $('f-builder').value.trim()); }
-function builderDone() { return jobOk() && allSet(state.checks) && signed('sig-builder'); }
+function builderDone() { return jobOk() && allSet(state.checks) && photosDone() && signed('sig-builder'); }
 
 function stepList() {
   if (mode === 'builder') {
@@ -1039,7 +1576,9 @@ function stepList() {
       { id: 'b-job', l: 'Job', done: jobOk() },
       { id: 'b-checks', l: 'Checks', done: allSet(state.checks) },
       { id: 'b-snags', l: 'Snags', done: allSet(state.checks) },
-      { id: 'b-sign', l: 'Sign', done: signed('sig-builder') }
+      { id: 'b-photos', l: 'Photos', done: photosDone() },
+      { id: 'b-sign', l: 'Sign', done: signed('sig-builder') },
+      { id: 'b-finish', l: 'Save', done: !!state.finished.sent }
     ];
   }
   var cs = signed('sig-customer');
@@ -1049,7 +1588,7 @@ function stepList() {
     { id: 'c-photos', l: 'Photos', done: !!state.media },
     { id: 'c-sign', l: 'Sign', done: cs },
     { id: 'c-review', l: 'Review', done: cs && (state.testimonial.rating > 0 || state.review.google || state.review.trustpilot) },
-    { id: 'c-finish', l: 'Finish', done: state.finished.pdf || state.finished.sent }
+    { id: 'c-finish', l: 'Copy', done: !!state.finished.emailed }
   ];
 }
 
@@ -1083,7 +1622,10 @@ function refresh() {
   $('walk-count').textContent = wk.filter(function(k){ return state.walkthrough[k]; }).length + ' / ' + wk.length;
 
   $('handoff').style.display = builderDone() ? 'block' : 'none';
-  document.body.classList.toggle('c-signed', signed('sig-customer'));
+  var cs = signed('sig-customer');
+  document.body.classList.toggle('c-signed', cs);
+  $('save-wait').style.display = cs ? 'none' : 'block';
+  $('btn-save').style.opacity = cs ? '1' : '0.45';
   renderSteps();
 }
 
@@ -1308,6 +1850,7 @@ function paintCustomerInputs() {
   $('r-name').value = state.referral.name || '';
   $('r-phone').value = state.referral.phone || '';
   $('r-ok').checked = !!state.referral.ok;
+  $('c-email').value = state.copyEmail || $('f-email').value || '';
 }
 
 /* =========================================================
@@ -1404,11 +1947,11 @@ document.addEventListener('click', function(e){
    ========================================================= */
 JOB_FIELDS.concat(['f-notes']).forEach(function(id){
   var el = $(id);
-  var fn = function(){ renderHero(); renderCover(); refresh(); save(); };
+  var fn = function(){ renderHero(); renderCover(); renderPhotoCount(); refresh(); save(); pump(); };
   el.addEventListener('input', fn);
   el.addEventListener('change', fn);
 });
-$('f-product').addEventListener('change', function(){ renderChecks(); renderHero(); save(); });
+$('f-product').addEventListener('change', function(){ renderChecks(); renderShots(); renderHero(); refresh(); save(); });
 $('restore-dismiss').addEventListener('click', function(){ $('restore').classList.remove('show'); });
 
 /* =========================================================
@@ -1445,6 +1988,8 @@ function validate() {
   if (b) missing.push(b + ' walkthrough item' + (b > 1 ? 's' : ''));
   var noOwner = cleanSnags().filter(function(s){ return !s.owner.trim() || !s.due; }).length;
   if (noOwner) missing.push('an owner and fix-by date on ' + noOwner + ' snag' + (noOwner > 1 ? 's' : ''));
+  var noShots = requiredShots().filter(function(s){ return !shotDone(s.id); }).length;
+  if (noShots) missing.push(noShots + ' required photo' + (noShots > 1 ? 's' : ''));
   if (!state.media) missing.push('the photo question');
   if (!signed('sig-builder')) missing.push('builder signature');
   if (!signed('sig-customer')) missing.push('customer signature');
@@ -1465,6 +2010,8 @@ function collect() {
     warrantyStart: isoOf(handoverDate()), warrantyYears: WARRANTY_YEARS[key] || '',
     checkin: isoOf(checkinDate()),
     media: state.media,
+    custShare: state.custShare,
+    folder: folderName(),
     rating: state.testimonial.rating, words: state.testimonial.text.trim(), shareOk: !!state.testimonial.share,
     refName: state.referral.name.trim(), refPhone: state.referral.phone.trim(), refOk: !!state.referral.ok,
     review: reviewSummary(),
@@ -1644,6 +2191,35 @@ function makePDF(d) {
 
   if (d.notes) { section('Notes'); para(d.notes); y += 3; }
 
+  /* contact sheet */
+  var sheet = shotsFor(d.productKey).concat([CUST_SHOT]).filter(function(s){ return THUMBS[s.id] && shotDone(s.id) && state.photos[s.id].status !== 'skip'; });
+  var skipped = shotsFor(d.productKey).filter(function(s){ return state.photos[s.id] && state.photos[s.id].status === 'skip'; });
+  if (sheet.length || skipped.length) {
+    page();
+    section('Set Shots');
+    if (d.folder) para('Full size copies are in the GHL Media Storage folder Handovers / ' + d.folder + '.', C.sub);
+    y += 2;
+    var cols = 3, gap = 5, cw = (CW - gap * (cols - 1)) / cols, ch = cw * 0.75;
+    sheet.forEach(function(s, i){
+      var col = i % cols;
+      if (col === 0 && i > 0) y += ch + 12;
+      if (col === 0) room(ch + 12);
+      var x = PG.m + col * (cw + gap);
+      doc.setFillColor.apply(doc, C.panel); doc.rect(x, y, cw, ch, 'F');
+      try {
+        var p = state.photos[s.id] || {};
+        var ar = (p.w && p.h) ? p.w / p.h : (s.o === 'land' ? 1.6 : 0.8);
+        var iw = cw, ih = cw / ar;
+        if (ih > ch) { ih = ch; iw = ch * ar; }
+        doc.addImage(THUMBS[s.id], 'JPEG', x + (cw - iw) / 2, y + (ch - ih) / 2, iw, ih);
+      } catch (e) {}
+      doc.setFontSize(7.5); doc.setTextColor.apply(doc, C.body);
+      doc.text(doc.splitTextToSize(s.label, cw), x, y + ch + 4);
+    });
+    if (sheet.length) y += ch + 14;
+    skipped.forEach(function(s){ para(s.label + ': not possible on this site.', C.sub); });
+  }
+
   section('Customer Feedback');
   pair('Rating', d.rating ? d.rating + ' out of 5' : 'Not given', 'Happy to share', d.words ? (d.shareOk ? 'Yes, first name only' : 'No') : '-');
   if (d.words) full('In their words', d.words);
@@ -1687,62 +2263,140 @@ function makePDF(d) {
 /* =========================================================
    FINISH ACTIONS
    ========================================================= */
-$('btn-pdf').addEventListener('click', function(){
-  var missing = validate();
-  if (missing.length) { setStatus('Still needed: ' + missing.join(', ') + '.', 'bad'); return; }
-  try {
-    var d = collect();
-    makePDF(d).save(filename(d));
-    state.finished.pdf = true; refresh(); save();
-    setStatus('PDF downloaded. WhatsApp it to the customer and attach it to their GHL contact.', 'ok');
-  } catch (err) {
-    setStatus('Could not build the PDF. Try again, or reload the page.', 'bad');
-  }
+function payload(d, event, pdfUrl, extra) {
+  var body = {
+    event: event,
+    contact_id: CONTACT_ID,
+    first_name: d.name.split(' ')[0] || '', full_name: d.name, email: d.email, phone: d.phone,
+    order_number: d.order, product: d.product, handover_product: d.product,
+    install_address: d.address, serial_reference: d.serial,
+    handover_date: d.date, handover_date_long: longDate(parseIso(d.date) || new Date()),
+    handover_builder: d.builder, handover_status: d.status,
+    handover_snags: d.snags.length ? d.snags.map(function(s){ return s.text + ' (owner: ' + (s.owner || '-') + ', fix by: ' + (s.due || '-') + ')'; }).join(' | ') : 'None',
+    handover_snag_count: d.snags.length,
+    handover_snag_next_due: d.snags.map(function(s){ return s.due; }).filter(Boolean).sort()[0] || '',
+    handover_failed_checks: d.fails.length ? d.fails.join(' | ') : 'None',
+    handover_notes: d.notes, handover_pdf_filename: filename(d), handover_pdf_url: pdfUrl || '',
+    warranty_start: d.warrantyStart, warranty_start_long: longDate(parseIso(d.warrantyStart)), warranty_years: d.warrantyYears,
+    first_checkin_date: d.checkin, first_checkin_long: longDate(parseIso(d.checkin)),
+    media_consent: d.media,
+    customer_photo_share: d.custShare,
+    photo_folder: d.folder ? 'Handovers / ' + d.folder : '',
+    photos_taken: Object.keys(state.photos).filter(function(k){ return shotDone(k) && state.photos[k].status !== 'skip'; }).length,
+    photos_in_ghl: Object.keys(state.photos).filter(function(k){ return state.photos[k].status === 'sent'; }).length,
+    photo_links: Object.keys(state.photos).filter(function(k){ return state.photos[k].url; }).map(function(k){ return k + ': ' + state.photos[k].url; }).join(' | '),
+    shots_not_possible: Object.keys(state.photos).filter(function(k){ return state.photos[k].status === 'skip'; }).join(', '),
+    testimonial_rating: d.rating, testimonial_text: d.words, testimonial_share_ok: d.shareOk,
+    review_google_opened: !!state.review.google, review_trustpilot_opened: !!state.review.trustpilot, review_summary: d.review,
+    referral_name: d.refName, referral_phone: d.refPhone, referral_consent: d.refOk,
+    builder_signed_at: d.signedB, customer_signed_at: d.signedC,
+    submitted_at: new Date().toISOString()
+  };
+  Object.keys(extra || {}).forEach(function(k){ body[k] = extra[k]; });
+  return body;
+}
+
+function webhookReady() { return WEBHOOK_URL.indexOf('PASTE_') !== 0; }
+
+function postWebhook(body) {
+  return fetch(WEBHOOK_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+}
+
+/* Make the PDF on the phone and put it in the customer's GHL folder. Answers the link. */
+function uploadRecord(d) {
+  if (!uploadReady() || !folderName()) return Promise.resolve('');
+  var blob = makePDF(d).output('blob');
+  var fd = new FormData();
+  fd.append('key', UPLOAD_KEY);
+  fd.append('contactId', CONTACT_ID);
+  fd.append('name', d.name); fd.append('order', d.order);
+  fd.append('email', d.email); fd.append('phone', d.phone);
+  fd.append('folder', d.folder);
+  fd.append('shot', 'record');
+  fd.append('label', 'Handover record PDF');
+  fd.append('file', blob, filename(d));
+  return fetch(UPLOAD_URL, { method: 'POST', body: fd }).then(function(r){
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  }).then(function(j){
+    if (!j || !j.ok) throw new Error('refused');
+    state.recordUrl = j.url || '';
+    save();
+    return state.recordUrl;
+  });
+}
+
+function showFallback(on) { $('pdf-fallback').style.display = on ? 'block' : 'none'; }
+
+/* fallback only: shown when GHL cannot be reached */
+$('btn-pdf').addEventListener('click', function(e){
+  e.preventDefault();
+  try { var d = collect(); makePDF(d).save(filename(d)); setStatus('PDF downloaded. Attach it to the contact in GHL by hand.', 'ok'); }
+  catch (err) { setStatus('Could not build the PDF. Try again, or reload the page.', 'bad'); }
 });
 
+/* BUILDER: the only finish action */
 $('btn-save').addEventListener('click', function(){
+  if (!signed('sig-customer')) { setStatus('The customer has not signed yet. Open the customer side and hand them the phone.', 'bad'); return; }
   var missing = validate();
   if (missing.length) { setStatus('Still needed: ' + missing.join(', ') + '.', 'bad'); return; }
-  if (WEBHOOK_URL.indexOf('PASTE_') === 0) { setStatus('No webhook set yet. Download the PDF and attach it by hand for now.', 'bad'); return; }
+  if (!webhookReady()) { setStatus('Not connected to GHL yet. Everything is saved on this phone.', 'bad'); showFallback(true); return; }
   var d = collect();
   var btn = $('btn-save');
   btn.disabled = true;
-  setStatus('Sending to GHL...', 'wait');
-  fetch(WEBHOOK_URL, {
-    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      event: 'handover_complete',
-      contact_id: CONTACT_ID,
-      first_name: d.name.split(' ')[0] || '', full_name: d.name, email: d.email, phone: d.phone,
-      order_number: d.order, product: d.product, install_address: d.address, serial_reference: d.serial,
-      handover_date: d.date, handover_builder: d.builder, handover_status: d.status,
-      handover_snags: d.snags.length ? d.snags.map(function(s){ return s.text + ' (owner: ' + (s.owner || '-') + ', fix by: ' + (s.due || '-') + ')'; }).join(' | ') : 'None',
-      handover_snag_count: d.snags.length,
-      handover_snag_next_due: d.snags.map(function(s){ return s.due; }).filter(Boolean).sort()[0] || '',
-      handover_failed_checks: d.fails.length ? d.fails.join(' | ') : 'None',
-      handover_notes: d.notes, handover_pdf_filename: filename(d),
-      warranty_start: d.warrantyStart, warranty_years: d.warrantyYears,
-      first_checkin_date: d.checkin,
-      media_consent: d.media,
-      testimonial_rating: d.rating, testimonial_text: d.words, testimonial_share_ok: d.shareOk,
-      review_google_opened: !!state.review.google, review_trustpilot_opened: !!state.review.trustpilot, review_summary: d.review,
-      referral_name: d.refName, referral_phone: d.refPhone, referral_consent: d.refOk,
-      builder_signed_at: d.signedB, customer_signed_at: d.signedC,
-      submitted_at: new Date().toISOString()
-    })
-  }).then(function(){
+  setStatus('Saving the record to GHL...', 'wait');
+  var unsent = Object.keys(state.photos).filter(function(k){ var st = state.photos[k].status; return st === 'saved' || st === 'failed' || st === 'sending'; }).length;
+  (state.recordUrl ? Promise.resolve(state.recordUrl) : uploadRecord(d)).catch(function(){ return ''; }).then(function(url){
+    return postWebhook(payload(d, 'handover_complete', url)).then(function(){ return url; });
+  }).then(function(url){
     state.finished.sent = true; refresh(); save();
-    setStatus('Sent to GHL. Now download the PDF and attach it to the contact.', 'ok');
-    btn.textContent = 'Sent';
+    btn.textContent = 'Saved';
+    if (!url) { setStatus('Saved to GHL, but the PDF did not upload. Download it below and attach it by hand.', 'bad'); showFallback(true); }
+    else if (unsent) { setStatus('Saved to GHL. ' + unsent + ' photo' + (unsent > 1 ? 's are' : ' is') + ' still sending. Keep this page open until they show as saved.', 'ok'); }
+    else { setStatus('Saved to GHL. Record, photos and PDF are all in the customer\'s folder.', 'ok'); }
   }).catch(function(){
     btn.disabled = false;
-    setStatus('Could not send. Download the PDF and attach it by hand.', 'bad');
+    setStatus('Could not reach GHL. Everything is still saved on this phone, try again when you have signal.', 'bad');
+    showFallback(true);
   });
 });
 
-$('btn-reset').addEventListener('click', function(){
+/* CUSTOMER: email me a copy */
+function cStatus(msg, kind) {
+  var el = $('c-status');
+  el.className = 'status' + (kind ? ' status--' + kind : '');
+  el.querySelector('p').textContent = msg;
+}
+$('c-email').addEventListener('input', function(){ state.copyEmail = this.value; save(); });
+$('btn-email').addEventListener('click', function(){
+  var em = $('c-email').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { cStatus('Please check your email address.', 'bad'); return; }
+  if (!signed('sig-customer')) { cStatus('Please sign above first.', 'bad'); return; }
+  if (!webhookReady()) { cStatus('We are not connected just now. Your builder will make sure a copy reaches you.', 'bad'); return; }
+  var d = collect();
+  var btn = $('btn-email');
+  btn.disabled = true;
+  cStatus('Sending...', 'wait');
+  var go = state.recordUrl ? Promise.resolve(state.recordUrl) : uploadRecord(d).catch(function(){ return ''; });
+  go.then(function(url){
+    return postWebhook(payload(d, 'handover_copy_requested', url, { copy_email: em }));
+  }).then(function(){
+    state.finished.emailed = true; refresh(); save();
+    btn.textContent = 'Sent';
+    cStatus('Sent. Check your inbox in a few minutes, and your junk folder just in case.', 'ok');
+  }).catch(function(){
+    btn.disabled = false;
+    cStatus('That did not go through. Please try again in a moment.', 'bad');
+  });
+});
+
+$('btn-reset').addEventListener('click', function(e){
+  e.preventDefault();
   if (!confirm('Clear the whole form and start again? Everything saved on this device will go.')) return;
+  var unsent = Object.keys(state.photos).filter(function(k){ var st = state.photos[k].status; return st === 'saved' || st === 'failed' || st === 'sending'; }).length;
+  if (unsent && uploadReady() && !confirm(unsent + ' photo' + (unsent > 1 ? 's have' : ' has') + ' not reached GHL yet and will be lost. Reset anyway?')) return;
   wipe();
+  dbClear().catch(function(){});
   window.location.href = window.location.pathname;
 });
 
@@ -1766,6 +2420,9 @@ renderStars();
 renderMedia();
 paintCustomerInputs();
 renderCover();
+renderShots();
+renderCustChoice();
+loadThumbs().then(function(){ renderShots(); refresh(); pump(); });
 
 booting = false;
 setMode(mode);
