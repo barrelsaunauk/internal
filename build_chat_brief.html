@@ -48,6 +48,13 @@
   .disc{flex:0 0 52px;width:52px;height:52px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:23px;line-height:1;}
   .disc.sm{flex:0 0 46px;width:46px;height:46px;font-size:20px;}
 
+  /* top strip, drawings only */
+  .topstrip{background:#ffffff;border-bottom:1px solid var(--rule-soft);padding:14px 0;}
+  .topstrip .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;}
+  .topstrip .ts{font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--sage);white-space:nowrap;}
+  .topstrip .draw{display:flex;align-items:flex-end;gap:14px;flex:1 1 auto;justify-content:center;}
+  .topstrip .draw img{height:40px;width:auto;}
+
   /* hero */
   .hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;color:#ffffff;
     background:
@@ -157,11 +164,18 @@
   .scard .t{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:2px;}
   .scard .s{font-size:14px;color:var(--ink-l);line-height:1.55;}
 
-  /* price sentence and included */
-  .pricecard{background:#ffffff;border:1px solid var(--hairline);border-radius:22px;padding:30px 32px 28px;}
-  .pricecard .plab{font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage);margin-bottom:12px;}
-  .pricecard p{font-size:17px;color:var(--ink);line-height:1.65;}
-  .pricecard p span{font-weight:700;color:var(--forest-deep);}
+  /* price: big from number, plus, one extra */
+  .pricerow{display:flex;align-items:center;gap:28px;flex-wrap:wrap;background:#ffffff;border:1px solid var(--hairline);border-radius:22px;padding:34px 36px;}
+  .pricerow .pbig{flex:1 1 300px;}
+  .pricerow .plab{font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage);margin-bottom:10px;}
+  .pricerow .num{font-size:46px;font-weight:700;line-height:1.05;color:var(--forest-deep);letter-spacing:-1px;}
+  .pricerow .num span{font-size:18px;font-weight:700;letter-spacing:0;color:var(--sage);margin-left:6px;}
+  .pricerow .sub{font-size:15px;color:var(--ink-l);margin-top:10px;}
+  .pricerow .plus{font-size:64px;font-weight:700;color:var(--honey);line-height:1;flex:0 0 auto;}
+  .pricerow .circ.side{flex:0 0 auto;}
+  .pricerow .circ.side .ph{width:150px;height:150px;flex:0 0 150px;}
+  .pnote{font-size:16px;color:var(--ink);line-height:1.65;max-width:760px;margin:24px 0 34px;}
+  .pnote span{font-weight:700;color:var(--forest-deep);}
   .incl{background:var(--tint);border-radius:22px;padding:30px 30px 26px;}
   .incl .plab{font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--forest-deep);margin-bottom:12px;}
   .incl ul{list-style:none;}
@@ -178,12 +192,6 @@
   .close h2 span{color:var(--honey-l);}
   .close p{font-size:17px;max-width:560px;margin:0 auto 30px;}
   .close .btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
-
-  /* range strip, drawings only */
-  .range{padding:40px 0 70px;text-align:center;}
-  .range .kicker{margin-bottom:26px;}
-  .range .draw{display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;gap:22px 38px;margin-bottom:30px;}
-  .range .draw img{height:84px;width:auto;}
 
   /* footer */
   footer{background:var(--ground);border-radius:22px 22px 0 0;padding:54px 24px 40px;text-align:center;}
@@ -204,8 +212,14 @@
     section{padding:60px 0;}
     .wrap{padding:0 16px;}
     .hero h1{font-size:36px;}
-    .hero .inner{padding:150px 0 46px;}
-    .hero .topbtn{top:90px;right:auto;left:24px;}
+    .hero .inner{padding:110px 0 46px;}
+    .topstrip .wrap{justify-content:center;text-align:center;}
+    .topstrip .draw{gap:8px;}
+    .topstrip .draw img{height:30px;}
+    .pricerow{padding:26px 20px;justify-content:center;text-align:center;}
+    .pricerow .num{font-size:38px;}
+    .pricerow .plus{width:100%;text-align:center;font-size:48px;}
+    .pricerow .circ.side{flex-direction:column;}
     h2{font-size:28px;}
     .band h2{font-size:27px;}
     .g2,.g3,.g4,.bgrid,.circles{grid-template-columns:1fr;}
@@ -222,16 +236,30 @@
     .jstep{width:120px;}
     .close{padding:48px 22px;}
     .pill,.ghost{white-space:normal;text-align:center;}
-    .range .draw img{height:60px;}
   }
 </style>
 </head>
 <body>
 
+<!-- TOP STRIP: the rest of the range, drawings only -->
+<div class="topstrip">
+  <div class="wrap">
+    <span class="ts">We build more than saunas</span>
+    <div class="draw">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11de8ed1c29f9e1345.png" alt="Glamping pod">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14ff484614db752941.png" alt="Shepherd's hut">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee1430b0f957ccb86d28.png" alt="Hot tubs">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528b9.png" alt="Double Dippers">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11ff484614db752909.png" alt="Ice bath">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528ad.png" alt="Barrel shower">
+    </div>
+    <a class="ghost green" href="https://barrelsaunauk.github.io/internal/more_than_saunas.html">See the full range</a>
+  </div>
+</div>
+
 <!-- HERO -->
 <header class="hero">
   <img class="logo" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a159cbca7ceea4e5718f77f.png" alt="Barrel Sauna UK">
-  <a class="ghost topbtn" href="https://barrelsaunauk.github.io/internal/more_than_saunas.html">Looking for something other than a sauna?</a>
   <div class="wrap inner">
     <div class="dash"></div>
     <div class="kicker">Your Build Chat Brief</div>
@@ -361,7 +389,7 @@
       <div class="card"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6abe8a331325c552eecaac62.jpg" alt="Roof mounted solar panel"><div class="tab">Solar</div><div class="ex">Off-grid lighting from a roof-mounted panel.</div></div>
     </div>
 
-    <div class="ask"><span class="al">James will ask</span><span class="aq">How far is the sauna from your back door?</span></div>
+    <div class="ask"><span class="al">James will ask</span><span class="aq">Straight in from the house, or do you want somewhere to change and cool down out there?</span></div>
   </div>
 </section>
 
@@ -446,45 +474,43 @@
   <div class="wrap">
     <div class="kicker">From here</div>
     <h2>What happens <span>next</span></h2>
+    <p class="lede">Three easy steps, and none of them are scary. &#128522;</p>
     <div class="journey">
-      <div class="jl">Your journey</div>
+      <div class="jl">Your next steps</div>
       <div class="jrow">
-        <div class="jstep on"><div class="jd">&#129309;</div><div class="jt">Deposit</div></div>
-        <div class="jstep"><div class="jd">&#128221;</div><div class="jt">Spec call</div></div>
-        <div class="jstep"><div class="jd">&#128296;</div><div class="jt">In build</div></div>
-        <div class="jstep"><div class="jd">&#127968;</div><div class="jt">Built at yours</div></div>
+        <div class="jstep on"><div class="jd">&#128197;</div><div class="jt">Pick a slot</div></div>
+        <div class="jstep"><div class="jd">&#128075;</div><div class="jt">Meet James</div></div>
+        <div class="jstep"><div class="jd">&#129518;</div><div class="jt">Plan it together</div></div>
       </div>
     </div>
-    <div class="grid g2">
-      <div class="scard"><div class="disc">&#129309;</div><div><div class="t">Deposit</div><div class="s">A &pound;500 non-refundable deposit secures your place in the build queue.</div></div></div>
-      <div class="scard"><div class="disc">&#128221;</div><div><div class="t">Spec confirmed</div><div class="s">We lock in your full specification and issue your build invoice.</div></div></div>
-      <div class="scard"><div class="disc">&#128296;</div><div><div class="t">Build queue</div><div class="s">Your sauna is scheduled into our Welsh workshop with a firm timeline.</div></div></div>
-      <div class="scard"><div class="disc">&#127968;</div><div><div class="t">Built on site</div><div class="s">We build at your home, on the base you have ready.</div></div></div>
+    <div class="grid g3">
+      <div class="scard"><div class="disc">&#128197;</div><div><div class="t">Pick a slot</div><div class="s">15 minutes, whenever suits you. No forms, no sales pitch. &#9749;</div></div></div>
+      <div class="scard"><div class="disc">&#128075;</div><div><div class="t">Meet James</div><div class="s">A relaxed chat about your garden, your space and what you want from it. &#127795;</div></div></div>
+      <div class="scard"><div class="disc">&#129518;</div><div><div class="t">Plan it together</div><div class="s">James works out the layout and options that get you the most sauna for your money. &#128170;</div></div></div>
     </div>
 
     <h3>Where your build starts</h3>
-    <p class="lede" style="margin-bottom:24px;">Every sauna is made to order, so your estimate is built around your configuration.</p>
-    <div class="split">
-      <div class="pricecard">
+    <p class="lede" style="margin-bottom:24px;">Every sauna is made to order, so your estimate is built around what you choose.</p>
+    <div class="pricerow">
+      <div class="pbig">
         <div class="plab">Thermowood barrel saunas</div>
-        <p><span>Prices start from &pound;5,250 plus VAT.</span> Your exact figure comes from six choices on this page: length, diameter, bench layout, windows, entrance and heater. James prices them with you in 15 minutes. Delivery and installation are always priced separately.</p>
+        <div class="num">From &pound;5,250 <span>plus VAT</span></div>
+        <div class="sub">The basic sauna, built and ready to use.</div>
       </div>
-      <div class="incl">
-        <div class="plab">Included with every sauna</div>
-        <ul>
-          <li>Volcanic sauna stones</li>
-          <li>Stainless steel components</li>
-          <li>Base roof shingles</li>
-          <li>Standard secure door</li>
-          <li>Standard flush entrance</li>
-          <li>Structural warranty</li>
-        </ul>
-      </div>
+      <div class="plus">+</div>
+      <div class="circ side"><div class="ph" style="background-image:url('https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6abe8683612cffc49a2738f8.jpg');" role="img" aria-label="Changing room"></div><div class="cap">Changing room<br>+&pound;725 plus VAT</div></div>
     </div>
-    <div class="dep">
-      <div class="disc">&#129309;</div>
-      <div class="txt"><div class="t">Already decided?</div>A &pound;500 non-refundable deposit secures your place in the build queue.</div>
-      <a class="pill" href="https://www.barrelsaunauk.com/secure-your-build">Secure Your Build</a>
+    <p class="pnote"><span>The extras are where the number moves.</span> Start with the basics, or add what you'll actually use. James will help you decide. Delivery and installation are always priced separately.</p>
+    <div class="incl">
+      <div class="plab">Included with every sauna</div>
+      <ul>
+        <li>Volcanic sauna stones</li>
+        <li>Stainless steel components</li>
+        <li>Base roof shingles</li>
+        <li>Standard secure door</li>
+        <li>Standard flush entrance</li>
+        <li>Structural warranty</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -498,27 +524,10 @@
       <p>15 minutes with James, at a time that suits you. No pitch, just your build talked through properly.</p>
       <div class="btns">
         <a class="pill" href="https://www.barrelsaunauk.com/book-a-call-back">Pick a slot</a>
-        <a class="pill wa" href="https://wa.me/447360274142">WhatsApp Us</a>
       </div>
     </div>
   </div>
 </section>
-
-<!-- RANGE STRIP, drawings only -->
-<div class="range">
-  <div class="wrap">
-    <div class="kicker">We build more than saunas</div>
-    <div class="draw">
-      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11de8ed1c29f9e1345.png" alt="Glamping pod">
-      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14ff484614db752941.png" alt="Shepherd's hut">
-      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee1430b0f957ccb86d28.png" alt="Hot tubs">
-      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528b9.png" alt="Double Dippers">
-      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11ff484614db752909.png" alt="Ice bath">
-      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528ad.png" alt="Barrel shower">
-    </div>
-    <a class="ghost green" href="https://barrelsaunauk.github.io/internal/more_than_saunas.html">See the full range</a>
-  </div>
-</div>
 
 <!-- FOOTER -->
 <footer>
