@@ -39,6 +39,10 @@
   .pill:hover{background:var(--honey-d);}
   .pill.wa{background:var(--wa);}
   .pill.wa:hover{background:#28b843;}
+  .ghost{display:inline-block;background:transparent;border:1px solid rgba(255,255,255,0.55);color:#ffffff;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:11px 20px;border-radius:30px;white-space:nowrap;}
+  .ghost:hover{background:rgba(255,255,255,0.12);}
+  .ghost.green{border-color:var(--hairline);color:var(--forest-deep);}
+  .ghost.green:hover{background:var(--tint-l);}
 
   /* emoji disc */
   .disc{flex:0 0 52px;width:52px;height:52px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:23px;line-height:1;}
@@ -51,6 +55,7 @@
       linear-gradient(180deg, rgba(22,38,28,0.45) 0%, rgba(22,38,28,0.10) 38%, rgba(22,38,28,0.90) 100%),
       url('https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6abe68158807113c2d1d4b01.png') center/cover no-repeat;}
   .hero .logo{position:absolute;top:28px;left:24px;width:120px;}
+  .hero .topbtn{position:absolute;top:34px;right:24px;}
   .hero .inner{padding:130px 0 70px;width:100%;}
   .hero .dash{width:44px;height:2px;background:var(--honey-l);margin-bottom:14px;}
   .hero .kicker{color:var(--honey-l);}
@@ -77,6 +82,17 @@
   .block .bd{font-size:15px;color:var(--ink-l);line-height:1.6;}
   section.dark .block{border:1px solid rgba(255,255,255,0.10);}
 
+  /* heater cards: pro, best for, think about */
+  .heat{background:#ffffff;border-radius:18px;box-shadow:var(--shadow);padding:26px 26px 22px;}
+  .heat .top{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+  .heat .top .ico{flex:0 0 72px;display:flex;justify-content:center;}
+  .heat .top .ico img{height:62px;width:auto;}
+  .heat .ti{font-size:13px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--forest-deep);line-height:1.4;}
+  .heat .pro{font-size:18px;font-weight:700;color:var(--forest-deep);line-height:1.4;margin-bottom:14px;}
+  .heat .row{display:flex;gap:12px;padding:9px 0;border-top:1px solid var(--rule-soft);font-size:14px;line-height:1.55;color:var(--ink-l);}
+  .heat .row .k{flex:0 0 92px;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--sage);padding-top:3px;}
+  section.dark .heat{border:1px solid rgba(255,255,255,0.10);}
+
   /* pill box rows (emoji or drawing left, caps title, copy) */
   .pbox{display:flex;align-items:center;gap:22px;background:#ffffff;border-radius:22px;box-shadow:var(--shadow);padding:20px 26px;}
   .pbox .ico{flex:0 0 96px;display:flex;justify-content:center;}
@@ -90,6 +106,7 @@
   .card img{width:100%;height:auto;}
   .card .tab{background:var(--forest-deep);border-top:3px solid var(--honey);color:#ffffff;padding:11px 18px;font-size:12px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;}
   .card .ex{padding:12px 18px 16px;font-size:14px;color:var(--sage);line-height:1.55;}
+  .card .ex .note{display:block;margin-top:6px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--sage-pale);}
 
   /* circle inserts */
   .circles{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:64px;}
@@ -123,9 +140,9 @@
   .band h2 span{color:var(--honey-l);}
   .band p{color:var(--veil-body);font-size:16px;max-width:460px;}
 
-  /* chips */
+  /* chips, light version */
   .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
-  .chip{background:rgba(255,255,255,0.08);border:1px solid rgba(214,168,104,0.35);color:var(--honey-l);border-radius:30px;padding:8px 16px;font-size:13px;font-weight:700;}
+  .chip{background:var(--tint-l);border:1px solid var(--rule-soft);color:var(--forest-deep);border-radius:30px;padding:8px 16px;font-size:13px;font-weight:700;}
 
   /* journey */
   .journey{background:var(--forest);border-radius:22px;box-shadow:var(--shadow);padding:32px 20px 34px;text-align:center;margin-bottom:22px;}
@@ -162,6 +179,12 @@
   .close p{font-size:17px;max-width:560px;margin:0 auto 30px;}
   .close .btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
 
+  /* range strip, drawings only */
+  .range{padding:40px 0 70px;text-align:center;}
+  .range .kicker{margin-bottom:26px;}
+  .range .draw{display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;gap:22px 38px;margin-bottom:30px;}
+  .range .draw img{height:84px;width:auto;}
+
   /* footer */
   footer{background:var(--ground);border-radius:22px 22px 0 0;padding:54px 24px 40px;text-align:center;}
   footer .icons{display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;gap:18px 26px;margin-bottom:28px;}
@@ -181,7 +204,8 @@
     section{padding:60px 0;}
     .wrap{padding:0 16px;}
     .hero h1{font-size:36px;}
-    .hero .inner{padding:110px 0 46px;}
+    .hero .inner{padding:150px 0 46px;}
+    .hero .topbtn{top:90px;right:auto;left:24px;}
     h2{font-size:28px;}
     .band h2{font-size:27px;}
     .g2,.g3,.g4,.bgrid,.circles{grid-template-columns:1fr;}
@@ -191,11 +215,14 @@
     .circ.side{flex-direction:column;text-align:center;}
     .circ.side .ph{flex:none;}
     .ask .aq{font-size:17px;}
+    .heat .row{flex-direction:column;gap:2px;}
+    .heat .row .k{flex:none;}
     .inter{padding:60px 22px;}
     .inter p{font-size:24px;}
     .jstep{width:120px;}
     .close{padding:48px 22px;}
-    .pill{white-space:normal;text-align:center;}
+    .pill,.ghost{white-space:normal;text-align:center;}
+    .range .draw img{height:60px;}
   }
 </style>
 </head>
@@ -204,6 +231,7 @@
 <!-- HERO -->
 <header class="hero">
   <img class="logo" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a159cbca7ceea4e5718f77f.png" alt="Barrel Sauna UK">
+  <a class="ghost topbtn" href="https://barrelsaunauk.github.io/internal/more_than_saunas.html">Looking for something other than a sauna?</a>
   <div class="wrap inner">
     <div class="dash"></div>
     <div class="kicker">Your Build Chat Brief</div>
@@ -254,11 +282,11 @@
     <div class="kicker">Bench layouts</div>
     <h2>Sit, stretch, <span>share</span></h2>
     <p class="lede">The layout shapes your experience. Choose how you sit, stretch, and share the heat.</p>
-    <div class="pstack">
-      <div class="pbox"><div class="ico"><div class="disc">&#128260;</div></div><div class="ti">U-shaped</div><div class="bd">Side-placed heater, cleaner lines, and more usable sauna space. Chimney to the side means nothing between you and your window or globe.</div></div>
-      <div class="pbox"><div class="ico"><div class="disc">&#128207;</div></div><div class="ti">Straight</div><div class="bd">The classic sauna layout. One bench each side, perfect for lying flat, relaxing, or sitting with a group.</div></div>
-      <div class="pbox"><div class="ico"><div class="disc">&#128208;</div></div><div class="ti">L-shaped</div><div class="bd">Ideal for compact saunas. One bench along the back, one along the side. The go-to layout for our most compact builds.</div></div>
-      <div class="pbox"><div class="ico"><div class="disc">&#127760;</div></div><div class="ti">Globe window seating</div><div class="bd">Panoramic views into the sauna, with a middle plank that drops in or out in seconds for a full flat platform.</div></div>
+    <div class="grid g2">
+      <div class="card"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ac0bc217d735ea2a1f1aa0a.jpg" alt="U-shaped benches with a full glass back wall and floating seat"><div class="tab">U-shaped</div><div class="ex">Side-placed heater, cleaner lines, and more usable sauna space. Chimney to the side means nothing between you and your window or globe.<span class="note">Shown with a full glass back wall and floating seat</span></div></div>
+      <div class="card"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ac1c32022bc27f58f4459c2.jpg" alt="Straight benches with a changing room"><div class="tab">Straight</div><div class="ex">The classic sauna layout. One bench each side, perfect for lying flat, relaxing, or sitting with a group.<span class="note">Shown with a changing room</span></div></div>
+      <div class="card"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ac1c5f6bbad531ac8993eac.jpg" alt="L-shaped benches in a compact sauna"><div class="tab">L-shaped</div><div class="ex">Made for smaller builds, especially our compact saunas. One bench along the back, one along the side.<span class="note">The go-to layout for our most compact builds</span></div></div>
+      <div class="card"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6abbaab360c7466bcf6e423b.jpeg" alt="Globe window seating"><div class="tab">Globe window seating</div><div class="ex">Panoramic views into the sauna, with a middle plank that drops in or out in seconds for a full flat platform.</div></div>
     </div>
 
     <div class="ask"><span class="al">James will ask</span><span class="aq">Lying flat or sitting up, which matters more to you?</span></div>
@@ -342,53 +370,49 @@
   <div class="wrap">
     <div class="kicker">Heater options</div>
     <h2>Choose your <span>heat</span></h2>
-    <p class="lede">Every sauna is built bespoke. Choose the heat source that suits your lifestyle.</p>
+    <p class="lede">Every sauna is built bespoke. Four ways to heat it, and one of them will suit how you live.</p>
     <div class="grid g2">
-      <div class="block"><div class="disc sm">&#128268;</div><div class="lb">Electric switch</div><div class="bd">Simple, reliable, no fuss. Just turn it on and go.</div></div>
-      <div class="block"><div class="disc sm">&#128241;</div><div class="lb">Electric WiFi</div><div class="bd">Preheat from anywhere with the Harvia app. Our top pick.</div></div>
-      <div class="block"><div class="disc sm">&#128293;</div><div class="lb">Wood burning</div><div class="bd">Internal or external feed, the classic sauna experience.</div></div>
-      <div class="block"><div class="disc sm">&#9832;&#65039;</div><div class="lb">Hybrid</div><div class="bd">Wood burning and electric in one sauna.</div></div>
+
+      <!-- HEATER DRAWING SLOT 1: replace the disc with <img src="CDN" alt="Electric switch heater"> once the Gamma drawing is on the CDN -->
+      <div class="heat">
+        <div class="top"><div class="ico"><div class="disc">&#128268;</div></div><div class="ti">Electric switch</div></div>
+        <div class="pro">The simplest to live with. Turn it on, wait, get in.</div>
+        <div class="row"><div class="k">Best for</div><div>A sauna near the house with power close by.</div></div>
+        <div class="row"><div class="k">Think about</div><div>An electrician runs a dedicated supply out to the sauna.</div></div>
+      </div>
+
+      <!-- HEATER DRAWING SLOT 2 -->
+      <div class="heat">
+        <div class="top"><div class="ico"><div class="disc">&#128241;</div></div><div class="ti">Electric WiFi</div></div>
+        <div class="pro">Switch it on from your phone, so it's hot when you get home. Our top pick.</div>
+        <div class="row"><div class="k">Best for</div><div>Busy weeks, when you want it ready the moment you walk in.</div></div>
+        <div class="row"><div class="k">Think about</div><div>The same electrics as the switch version, plus WiFi that reaches the garden. Runs on the Harvia app.</div></div>
+      </div>
+
+      <!-- HEATER DRAWING SLOT 3 -->
+      <div class="heat">
+        <div class="top"><div class="ico"><div class="disc">&#128293;</div></div><div class="ti">Wood burning</div></div>
+        <div class="pro">The classic sauna experience. Real fire, no electrics needed.</div>
+        <div class="row"><div class="k">Best for</div><div>Off-grid spots, or anyone who loves the ritual of lighting the stove.</div></div>
+        <div class="row"><div class="k">Think about</div><div>Internal feed loads from inside the sauna. External feed loads from outside, so no smoke or mess in the sauna.</div></div>
+      </div>
+
+      <!-- HEATER DRAWING SLOT 4 -->
+      <div class="heat">
+        <div class="top"><div class="ico"><div class="disc">&#9832;&#65039;</div></div><div class="ti">Hybrid</div></div>
+        <div class="pro">Wood burning and electric in one sauna.</div>
+        <div class="row"><div class="k">Best for</div><div>Wood at the weekend, a quick electric session midweek.</div></div>
+        <div class="row"><div class="k">Think about</div><div>The most flexible of the four, and the one worth talking through with James.</div></div>
+      </div>
+
     </div>
 
     <div class="ask"><span class="al">James will ask</span><span class="aq">Is there power nearby, or is wood the plan?</span></div>
   </div>
 </section>
 
-<!-- DETAILS BAND -->
-<div class="band">
-  <div class="wrap">
-    <h2>Handcrafted <span>in Wales</span></h2>
-    <p>Thermowood bound in stainless steel bands, with stainless components throughout. Every sauna is made to order in our Welsh workshop.</p>
-  </div>
-</div>
-
-<!-- MORE THAN SAUNAS -->
-<section>
-  <div class="wrap">
-    <div class="kicker">The full range</div>
-    <h2>More than just <span>saunas</span></h2>
-    <p class="lede">Outdoor wellness and leisure structures, all designed to complement each other on one shared deck.</p>
-    <div class="pstack">
-      <div class="pbox"><div class="ico"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11de8ed1c29f9e1345.png" alt="Glamping pod"></div><div class="ti">Glamping pods</div><div class="bd">Handbuilt to any size, for the garden, a holiday let or off-grid.</div></div>
-      <div class="pbox"><div class="ico"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14ff484614db752941.png" alt="Shepherd's hut"></div><div class="ti">Garden huts</div><div class="bd">Built in the same workshop as our saunas, with the same joinery and materials.</div></div>
-      <div class="pbox"><div class="ico"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee1430b0f957ccb86d28.png" alt="Hot tub"></div><div class="ti">Hot tubs</div><div class="bd">Thermowood, with air and jacuzzi jets, LED lighting and an insulated lid.</div></div>
-      <div class="pbox"><div class="ico"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528b9.png" alt="Double Dipper"></div><div class="ti">Double Dippers</div><div class="bd">Two-person cold plunge. Side by side contrast therapy.</div></div>
-      <div class="pbox"><div class="ico"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11ff484614db752909.png" alt="Ice bath"></div><div class="ti">Ice baths</div><div class="bd">The Single Dipper, a compact cold plunge for one.</div></div>
-      <div class="pbox"><div class="ico"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528ad.png" alt="Barrel shower"></div><div class="ti">Barrel showers</div><div class="bd">Designed to sit alongside your sauna on a shared deck.</div></div>
-    </div>
-    <div class="grid g4" style="margin-top:34px;">
-      <div class="card"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a994bc9174710d6163e3c4b.png" alt="Thermowood hot tub"><div class="tab">Hot tubs</div></div>
-      <div class="card"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa154a69416bfd5312819bc.jpg" alt="Double Dipper cold plunge"><div class="tab">Ice baths</div></div>
-      <div class="card"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa1597bd953a0128b482fe8.jpg" alt="Eco glamping pod"><div class="tab">Glamping</div></div>
-      <div class="card"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa526c7df2d0155532ed538.jpg" alt="Barrel shower"><div class="tab">Showers</div></div>
-    </div>
-
-    <div class="ask"><span class="al">James will ask</span><span class="aq">Just the sauna, or the full set up?</span></div>
-  </div>
-</section>
-
 <!-- MOBILE -->
-<section class="dark">
+<section>
   <div class="wrap">
     <div class="kicker">Mobile saunas</div>
     <h2>Built to <span>move</span></h2>
@@ -408,6 +432,14 @@
     </div>
   </div>
 </section>
+
+<!-- DETAILS BAND -->
+<div class="band">
+  <div class="wrap">
+    <h2>Handcrafted <span>in Wales</span></h2>
+    <p>Thermowood bound in stainless steel bands, with stainless components throughout. Every sauna is made to order in our Welsh workshop.</p>
+  </div>
+</div>
 
 <!-- JOURNEY AND PRICE -->
 <section>
@@ -471,6 +503,22 @@
     </div>
   </div>
 </section>
+
+<!-- RANGE STRIP, drawings only -->
+<div class="range">
+  <div class="wrap">
+    <div class="kicker">We build more than saunas</div>
+    <div class="draw">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11de8ed1c29f9e1345.png" alt="Glamping pod">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14ff484614db752941.png" alt="Shepherd's hut">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee1430b0f957ccb86d28.png" alt="Hot tubs">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528b9.png" alt="Double Dippers">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11ff484614db752909.png" alt="Ice bath">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528ad.png" alt="Barrel shower">
+    </div>
+    <a class="ghost green" href="https://barrelsaunauk.github.io/internal/more_than_saunas.html">See the full range</a>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
