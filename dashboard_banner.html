@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BSUK Dashboard Banner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#16261C; --forest-deep:#1F3D28; --forest:#2B5336;
+    --sage-pale:#8fae86; --honey:#C08B41; --honey-l:#D6A868;
+    --hero:url('https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ac4da2cc062e4fb051fb066.png');
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;background:var(--ground);}
+  body{font-family:'Poppins',Arial,Helvetica,sans-serif;color:#ffffff;-webkit-font-smoothing:antialiased;overflow:hidden;}
+
+  .banner{position:relative;height:100%;min-height:170px;display:flex;align-items:center;
+    background-image:var(--hero);background-size:cover;background-position:center 60%;}
+  .banner::before{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,rgba(22,38,28,0.78) 0%,rgba(31,61,40,0.50) 40%,rgba(31,61,40,0.12) 75%,rgba(31,61,40,0) 100%);}
+
+  .inner{position:relative;z-index:2;width:100%;padding:26px 40px;}
+
+  .kicker{font-size:11px;font-weight:700;letter-spacing:0.32em;text-transform:uppercase;color:var(--honey-l);margin-bottom:10px;}
+  h1{font-size:40px;font-weight:700;line-height:1.08;letter-spacing:-0.5px;color:#ffffff;}
+  h1 span{color:var(--honey-l);}
+  .date{margin-top:12px;font-size:15px;font-weight:400;color:#e9eee4;}
+  .date .wd{font-weight:700;color:#ffffff;}
+
+  .clock{display:inline-flex;align-items:center;gap:12px;margin-top:14px;background:rgba(22,38,28,0.45);
+    border:1px solid rgba(255,255,255,0.18);border-radius:40px;padding:7px 16px;backdrop-filter:blur(4px);}
+  .clock .lab{font-size:10px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:#e9eee4;}
+  .clock .t{font-size:16px;font-weight:700;color:#ffffff;line-height:1;}
+  .clock .s{font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;}
+  .open{color:var(--honey-l);}
+  .shut{color:var(--sage-pale);}
+
+
+  @media(max-width:820px){
+    .inner{padding:20px;}
+    h1{font-size:28px;}
+  }
+</style>
+</head>
+<body>
+<div class="banner">
+  <div class="inner">
+    <div>
+      <div class="kicker">Barrel Sauna UK &middot; Team dashboard</div>
+      <h1 id="greet">Good morning, <span>team</span></h1>
+      <div class="date" id="date">&nbsp;</div>
+      <div class="clock">
+        <span class="lab">Workshop</span>
+        <span class="t" id="ukTime">--:--</span>
+        <span class="s" id="ukState">&nbsp;</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function ukParts(){
+    var now = new Date();
+    var f = new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false});
+    var p = {};
+    f.formatToParts(now).forEach(function(x){ p[x.type] = x.value; });
+    return p;
+  }
+  function draw(){
+    var p = ukParts();
+    var h = parseInt(p.hour,10), m = parseInt(p.minute,10);
+    var greet = h < 12 ? 'Good morning' : (h < 18 ? 'Good afternoon' : 'Good evening');
+    document.getElementById('greet').innerHTML = greet + ', <span>team</span>';
+    document.getElementById('date').innerHTML = '<span class="wd">' + p.weekday + '</span> ' + p.day + ' ' + p.month + ' ' + p.year;
+    document.getElementById('ukTime').textContent = p.hour + ':' + p.minute;
+    var weekday = ['Saturday','Sunday'].indexOf(p.weekday) === -1;
+    var mins = h * 60 + m;
+    var isOpen = weekday && mins >= 540 && mins < 1080;
+    var st = document.getElementById('ukState');
+    st.textContent = isOpen ? 'Open now' : 'Closed';
+    st.className = 's ' + (isOpen ? 'open' : 'shut');
+  }
+  draw();
+  setInterval(draw, 30000);
+</script>
+</body>
+</html>
