@@ -37,7 +37,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:"Poppins",system
 .wrap{max-width:900px;margin:0 auto}
 img{max-width:100%}
 
-.hero{position:relative;margin-inline:-16px;min-height:460px;display:flex;align-items:flex-end;overflow:hidden;background:#16261C}
+.hero{position:relative;margin-inline:-16px;min-height:320px;display:flex;align-items:flex-end;overflow:hidden;background:#16261C}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;max-width:none}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(22,38,28,.9) 0%,rgba(22,38,28,.68) 45%,rgba(22,38,28,.22) 100%),linear-gradient(0deg,rgba(22,38,28,.85) 0%,rgba(22,38,28,0) 55%)}
 .hero .inner{position:relative;z-index:1;width:100%;max-width:900px;margin:0 auto;padding:56px 16px 40px;display:grid;gap:12px;color:#fff}
@@ -197,11 +197,10 @@ h2 .hl{color:var(--honey)}
   html,body{background:#fff;color:#16261C}
   body{padding:0 !important;font-size:11.5pt;line-height:1.45}
   .wrap{max-width:none}
-  .hero,.strip,.tabs,.printbtn,.dayphoto,.circ,.vers,.savestate,.dayhead .count,.plan{display:none !important}
+  .hero,.strip,.tabs,.printbtn,.dayphoto,.circ,.vers,.savestate,.dayhead .count,.plan,.backbtn,.tiles,.scrbtn{display:none !important}
+  .pane:not(.on),.arch:not(.on){display:none !important}
   .sec{margin-top:0}
-  .sec.days > h2,.sec.days > .intro{display:none}
-  .day{display:block !important;break-before:page}
-  .day:first-of-type{break-before:auto}
+  .card,.offer,.terms span,.steps span{box-shadow:none !important;break-inside:avoid}
   .runhead{display:flex;justify-content:space-between;align-items:baseline;font-size:9.5pt;letter-spacing:.14em;text-transform:uppercase;color:#50795F;font-weight:600;border-bottom:1px solid #1F3D28;padding-bottom:5px;margin:0 0 12px}
   .runhead .rh{color:#C08B41}
   .dayhead{background:#fff;border:0;border-radius:0;padding:0 0 8px;gap:3px;border-bottom:2px solid #1F3D28}
@@ -225,10 +224,8 @@ h2 .hl{color:var(--honey)}
   .notes{display:block;margin-top:8px;break-inside:avoid}
   .notes .nl{font-size:9pt;letter-spacing:.16em;text-transform:uppercase;color:#50795F;font-weight:600;margin-bottom:3px}
   .lines{display:block;height:21mm;border:1px solid #c9d6cc;border-radius:4px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 7mm,#dbe7dd 7mm,#dbe7dd calc(7mm + 1px));-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .after{break-before:page;margin-top:0}
-  .after + .after{break-before:auto;margin-top:26px}
-  .after h2{font-size:18pt;color:#1F3D28}
-  .after .intro{font-size:10.5pt}
+  .pane h2{font-size:18pt;color:#1F3D28}
+  .pane .intro{font-size:10.5pt}
   .theme{margin-top:18px;break-inside:auto}
   .theme .th{break-after:avoid}
   .theme .th img{height:30px}
@@ -246,8 +243,7 @@ h2 .hl{color:var(--honey)}
   .planprint .pt{font-size:9pt;letter-spacing:.08em;text-transform:uppercase;color:#C08B41;font-weight:600;margin-top:8px}
   .planprint .empty{font-size:10.5pt;color:#50795F}
   a{color:inherit;text-decoration:none}
-  body.print-one .day:not(.on){display:none !important}
-  body.print-one .after,body.print-one .planprint{display:none !important}
+  body.print-one .planprint{display:none !important}
 }
 
 /* ---------- Builds tab (v13) ---------- */
@@ -336,6 +332,70 @@ h2 .hl{color:var(--honey)}
   .bl-legend{font-size:8.5pt}
   #day5 .dayhead p{font-size:10pt}
 }
+
+/* ---------- v15: tabs, This month, Jake's offer, Archive ---------- */
+.maintabs{position:sticky;top:0;z-index:20;background:var(--bg);padding:12px 0;margin:26px 0 0;border-bottom:1px solid var(--line)}
+.maintabs .tab{padding:11px 18px;font-size:14.5px}
+.pane{display:none}
+.pane.on{display:block}
+.pane > .sec:first-child{margin-top:34px}
+.kick{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--honey);font-weight:600;margin:0 0 6px}
+
+.steps{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 22px;padding:0;list-style:none}
+.steps span{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:600}
+.steps b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--forest-deep);color:#fff;font-size:12px}
+
+.cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:700px){.cards{grid-template-columns:1fr 1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow)}
+.card .t{font-weight:700;font-size:15.5px;display:block;line-height:1.35}
+.card .d{font-size:13.5px;color:var(--muted);margin-top:4px;display:block}
+.card.done{border-color:var(--forest-deep)}
+.card.done .t{color:var(--muted)}
+.card .who{display:inline-block;margin-top:8px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--honey);font-weight:600}
+
+.terms{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 22px}
+.terms span{background:var(--forest-deep);color:#fff;border-radius:999px;padding:8px 15px;font-size:13px;font-weight:600}
+.offers{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:860px){.offers{grid-template-columns:repeat(3,1fr)}}
+.offer{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 20px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;position:relative}
+.offer.pick{border:2px solid var(--honey)}
+.offer .badge{position:absolute;top:-12px;left:18px;background:var(--honey);color:#fff;border-radius:999px;padding:4px 12px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+.offer h3{margin:4px 0 0;font-size:19px;line-height:1.25;font-weight:700}
+.offer .what{margin:0;font-size:13.5px;color:var(--muted)}
+.offer ul.inc{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.offer ul.inc li{padding:7px 0 7px 22px;border-bottom:1px solid var(--line);font-size:13.5px;position:relative;line-height:1.45}
+.offer ul.inc li::before{content:"";position:absolute;left:2px;top:12px;width:9px;height:9px;border-radius:50%;background:var(--sage,#8fae86)}
+.offer ul.inc li.out::before{background:transparent;border:1.5px solid var(--muted);width:7px;height:7px}
+.offer ul.inc li.out{color:var(--muted)}
+.offer .price{margin-top:auto;padding-top:6px;display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--muted)}
+.offer .price b{font-size:15px;color:var(--ink)}
+.offer ul.choice{list-style:none;margin:0;padding:12px 0 0;border-top:1px solid var(--line)}
+.offer ul.choice .tx{font-weight:600;font-size:14px}
+.waiting{margin-top:22px;padding:16px 18px;background:var(--panel);border-radius:14px;font-size:14px}
+.waiting p{margin:0}
+
+.tiles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (min-width:700px){.tiles{grid-template-columns:repeat(3,1fr)}}
+.tile{display:flex;flex-direction:column;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:0;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;font:inherit;color:var(--ink);transition:border-color .12s,transform .12s}
+.tile:hover{border-color:var(--forest-deep);transform:translateY(-1px)}
+.tile .im{height:96px;background:var(--panel);display:grid;place-items:center;overflow:hidden}
+.tile .im img{width:100%;height:100%;object-fit:cover;display:block}
+.tile .im img.ic{width:auto;height:58px;object-fit:contain}
+.tile .tt{padding:12px 14px 2px;font-weight:700;font-size:14.5px;line-height:1.3}
+.tile .tc{padding:0 14px 13px;font-size:12px;color:var(--muted);font-weight:600}
+.tile .tk{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--honey);font-weight:600;padding:12px 14px 0}
+.tile .tk + .tt{padding-top:2px}
+.arch{display:none}
+.arch.on{display:block}
+.backbtn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:9px 16px;font:inherit;font-weight:600;font-size:13.5px;cursor:pointer;margin:0 0 6px;box-shadow:var(--shadow)}
+.backbtn:hover{border-color:var(--forest-deep)}
+.arch .theme{margin-top:14px}
+.arch .theme .th h3{font-size:22px}
+.offer ul.choice .scrbtn,.offer ul.choice .scrview,.offer ul.choice .scredit{display:none !important}
+@media (max-width:520px){.maintabs{display:flex;flex-wrap:nowrap;gap:6px}.maintabs .tab{flex:1 1 auto;padding:9px 8px;font-size:13px;text-align:center}}
+.arch > h2{margin-top:10px}
+
 </style>
 </head>
 <body>
@@ -345,7 +405,7 @@ h2 .hl{color:var(--honey)}
   <div class="inner">
     <div class="kicker">Barrel Sauna UK</div>
     <h1>Content <span>Plan</span></h1>
-    <p class="lede">Four filming days with Tim, the builds calendar, then everything else we've talked about. Tick anything you want in the plan and it lands in the panel. One button sends it to Nikki.</p>
+    <p class="lede">What you and Jake talked about, his offer, and every other idea tucked away in the archive. Tick what you want and it lands in the panel.</p>
   </div>
 </header>
 
@@ -353,20 +413,121 @@ h2 .hl{color:var(--honey)}
 
   <div class="strip"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9c52d9e29b3baf97d3415c.png" alt="Barrel Sauna UK product range drawings"></div>
 
-  <section class="sec days">
-    <h2>The four <span class="hl">days</span></h2>
-    <p class="intro">Each day is one list. Print a day to take it with you.</p>
+  <nav class="tabs maintabs" aria-label="Content plan sections">
+    <button class="tab on" type="button" data-pane="now">This month</button>
+    <button class="tab" type="button" data-pane="offer">Jake's offer</button>
+    <button class="tab" type="button" data-pane="archive">Archive</button>
+    <button class="tab" type="button" data-pane="builds">Builds</button>
+  </nav>
 
-    <div class="tabs">
-      <button class="tab on" type="button" data-day="day1"><span class="n">Day 1</span>The new unit</button>
-      <button class="tab" type="button" data-day="day2"><span class="n">Day 2</span>Local installs</button>
-      <button class="tab" type="button" data-day="day3"><span class="n">Day 3</span>Calvin Clark, mid build</button>
-      <button class="tab" type="button" data-day="day4"><span class="n">Day 4</span>Try before you buy</button>
-      <button class="tab" type="button" data-day="day5"><span class="n">Builds</span>Who should be ready when</button>
+  <!-- THIS MONTH -->
+  <div class="pane on" id="pane-now" data-title="This month with Jake">
+    <section class="sec">
+      <div class="kick">From your call with Jake, 6 October</div>
+      <h2>This <span class="hl">month</span></h2>
+      <p class="intro">The eight things you and Jake talked about. Tick the ones you want first.</p>
+      <div class="steps"><span><b>1</b>Plan together</span><span><b>2</b>One shoot day</span><span><b>3</b>Jake edits</span><span><b>4</b>Look back, improve</span></div>
+      <ul class="cards">
+        <li class="card ck" data-id="now-design-library"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Design options library</span><span class="d">Film every design option and layout, a bit more each shoot. Feeds Design Your Sauna and the proposals.</span></span></label></li>
+        <li class="card ck" data-id="now-launch-pack"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Client launch media pack</span><span class="d">Clients pay for a shoot of their build. They get the content, we post it too. Your add on: a soft launch page with one local ad.</span></span></label></li>
+        <li class="card ck" data-id="now-journey-videos"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Customer journey videos</span><span class="d">Tim explains what happens after the order: batches, why 8 to 10 weeks, out for delivery. Fewer chasers to sales.</span></span></label></li>
+        <li class="card ck" data-id="now-crew-guide"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Filming guide for crews</span><span class="d">Jake films reference shots, then a one page checklist or short video. Crews send their shots to Nikki.</span></span></label></li>
+        <li class="card ck" data-id="now-install-montage"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Install montage with Tim's voiceover</span><span class="d">Every finished build: crew footage plus Tim recorded in his sound room. "Join us today in Surrey where we're building..."</span></span></label></li>
+        <li class="card ck" data-id="now-backlog-shoots"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Backlog shoots</span><span class="d">When Tim can't make it: past customers, a build on site or the warehouse. Or Jake catches up on editing.</span></span></label></li>
+        <li class="card ck" data-id="now-media-library"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">B-roll and stills library</span><span class="d">Every clip and high res still filed so anyone in the team can find it.</span></span></label></li>
+        <li class="card ck" data-id="now-posting"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Getting it posted</span><span class="d">Nothing finished sits unposted. Nikki schedules it now, Jake offered a content calendar.</span></span></label></li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- JAKE'S OFFER -->
+  <div class="pane" id="pane-offer" data-title="Jake's offer">
+    <section class="sec">
+      <div class="kick">Ahead of Jake's deck</div>
+      <h2>Jake's <span class="hl">offer</span></h2>
+      <p class="intro">A set amount of Jake's time each month, not a fixed number of videos. He puts it where you need it that month.</p>
+      <div class="terms"><span>3 months, then review</span><span>You're a priority client</span><span>South Wales travel included</span><span>Monthly planning session</span></div>
+      <div class="offers">
+        <div class="offer">
+          <h3>Content Support</h3>
+          <p class="what">The light version.</p>
+          <ul class="inc">
+            <li>Monthly planning session</li>
+            <li>Shoot itinerary and shot list</li>
+            <li>Runs the shoot day</li>
+            <li class="out">Scripts and content ideas left to you</li>
+          </ul>
+          <div class="price"><span>Price</span><b>from deck</b></div>
+          <ul class="choice"><li class="ck" data-id="offer-support"><label><input type="checkbox"><span class="bx"></span><span class="tx">Liam's choice: Content Support</span></label></li></ul>
+        </div>
+        <div class="offer pick">
+          <span class="badge">Jake's pick</span>
+          <h3>Content Production</h3>
+          <p class="what">Everything in Support, plus:</p>
+          <ul class="inc">
+            <li>Scripts and content ideas with you</li>
+            <li>His own pro equipment, no relying on Tim's kit</li>
+            <li>B-roll library, organised for the team</li>
+            <li>High res stills</li>
+            <li>Ongoing help between shoots</li>
+          </ul>
+          <div class="price"><span>Price</span><b>from deck</b></div>
+          <ul class="choice"><li class="ck" data-id="offer-production"><label><input type="checkbox"><span class="bx"></span><span class="tx">Liam's choice: Content Production</span></label></li></ul>
+        </div>
+        <div class="offer">
+          <h3>Social Media Management</h3>
+          <p class="what">Adds running the accounts.</p>
+          <ul class="inc">
+            <li>Publishing the content</li>
+            <li>Writing captions</li>
+            <li>Reviewing how posts perform</li>
+            <li class="out">Jake doesn't push this one, you haven't asked for it</li>
+          </ul>
+          <div class="price"><span>Price</span><b>from deck</b></div>
+          <ul class="choice"><li class="ck" data-id="offer-social"><label><input type="checkbox"><span class="bx"></span><span class="tx">Liam's choice: Social Media Management</span></label></li></ul>
+        </div>
+      </div>
+      <div class="waiting"><p><b>Still to come from Jake:</b> his deck with prices, and links to his portfolio.</p></div>
+
+    <div class="circ">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ff6c5641597c752aab2dd.jpg" alt="Turned timber coat hooks on a rail">
+      <div class="cap">Turned timber<br>coat hooks<br>Detail shot</div>
     </div>
+    </section>
+  </div>
 
-    <!-- DAY 1 -->
-    <div class="day on" id="day1" data-title="Day 1: The new unit">
+  <!-- ARCHIVE -->
+  <div class="pane" id="pane-archive" data-title="Archive">
+    <section class="sec">
+      <div id="archive-home">
+        <div class="kick">Everything else</div>
+        <h2>The <span class="hl">archive</span></h2>
+        <p class="intro">Every other idea since June. Tap a tile to open it.</p>
+        <ul class="tiles" id="tiles">
+          <li><button class="tile" type="button" data-open="day1"><span class="im"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa5a59b9f8b31b6abd27b54.jpg" alt=""></span><span class="tk">Filming day</span><span class="tt">The new unit</span><span class="tc"></span></button></li>
+          <li><button class="tile" type="button" data-open="day2"><span class="im"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a8561324aaffc55cddd1f1c.png" alt=""></span><span class="tk">Filming day</span><span class="tt">Local installs</span><span class="tc"></span></button></li>
+          <li><button class="tile" type="button" data-open="day3"><span class="im"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9e5427b81a3502a8958dbf.jpg" alt=""></span><span class="tk">Filming day</span><span class="tt">Calvin Clark, mid build</span><span class="tc"></span></button></li>
+          <li><button class="tile" type="button" data-open="day4"><span class="im"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa5a3adc9a6c7937b60d1bd.jpeg" alt=""></span><span class="tk">Filming day</span><span class="tt">Try before you buy</span><span class="tc"></span></button></li>
+          <li><button class="tile" type="button" data-open="arch-launch"><span class="im"><img class="ic" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528b9.png" alt=""></span><span class="tt">Launch a mobile sauna business</span><span class="tc"></span></button></li>
+          <li><button class="tile" type="button" data-open="arch-tim"><span class="im"><img class="ic" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cbdaa5e26a96908e5.png" alt=""></span><span class="tt">Tim on camera</span><span class="tc"></span></button></li>
+          <li><button class="tile" type="button" data-open="arch-products"><span class="im"><img class="ic" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528b9.png" alt=""></span><span class="tt">Product hero shoots</span><span class="tc"></span></button></li>
+          <li><button class="tile" type="button" data-open="arch-workshop"><span class="im"><img class="ic" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee114091fa65e6a8fa27.png" alt=""></span><span class="tt">Workshop and build process</span><span class="tc"></span></button></li>
+          <li><button class="tile" type="button" data-open="arch-delivery"><span class="im"><img class="ic" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14ff484614db752941.png" alt=""></span><span class="tt">Delivery and install</span><span class="tc"></span></button></li>
+          <li><button class="tile" type="button" data-open="arch-customers"><span class="im"><img class="ic" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11de8ed1c29f9e1345.png" alt=""></span><span class="tt">Customers and proof</span><span class="tc"></span></button></li>
+          <li><button class="tile" type="button" data-open="arch-office"><span class="im"><img class="ic" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528ad.png" alt=""></span><span class="tt">Office and B-roll</span><span class="tc"></span></button></li>
+          <li><button class="tile" type="button" data-open="arch-seasonal"><span class="im"><img class="ic" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11ff484614db752909.png" alt=""></span><span class="tt">Seasonal and campaigns</span><span class="tc"></span></button></li>
+          <li><button class="tile" type="button" data-open="arch-explainers"><span class="im"><img class="ic" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee1430b0f957ccb86d28.png" alt=""></span><span class="tt">Explainers</span><span class="tc"></span></button></li>
+        </ul>
+
+    <div class="circ">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ffd1c641597c752ab184f.jpg" alt="Stainless steel Barrel Sauna UK nameplate on a door frame">
+      <div class="cap">Built in the<br>United Kingdom<br>The nameplate detail</div>
+    </div>
+      </div>
+
+
+      <div class="arch" id="day1" data-title="Day 1: The new unit">
+        <button class="backbtn" type="button">&larr; All ideas</button>
       <div class="runhead"><span>Barrel Sauna UK · Content Plan</span><span class="rh">Day 1 of 4</span></div>
       <div class="dayphoto"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa5a59b9f8b31b6abd27b54.jpg" alt="Globe window sauna on a trailer in the workshop"></div>
       <div class="dayhead">
@@ -423,10 +584,11 @@ h2 .hl{color:var(--honey)}
       </ul></div>
 
       <div class="notes"><div class="nl">Notes</div><div class="lines"></div></div>
-    </div>
+      </div>
 
-    <!-- DAY 2 -->
-    <div class="day" id="day2" data-title="Day 2: Local installs">
+
+      <div class="arch" id="day2" data-title="Day 2: Local installs">
+        <button class="backbtn" type="button">&larr; All ideas</button>
       <div class="runhead"><span>Barrel Sauna UK · Content Plan</span><span class="rh">Day 2 of 4</span></div>
       <div class="dayphoto"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a8561324aaffc55cddd1f1c.png" alt="Two saunas, a hot tub and an ice bath installed together"></div>
       <div class="dayhead">
@@ -452,10 +614,11 @@ h2 .hl{color:var(--honey)}
       </ul></div>
 
       <div class="notes"><div class="nl">Notes</div><div class="lines"></div></div>
-    </div>
+      </div>
 
-    <!-- DAY 3 -->
-    <div class="day" id="day3" data-title="Day 3: Calvin Clark's campsite, mid build">
+
+      <div class="arch" id="day3" data-title="Day 3: Calvin Clark's campsite, mid build">
+        <button class="backbtn" type="button">&larr; All ideas</button>
       <div class="runhead"><span>Barrel Sauna UK · Content Plan</span><span class="rh">Day 3 of 4</span></div>
       <div class="dayphoto"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9e5427b81a3502a8958dbf.jpg" alt="Barrel sauna with porch entrance in a garden"></div>
       <div class="dayhead">
@@ -478,10 +641,11 @@ h2 .hl{color:var(--honey)}
       </ul></div>
 
       <div class="notes"><div class="nl">Notes</div><div class="lines"></div></div>
-    </div>
+      </div>
 
-    <!-- DAY 4 -->
-    <div class="day" id="day4" data-title="Day 4: Try before you buy">
+
+      <div class="arch" id="day4" data-title="Day 4: Try before you buy">
+        <button class="backbtn" type="button">&larr; All ideas</button>
       <div class="runhead"><span>Barrel Sauna UK · Content Plan</span><span class="rh">Day 4 of 4</span></div>
       <div class="dayphoto"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa5a3adc9a6c7937b60d1bd.jpeg" alt="Double Dipper outdoors"></div>
       <div class="dayhead">
@@ -505,10 +669,154 @@ h2 .hl{color:var(--honey)}
       </ol></div>
 
       <div class="notes"><div class="nl">Notes</div><div class="lines"></div></div>
-    </div>
+      </div>
 
-    <!-- BUILDS (v13) -->
-    <div class="day" id="day5" data-title="Builds: who should be ready when">
+
+      <div class="arch" id="arch-launch" data-title="Launch a mobile sauna business">
+        <button class="backbtn" type="button">&larr; All ideas</button>
+    <h2>Launch a <span class="hl">mobile sauna business</span></h2>
+    <p class="intro">Build a mobile sauna launch as if Liam were a customer who'd just bought one, so the team can sell the whole setup: content launch, website, backend systems, all linked. Where and when to film it is not decided.</p>
+    <div class="group"><h3>🎥 What it needs</h3><ul>
+      <li class="ck" data-id="launch-landing-video"><label><input type="checkbox"><span class="bx"></span><span class="tx">Tim's landing page video: starting a mobile sauna business has roadblocks. Planning, website, content. It stops people going for a dream lifestyle. We can take care of all of it. Click below to see an example</span></label></li>
+      <li class="ck" data-id="launch-brand"><label><input type="checkbox"><span class="bx"></span><span class="tx">A made-up brand name and logo</span></label></li>
+      <li class="ck" data-id="launch-12-posts"><label><input type="checkbox"><span class="bx"></span><span class="tx">12 launch posts, a full Instagram grid in threes. Roughly half video, half HD stills</span></label></li>
+      <li class="ck" data-id="launch-stills"><label><input type="checkbox"><span class="bx"></span><span class="tx">The stills can be freeze frames from Tim's cameras</span></label></li>
+      <li class="ck" data-id="launch-example-posts"><label><input type="checkbox"><span class="bx"></span><span class="tx">Example posts: "we're launching at so-and-so", "view our sauna here", people using it</span></label></li>
+      <li class="ck" data-id="launch-starter-pack"><label><input type="checkbox"><span class="bx"></span><span class="tx">A starter pack: here's your kit, now go make a business</span></label></li>
+      <li class="ck" data-id="launch-double-use"><label><input type="checkbox"><span class="bx"></span><span class="tx">The same footage doubles as BSUK posts: people smiling and relaxing in a sauna works on our own feed too</span></label></li>
+    </ul></div>
+      </div>
+
+
+      <div class="arch" id="arch-tim" data-title="Tim on camera">
+        <button class="backbtn" type="button">&larr; All ideas</button>
+    <div class="theme">
+      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cbdaa5e26a96908e5.png" alt=""><h3>Tim on camera</h3></div>
+      <p class="sub">Scripted pieces to camera. Tim needs notice, so batch these into one session with a full script.</p>
+      <ul class="ideas">
+        <li class="idea ck" data-id="x-woodburners"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Woodburners are lovely</span><span class="d">Tim sitting by the hot tub talking about how natural and therapeutic woodburners are. Two older versions exist in the archive. For the heater section of the closer's guide.</span></span></label></li>
+        <li class="idea ck" data-id="x-voiceovers"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Tim voiceovers from his sound room</span><span class="d">Tim offered to record voiceovers over B-roll at home, to patch anything missed on a shoot day. For any edit that needs narration.</span></span></label></li>
+      </ul>
+    </div>
+      </div>
+
+
+      <div class="arch" id="arch-products" data-title="Product hero shoots">
+        <button class="backbtn" type="button">&larr; All ideas</button>
+    <div class="theme">
+      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528b9.png" alt=""><h3>Product hero shoots</h3></div>
+      <p class="sub">Real footage of each product so we stop leaning on AI images and other makers' photos.</p>
+      <ul class="ideas">
+        <li class="idea ck" data-id="x-hot-tub-day"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Hot tub content day</span><span class="d">Stefano's square tub, the big square one, several Double Dippers, and one in use at a new location. For the hot tub page and hot tub ads.</span></span></label></li>
+        <li class="idea ck" data-id="x-grill-cabin"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Grill cabin walkthrough</span><span class="d">Liam talking through the grill cabin: grill, fire pit, bar or massage use, fully bespoke. Most grill cabin photos we hold aren't ours. For the new grill cabin page.</span></span></label></li>
+        <li class="idea ck" data-id="x-replace-photos"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Replace AI and borrowed photos</span><span class="d">Real photos for hot tubs, glamping pods, the grill cabin, the Book a call page and the shepherd's hut interiors, which look dated. For the website and partner estimate pages.</span></span></label></li>
+        <li class="idea ck" data-id="x-shepherds-hut"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">First shepherd's hut build</span><span class="d">Chris Hollis's hut is our first showcase one and was priced partly so we could film it. Document it start to finish. For the shepherd's hut page and socials.</span></span></label></li>
+        <li class="idea ck" data-id="x-mobile-dual-icebath"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Mobile sauna with hot tub and dual ice bath</span><span class="d">The pinned Instagram video drew lots of interest. More of this setup. For the mobile sauna page and the "totally bespoke" line.</span></span></label></li>
+        <li class="idea ck" data-id="x-solar-mobile"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Solar on a mobile sauna</span><span class="d">Tim on fitting solar, cut to Jarek fitting a panel in the workshop. An Instagram clip exists. For the mobile sauna page.</span></span></label></li>
+        <li class="idea ck" data-id="x-glamping-walkthrough"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Glamping pod walkthrough</span><span class="d">Liam walking out of a glamping pod, talking it through. The expo version is pinned on Instagram. For glamping enquiries and the pod page.</span></span></label></li>
+      </ul>
+    </div>
+      </div>
+
+
+      <div class="arch" id="arch-workshop" data-title="Workshop and build process">
+        <button class="backbtn" type="button">&larr; All ideas</button>
+    <div class="theme">
+      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee114091fa65e6a8fa27.png" alt=""><h3>Workshop and build process</h3></div>
+      <p class="sub">Proof that it's all made by hand in Wales.</p>
+      <ul class="ideas">
+        <li class="idea ck" data-id="x-last-hour"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">The last hour of a build</span><span class="d">Jarek tells us when a build is about an hour from finished so we can go up and film it. For socials and build updates.</span></span></label></li>
+        <li class="idea ck" data-id="x-dismantling"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">On-site dismantling</span><span class="d">From Nikki's list. Not discussed on a recorded call, so the brief needs Liam's detail.</span></span></label></li>
+        <li class="idea ck" data-id="x-ai-camera"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">The AI camera <span class="new">New</span></span><span class="d">The clip-on camera in the cupboard records a full day and edits it itself. It may already hold the grill cabin being built from the ground up. Hand it to Jake, or mount it in the workshop for a full mobile sauna build time lapse.</span></span></label></li>
+      </ul>
+    </div>
+      </div>
+
+
+      <div class="arch" id="arch-delivery" data-title="Delivery and install">
+        <button class="backbtn" type="button">&larr; All ideas</button>
+    <div class="theme">
+      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14ff484614db752941.png" alt=""><h3>Delivery and install</h3></div>
+      <p class="sub">About 16 installs were in the pipeline on 2 September. Each one is content if we know about it in time.</p>
+      <ul class="ideas">
+        <li class="idea ck" data-id="x-high-end-install"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">High end wellness space install</span><span class="d">The upcoming order with a barrel shower, hot tub, ice bath and saunas as one space, about four hours away. Either Jake travels, or a local videographer films and Jake edits. For hero content and commercial pitches.</span></span></label></li>
+        <li class="idea ck" data-id="x-pickups"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Customer pickups and handovers</span><span class="d">Mobile sauna collections keep happening at the workshop without anyone filming. For socials and testimonials.</span></span></label></li>
+        <li class="idea ck" data-id="x-delivery-montage"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Delivery montage of the wider range</span><span class="d">A hot tub on a trailer, a glamping pod and hot tub being loaded, the pod and grill cabin being built. For the more products landing page.</span></span></label></li>
+        <li class="idea ck" data-id="x-built-for-you"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Built for you or built on site</span><span class="d">Liam saying we can bring it fully built on a trailer or build it on site. For the estimate page delivery section.</span></span></label></li>
+        <li class="idea ck" data-id="x-farm-delivery"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Hot tub and half moon sauna to a local farm</span><span class="d">Delivery footage of both going to a local farm. For the "what we've been up to" email.</span></span></label></li>
+        <li class="idea ck" data-id="x-london-garden"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">London narrow garden</span><span class="d">Carried through a narrow house into a long garden, decking cut round a tree stump, Double Dipper beside the sauna. Proof for difficult access and decking.</span></span></label></li>
+      </ul>
+    </div>
+      </div>
+
+
+      <div class="arch" id="arch-customers" data-title="Customers and proof">
+        <button class="backbtn" type="button">&larr; All ideas</button>
+    <div class="theme">
+      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11de8ed1c29f9e1345.png" alt=""><h3>Customers and proof</h3></div>
+      <p class="sub">Real people with real builds. Mobile sauna businesses are the biggest untapped pile.</p>
+      <ul class="ideas">
+        <li class="idea ck" data-id="x-dimitri"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Dimitri and Solace Heat</span><span class="d">Call Dimitri (mobile sauna and ice bath) for his socials and a review. Add the Solace Heat video to the mobile sauna page.</span></span></label></li>
+        <li class="idea ck" data-id="x-escape-devon"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Escape to the Sauna, Devon</span><span class="d">On his second and third units and posting good content. Point prospects to his Instagram. For mobile sauna leads.</span></span></label></li>
+        <li class="idea ck" data-id="x-nomad"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Nomad Sauna stories</span><span class="d">He posts high quality videos to his stories, not his feed. Save them as they go up. For socials and detail shots.</span></span></label></li>
+        <li class="idea ck" data-id="x-globe-camping"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Camping out under the globe</span><span class="d">A retired grandad's grandchildren camp on a mattress in his globe window sauna under the LEDs. A story worth telling. For socials and the globe window.</span></span></label></li>
+        <li class="idea ck" data-id="x-big-names"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Big name builds</span><span class="d">The castle sauna in Scotland, Flynn Holiday Park in Dublin, the client featured on the BBC. Track their Instagram and use snapshots. For proposals and commercial pitches.</span></span></label></li>
+        <li class="idea ck" data-id="x-reviews-photos"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Reviews and photos from every customer</span><span class="d">Installer gets a bonus for a review on site, review link on the handover sheet, automated ask after the QC form, and a photo request about six months in. For Google reviews and user photos.</span></span></label></li>
+      </ul>
+    </div>
+      </div>
+
+
+      <div class="arch" id="arch-office" data-title="Office and B-roll">
+        <button class="backbtn" type="button">&larr; All ideas</button>
+    <div class="theme">
+      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528ad.png" alt=""><h3>Office and B-roll</h3></div>
+      <p class="sub">Cutaways to lay under Tim's talking pieces.</p>
+      <ul class="ideas">
+        <li class="idea ck" data-id="x-liam-face"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Liam's face on camera</span><span class="d">A bad review called James "the man who hides his face". Founder led content answers it. For socials and the about page.</span></span></label></li>
+      </ul>
+    </div>
+      </div>
+
+
+      <div class="arch" id="arch-seasonal" data-title="Seasonal and campaigns">
+        <button class="backbtn" type="button">&larr; All ideas</button>
+    <div class="theme">
+      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11ff484614db752909.png" alt=""><h3>Seasonal and campaigns</h3></div>
+      <p class="sub">Christmas has been missed before because content was left too late. It needs shooting now.</p>
+      <ul class="ideas">
+        <li class="idea ck" data-id="x-christmas-grill"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Christmas and autumn grill cabin</span><span class="d">The grill cabin now has a beer tap. Angles: a garden bar, a beer garden add-on, a Christmas grotto for pubs. For Christmas socials and ads.</span></span></label></li>
+        <li class="idea ck" data-id="x-cold-snap"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">The October cold snap</span><span class="d">Leads come back to order when it turns cold. Have autumn content ready before then. For autumn ads and emails.</span></span></label></li>
+        <li class="idea ck" data-id="x-expo-ads"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Expo stand and nearby ads</span><span class="d">Film the stand at Farm Business Innovation and run ads within about a mile saying "we're here". Same trick at expos we don't attend.</span></span></label></li>
+        <li class="idea ck" data-id="x-hot-cold-day"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Hot and cold day</span><span class="d">Commercial Double Dipper owners can run a weekly hot and cold day, which gives them and us something fresh to post. For the commercial pitch and socials.</span></span></label></li>
+        <li class="idea ck" data-id="x-square-ads"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Square sauna ads</span><span class="d">A competitor's square sauna ad was good. Run our own from the sister site.</span></span></label></li>
+        <li class="idea ck" data-id="x-monthly-email"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">What we've been up to this month</span><span class="d">Revive Millie's monthly email (it had a high open rate) with recent installs and video.</span></span></label></li>
+      </ul>
+    </div>
+      </div>
+
+
+      <div class="arch" id="arch-explainers" data-title="Explainers">
+        <button class="backbtn" type="button">&larr; All ideas</button>
+    <div class="theme">
+      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee1430b0f957ccb86d28.png" alt=""><h3>Explainers</h3></div>
+      <p class="sub">Answers to questions customers keep asking.</p>
+      <ul class="ideas">
+        <li class="idea ck" data-id="x-anyone-can-move"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Anyone can move it</span><span class="d">Liam pushing a two tonne mobile sauna by hand. For towing nerves on mobile sauna calls.</span></span></label></li>
+        <li class="idea ck" data-id="x-two-person-price"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">How much is a 2 person sauna? <span class="new">New</span></span><span class="d">Tim starts at the compact entry level sauna and works up, with B-roll of other saunas as he talks. Compact seats two side by side, a 2.4m is a comfortable two with a straight bench each side so both can lie down, and 2.4m of sauna with a changing room and porch pushes 4m in total. The answer depends on width, layout, heater position, back and front windows, lighting and solar, because nothing is mass produced. Close on booking a design consultation, as the build often ends up different to what was clicked on Design Your Sauna.</span></span></label></li>
+        <li class="idea ck" data-id="x-finishes"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Stain, oil or paint <span class="new">New</span></span><span class="d">Dark stain, light stain or paraffin oil. Paraffin oil brings out the natural texture of the wood without a varnished look. We don't paint because it can flake and covers the texture, and dark stain protects the wood better. B-roll of someone in a t-shirt staining a sauna in the background while Tim talks.</span></span></label></li>
+      </ul>
+    </div>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- BUILDS -->
+  <div class="pane" id="pane-builds">
+    <section class="sec">
+      <div id="day5" data-title="Builds: who should be ready when">
+
       <div class="runhead"><span>Barrel Sauna UK · Content Plan</span><span class="rh">Builds</span></div>
       <div class="dayhead">
         <div class="k">Builds</div>
@@ -540,128 +848,9 @@ h2 .hl{color:var(--honey)}
         <p>Local means under an hour from Caerphilly, an easy content day for Jake and Tim. Far means over two hours, so brief a local videographer or ask the customer for footage.</p>
         <p>Rows with no build recorded need their spec written into GHL. The sheet is the record: anything typed there wins over what is baked into this page.</p>
       </div>
-    </div>
-  </section>
-
-  <section class="sec after">
-    <h2>Launch a <span class="hl">mobile sauna business</span></h2>
-    <p class="intro">Build a mobile sauna launch as if Liam were a customer who'd just bought one, so the team can sell the whole setup: content launch, website, backend systems, all linked. Where and when to film it is not decided.</p>
-    <div class="group"><h3>🎥 What it needs</h3><ul>
-      <li class="ck" data-id="launch-landing-video"><label><input type="checkbox"><span class="bx"></span><span class="tx">Tim's landing page video: starting a mobile sauna business has roadblocks. Planning, website, content. It stops people going for a dream lifestyle. We can take care of all of it. Click below to see an example</span></label></li>
-      <li class="ck" data-id="launch-brand"><label><input type="checkbox"><span class="bx"></span><span class="tx">A made-up brand name and logo</span></label></li>
-      <li class="ck" data-id="launch-12-posts"><label><input type="checkbox"><span class="bx"></span><span class="tx">12 launch posts, a full Instagram grid in threes. Roughly half video, half HD stills</span></label></li>
-      <li class="ck" data-id="launch-stills"><label><input type="checkbox"><span class="bx"></span><span class="tx">The stills can be freeze frames from Tim's cameras</span></label></li>
-      <li class="ck" data-id="launch-example-posts"><label><input type="checkbox"><span class="bx"></span><span class="tx">Example posts: "we're launching at so-and-so", "view our sauna here", people using it</span></label></li>
-      <li class="ck" data-id="launch-starter-pack"><label><input type="checkbox"><span class="bx"></span><span class="tx">A starter pack: here's your kit, now go make a business</span></label></li>
-      <li class="ck" data-id="launch-double-use"><label><input type="checkbox"><span class="bx"></span><span class="tx">The same footage doubles as BSUK posts: people smiling and relaxing in a sauna works on our own feed too</span></label></li>
-    </ul></div>
-  </section>
-
-  <section class="sec after">
-    <h2>Not in the <span class="hl">four days</span></h2>
-    <p class="intro">Everything else we've talked about since June that hasn't been given a filming day yet. Some need their own trip, some happen on a schedule of their own, some just need deciding.</p>
-
-    <div class="theme">
-      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cbdaa5e26a96908e5.png" alt=""><h3>Tim on camera</h3></div>
-      <p class="sub">Scripted pieces to camera. Tim needs notice, so batch these into one session with a full script.</p>
-      <ul class="ideas">
-        <li class="idea ck" data-id="x-woodburners"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Woodburners are lovely</span><span class="d">Tim sitting by the hot tub talking about how natural and therapeutic woodburners are. Two older versions exist in the archive. For the heater section of the closer's guide.</span></span></label></li>
-        <li class="idea ck" data-id="x-voiceovers"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Tim voiceovers from his sound room</span><span class="d">Tim offered to record voiceovers over B-roll at home, to patch anything missed on a shoot day. For any edit that needs narration.</span></span></label></li>
-      </ul>
-    </div>
-
-    <div class="theme">
-      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528b9.png" alt=""><h3>Product hero shoots</h3></div>
-      <p class="sub">Real footage of each product so we stop leaning on AI images and other makers' photos.</p>
-      <ul class="ideas">
-        <li class="idea ck" data-id="x-hot-tub-day"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Hot tub content day</span><span class="d">Stefano's square tub, the big square one, several Double Dippers, and one in use at a new location. For the hot tub page and hot tub ads.</span></span></label></li>
-        <li class="idea ck" data-id="x-grill-cabin"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Grill cabin walkthrough</span><span class="d">Liam talking through the grill cabin: grill, fire pit, bar or massage use, fully bespoke. Most grill cabin photos we hold aren't ours. For the new grill cabin page.</span></span></label></li>
-        <li class="idea ck" data-id="x-replace-photos"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Replace AI and borrowed photos</span><span class="d">Real photos for hot tubs, glamping pods, the grill cabin, the Book a call page and the shepherd's hut interiors, which look dated. For the website and partner estimate pages.</span></span></label></li>
-        <li class="idea ck" data-id="x-shepherds-hut"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">First shepherd's hut build</span><span class="d">Chris Hollis's hut is our first showcase one and was priced partly so we could film it. Document it start to finish. For the shepherd's hut page and socials.</span></span></label></li>
-        <li class="idea ck" data-id="x-mobile-dual-icebath"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Mobile sauna with hot tub and dual ice bath</span><span class="d">The pinned Instagram video drew lots of interest. More of this setup. For the mobile sauna page and the "totally bespoke" line.</span></span></label></li>
-        <li class="idea ck" data-id="x-solar-mobile"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Solar on a mobile sauna</span><span class="d">Tim on fitting solar, cut to Jarek fitting a panel in the workshop. An Instagram clip exists. For the mobile sauna page.</span></span></label></li>
-        <li class="idea ck" data-id="x-glamping-walkthrough"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Glamping pod walkthrough</span><span class="d">Liam walking out of a glamping pod, talking it through. The expo version is pinned on Instagram. For glamping enquiries and the pod page.</span></span></label></li>
-      </ul>
-    </div>
-
-    <div class="circ">
-      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ffd1c641597c752ab184f.jpg" alt="Stainless steel Barrel Sauna UK nameplate on a door frame">
-      <div class="cap">Built in the<br>United Kingdom<br>The nameplate detail</div>
-    </div>
-
-    <div class="theme">
-      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee114091fa65e6a8fa27.png" alt=""><h3>Workshop and build process</h3></div>
-      <p class="sub">Proof that it's all made by hand in Wales.</p>
-      <ul class="ideas">
-        <li class="idea ck" data-id="x-last-hour"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">The last hour of a build</span><span class="d">Jarek tells us when a build is about an hour from finished so we can go up and film it. For socials and build updates.</span></span></label></li>
-        <li class="idea ck" data-id="x-dismantling"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">On-site dismantling</span><span class="d">From Nikki's list. Not discussed on a recorded call, so the brief needs Liam's detail.</span></span></label></li>
-        <li class="idea ck" data-id="x-ai-camera"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">The AI camera <span class="new">New</span></span><span class="d">The clip-on camera in the cupboard records a full day and edits it itself. It may already hold the grill cabin being built from the ground up. Hand it to Jake, or mount it in the workshop for a full mobile sauna build time lapse.</span></span></label></li>
-      </ul>
-    </div>
-
-    <div class="theme">
-      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14ff484614db752941.png" alt=""><h3>Delivery and install</h3></div>
-      <p class="sub">About 16 installs were in the pipeline on 2 September. Each one is content if we know about it in time.</p>
-      <ul class="ideas">
-        <li class="idea ck" data-id="x-high-end-install"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">High end wellness space install</span><span class="d">The upcoming order with a barrel shower, hot tub, ice bath and saunas as one space, about four hours away. Either Jake travels, or a local videographer films and Jake edits. For hero content and commercial pitches.</span></span></label></li>
-        <li class="idea ck" data-id="x-pickups"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Customer pickups and handovers</span><span class="d">Mobile sauna collections keep happening at the workshop without anyone filming. For socials and testimonials.</span></span></label></li>
-        <li class="idea ck" data-id="x-delivery-montage"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Delivery montage of the wider range</span><span class="d">A hot tub on a trailer, a glamping pod and hot tub being loaded, the pod and grill cabin being built. For the more products landing page.</span></span></label></li>
-        <li class="idea ck" data-id="x-built-for-you"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Built for you or built on site</span><span class="d">Liam saying we can bring it fully built on a trailer or build it on site. For the estimate page delivery section.</span></span></label></li>
-        <li class="idea ck" data-id="x-farm-delivery"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Hot tub and half moon sauna to a local farm</span><span class="d">Delivery footage of both going to a local farm. For the "what we've been up to" email.</span></span></label></li>
-        <li class="idea ck" data-id="x-london-garden"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">London narrow garden</span><span class="d">Carried through a narrow house into a long garden, decking cut round a tree stump, Double Dipper beside the sauna. Proof for difficult access and decking.</span></span></label></li>
-      </ul>
-    </div>
-
-    <div class="theme">
-      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11de8ed1c29f9e1345.png" alt=""><h3>Customers and proof</h3></div>
-      <p class="sub">Real people with real builds. Mobile sauna businesses are the biggest untapped pile.</p>
-      <ul class="ideas">
-        <li class="idea ck" data-id="x-dimitri"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Dimitri and Solace Heat</span><span class="d">Call Dimitri (mobile sauna and ice bath) for his socials and a review. Add the Solace Heat video to the mobile sauna page.</span></span></label></li>
-        <li class="idea ck" data-id="x-escape-devon"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Escape to the Sauna, Devon</span><span class="d">On his second and third units and posting good content. Point prospects to his Instagram. For mobile sauna leads.</span></span></label></li>
-        <li class="idea ck" data-id="x-nomad"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Nomad Sauna stories</span><span class="d">He posts high quality videos to his stories, not his feed. Save them as they go up. For socials and detail shots.</span></span></label></li>
-        <li class="idea ck" data-id="x-globe-camping"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Camping out under the globe</span><span class="d">A retired grandad's grandchildren camp on a mattress in his globe window sauna under the LEDs. A story worth telling. For socials and the globe window.</span></span></label></li>
-        <li class="idea ck" data-id="x-big-names"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Big name builds</span><span class="d">The castle sauna in Scotland, Flynn Holiday Park in Dublin, the client featured on the BBC. Track their Instagram and use snapshots. For proposals and commercial pitches.</span></span></label></li>
-        <li class="idea ck" data-id="x-reviews-photos"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Reviews and photos from every customer</span><span class="d">Installer gets a bonus for a review on site, review link on the handover sheet, automated ask after the QC form, and a photo request about six months in. For Google reviews and user photos.</span></span></label></li>
-      </ul>
-    </div>
-
-    <div class="theme">
-      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cff484614db7528ad.png" alt=""><h3>Office and B-roll</h3></div>
-      <p class="sub">Cutaways to lay under Tim's talking pieces.</p>
-      <ul class="ideas">
-        <li class="idea ck" data-id="x-liam-face"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Liam's face on camera</span><span class="d">A bad review called James "the man who hides his face". Founder led content answers it. For socials and the about page.</span></span></label></li>
-      </ul>
-    </div>
-
-    <div class="circ">
-      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ff6c5641597c752aab2dd.jpg" alt="Turned timber coat hooks on a rail">
-      <div class="cap">Turned timber<br>coat hooks<br>Detail shot</div>
-    </div>
-
-    <div class="theme">
-      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11ff484614db752909.png" alt=""><h3>Seasonal and campaigns</h3></div>
-      <p class="sub">Christmas has been missed before because content was left too late. It needs shooting now.</p>
-      <ul class="ideas">
-        <li class="idea ck" data-id="x-christmas-grill"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Christmas and autumn grill cabin</span><span class="d">The grill cabin now has a beer tap. Angles: a garden bar, a beer garden add-on, a Christmas grotto for pubs. For Christmas socials and ads.</span></span></label></li>
-        <li class="idea ck" data-id="x-cold-snap"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">The October cold snap</span><span class="d">Leads come back to order when it turns cold. Have autumn content ready before then. For autumn ads and emails.</span></span></label></li>
-        <li class="idea ck" data-id="x-expo-ads"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Expo stand and nearby ads</span><span class="d">Film the stand at Farm Business Innovation and run ads within about a mile saying "we're here". Same trick at expos we don't attend.</span></span></label></li>
-        <li class="idea ck" data-id="x-hot-cold-day"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Hot and cold day</span><span class="d">Commercial Double Dipper owners can run a weekly hot and cold day, which gives them and us something fresh to post. For the commercial pitch and socials.</span></span></label></li>
-        <li class="idea ck" data-id="x-square-ads"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Square sauna ads</span><span class="d">A competitor's square sauna ad was good. Run our own from the sister site.</span></span></label></li>
-        <li class="idea ck" data-id="x-monthly-email"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">What we've been up to this month</span><span class="d">Revive Millie's monthly email (it had a high open rate) with recent installs and video.</span></span></label></li>
-      </ul>
-    </div>
-
-    <div class="theme">
-      <div class="th"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee1430b0f957ccb86d28.png" alt=""><h3>Explainers</h3></div>
-      <p class="sub">Answers to questions customers keep asking.</p>
-      <ul class="ideas">
-        <li class="idea ck" data-id="x-anyone-can-move"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Anyone can move it</span><span class="d">Liam pushing a two tonne mobile sauna by hand. For towing nerves on mobile sauna calls.</span></span></label></li>
-        <li class="idea ck" data-id="x-two-person-price"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">How much is a 2 person sauna? <span class="new">New</span></span><span class="d">Tim starts at the compact entry level sauna and works up, with B-roll of other saunas as he talks. Compact seats two side by side, a 2.4m is a comfortable two with a straight bench each side so both can lie down, and 2.4m of sauna with a changing room and porch pushes 4m in total. The answer depends on width, layout, heater position, back and front windows, lighting and solar, because nothing is mass produced. Close on booking a design consultation, as the build often ends up different to what was clicked on Design Your Sauna.</span></span></label></li>
-        <li class="idea ck" data-id="x-finishes"><label><input type="checkbox"><span class="bx"></span><span class="tx"><span class="t">Stain, oil or paint <span class="new">New</span></span><span class="d">Dark stain, light stain or paraffin oil. Paraffin oil brings out the natural texture of the wood without a varnished look. We don't paint because it can flake and covers the texture, and dark stain protects the wood better. B-roll of someone in a t-shirt staining a sauna in the background while Tim talks.</span></span></label></li>
-      </ul>
-    </div>
-  </section>
-
+      </div>
+    </section>
+  </div>
 
 
   <section class="planprint" id="planprint">
@@ -669,9 +858,10 @@ h2 .hl{color:var(--honey)}
     <div id="planprint-body"></div>
   </section>
 
-  <p class="vers">Content plan v14, 3 October 2026. Every idea from 61 calls (12 June to 21 September) plus the new ones from 28 September, and the builds calendar.</p>
+  <p class="vers">Content plan v15, 7 October 2026. This month and Jake's offer from Liam's 6 October call with Jake. The archive holds every idea from 61 calls (12 June to 21 September), the 28 September additions and the four filming days.</p>
 
 </main>
+
 
 <aside class="plan" id="plan">
   <div class="ph" id="plan-toggle">
@@ -714,24 +904,57 @@ h2 .hl{color:var(--honey)}
   try { ticks = JSON.parse(localStorage.getItem(KEY_T) || '{}') || {}; } catch (e) { ticks = {}; }
   try { notes = JSON.parse(localStorage.getItem(KEY_N) || '{}') || {}; } catch (e) { notes = {}; }
 
-  /* day tabs */
-  var tabs = document.querySelectorAll('.tab');
-  var days = document.querySelectorAll('.day');
-  function showDay(id){
-    tabs.forEach(function(x){ x.classList.toggle('on', x.getAttribute('data-day') === id); });
-    days.forEach(function(d){ d.classList.toggle('on', d.id === id); });
+  /* main tabs and the archive */
+  var tabs = document.querySelectorAll('.tab[data-pane]');
+  var panes = document.querySelectorAll('.pane');
+  var archs = document.querySelectorAll('.arch');
+  var home = document.getElementById('archive-home');
+  var bar = document.querySelector('.maintabs');
+  function toTop(){
+    var y = bar.getBoundingClientRect().top + window.pageYOffset - 4;
+    if (window.pageYOffset > y) window.scrollTo(0, y);
   }
-  tabs.forEach(function(b){ b.addEventListener('click', function(){ showDay(b.getAttribute('data-day')); }); });
+  function showPane(id){
+    tabs.forEach(function(x){ x.classList.toggle('on', x.getAttribute('data-pane') === id); });
+    panes.forEach(function(p){ p.classList.toggle('on', p.id === 'pane-' + id); });
+  }
+  function openArch(id){
+    showPane('archive');
+    archs.forEach(function(a){ a.classList.toggle('on', a.id === id); });
+    home.style.display = id ? 'none' : '';
+  }
+  function reveal(el){
+    var a = el.closest('.arch');
+    if (a) { openArch(a.id); return; }
+    var p = el.closest('.pane');
+    if (p) showPane(p.id.replace('pane-', ''));
+  }
+  tabs.forEach(function(b){ b.addEventListener('click', function(){
+    var id = b.getAttribute('data-pane');
+    if (id === 'archive') openArch(''); else showPane(id);
+    toTop();
+  }); });
+  document.querySelectorAll('.tile[data-open]').forEach(function(t){
+    t.addEventListener('click', function(){ openArch(t.getAttribute('data-open')); toTop(); });
+  });
+  document.querySelectorAll('.backbtn').forEach(function(b){
+    b.addEventListener('click', function(){ openArch(''); toTop(); });
+  });
+  (function(){
+    var h = (location.hash || '').replace('#', '');
+    if (!h) return;
+    if (document.getElementById('pane-' + h)) { if (h === 'archive') openArch(''); else showPane(h); }
+    else if (document.getElementById(h) && document.getElementById(h).classList.contains('arch')) openArch(h);
+  })();
 
-  /* print one day */
+  /* print what is on screen */
   document.querySelectorAll('.printbtn').forEach(function(b){
     b.addEventListener('click', function(){
-      var day = b.closest('.day');
-      showDay(day.id);
       document.body.classList.add('print-one');
       window.print();
     });
   });
+
   window.addEventListener('afterprint', function(){ document.body.classList.remove('print-one'); });
   if (window.matchMedia) {
     window.matchMedia('print').addEventListener('change', function(m){ if (!m.matches) { document.body.classList.remove('print-one'); } });
@@ -750,8 +973,8 @@ h2 .hl{color:var(--honey)}
 
   /* where an item lives, for grouping */
   function groupOf(li){
-    var day = li.closest('.day');
-    if (day) return day.getAttribute('data-title') || day.id;
+    var box = li.closest('[data-title]');
+    if (box) return box.getAttribute('data-title');
     var sec = li.closest('section');
     if (sec) { var h = sec.querySelector('h2'); return h ? h.textContent.replace(/\s+/g,' ').trim() : 'Other'; }
     return 'Other';
@@ -819,6 +1042,13 @@ h2 .hl{color:var(--honey)}
       var day = document.getElementById(c.getAttribute('data-count-for'));
       if (!day) return;
       c.textContent = day.querySelectorAll('.ck.done').length + ' of ' + day.querySelectorAll('.ck').length + ' shots ticked';
+    });
+    document.querySelectorAll('.tile[data-open]').forEach(function(t){
+      var b = document.getElementById(t.getAttribute('data-open'));
+      var tc = t.querySelector('.tc');
+      if (!b || !tc) return;
+      var all = b.querySelectorAll('.ck').length, on = b.querySelectorAll('.ck.done').length;
+      tc.textContent = on ? on + ' of ' + all + ' ticked' : all + (all === 1 ? ' idea' : ' ideas');
     });
   }
   function applyTicks(){
@@ -892,7 +1122,7 @@ h2 .hl{color:var(--honey)}
   document.getElementById('plan-scripts').addEventListener('click', function(ev){
     var li = ev.target.closest('li[data-jump]'); if (!li) return;
     var target = document.querySelector('.ck[data-id="' + li.getAttribute('data-jump') + '"]'); if (!target) return;
-    var day = target.closest('.day'); if (day) showDay(day.id);
+    reveal(target);
     if (window.matchMedia && !window.matchMedia('(min-width:1100px)').matches) plan.classList.remove('open');
     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
