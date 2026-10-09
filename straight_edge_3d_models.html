@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Straight-edge 3D Models</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#16261C; --forest-deep:#1F3D28; --forest:#2B5336; --mid:#417C51;
+    --sage:#50795F; --sage-pale:#8fae86; --honey:#C08B41; --tint-l:#eef4ef;
+    --hair:rgba(65,124,81,0.30);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#ffffff;font-family:'Poppins',Arial,sans-serif;color:var(--forest-deep);overflow:hidden}
+  #stage{position:fixed;inset:0;touch-action:none}
+  #stage canvas{display:block;width:100%;height:100%}
+  .bar{position:fixed;left:12px;right:12px;top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;z-index:5;pointer-events:none}
+  .bar > *{pointer-events:auto}
+  .grp{display:flex;flex-wrap:wrap;gap:6px;background:#ffffff;border:1px solid var(--hair);border-radius:14px;padding:6px;box-shadow:0 6px 18px rgba(22,38,28,0.10)}
+  .grp .lab{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);align-self:center;padding:0 6px}
+  button{font-family:inherit;font-size:12px;font-weight:700;border:1px solid var(--hair);background:#ffffff;color:var(--forest-deep);border-radius:20px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+  button:hover{background:var(--tint-l)}
+  button.on{background:var(--forest-deep);color:#ffffff;border-color:var(--forest-deep)}
+  button.honey{background:var(--honey);border-color:var(--honey);color:#ffffff}
+  .info{position:fixed;left:12px;bottom:12px;max-width:340px;background:#ffffff;border:1px solid var(--hair);border-top:3px solid var(--honey);border-radius:14px;padding:14px 16px;box-shadow:0 6px 18px rgba(22,38,28,0.10);z-index:5}
+  .info .k{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--honey)}
+  .info h1{font-size:18px;font-weight:700;margin:2px 0 2px}
+  .info .sz{font-size:13px;font-weight:700;color:var(--sage)}
+  .info p{font-size:12px;color:var(--sage);margin-top:6px;line-height:1.5}
+  .hint{position:fixed;right:12px;bottom:12px;font-size:11px;color:var(--sage);background:#ffffff;border:1px solid var(--hair);border-radius:12px;padding:8px 12px;z-index:5;max-width:260px;line-height:1.5}
+  body.clean .bar, body.clean .info, body.clean .hint{display:none}
+  #back{display:none;position:fixed;top:10px;right:10px;z-index:6;opacity:0;font-size:11px;padding:5px 10px}
+  body.clean #back{display:block}
+  #back:hover{opacity:1}
+  @media (max-width:700px){
+    .grp .lab{display:none}
+    button{font-size:11px;padding:6px 10px}
+    .info{right:12px;max-width:none}
+    .hint{display:none}
+  }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+
+<div class="bar">
+  <div class="grp" id="models"><span class="lab">Model</span></div>
+  <div class="grp" id="views"><span class="lab">View</span></div>
+  <div class="grp"><span class="lab">Scene</span>
+    <button id="bgStudio" class="on">Studio</button><button id="bgGarden">Garden</button>
+    <button id="tDay" class="on">Day</button><button id="tDusk">Dusk</button>
+  </div>
+  <div class="grp">
+    <button id="clean" class="honey">Clean shot</button>
+    <button id="save">Save PNG</button>
+  </div>
+</div>
+
+<div class="info">
+  <div class="k">Straight-edge model</div>
+  <h1 id="mName"></h1>
+  <div class="sz" id="mSize"></div>
+  <p id="mNote"></p>
+</div>
+<div class="hint">Drag to turn, scroll or pinch to zoom. Clean shot hides everything so you can screenshot for Gamma.</div>
+<button id="back">Show controls</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  var stage = document.getElementById('stage');
+  var renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  stage.appendChild(renderer.domElement);
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 200);
+
+  /* ---------- lights ---------- */
+  var hemi = new THREE.HemisphereLight(0xffffff, 0xb9b3a6, 0.65); scene.add(hemi);
+  var sun = new THREE.DirectionalLight(0xffffff, 0.95);
+  sun.position.set(6, 10, 7); sun.castShadow = true;
+  sun.shadow.mapSize.set(2048, 2048);
+  var sc = sun.shadow.camera; sc.left=-9; sc.right=9; sc.top=9; sc.bottom=-9; sc.near=1; sc.far=40;
+  sun.shadow.bias = -0.0004; sun.shadow.radius = 4;
+  scene.add(sun);
+  var fill = new THREE.DirectionalLight(0xfff4e6, 0.25); fill.position.set(-6, 4, -4); scene.add(fill);
+
+  /* ---------- textures ---------- */
+  function boardCanvas(dir, tone){
+    var S = 512, c = document.createElement('canvas'); c.width = c.height = S;
+    var x = c.getContext('2d');
+    var base = tone === 'inner' ? [214,170,112] : tone === 'deck' ? [150,96,54] : [158,100,56];
+    var boardW = 0.12 * S, n = Math.ceil(S / boardW);
+    function rnd(a){ return (Math.random() - 0.5) * a; }
+    for (var i = 0; i < n; i++){
+      var v = rnd(22);
+      var r = base[0] + v, g = base[1] + v * 0.8, b = base[2] + v * 0.6;
+      x.fillStyle = 'rgb(' + (r|0) + ',' + (g|0) + ',' + (b|0) + ')';
+      if (dir === 'v') x.fillRect(i * boardW, 0, boardW, S); else x.fillRect(0, i * boardW, S, boardW);
+      for (var k = 0; k < 14; k++){
+        x.strokeStyle = 'rgba(' + ((r - 30)|0) + ',' + ((g - 28)|0) + ',' + ((b - 22)|0) + ',' + (0.18 + Math.random() * 0.2) + ')';
+        x.lineWidth = 0.6 + Math.random() * 1.4;
+        x.beginPath();
+        var o = i * boardW + 3 + Math.random() * (boardW - 6);
+        if (dir === 'v'){ x.moveTo(o, 0); x.bezierCurveTo(o + rnd(6), S * 0.3, o + rnd(6), S * 0.7, o + rnd(4), S); }
+        else { x.moveTo(0, o); x.bezierCurveTo(S * 0.3, o + rnd(6), S * 0.7, o + rnd(6), S, o + rnd(4)); }
+        x.stroke();
+      }
+      x.fillStyle = 'rgba(40,22,10,0.55)';
+      if (dir === 'v') x.fillRect(i * boardW, 0, 2, S); else x.fillRect(0, i * boardW, S, 2);
+    }
+    return c;
+  }
+  function shingleCanvas(){
+    var S = 512, c = document.createElement('canvas'); c.width = c.height = S;
+    var x = c.getContext('2d');
+    x.fillStyle = '#1d1d1d'; x.fillRect(0, 0, S, S);
+    var w = S / 4, h = S / 6;
+    for (var row = 0; row < 7; row++){
+      for (var col = -1; col < 5; col++){
+        var ox = col * w + (row % 2 ? w / 2 : 0), oy = row * h;
+        var t = 24 + Math.random() * 14;
+        x.fillStyle = 'rgb(' + t + ',' + t + ',' + (t + 2) + ')';
+        x.beginPath(); x.moveTo(ox, oy); x.lineTo(ox + w, oy); x.lineTo(ox + w, oy + h * 0.7);
+        x.lineTo(ox + w / 2, oy + h * 1.05); x.lineTo(ox, oy + h * 0.7); x.closePath(); x.fill();
+        x.strokeStyle = 'rgba(0,0,0,0.6)'; x.lineWidth = 2; x.stroke();
+      }
+    }
+    return c;
+  }
+  function noiseCanvas(rgb, amt){
+    var S = 256, c = document.createElement('canvas'); c.width = c.height = S;
+    var x = c.getContext('2d'), d = x.createImageData(S, S);
+    for (var i = 0; i < d.data.length; i += 4){
+      var v = (Math.random() - 0.5) * amt;
+      d.data[i] = rgb[0] + v; d.data[i + 1] = rgb[1] + v; d.data[i + 2] = rgb[2] + v; d.data[i + 3] = 255;
+    }
+    x.putImageData(d, 0, 0); return c;
+  }
+  var canv = {};
+  function canvasFor(key, make){ if (!canv[key]) canv[key] = make(); return canv[key]; }
+  var texCache = {};
+  function tex(kind, rx, ry){
+    var key = kind + '|' + rx.toFixed(2) + '|' + ry.toFixed(2);
+    if (texCache[key]) return texCache[key];
+    var cv;
+    if (kind === 'shingle') cv = canvasFor('sh', shingleCanvas);
+    else if (kind === 'gravel') cv = canvasFor('gr', function(){ return noiseCanvas([168,162,152], 60); });
+    else if (kind === 'grass') cv = canvasFor('gs', function(){ return noiseCanvas([96,128,70], 40); });
+    else { var p = kind.split(':'); cv = canvasFor(kind, function(){ return boardCanvas(p[1], p[2]); }); }
+    var t = new THREE.CanvasTexture(cv);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rx, ry);
+    t.encoding = THREE.sRGBEncoding; t.anisotropy = 8;
+    texCache[key] = t; return t;
+  }
+  function woodMat(dir, tone, rx, ry){
+    return new THREE.MeshStandardMaterial({map: tex('wood:' + dir + ':' + tone, rx, ry), roughness: 0.78, metalness: 0});
+  }
+
+  var M = {
+    roof: new THREE.MeshStandardMaterial({color: 0x0c0c0c, roughness: 0.92}),
+    plinth: new THREE.MeshStandardMaterial({color: 0x151515, roughness: 0.95}),
+    glass: new THREE.MeshStandardMaterial({color: 0x3a2f24, roughness: 0.04, metalness: 0.55, transparent: true, opacity: 0.42, side: THREE.DoubleSide, depthWrite: false}),
+    steel: new THREE.MeshStandardMaterial({color: 0xcfd3d6, roughness: 0.25, metalness: 0.9}),
+    heater: new THREE.MeshStandardMaterial({color: 0x3c3c3c, roughness: 0.5, metalness: 0.6}),
+    stone: new THREE.MeshStandardMaterial({color: 0x8d8780, roughness: 0.95}),
+    led: new THREE.MeshStandardMaterial({color: 0xffb05a, emissive: 0xffa040, emissiveIntensity: 1.6})
+  };
+
+  /* ---------- primitives ---------- */
+  function woodBox(g, w, h, d, x, y, z, dir, tone){
+    var mats = [
+      woodMat(dir, tone, d, h), woodMat(dir, tone, d, h),
+      woodMat(dir, tone, w, d), woodMat(dir, tone, w, d),
+      woodMat(dir, tone, w, h), woodMat(dir, tone, w, h)
+    ];
+    var m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mats);
+    m.position.set(x, y, z); g.add(m); return m;
+  }
+  function box(g, w, h, d, x, y, z, mat){
+    var m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+    m.position.set(x, y, z); g.add(m); return m;
+  }
+  function cyl(g, rt, rb, h, x, y, z, mat, seg){
+    var m = new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, seg || 24), mat);
+    m.position.set(x, y, z); g.add(m); return m;
+  }
+
+  /* wall along X at z = zc, from x0..x1, y0..y1, thickness t, with openings [{a,b,y0,y1}] */
+  function wallX(g, x0, x1, y0, y1, zc, t, ops, dir){
+    ops = (ops || []).slice().sort(function(p, q){ return p.a - q.a; });
+    var cur = x0;
+    ops.forEach(function(o){
+      if (o.a > cur + 0.001) woodBox(g, o.a - cur, y1 - y0, t, (cur + o.a) / 2, (y0 + y1) / 2, zc, dir, 'outer');
+      if (o.y0 > y0 + 0.001) woodBox(g, o.b - o.a, o.y0 - y0, t, (o.a + o.b) / 2, (y0 + o.y0) / 2, zc, dir, 'outer');
+      if (o.y1 < y1 - 0.001) woodBox(g, o.b - o.a, y1 - o.y1, t, (o.a + o.b) / 2, (o.y1 + y1) / 2, zc, dir, 'outer');
+      cur = o.b;
+    });
+    if (x1 > cur + 0.001) woodBox(g, x1 - cur, y1 - y0, t, (cur + x1) / 2, (y0 + y1) / 2, zc, dir, 'outer');
+  }
+  /* wall along Z at x = xc */
+  function wallZ(g, z0, z1, y0, y1, xc, t, ops, dir){
+    ops = (ops || []).slice().sort(function(p, q){ return p.a - q.a; });
+    var cur = z0;
+    ops.forEach(function(o){
+      if (o.a > cur + 0.001) woodBox(g, t, y1 - y0, o.a - cur, xc, (y0 + y1) / 2, (cur + o.a) / 2, dir, 'outer');
+      if (o.y0 > y0 + 0.001) woodBox(g, t, o.y0 - y0, o.b - o.a, xc, (y0 + o.y0) / 2, (o.a + o.b) / 2, dir, 'outer');
+      if (o.y1 < y1 - 0.001) woodBox(g, t, y1 - o.y1, o.b - o.a, xc, (o.y1 + y1) / 2, (o.a + o.b) / 2, dir, 'outer');
+      cur = o.b;
+    });
+    if (z1 > cur + 0.001) woodBox(g, t, y1 - y0, z1 - cur, xc, (y0 + y1) / 2, (cur + z1) / 2, dir, 'outer');
+  }
+  /* glazed opening with timber frame; axis 'x' = in a wall along X */
+  function glazing(g, axis, a, b, y0, y1, c, door, timberDoor){
+    var w = b - a, h = y1 - y0, m = (a + b) / 2, f = 0.055, ft = 0.1;
+    function fr(len, hh, pm, py){
+      if (axis === 'x') woodBox(g, len, hh, ft, pm, py, c, 'v', 'outer');
+      else woodBox(g, ft, hh, len, c, py, pm, 'v', 'outer');
+    }
+    fr(w, f, m, y0 + f / 2); fr(w, f, m, y1 - f / 2);
+    fr(f, h, a + f / 2, (y0 + y1) / 2); fr(f, h, b - f / 2, (y0 + y1) / 2);
+    if (timberDoor){
+      if (axis === 'x') woodBox(g, w - 2 * f, h - 2 * f, 0.05, m, (y0 + y1) / 2, c, 'v', 'outer');
+      else woodBox(g, 0.05, h - 2 * f, w - 2 * f, c, (y0 + y1) / 2, m, 'v', 'outer');
+    } else {
+      var gl = axis === 'x' ? box(g, w - 2 * f, h - 2 * f, 0.02, m, (y0 + y1) / 2, c, M.glass) : box(g, 0.02, h - 2 * f, w - 2 * f, c, (y0 + y1) / 2, m, M.glass);
+      gl.castShadow = false;
+    }
+    if (door){
+      var hx = b - f - 0.09, hy = y0 + h * 0.48;
+      if (axis === 'x'){ woodBox(g, 0.05, 0.42, 0.05, hx, hy, c + 0.07, 'v', 'deck'); }
+      else { woodBox(g, 0.05, 0.42, 0.05, c + 0.07, hy, hx, 'v', 'deck'); }
+    }
+  }
+  function bench(g, x0, x1, zFront, depth, top, fl){
+    fl = fl || 0;
+    /* bench running along X, front edge at zFront, extending toward -z */
+    var len = x1 - x0, slats = 4, sw = depth / slats;
+    for (var i = 0; i < slats; i++){
+      woodBox(g, len, 0.035, sw - 0.012, (x0 + x1) / 2, top, zFront - sw / 2 - i * sw, 'h', 'inner');
+    }
+    var legs = Math.max(2, Math.round(len / 1.1) + 1);
+    for (var j = 0; j < legs; j++){
+      var lx = x0 + 0.05 + (len - 0.1) * j / (legs - 1);
+      woodBox(g, 0.05, top - 0.02 - fl, depth - 0.04, lx, fl + (top - 0.02 - fl) / 2, zFront - depth / 2, 'v', 'inner');
+    }
+  }
+  function heaterPillar(g, x, y, z){
+    cyl(g, 0.17, 0.17, 0.78, x, y + 0.39, z, M.heater, 20);
+    for (var i = 0; i < 9; i++){
+      var s = new THREE.Mesh(new THREE.DodecahedronGeometry(0.05 + Math.random() * 0.03, 0), M.stone);
+      var a = Math.random() * Math.PI * 2, r = Math.random() * 0.1;
+      s.position.set(x + Math.cos(a) * r, y + 0.8 + Math.random() * 0.06, z + Math.sin(a) * r); g.add(s);
+    }
+  }
+
+  /* ---------- straight-edge builder (front faces +z) ---------- */
+  function straight(o){
+    var g = new THREE.Group();
+    var L = o.L, D = 2.3, P = 0.16, H = 2.3, t = 0.1, porch = o.porch || 0, Le = L - porch;
+    var y0 = P, y1 = P + H, zf = D / 2 - t / 2, zb = -D / 2 + t / 2;
+    box(g, L - 0.3, P, D - 0.3, L / 2, P / 2, 0, M.plinth);
+    /* floor */
+    woodBox(g, L - 2 * t, 0.04, D - 2 * t, L / 2, P + 0.02, 0, 'h', porch ? 'deck' : 'inner');
+    if (porch) woodBox(g, porch + 0.05, 0.06, D, Le + porch / 2, P + 0.03, 0, 'h', 'deck');
+    /* back wall */
+    wallX(g, 0, L, y0, y1, zb, t, o.back || [], 'v');
+    /* front wall over the enclosed part */
+    wallX(g, 0, Le, y0, y1, zf, t, o.front, 'v');
+    /* left end */
+    wallZ(g, -D / 2 + t, D / 2 - t, y0, y1, t / 2, t, o.left || [], 'v');
+    /* right end of enclosed part */
+    wallZ(g, -D / 2 + t, D / 2 - t, y0, y1, Le - t / 2, t, o.right || [], 'v');
+    /* porch corner post */
+    if (porch){ woodBox(g, 0.16, H, 0.16, L - 0.08, P + H / 2, D / 2 - 0.08, 'v', 'outer'); }
+    /* changing partition */
+    if (o.change){
+      wallZ(g, -D / 2 + t, D / 2 - t, y0, y1, o.change, 0.08, [{a: -0.35, b: 0.35, y0: y0, y1: y0 + 2.0}], 'v');
+      bench(g, t + 0.05, o.change - 0.08, -D / 2 + t + 0.42, 0.4, P + 0.45, P + 0.04);
+    }
+    /* roof */
+    var ov = 0.08;
+    box(g, L + 2 * ov, 0.07, D + 2 * ov, L / 2, y1 + 0.035, 0, M.roof);
+    box(g, L + 2 * ov, 0.16, 0.03, L / 2, y1 + 0.02, D / 2 + ov, M.roof);
+    box(g, L + 2 * ov, 0.16, 0.03, L / 2, y1 + 0.02, -D / 2 - ov, M.roof);
+    box(g, 0.03, 0.16, D + 2 * ov, -ov, y1 + 0.02, 0, M.roof);
+    box(g, 0.03, 0.16, D + 2 * ov, L + ov, y1 + 0.02, 0, M.roof);
+    if (porch){ woodBox(g, porch, 0.03, D - 0.1, Le + porch / 2, y1 - 0.015, 0, 'v', 'outer'); }
+    /* glazing fills */
+    (o.front || []).forEach(function(op){ glazing(g, 'x', op.a, op.b, op.y0, op.y1, zf, op.door, op.timber); });
+    (o.right || []).forEach(function(op){ glazing(g, 'z', op.a, op.b, op.y0, op.y1, Le - t / 2, op.door, op.timber); });
+    (o.left || []).forEach(function(op){ glazing(g, 'z', op.a, op.b, op.y0, op.y1, t / 2, op.door, op.timber); });
+    /* nameplate by the sauna door */
+    if (o.plate) box(g, 0.14, 0.05, 0.01, o.plate[0], P + 1.55, o.plate[1], M.steel);
+    /* sauna interior */
+    var sx0 = (o.change || 0) + 0.1, sx1 = Le - t - 0.05;
+    var heatX = sx1 - 0.3;
+    bench(g, sx0, heatX - 0.3, -D / 2 + t + 0.55, 0.55, P + 0.95, P + 0.04);
+    bench(g, sx0, heatX - 0.3, -D / 2 + t + 1.05, 0.5, P + 0.48, P + 0.04);
+    box(g, heatX - 0.3 - sx0, 0.012, 0.012, (sx0 + heatX - 0.3) / 2, P + 0.9, -D / 2 + t + 0.53, M.led);
+    heaterPillar(g, heatX, P + 0.04, -D / 2 + t + 0.35);
+    var pl = new THREE.PointLight(0xffa860, 1.6, 4.5, 2); pl.position.set((sx0 + sx1) / 2, P + 1.7, -0.2); g.add(pl); g.userData.glow = [pl];
+    /* porch bench */
+    if (porch){ bench(g, Le + 0.15, L - 0.25, -D / 2 + t + 0.42, 0.4, P + 0.45, P + 0.06); }
+    return g;
+  }
+
+  /* ---------- rounded builder (front faces +x) ---------- */
+  function rrPoints(w, h, r, off, cy, n){
+    var a = w / 2 + off, b = h / 2 + off, rr = Math.max(0.02, r + off), pts = [];
+    function arc(cx, cyy, s, e){ for (var i = 0; i <= n; i++){ var t = s + (e - s) * i / n; pts.push(new THREE.Vector2(cx + Math.cos(t) * rr, cy + cyy + Math.sin(t) * rr)); } }
+    pts.push(new THREE.Vector2(0, cy - b));
+    arc(a - rr, -b + rr, -Math.PI / 2, 0);
+    arc(a - rr, b - rr, 0, Math.PI / 2);
+    arc(-a + rr, b - rr, Math.PI / 2, Math.PI);
+    arc(-a + rr, -b + rr, Math.PI, Math.PI * 1.5);
+    return pts;
+  }
+  function extrudeX(g, shape, depth, x0, mats){
+    var geo = new THREE.ExtrudeGeometry(shape, {depth: depth, bevelEnabled: false, curveSegments: 16});
+    var m = new THREE.Mesh(geo, mats); m.rotation.y = Math.PI / 2; m.position.x = x0; g.add(m); return m;
+  }
+  function flatX(g, shape, x, mat){
+    var m = new THREE.Mesh(new THREE.ShapeGeometry(shape, 16), mat); m.rotation.y = Math.PI / 2; m.position.x = x; g.add(m); return m;
+  }
+  function rounded(o){
+    var g = new THREE.Group();
+    var L = o.L, W = 2.3, H = 2.25, R = 0.6, base = 0.2, cy = base + H / 2, sh = 0.1, porch = o.porch || 0;
+    var woodSide = woodMat('v', 'outer', 1, 1), woodCap = woodMat('v', 'outer', 1, 1);
+    /* bearers */
+    woodBox(g, 0.12, base, W - 0.2, 0.4, base / 2, 0, 'h', 'deck');
+    woodBox(g, 0.12, base, W - 0.2, L - 0.4, base / 2, 0, 'h', 'deck');
+    /* shell */
+    var outer = new THREE.Shape(rrPoints(W, H, R, 0, cy, 10));
+    outer.holes.push(new THREE.Path(rrPoints(W, H, R, -sh, cy, 10)));
+    extrudeX(g, outer, L, 0, [woodCap, woodSide]);
+    /* back cap */
+    extrudeX(g, new THREE.Shape(rrPoints(W, H, R, -0.001, cy, 10)), 0.1, 0, [woodMat('h', 'outer', 1, 1), woodMat('h', 'outer', 1, 1)]);
+    /* shingle band over the top */
+    var oP = rrPoints(W, H, R, 0.035, cy, 14), iP = rrPoints(W, H, R, 0.002, cy, 14), thr = base + H * 0.6;
+    var oS = oP.filter(function(p){ return p.y > thr; }), iS = iP.filter(function(p){ return p.y > thr; });
+    var band = new THREE.Shape(oS.concat(iS.reverse()));
+    var shM = new THREE.MeshStandardMaterial({map: tex('shingle', 1.6, 1.6), roughness: 0.9});
+    extrudeX(g, band, L - 0.02, 0.01, [M.roof, shM]);
+    /* front frame ring */
+    var ring = new THREE.Shape(rrPoints(W, H, R, 0.06, cy, 12));
+    ring.holes.push(new THREE.Path(rrPoints(W, H, R, -0.17, cy, 12)));
+    extrudeX(g, ring, 0.14, L - 0.1, [woodMat('h', 'outer', 1, 1), woodMat('v', 'outer', 1, 1)]);
+    /* floor */
+    var fy = base + sh;
+    woodBox(g, L - 0.1, 0.04, 1.4, L / 2, fy + 0.02, 0, 'h', 'inner');
+    /* front wall */
+    var wx = L - 0.22 - porch, doorW = 0.72, doorH = 1.95;
+    if (porch){
+      var wall = new THREE.Shape(rrPoints(W, H, R, -sh + 0.002, cy, 10));
+      var hole = new THREE.Path([new THREE.Vector2(-doorW / 2, fy + 0.04), new THREE.Vector2(doorW / 2, fy + 0.04), new THREE.Vector2(doorW / 2, fy + 0.04 + doorH), new THREE.Vector2(-doorW / 2, fy + 0.04 + doorH)]);
+      wall.holes.push(hole);
+      extrudeX(g, wall, 0.08, wx - 0.04, [woodMat('h', 'outer', 1, 1), woodMat('h', 'outer', 1, 1)]);
+      glazing(g, 'z', -doorW / 2, doorW / 2, fy + 0.04, fy + 0.04 + doorH, wx, true, false);
+      /* porch deck and benches */
+      woodBox(g, porch + 0.2, 0.05, 1.4, wx + (porch + 0.2) / 2, fy + 0.05, 0, 'h', 'deck');
+      bench(g, wx + 0.12, L - 0.3, 0.85, 0.38, fy + 0.46, fy + 0.18);
+      var bb = new THREE.Group(); bench(bb, wx + 0.12, L - 0.3, 0.85, 0.38, fy + 0.46, fy + 0.18); bb.rotation.y = Math.PI; bb.position.x = 2 * (wx + 0.12 + (L - 0.3)) / 2; g.add(bb);
+    } else {
+      var gs = new THREE.Shape(rrPoints(W, H, R, -sh - 0.01, cy, 10));
+      flatX(g, gs, wx, M.glass);
+      [-doorW / 2 - 0.03, doorW / 2 + 0.03].forEach(function(z){ woodBox(g, 0.08, H - 2 * sh - 0.05, 0.07, wx, cy, z, 'v', 'outer'); });
+      woodBox(g, 0.08, 0.07, doorW + 0.13, wx, fy + 0.04 + doorH, 0, 'h', 'outer');
+      woodBox(g, 0.05, 0.42, 0.05, wx + 0.07, fy + 0.95, doorW / 2 - 0.1, 'v', 'deck');
+    }
+    /* interior: benches facing each other */
+    var ix0 = 0.2, ix1 = wx - 0.1, heatX = 0.42;
+    var innerZ = W / 2 - sh - 0.02;
+    bench(g, heatX + 0.3, ix1, -innerZ + 0.65, 0.55, fy + 0.85, fy + 0.2);
+    var b2 = new THREE.Group(); bench(b2, heatX + 0.3, ix1, -innerZ + 0.6, 0.5, fy + 0.45, fy + 0.2); b2.rotation.y = Math.PI; b2.position.x = heatX + 0.3 + ix1; g.add(b2);
+    box(g, ix1 - heatX - 0.3, 0.012, 0.012, (heatX + 0.3 + ix1) / 2, fy + 0.8, -innerZ + 0.63, M.led);
+    heaterPillar(g, heatX, fy, 0);
+    if (o.chimney){
+      cyl(g, 0.075, 0.075, 0.9, 0.42, base + H + 0.35, 0, M.steel, 20);
+      cyl(g, 0.15, 0.15, 0.04, 0.42, base + H + 0.82, 0, M.steel, 20);
+      cyl(g, 0.11, 0.11, 0.16, 0.42, base + H + 0.74, 0, M.steel, 20);
+    }
+    var pl = new THREE.PointLight(0xffa860, 1.6, 4.5, 2); pl.position.set((ix0 + ix1) / 2, fy + 1.5, 0); g.add(pl); g.userData.glow = [pl];
+    return g;
+  }
+
+  /* ---------- the six models ---------- */
+  var P = 0.16, Y0 = P + 0.08, YD = P + 2.06, YW = P + 2.06;
+  var MODELS = [
+    {id: 'small_square', name: 'Small square', size: '2.3m x 2.3m', note: 'Sauna only. Glass front with a glass door, two tier benches inside.',
+      build: function(){ return straight({L: 2.3, front: [{a: 0.18, b: 1.42, y0: Y0, y1: YW}, {a: 1.5, b: 2.18, y0: Y0, y1: YD, door: true}], plate: [1.46, 1.19]}); }, kind: 's'},
+    {id: 'medium_rectangular', name: 'Medium rectangular', size: '4.5m x 2.3m', note: '1m changing room with a timber door, then the sauna room with a full glass front.',
+      build: function(){ return straight({L: 4.5, change: 1.0, front: [{a: 0.18, b: 0.86, y0: Y0, y1: YD, door: true, timber: true}, {a: 1.3, b: 3.24, y0: Y0, y1: YW}, {a: 3.4, b: 4.1, y0: Y0, y1: YD, door: true}], plate: [3.3, 1.19]}); }, kind: 's'},
+    {id: 'large_rectangular', name: 'Large rectangular', size: '6m x 2.3m', note: '1.5m changing room, then a long sauna room with a big glass front and a side window.',
+      build: function(){ return straight({L: 6.0, change: 1.5, front: [{a: 0.42, b: 1.1, y0: Y0, y1: YD, door: true, timber: true}, {a: 1.9, b: 3.84, y0: Y0, y1: YW}, {a: 4.1, b: 4.8, y0: Y0, y1: YD, door: true}], right: [{a: -0.75, b: 0.75, y0: P + 0.9, y1: P + 1.9}], plate: [3.97, 1.19]}); }, kind: 's'},
+    {id: 'rounded_cube', name: 'Rounded cube', size: '3m x 2.3m', note: 'Rounded profile with a deep timber frame, full glass front and a wood fired heater.',
+      build: function(){ return rounded({L: 3.0, chimney: true}); }, kind: 'r'},
+    {id: 'straight_edge_porch', name: 'Straight-edge with porch', size: '4.8m x 2.3m', note: '1.3m covered porch with a deck and bench, glass door into the sauna, glass front on the side.',
+      build: function(){ return straight({L: 4.8, porch: 1.3, front: [{a: 0.6, b: 2.54, y0: Y0, y1: YW}], right: [{a: -0.35, b: 0.35, y0: Y0, y1: YD, door: true}]}); }, kind: 'p'},
+    {id: 'rounded_porch', name: 'Rounded with porch', size: '4m x 2.3m', note: '1m covered porch with benches either side and a glass door into the sauna.',
+      build: function(){ return rounded({L: 4.0, porch: 1.0, chimney: true}); }, kind: 'r'}
+  ];
+  var VIEWS = [
+    {id: 'three_quarter', name: '3/4'},
+    {id: 'front', name: 'Front'},
+    {id: 'side', name: 'Side'},
+    {id: 'high', name: 'High'}
+  ];
+
+  /* ---------- environment ---------- */
+  var envGroup = new THREE.Group(); scene.add(envGroup);
+  var shadowPlane = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({opacity: 0.18}));
+  shadowPlane.rotation.x = -Math.PI / 2; shadowPlane.receiveShadow = true;
+  var grass = new THREE.Mesh(new THREE.CircleGeometry(40, 48), new THREE.MeshStandardMaterial({map: tex('grass', 60, 60), roughness: 1}));
+  grass.rotation.x = -Math.PI / 2; grass.receiveShadow = true;
+  var gravel = null;
+  function skyTex(top, bottom){
+    var c = document.createElement('canvas'); c.width = 2; c.height = 256;
+    var x = c.getContext('2d'), gr = x.createLinearGradient(0, 0, 0, 256);
+    gr.addColorStop(0, top); gr.addColorStop(1, bottom); x.fillStyle = gr; x.fillRect(0, 0, 2, 256);
+    var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; return t;
+  }
+  var state = {model: 0, view: 'three_quarter', bg: 'studio', time: 'day'};
+  var current = null;
+
+  function applyScene(){
+    envGroup.clear ? envGroup.clear() : envGroup.children.slice().forEach(function(c){ envGroup.remove(c); });
+    var L = current ? current.userData.L : 3;
+    if (state.bg === 'studio'){
+      envGroup.add(shadowPlane);
+      scene.background = state.time === 'day' ? new THREE.Color(0xffffff) : skyTex('#1d2a36', '#3a4651');
+      scene.fog = null;
+    } else {
+      envGroup.add(grass);
+      gravel = new THREE.Mesh(new THREE.BoxGeometry(L + 1.4, 0.03, 3.6), new THREE.MeshStandardMaterial({map: tex('gravel', 4, 4), roughness: 1}));
+      gravel.position.y = 0.015; gravel.receiveShadow = true; envGroup.add(gravel);
+      scene.background = state.time === 'day' ? skyTex('#9fc2dc', '#e4eef3') : skyTex('#1b2a3a', '#6b5a62');
+      scene.fog = new THREE.Fog(state.time === 'day' ? 0xe4eef3 : 0x3c3b45, 18, 55);
+    }
+    var day = state.time === 'day';
+    hemi.intensity = day ? 0.65 : 0.18;
+    sun.intensity = day ? 0.95 : 0.12;
+    sun.color.set(day ? 0xffffff : 0x9fb0d0);
+    fill.intensity = day ? 0.25 : 0.05;
+    if (current) current.userData.glow.forEach(function(p){ p.intensity = day ? 1.6 : 4.2; });
+    M.led.emissiveIntensity = day ? 1.6 : 3.2;
+    render();
+  }
+
+  function loadModel(i){
+    if (current) scene.remove(current);
+    var def = MODELS[i];
+    var g = def.build();
+    var bb = new THREE.Box3().setFromObject(g);
+    var cx = (bb.min.x + bb.max.x) / 2;
+    g.position.x = -cx;
+    g.userData.L = bb.max.x - bb.min.x;
+    g.userData.glow = g.userData.glow || [];
+    g.traverse(function(o){ if (o.isMesh && o.material !== M.glass){ o.castShadow = true; o.receiveShadow = true; } });
+    scene.add(g); current = g; state.model = i;
+    document.getElementById('mName').textContent = def.name;
+    document.getElementById('mSize').textContent = def.size;
+    document.getElementById('mNote').textContent = def.note;
+    setActive('models', i);
+    applyScene();
+    setView(state.view);
+  }
+
+  /* ---------- camera ---------- */
+  var orbit = {theta: 0.6, phi: 1.25, r: 9, target: new THREE.Vector3(0, 1.2, 0)};
+  function place(){
+    var o = orbit;
+    camera.position.set(o.target.x + o.r * Math.sin(o.phi) * Math.sin(o.theta), o.target.y + o.r * Math.cos(o.phi), o.target.z + o.r * Math.sin(o.phi) * Math.cos(o.theta));
+    camera.lookAt(o.target); render();
+  }
+  function setView(v){
+    state.view = v; setActive('views', VIEWS.findIndex(function(x){ return x.id === v; }));
+    var def = MODELS[state.model], L = current.userData.L;
+    var span = Math.max(L, 2.6);
+    var frontTheta = def.kind === 'r' ? Math.PI / 2 : 0;
+    orbit.target.set(0, 1.25, 0);
+    if (v === 'three_quarter'){ orbit.theta = frontTheta + (def.kind === 'r' ? -0.75 : 0.62); orbit.phi = 1.38; orbit.r = span * 1.55 + 4.2; }
+    if (v === 'front'){ orbit.theta = frontTheta; orbit.phi = 1.45; orbit.r = span * 1.35 + 4.4; }
+    if (v === 'side'){ orbit.theta = frontTheta + (def.kind === 'r' ? -Math.PI / 2 : Math.PI / 2); orbit.phi = 1.45; orbit.r = span * 1.35 + 4.4; }
+    if (v === 'high'){ orbit.theta = frontTheta + (def.kind === 'r' ? -0.7 : 0.55); orbit.phi = 0.95; orbit.r = span * 1.6 + 5; }
+    if (def.kind === 'p' && v === 'three_quarter'){ orbit.theta = 0.95; }
+    place();
+  }
+
+  function resize(){
+    var w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); render();
+  }
+  function render(){ renderer.render(scene, camera); }
+
+  /* ---------- input ---------- */
+  var ptrs = {}, last = null, lastDist = 0;
+  stage.addEventListener('pointerdown', function(e){ ptrs[e.pointerId] = {x: e.clientX, y: e.clientY}; last = {x: e.clientX, y: e.clientY}; stage.setPointerCapture(e.pointerId); });
+  stage.addEventListener('pointermove', function(e){
+    if (!ptrs[e.pointerId]) return;
+    ptrs[e.pointerId] = {x: e.clientX, y: e.clientY};
+    var ids = Object.keys(ptrs);
+    if (ids.length === 2){
+      var a = ptrs[ids[0]], b = ptrs[ids[1]], d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (lastDist) { orbit.r = Math.max(3, Math.min(40, orbit.r * lastDist / d)); place(); }
+      lastDist = d; return;
+    }
+    var dx = e.clientX - last.x, dy = e.clientY - last.y; last = {x: e.clientX, y: e.clientY};
+    orbit.theta -= dx * 0.008; orbit.phi = Math.max(0.25, Math.min(1.56, orbit.phi - dy * 0.006)); place();
+  });
+  function up(e){ delete ptrs[e.pointerId]; lastDist = 0; }
+  stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+  stage.addEventListener('wheel', function(e){ e.preventDefault(); orbit.r = Math.max(3, Math.min(40, orbit.r * (1 + e.deltaY * 0.0012))); place(); }, {passive: false});
+
+  /* ---------- UI ---------- */
+  function setActive(group, idx){
+    var btns = document.querySelectorAll('#' + group + ' button');
+    btns.forEach(function(b, i){ b.classList.toggle('on', i === idx); });
+  }
+  MODELS.forEach(function(m, i){ var b = document.createElement('button'); b.textContent = m.name; b.onclick = function(){ loadModel(i); }; document.getElementById('models').appendChild(b); });
+  VIEWS.forEach(function(v){ var b = document.createElement('button'); b.textContent = v.name; b.onclick = function(){ setView(v.id); }; document.getElementById('views').appendChild(b); });
+  function pair(a, b, key, va, vb){
+    var A = document.getElementById(a), B = document.getElementById(b);
+    A.onclick = function(){ state[key] = va; A.classList.add('on'); B.classList.remove('on'); applyScene(); };
+    B.onclick = function(){ state[key] = vb; B.classList.add('on'); A.classList.remove('on'); applyScene(); };
+  }
+  pair('bgStudio', 'bgGarden', 'bg', 'studio', 'garden');
+  pair('tDay', 'tDusk', 'time', 'day', 'dusk');
+  document.getElementById('clean').onclick = function(){ document.body.classList.add('clean'); resize(); };
+  document.getElementById('back').onclick = function(){ document.body.classList.remove('clean'); resize(); };
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape'){ document.body.classList.remove('clean'); } });
+  document.getElementById('save').onclick = function(){
+    try {
+      render();
+      var a = document.createElement('a');
+      a.download = 'bsuk_' + MODELS[state.model].id + '_' + state.view + '_' + state.bg + '_' + state.time + '.png';
+      a.href = renderer.domElement.toDataURL('image/png');
+      document.body.appendChild(a); a.click(); a.remove();
+    } catch (err) { alert('Saving is blocked here. Use Clean shot and take a screenshot instead.'); }
+  };
+
+  window.addEventListener('resize', resize);
+  window.__bsuk = {load: loadModel, view: setView, state: state, apply: applyScene, render: render};
+  resize();
+  loadModel(0);
+})();
+</script>
+</body>
+</html>
