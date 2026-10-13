@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Barrel Sauna UK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#16261C; --forest-deep:#1F3D28; --forest:#2B5336; --mid:#417C51;
+  --sage:#50795F; --sage-pale:#8fae86;
+  --honey:#C08B41; --honey-l:#D6A868;
+  --tint:#dbe7dd; --tint-l:#eef4ef; --white:#ffffff;
+  --body:rgba(22,38,28,0.80);
+  --hair:rgba(65,124,81,0.24);
+  --shadow:0 10px 30px rgba(22,38,28,0.10);
+  --face:'Raleway', Arial, Helvetica, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{background:#ffffff;}
+body{font-family:var(--face);font-weight:400;font-size:16px;line-height:1.7;color:var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+img{max-width:100%;}
+.w7{font-weight:700;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
+.narrow{max-width:760px;}
+
+/* type */
+.kicker{font-size:12px;font-weight:700;letter-spacing:0.32em;text-transform:uppercase;color:var(--honey);margin-bottom:14px;}
+h1,h2,h3,h4{font-family:var(--face);font-weight:700;}
+h2{font-size:38px;line-height:1.14;letter-spacing:-0.5px;color:var(--forest);margin-bottom:18px;}
+h2 span,h3 span{color:var(--honey);}
+h3{font-size:22px;line-height:1.25;color:var(--forest);margin:34px 0 10px;}
+h4{font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:var(--forest);margin-bottom:10px;line-height:1.4;}
+p{margin-bottom:14px;max-width:720px;}
+p.lede{font-size:19px;line-height:1.6;color:var(--forest-deep);}
+p.lead-in{font-weight:700;color:var(--forest-deep);margin-bottom:6px;}
+.statement{font-size:26px;font-weight:700;line-height:1.25;color:var(--forest);margin:22px 0 6px;max-width:720px;}
+.statement span{color:var(--honey);}
+
+/* sections */
+section{padding:72px 0;background:#ffffff;}
+section.dark{background:var(--ground);color:var(--tint);}
+section.dark .kicker{color:var(--honey-l);}
+section.dark h2,section.dark h3,section.dark h4{color:#ffffff;}
+section.dark h2 span,section.dark h3 span{color:var(--honey-l);}
+section.dark p.lede{color:#ffffff;}
+section.dark p.lead-in{color:#ffffff;}
+section.dark .statement{color:#ffffff;}
+section.dark .statement span{color:var(--honey-l);}
+
+/* hero */
+.hero{position:relative;background:var(--ground);min-height:min(56vw,760px);display:flex;align-items:flex-end;overflow:hidden;}
+.hero-media{position:absolute;inset:0;}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 55%;display:block;}
+.hero-media .veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(22,38,28,0.88) 0%,rgba(22,38,28,0.55) 48%,rgba(22,38,28,0.25) 100%),linear-gradient(180deg,rgba(22,38,28,0.30) 0%,rgba(22,38,28,0.10) 45%,rgba(22,38,28,0.80) 100%);}
+.hero-in{position:relative;z-index:2;width:100%;padding-top:110px;padding-bottom:64px;}
+.hero .dash{width:44px;height:2px;background:var(--honey-l);margin-bottom:16px;}
+.hero .kicker{color:var(--honey-l);}
+.hero h1{color:#ffffff;font-size:50px;line-height:1.06;letter-spacing:-1px;max-width:720px;margin-bottom:20px;}
+.hero h1 span{color:var(--honey-l);}
+.hero p{color:var(--tint);font-size:17px;max-width:560px;margin-bottom:8px;}
+.hero p.big{color:#ffffff;font-size:20px;font-weight:700;line-height:1.4;margin-bottom:26px;}
+
+/* pill */
+.pill{display:inline-block;background:var(--honey);color:#ffffff;font-family:var(--face);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;padding:15px 34px;border-radius:30px;line-height:1.2;}
+.pill:hover{background:var(--honey-l);}
+
+/* chips */
+ul.chips{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 20px;max-width:900px;}
+ul.chips li{font-size:14px;line-height:1.3;padding:7px 14px;border-radius:30px;background:var(--tint-l);color:var(--forest-deep);}
+section.dark ul.chips li{background:rgba(255,255,255,0.05);border:1px solid rgba(143,174,134,0.35);color:var(--tint);}
+
+/* hairline list */
+ul.lines{list-style:none;columns:2;column-gap:40px;margin:10px 0 22px;max-width:960px;}
+ul.lines li{break-inside:avoid;padding:10px 0;border-bottom:1px solid var(--hair);color:var(--forest-deep);font-size:15px;line-height:1.5;}
+
+/* grids */
+.split{display:grid;grid-template-columns:1.1fr 0.9fr;gap:52px;align-items:start;}
+.split.rev{grid-template-columns:0.9fr 1.1fr;}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:20px 0 24px;}
+.cards.three{grid-template-columns:repeat(3,1fr);}
+.cards.four{grid-template-columns:repeat(4,1fr);}
+
+/* white on white lift cards */
+.card{background:#ffffff;border:1px solid var(--hair);border-radius:18px;box-shadow:var(--shadow);padding:24px 24px 20px;}
+.card .lb{font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage);margin-bottom:8px;}
+.card h3{margin:0 0 8px;font-size:19px;}
+.card p{font-size:15px;margin-bottom:10px;}
+.card p:last-child{margin-bottom:0;}
+.card ul.chips{margin:8px 0 12px;}
+.card ul.chips li{font-size:13px;padding:6px 12px;}
+.word{display:flex;align-items:center;justify-content:center;text-align:center;padding:22px 12px;}
+.word span{font-size:17px;font-weight:700;color:var(--forest);letter-spacing:0.04em;}
+.pbox{display:flex;align-items:center;gap:22px;background:#ffffff;border:1px solid var(--hair);border-radius:22px;box-shadow:var(--shadow);padding:20px 24px;margin:22px 0;}
+.pbox .ico{flex:0 0 96px;}
+.pbox .ico img{width:96px;height:auto;display:block;}
+.pbox .ti{flex:0 0 190px;font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--forest);line-height:1.45;}
+.pbox .bd{font-size:15px;line-height:1.6;}
+
+/* circle insert */
+.circ{display:flex;align-items:center;gap:26px;margin:30px 0;}
+.circ.right{flex-direction:row-reverse;justify-content:flex-end;}
+.circ img{flex:0 0 175px;width:175px;height:175px;border-radius:50%;object-fit:cover;border:1px solid rgba(65,124,81,0.30);display:block;}
+.circ .cap{font-size:13px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--sage);line-height:1.7;max-width:260px;}
+
+/* labelled image card */
+.labimg{background:#ffffff;border-radius:18px;overflow:hidden;border:1px solid var(--hair);box-shadow:var(--shadow);}
+.labimg img{display:block;width:100%;height:auto;}
+.labimg .tab{background:var(--forest-deep);border-top:3px solid var(--honey);color:#ffffff;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:12px 16px;line-height:1.4;}
+
+/* placeholders */
+.slot{background:#ffffff;border:2px dashed var(--sage);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 18px;aspect-ratio:16/9;}
+.slot .sl{font-size:13px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--sage);line-height:1.6;}
+.slot .ss{font-size:13px;color:var(--sage);margin:6px 0 0;}
+.slot.gal{aspect-ratio:auto;min-height:150px;}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px;}
+
+/* draft tag */
+.draft{display:inline-block;border:1.5px solid var(--honey);color:var(--honey);font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;border-radius:30px;padding:4px 12px;margin:0 0 10px;line-height:1.4;}
+
+/* pull lines */
+.pull{border-left:3px solid var(--mid);padding:6px 0 6px 20px;margin:6px 0 18px;font-size:20px;font-weight:700;color:#ffffff;max-width:640px;line-height:1.45;}
+.pull.on{border-left-color:var(--honey-l);color:var(--honey-l);}
+
+/* callout */
+.callout{background:var(--tint);border-left:4px solid var(--forest-deep);border-radius:0 18px 18px 0;padding:24px 28px;margin-top:30px;max-width:820px;}
+.callout h3{margin:0 0 8px;color:var(--forest-deep);}
+.callout p{color:var(--forest-deep);margin:0;}
+
+/* details band */
+.band{position:relative;background:var(--ground);overflow:hidden;}
+.band img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.band .veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(22,38,28,0.88) 0%,rgba(22,38,28,0.58) 46%,rgba(22,38,28,0.80) 100%);}
+.band .in{position:relative;z-index:2;min-height:360px;display:flex;flex-direction:column;justify-content:center;padding-top:56px;padding-bottom:56px;}
+.band .bdisc{width:30px;height:30px;border-radius:50%;background:var(--mid);display:flex;align-items:center;justify-content:center;font-size:14px;margin-bottom:14px;}
+.band h2{color:#ffffff;font-size:34px;max-width:620px;margin-bottom:12px;}
+.band h2 span{color:var(--honey-l);}
+.band p{color:var(--tint);font-size:15px;max-width:460px;margin-bottom:6px;}
+
+/* drawings */
+.draw{margin:34px 0 0;}
+.draw img{display:block;width:100%;height:auto;}
+.draw .ph{display:none;}
+.drawrow{display:grid;grid-template-columns:repeat(8,1fr);gap:18px;align-items:end;margin:6px 0 30px;}
+.drawrow img{width:100%;height:auto;display:block;}
+
+/* journey */
+ol.journey{list-style:none;display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 18px;counter-reset:j;}
+ol.journey li{counter-increment:j;display:flex;align-items:center;gap:10px;background:var(--forest);color:#ffffff;border-radius:30px;padding:8px 18px 8px 8px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;line-height:1.2;}
+ol.journey li::before{content:counter(j);flex:0 0 26px;height:26px;border-radius:50%;background:var(--mid);color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:12px;letter-spacing:0;}
+
+/* why list */
+.whylist{list-style:none;columns:3;column-gap:34px;margin:24px 0 10px;}
+.whylist li{break-inside:avoid;display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid rgba(143,174,134,0.22);font-size:15px;line-height:1.45;color:var(--tint);}
+.whylist li::before{content:"";flex:0 0 8px;height:8px;border-radius:50%;background:var(--sage-pale);margin-top:6px;}
+
+/* closing */
+.closing{text-align:left;}
+.closing .final{font-size:28px;font-weight:700;color:var(--forest);line-height:1.25;margin:28px 0 24px;max-width:720px;}
+.closing .final span{color:var(--honey);}
+
+/* footer */
+footer{background:var(--ground);color:var(--tint);padding:56px 0 48px;text-align:center;}
+footer .logo{width:120px;height:auto;display:block;margin:0 auto 22px;}
+footer .icons{display:flex;justify-content:center;gap:16px;margin:0 auto 22px;flex-wrap:wrap;}
+footer .icons img{width:46px;height:auto;display:block;}
+footer .signoff{color:#ffffff;font-size:16px;font-weight:700;margin-bottom:6px;}
+footer .dom{font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--sage-pale);margin-bottom:28px;}
+footer .sigcard{max-width:640px;margin:0 auto;background:#ffffff;border-radius:18px;padding:14px;}
+footer .sigcard img{display:block;width:100%;height:auto;border-radius:8px;}
+
+/* tablet */
+@media (max-width:900px){
+  .split,.split.rev{grid-template-columns:1fr;gap:28px;}
+  .cards.three,.cards.four{grid-template-columns:repeat(2,1fr);}
+  .whylist{columns:2;}
+  .drawrow{grid-template-columns:repeat(4,1fr);}
+}
+
+/* phone */
+@media (max-width:640px){
+  body{font-size:15px;line-height:1.65;}
+  .wrap{padding:0 16px;}
+  section{padding:40px 0;}
+  h2{font-size:25px;margin-bottom:14px;}
+  h3{font-size:19px;margin:26px 0 8px;}
+  .kicker{font-size:11px;letter-spacing:0.24em;margin-bottom:10px;}
+  p{margin-bottom:11px;}
+  p.lede{font-size:16.5px;}
+  .statement{font-size:21px;margin:16px 0 4px;}
+
+  .hero{display:block;min-height:0;}
+  .hero-media{position:relative;inset:auto;}
+  .hero-media img{height:auto;object-fit:contain;}
+  .hero-media .veil{background:linear-gradient(180deg,rgba(22,38,28,0) 55%,rgba(22,38,28,0.92) 100%);}
+  .hero-in{padding-top:6px;padding-bottom:36px;}
+  .hero h1{font-size:29px;letter-spacing:-0.5px;margin-bottom:14px;}
+  .hero p{font-size:15px;}
+  .hero p.big{font-size:17px;margin-bottom:20px;}
+  .pill{padding:14px 26px;font-size:12px;}
+
+  ul.chips{gap:6px;margin:10px 0 16px;}
+  ul.chips li{font-size:12px;padding:4px 10px;}
+  section{padding:34px 0;}
+  p.lead-in{margin-bottom:4px;}
+  ul.lines{columns:1;}
+  ul.lines li{font-size:14px;padding:8px 0;}
+
+  .cards,.cards.three{grid-template-columns:1fr;gap:12px;margin:14px 0 18px;}
+  .cards.four{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .card{padding:18px 18px 16px;border-radius:16px;}
+  .word{padding:16px 8px;}
+  .word span{font-size:15px;}
+  .cards.four .word:last-child{grid-column:1 / -1;}
+  .pbox{flex-direction:column;align-items:flex-start;gap:10px;padding:18px;}
+  .pbox .ico{flex:none;}
+  .pbox .ico img{width:84px;}
+  .pbox .ti{flex:none;}
+
+  .circ,.circ.right{flex-direction:column;align-items:flex-start;gap:12px;margin:22px 0;}
+  .circ img{width:132px;height:132px;flex:0 0 132px;}
+  .circ .cap{font-size:12px;}
+
+  .gallery{grid-template-columns:1fr;gap:10px;}
+  .slot{padding:18px 12px;}
+  .slot.gal{min-height:110px;}
+  .slot .sl{font-size:12px;letter-spacing:0.18em;}
+
+  .pull{font-size:17px;padding-left:14px;}
+  .callout{padding:18px 18px;}
+
+  .band .in{min-height:0;padding-top:40px;padding-bottom:40px;}
+  .band h2{font-size:24px;}
+  .band p{font-size:14px;}
+
+  .draw .dt{display:none;}
+  .draw .ph{display:block;}
+  .drawrow{gap:12px;margin-bottom:22px;}
+
+  ol.journey{gap:7px;}
+  ol.journey li{font-size:10.5px;letter-spacing:0.1em;padding:6px 12px 6px 6px;gap:7px;}
+  ol.journey li::before{flex:0 0 22px;height:22px;font-size:11px;}
+
+  .whylist{columns:2;column-gap:14px;margin-top:14px;}
+  .whylist li{font-size:12.5px;padding:5px 0;gap:6px;line-height:1.35;}
+  .whylist li::before{flex:0 0 6px;height:6px;margin-top:5px;}
+
+  .closing .final{font-size:22px;}
+  footer{padding:40px 0 32px;}
+  footer .icons img{width:38px;}
+  footer .sigcard{padding:8px;border-radius:14px;}
+}
+</style>
+</head>
+<body>
+
+<!-- 1. HERO -->
+<header class="hero">
+  <div class="hero-media">
+    <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9b307bac5d03a1095ebcb5.png" alt="A Barrel Sauna UK barrel sauna at sunset">
+    <div class="veil"></div>
+  </div>
+  <div class="hero-in wrap">
+    <div class="dash"></div>
+    <div class="kicker">Barrel Sauna UK &middot; Why us</div>
+    <h1>Built here. Built safely. Built to last. Built around <span>you</span>.</h1>
+    <p>At Barrel Sauna UK, our aim is simple:</p>
+    <p class="big">To build saunas that are safer, stronger, more individual and made to last.</p>
+    <a class="pill" href="https://www.barrelsaunauk.com/secure-your-build" target="_top">Secure your build</a>
+  </div>
+</header>
+
+<!-- 2. INTRO, white, line drawings -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Our aim</div>
+    <p class="lede">We don’t believe in cutting corners to hit the lowest possible price. We don’t simply import a generic sauna kit, drop it at your property and disappear.</p>
+    <p>We design, manufacture and develop our saunas here in Wales, with a major focus on safety, longevity, British weather resistance, correct materials, genuine customisation and long-term aftercare.</p>
+    <p>From substantial Thermowood construction and premium Aspen seating to enhanced heater protection, bespoke UK-made glazing, solar and hybrid solutions, additional roof structures and our own purpose-built mobile sauna trailers, every part of the sauna can be considered as one complete build.</p>
+    <div class="draw">
+      <img class="dt" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9c52d9e29b3baf97d3415c.png" alt="Line drawings of the Barrel Sauna UK range">
+      <img class="ph" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9c44d27614828d369e9c23.png" alt="Line drawings of the Barrel Sauna UK range">
+    </div>
+  </div>
+</section>
+
+<!-- 3. MADE IN WALES, dark, Tim video slot -->
+<section class="dark">
+  <div class="wrap split">
+    <div>
+      <div class="kicker">Built here</div>
+      <h2>Made in <span>Wales</span></h2>
+      <p>Our saunas are built by our own team in South Wales.</p>
+      <p>Customers can visit our workshop, see saunas being manufactured and speak directly to the people involved in building theirs.</p>
+      <p class="lead-in">Because we manufacture rather than simply resell, we have far more control over:</p>
+      <ul class="chips">
+        <li>Materials</li><li>Construction</li><li>Layout</li><li>Finishing</li><li>Safety</li><li>Weather protection</li><li>Heating</li><li>Glazing</li><li>Lighting</li><li>Trailer engineering</li><li>Quality control</li><li>Aftercare</li>
+      </ul>
+      <p class="statement">Built here. Not just sold <span>here</span>.</p>
+    </div>
+    <div class="slot">
+      <div class="sl">Video of Tim to come</div>
+      <p class="ss">Placeholder for a talking video of Tim</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PRICE, white, lift cards -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Quality, not lowest price</div>
+    <h2>We don’t compete on price, and there’s a <span>reason</span> for that.</h2>
+    <p>There will always be someone willing to sell a sauna cheaper.</p>
+    <p>There are companies selling low-cost flat packs, imported kits and standardised products designed primarily to hit a price point.</p>
+    <p>That isn’t what we do.</p>
+    <p class="lead-in">At Barrel Sauna UK, we compete on:</p>
+    <div class="cards four">
+      <div class="card word"><span>Quality.</span></div>
+      <div class="card word"><span>Safety.</span></div>
+      <div class="card word"><span>Longevity.</span></div>
+      <div class="card word"><span>Materials.</span></div>
+      <div class="card word"><span>Engineering.</span></div>
+      <div class="card word"><span>Customisation.</span></div>
+      <div class="card word"><span>Support.</span></div>
+    </div>
+    <p>We would rather build something properly than remove important features simply to make the headline price look cheaper.</p>
+    <p>A lower price can often be achieved by using thinner materials, simpler construction, fewer protective components, basic roofing, limited finishing, restricted customisation or by importing a standard kit and moving it on quickly.</p>
+    <p>That may suit some customers.</p>
+    <p>But it is not the market we are trying to compete in.</p>
+    <p>We are building for customers who want something substantial, carefully considered and designed to last.</p>
+  </div>
+</section>
+
+<!-- 5. CHEAPEST, dark -->
+<section class="dark">
+  <div class="wrap">
+    <div class="kicker">Quality, not lowest price</div>
+    <h2>Cheapest isn’t our <span>goal</span>.</h2>
+    <p class="lede">Building it properly is.</p>
+    <p>A sauna has to deal with extreme heat on the inside and British weather on the outside.</p>
+    <div class="split">
+      <div>
+        <p class="lead-in">It combines:</p>
+        <ul class="chips">
+          <li>Timber</li><li>Moisture</li><li>Heating systems</li><li>Electrical components</li><li>Glazing</li><li>Ventilation</li><li>Roof protection</li><li>High temperatures</li><li>Expansion and contraction</li><li>Long-term exposure to weather</li>
+        </ul>
+        <p>And in the case of mobile saunas, the entire structure also has to withstand regular transport, vibration, movement, setup and commercial use.</p>
+      </div>
+      <div>
+        <p>Cutting corners in those areas may reduce the initial cost.</p>
+        <p class="lead-in">It can also affect:</p>
+        <ul class="chips">
+          <li>Safety</li><li>Durability</li><li>Weather resistance</li><li>Maintenance</li><li>Appearance</li><li>Performance</li><li>Long-term ownership costs</li>
+        </ul>
+        <p>That is why our focus is on building a sauna we are happy to put our name on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. FLAT-PACK, white, lift cards -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Quality, not lowest price</div>
+    <h2>Yes, you can buy a cheap <span>flat-pack</span> sauna.</h2>
+    <p>For some people, that may be exactly what they want.</p>
+    <p>There are plenty of inexpensive flat-pack saunas and imported sauna kits available.</p>
+    <p>But that should not be confused with what we manufacture.</p>
+    <p>We are not trying to become the cheapest flat-pack sauna company in the UK.</p>
+    <p>We manufacture made-to-order saunas and wellness products in Wales, with the ability to adapt the structure, materials, glazing, heating, lighting, roof protection and internal design around the customer and their site.</p>
+    <p>Our customers are choosing us because they want more than a box of timber delivered on a pallet.</p>
+    <p class="lead-in">They want something:</p>
+    <div class="cards four">
+      <div class="card word"><span>Designed properly.</span></div>
+      <div class="card word"><span>Built properly.</span></div>
+      <div class="card word"><span>Installed properly.</span></div>
+      <div class="card word"><span>Supported properly afterwards.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. CLOSE UP DETAILS BAND -->
+<div class="band">
+  <img class="bg" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa00cb4f44f6ea72fcb18fa.png" alt="Close up of the stainless steel banding on a Thermowood barrel">
+  <div class="veil"></div>
+  <div class="in wrap">
+    <div class="bdisc">&#127988;&#917607;&#917602;&#917623;&#917612;&#917619;&#917631;</div>
+    <h2>You’re not just paying for <span>what you can see</span>.</h2>
+    <p>Some of the most important differences in a sauna are not the things that photograph well.</p>
+    <p>They are the details underneath and behind the finished product.</p>
+  </div>
+</div>
+
+<!-- 8. THE DETAILS, white -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Built safely</div>
+    <ul class="lines">
+      <li>The protective plate beneath the heater.</li>
+      <li>The heat shielding around it.</li>
+      <li>The distance between the heater and surrounding timber.</li>
+      <li>The thickness of the sauna shell.</li>
+      <li>The materials used for the benches.</li>
+      <li>The way moisture is allowed to escape.</li>
+      <li>The way the roof protects the barrel.</li>
+      <li>The treatments used on exposed timber.</li>
+      <li>The quality of the glazing.</li>
+      <li>The electrical specification.</li>
+      <li>The construction underneath a mobile sauna.</li>
+      <li>The support available when something eventually needs maintenance.</li>
+    </ul>
+    <p>And whether the company that supplied the sauna is still there when you need them.</p>
+    <p>Those details cost more to do properly.</p>
+    <p class="statement">We think they are <span>worth</span> doing.</p>
+  </div>
+</section>
+
+<!-- 9. SAFETY AND LONGEVITY, dark -->
+<section class="dark">
+  <div class="wrap narrow">
+    <div class="kicker">Built safely</div>
+    <h2>Safety &amp; longevity <span>first</span></h2>
+    <p>A sauna combines high temperatures, timber, electricity, moisture and, in some cases, solid-fuel heating.</p>
+    <p>That means the details matter.</p>
+    <p class="lead-in">Our philosophy is not:</p>
+    <div class="pull">“What is the minimum needed to build a sauna?”</div>
+    <p class="lead-in">It is:</p>
+    <div class="pull on">“What can we do to build it properly, protect it properly and help it last?”</div>
+    <p>Many lower-cost and imported sauna packages are designed around reaching a particular price point.</p>
+    <p>Important protective features, weatherproofing measures or finishing details can sometimes be reduced, omitted or treated as extras.</p>
+    <p>We take a different approach.</p>
+    <p>Where appropriate, we build additional protection into the sauna from the beginning.</p>
+  </div>
+</section>
+
+<!-- 10. HEATER SAFETY, white, circle insert -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Built safely</div>
+    <h2>Extra heater <span>safety</span></h2>
+    <p>A heater alone is not a complete sauna heating installation.</p>
+    <div class="split">
+      <div>
+        <p class="lead-in">Depending on the heater and sauna design, our builds can incorporate:</p>
+        <ul class="chips">
+          <li>Protective heater sheaths</li><li>Heat shields</li><li>Protective bottom plates</li><li>Fire-resistant protection beneath heaters where required</li><li>Heater safety rails</li><li>Additional guarding</li><li>Heat reflectors</li><li>Raised heat protection</li><li>Correct manufacturer clearances</li><li>Correct sauna stone installation</li><li>Appropriate ventilation</li><li>Moisture management</li><li>Heat-resistant materials around critical areas</li>
+        </ul>
+        <p>These are not decorative extras.</p>
+        <p>They are there to help protect the sauna, the surrounding timber and the people using it.</p>
+      </div>
+      <div class="circ">
+        <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6abe8bf11325c552eecadff8.jpg" alt="Sauna heater with timber guarding">
+        <div class="cap">Additional guarding around the heater</div>
+      </div>
+    </div>
+    <div class="callout">
+      <h3>Safety should not be where costs are cut.</h3>
+      <p>For family saunas, holiday accommodation, hospitality and commercial environments in particular, we believe additional protection around the heater is worth considering from the start.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 11. FULLY BESPOKE, dark, gallery slot -->
+<section class="dark">
+  <div class="wrap">
+    <div class="kicker">Built around you</div>
+    <h2>Fully bespoke, not just a choice of <span>options</span></h2>
+    <p>To us, bespoke means considerably more than choosing a heater and window from a dropdown menu.</p>
+    <p class="lead-in">Depending on the project, we can alter:</p>
+    <ul class="chips">
+      <li>Overall sauna length</li><li>Overall width</li><li>Internal room sizes</li><li>Bench configuration</li><li>Bench style</li><li>Entrance position</li><li>Porch size</li><li>Changing-room size</li><li>Window size</li><li>Window position</li><li>Window colour</li><li>Glass tint</li><li>Full glass façades</li><li>Panoramic glazing</li><li>Globe windows</li><li>Roof structure</li><li>Roofing material</li><li>Timber finish</li><li>Lighting design</li><li>Heating system</li><li>Heating controls</li><li>Infrared systems</li><li>Solar systems</li><li>Commercial layouts</li><li>Mobile configurations</li><li>Interior detailing</li><li>Decorative features</li><li>Branding elements</li>
+    </ul>
+    <p>If a customer has something unusual in mind, we can design around it.</p>
+    <p>Properly bespoke means changing the sauna itself, not simply choosing between three pre-set versions.</p>
+    <div class="gallery">
+      <div class="slot gal"><div class="sl">Photos of unique designs to come</div></div>
+      <div class="slot gal"><div class="sl">Photo to come</div></div>
+      <div class="slot gal"><div class="sl">Photo to come</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12. THERMOWOOD AND BENCHES, white, lift cards, circle insert -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Built to last</div>
+    <h2>Substantial Thermowood <span>construction</span></h2>
+    <p>Our barrel saunas use substantial Thermowood construction, with approximately 48 mm barrel staves on our standard builds.</p>
+    <p>We want the structure itself to feel solid and substantial rather than simply using the minimum amount of timber needed.</p>
+    <p>The combination of good materials, correct construction, weather protection, ventilation and proper aftercare all contribute towards the long-term performance of the sauna.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="lb">Benching</div>
+        <h3>Aspen &amp; Thermo-Aspen benches</h3>
+        <p>The timber you sit on matters just as much as the timber forming the shell.</p>
+        <p>We offer specialist sauna benching in:</p>
+        <p class="lead-in">Aspen</p>
+        <p>and</p>
+        <p class="lead-in">Thermo-Aspen</p>
+        <p>These timbers provide a smooth, comfortable surface well suited to sauna interiors.</p>
+        <p>Thermo-Aspen also provides a darker, richer and more contemporary appearance for customers wanting a premium internal finish.</p>
+      </div>
+      <div class="card">
+        <div class="lb">Benching</div>
+        <h3>Floating bench options</h3>
+        <p>For customers looking for a cleaner and more architectural interior, we can incorporate floating sauna benches.</p>
+        <p>Floating seating creates:</p>
+        <ul class="chips">
+          <li>A more modern appearance</li><li>Cleaner internal lines</li><li>A greater feeling of space</li><li>A premium fitted look</li><li>Opportunities for concealed lighting underneath</li><li>A more striking high-end interior</li>
+        </ul>
+        <p>Combined with Aspen or Thermo-Aspen and integrated lighting, the benching can become a major design feature rather than simply somewhere to sit.</p>
+      </div>
+    </div>
+    <div class="circ right">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a78773688808720198d0c81.png" alt="Under-bench LED lighting inside a barrel sauna">
+      <div class="cap">Under-bench lighting</div>
+    </div>
+  </div>
+</section>
+
+<!-- 13. BRITISH WEATHER, dark -->
+<section class="dark">
+  <div class="wrap">
+    <div class="kicker">Built to last</div>
+    <h2>Built with British <span>weather</span> in mind</h2>
+    <p>An outdoor sauna in Britain has to deal with far more than heat on the inside.</p>
+    <div class="split">
+      <div>
+        <p class="lead-in">It has to withstand:</p>
+        <ul class="chips">
+          <li>Heavy rain</li><li>Persistent moisture</li><li>Wind</li><li>Temperature changes</li><li>Winter weather</li><li>Freeze-thaw cycles</li><li>UV exposure</li><li>Repeated expansion and contraction of timber</li>
+        </ul>
+        <p>That is why longevity starts outside the sauna as well as inside it.</p>
+      </div>
+      <div>
+        <p class="lead-in">Depending on the project, we can add additional weather protection including:</p>
+        <ul class="chips">
+          <li>Additional roof framing over the barrel</li><li>Secondary protective roof structures</li><li>Extra protection over the sauna shell</li><li>Improved water run-off</li><li>Additional timber treatments</li><li>Extra protection around exposed areas</li><li>Choice of roofing systems</li><li>Protective exterior finishes</li>
+        </ul>
+      </div>
+    </div>
+    <h3>A secondary roof above the barrel</h3>
+    <p>For customers wanting additional long-term protection, we can construct a dedicated framed roof structure above the barrel itself.</p>
+    <p>This creates an additional layer between the main sauna shell and the weather.</p>
+    <p>Rather than relying solely on the barrel shell to absorb years of rain, wind and exposure, the secondary roof helps provide another level of protection.</p>
+    <p>It can also dramatically change the appearance of the sauna and make the finished build feel more architectural.</p>
+  </div>
+</section>
+
+<!-- 14. ROOFING AND TREATMENTS, white, lift cards -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Built to last</div>
+    <h2>Choice of <span>roofing</span></h2>
+    <p>The roof can be part of the design rather than simply a functional covering.</p>
+    <p class="lead-in">Options can include:</p>
+    <div class="cards three">
+      <div class="card"><div class="lb">Roofing</div><h3>Traditional roofing shingles</h3><p>A practical and familiar barrel sauna finish with good weather protection.</p></div>
+      <div class="card"><div class="lb">Roofing</div><h3>Wooden roof shingles</h3><p>A more natural and premium architectural appearance.</p></div>
+      <div class="card"><div class="lb">Roofing</div><h3>Bespoke roofing finishes</h3><p>For projects where the sauna needs to complement a particular house, garden, hospitality venue or wider wellness development.</p></div>
+    </div>
+    <h3>Extra timber treatments</h3>
+    <p>Exterior timber protection plays an important role in the lifespan and appearance of an outdoor sauna.</p>
+    <p class="lead-in">We can provide additional wood treatments and protective finishes depending on:</p>
+    <ul class="chips">
+      <li>Location</li><li>Exposure</li><li>Desired appearance</li><li>Timber type</li><li>Commercial or residential use</li>
+    </ul>
+    <p>Customers are also provided with guidance on ongoing timber care.</p>
+    <p>A sauna should not simply be treated once and forgotten.</p>
+  </div>
+</section>
+
+<!-- 15. GLAZING, dark, labelled image -->
+<section class="dark">
+  <div class="wrap">
+    <div class="kicker">Built around you</div>
+    <h2>Bespoke UK-made <span>windows</span></h2>
+    <p>We are not always restricted to fixed imported sauna window sizes.</p>
+    <p>For suitable projects, glazing can be manufactured in the UK specifically around the requirements of the build.</p>
+    <p class="lead-in">This gives us far greater freedom with:</p>
+    <ul class="chips">
+      <li>Window dimensions</li><li>Window positioning</li><li>Panoramic glazing</li><li>Feature windows</li><li>Full glass façades</li><li>Bespoke shapes</li><li>Tinted glazing</li><li>Architectural glass designs</li>
+    </ul>
+    <p>Instead of designing the sauna around whatever window happens to be available, we can design the glazing around the sauna.</p>
+    <div class="split rev" style="margin-top:30px;">
+      <div class="labimg">
+        <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a7850cb9a9c7792ea50e3e6.jpg" alt="Barrel sauna with a premium globe window">
+        <div class="tab">Premium globe windows</div>
+      </div>
+      <div>
+        <h3 style="margin-top:0;">Premium globe windows</h3>
+        <p>For customers looking for maximum visual impact, we can incorporate premium panoramic globe windows.</p>
+        <p class="lead-in">These create:</p>
+        <ul class="chips">
+          <li>Wide panoramic views</li><li>More natural light</li><li>A greater feeling of space</li><li>A striking exterior appearance</li><li>A much more premium visual finish</li>
+        </ul>
+        <p class="lead-in">They are particularly effective for:</p>
+        <ul class="chips">
+          <li>Scenic properties</li><li>Coastal saunas</li><li>Lakeside locations</li><li>Retreats</li><li>Commercial wellness venues</li><li>Mobile sauna businesses</li>
+        </ul>
+      </div>
+    </div>
+    <h3>Personalised glass colours &amp; tints</h3>
+    <p>Customers are not restricted to one standard glass appearance.</p>
+    <div class="split">
+      <div>
+        <p class="lead-in">Depending on the glazing selected, we can offer a range of:</p>
+        <ul class="chips">
+          <li>Tints</li><li>Colours</li><li>Darker privacy finishes</li><li>Lighter panoramic finishes</li><li>Bespoke visual effects</li>
+        </ul>
+      </div>
+      <div>
+        <p class="lead-in">This allows glazing to complement the customer’s:</p>
+        <ul class="chips">
+          <li>Home</li><li>Garden</li><li>Interior</li><li>Business branding</li><li>Hospitality venue</li><li>Wellness brand</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16. HEATING, white, lift cards -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Built around you</div>
+    <h2>More ways to heat your <span>sauna</span></h2>
+    <p>Different customers and different locations need different solutions.</p>
+    <p class="lead-in">We can build around:</p>
+    <div class="cards three">
+      <div class="card word"><span>Wood-fired heating</span></div>
+      <div class="card word"><span>Electric heating</span></div>
+      <div class="card word"><span>Wi-Fi controlled electric heating</span></div>
+      <div class="card word"><span>Infrared heating</span></div>
+      <div class="card word"><span>Hybrid infrared and traditional sauna heating</span></div>
+    </div>
+    <p>Rather than treating every sauna the same, we can design the heating setup around how the customer intends to use it.</p>
+    <div class="split">
+      <div>
+        <h3>Hybrid infrared saunas</h3>
+        <p>For customers wanting additional flexibility, selected builds can combine a traditional Finnish-style sauna heater with integrated infrared technology.</p>
+        <p>This gives customers the option of using different forms of heat within one purpose-designed sauna environment.</p>
+        <p>Infrared panels can be incorporated into the overall interior rather than simply added as an afterthought.</p>
+      </div>
+      <div>
+        <h3>Solar &amp; off-grid solutions</h3>
+        <p>Not every sauna sits conveniently beside a suitable mains electricity supply.</p>
+        <p>For mobile, rural and commercial installations, we can develop solar and hybrid solutions around the individual site.</p>
+        <p class="lead-in">Depending on the project, this may include:</p>
+        <ul class="chips">
+          <li>Solar-powered lighting</li><li>Battery systems</li><li>Hybrid electrical configurations</li><li>Low-energy auxiliary systems</li><li>Wood-fired heating</li><li>Mobile power solutions</li><li>Power systems designed around restricted site supplies</li>
+        </ul>
+        <p class="lead-in">These can be particularly useful for:</p>
+        <ul class="chips">
+          <li>Beaches</li><li>Lakes</li><li>Rural locations</li><li>Campsites</li><li>Wellness retreats</li><li>Mobile sauna businesses</li><li>Temporary commercial locations</li><li>Sites with limited electrical capacity</li>
+        </ul>
+        <p>Instead of forcing every project into the same electrical setup, we look at how and where the sauna will actually operate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 17. INTERIORS, dark -->
+<section class="dark">
+  <div class="wrap">
+    <div class="kicker">Built around you</div>
+    <h2>Bespoke interior <span>design</span></h2>
+    <p>A sauna does not have to look like every other sauna.</p>
+    <p>We can incorporate premium decorative and architectural features to make each build feel more individual.</p>
+    <h3>Himalayan salt features</h3>
+    <p class="lead-in">Options can include:</p>
+    <ul class="chips">
+      <li>Full Himalayan salt feature walls</li><li>Partial salt walls</li><li>Salt accent panels</li><li>Illuminated salt sections</li><li>Backlit salt features</li><li>Salt incorporated around backrests</li><li>Decorative feature areas</li>
+    </ul>
+    <p>These can create a distinctive, atmospheric interior and dramatically change the look of the sauna.</p>
+    <h3>Architectural LED lighting</h3>
+    <p>Lighting can be designed into the sauna during manufacture rather than simply added afterwards.</p>
+    <p class="lead-in">Options can include:</p>
+    <ul class="chips">
+      <li>Warm-white LED lighting</li><li>Lighting behind backrests</li><li>Under-bench lighting</li><li>Concealed lighting underneath floating benches</li><li>Low-level ambient lighting</li><li>Backlit wall features</li><li>Illuminated Himalayan salt</li><li>Colour-changing LED systems</li><li>Individually controlled lighting zones</li>
+    </ul>
+    <p>Lighting can be subtle and relaxing or designed to create a much more dramatic premium interior.</p>
+    <h3>Personalised changing-room lighting</h3>
+    <p>Changing rooms can be personalised too.</p>
+    <p class="lead-in">Customers can incorporate fixed-colour or colour-changing LED accents designed around:</p>
+    <ul class="chips">
+      <li>Their preferred colours</li><li>Their home</li><li>Their business identity</li><li>Hospitality branding</li><li>Wellness branding</li><li>Commercial colour schemes</li>
+    </ul>
+    <p>For commercial customers, this allows the sauna and changing area to become part of the wider customer experience and brand identity.</p>
+  </div>
+</section>
+
+<!-- 18. TRAILERS, white, pill box with line drawing, labelled image -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Mobile sauna expertise</div>
+    <h2>We build the trailer <span>too</span></h2>
+    <div class="split">
+      <div>
+        <p>A mobile sauna should not simply be a garden sauna placed onto a generic trailer.</p>
+        <p>We manufacture our own mobile sauna trailer chassis, allowing the sauna and trailer to be designed together as one complete product.</p>
+        <p class="lead-in">Depending on specification, this can include:</p>
+        <ul class="chips">
+          <li>In-house fabricated steel chassis</li><li>Welsh steel</li><li>Galvanised construction</li><li>Braking systems</li><li>Stabilising legs</li><li>Additional structural reinforcement</li><li>Heavy-duty flooring</li><li>Integrated storage</li><li>Decking areas</li><li>Road lighting</li><li>Electrical systems</li><li>Appropriate wheels and running gear</li><li>Securing points</li><li>Trailer features designed specifically around the sauna</li><li>DVSA IVA testing where required</li>
+        </ul>
+      </div>
+      <div class="labimg">
+        <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa5a0a1df2d01555339a3c4.jpg" alt="Barrel Sauna UK mobile sauna on its own trailer chassis">
+        <div class="tab">Our own trailer chassis</div>
+      </div>
+    </div>
+    <div class="pbox">
+      <div class="ico"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee114091fa65e6a8fa27.png" alt="Mobile sauna line drawing"></div>
+      <div class="ti">One manufacturer. One complete mobile sauna.</div>
+      <div class="bd">If there is ever a question involving the sauna or the trailer underneath it, customers are not being passed between a sauna supplier and an unrelated trailer manufacturer.</div>
+    </div>
+    <h3>Mobile saunas designed for the job</h3>
+    <p>Mobile sauna businesses have very different requirements from domestic garden saunas.</p>
+    <p class="lead-in">A mobile build may need to deal with:</p>
+    <ul class="chips">
+      <li>Constant transport</li><li>Repeated setup</li><li>Uneven sites</li><li>High customer turnover</li><li>Frequent heating cycles</li><li>Coastal environments</li><li>Restricted power</li><li>Storage requirements</li><li>Commercial cleaning</li><li>Changing areas</li><li>Road compliance</li>
+    </ul>
+    <p>Those considerations can be incorporated during the design stage.</p>
+  </div>
+</section>
+
+<!-- 19. COMMERCIAL, dark -->
+<section class="dark">
+  <div class="wrap">
+    <div class="kicker">Commercial sauna expertise</div>
+    <h2>Designed for commercial <span>use</span></h2>
+    <p>We manufacture for far more than domestic gardens.</p>
+    <div class="split">
+      <div>
+        <p class="lead-in">Our builds can be designed around:</p>
+        <ul class="chips">
+          <li>Mobile sauna businesses</li><li>Wellness operators</li><li>Hospitality</li><li>Holiday accommodation</li><li>Retreats</li><li>Campsites</li><li>Coastal businesses</li><li>Lakeside businesses</li><li>Hotels</li><li>Gyms</li><li>Commercial wellness sites</li><li>High-use private installations</li>
+        </ul>
+        <p>Commercial projects require different thinking.</p>
+      </div>
+      <div>
+        <p class="lead-in">We can consider:</p>
+        <ul class="chips">
+          <li>Higher-frequency use</li><li>Increased capacity</li><li>Customer flow</li><li>Bench configuration</li><li>Heater output</li><li>Heater protection</li><li>Cleaning</li><li>Moisture management</li><li>Ventilation</li><li>Safety</li><li>Changing areas</li><li>Mobile operation</li><li>Electrical limitations</li><li>Solar solutions</li><li>Cold-water therapy</li><li>Long-term maintenance</li>
+        </ul>
+      </div>
+    </div>
+    <p>The sauna is designed around the business rather than taking a standard domestic model and trying to adapt it afterwards.</p>
+  </div>
+</section>
+
+<!-- 20. LONGEVITY, white -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Built to last</div>
+    <h2>Longevity is part of the <span>design</span></h2>
+    <p>We want customers to enjoy their sauna for years, not simply have it looking good on delivery day.</p>
+    <p class="lead-in">That means considering:</p>
+    <ul class="chips">
+      <li>Timber thickness</li><li>Timber quality</li><li>Correct bench materials</li><li>Moisture</li><li>Ventilation</li><li>Roof protection</li><li>Rain protection</li><li>Heater shielding</li><li>Correct clearances</li><li>Exterior treatments</li><li>Interior materials</li><li>Glazing</li><li>Hardware</li><li>Trailer construction</li><li>Electrical specification</li><li>Future maintenance</li><li>Replacement parts</li><li>Customer aftercare</li>
+    </ul>
+    <p>The cheapest way to manufacture something is rarely the best way to manufacture something expected to spend years outdoors in British weather.</p>
+  </div>
+</section>
+
+<!-- 21. AFTERCARE, dark -->
+<section class="dark">
+  <div class="wrap">
+    <div class="kicker">Ongoing UK-based support</div>
+    <h2>We don’t just import it, drop it off and <span>disappear</span></h2>
+    <p>Our involvement does not end when the sauna arrives.</p>
+    <p>Customers have access to our team before, during and after their build.</p>
+    <p class="lead-in">Support can include:</p>
+    <ul class="chips">
+      <li>Help choosing the correct specification</li><li>Heating advice</li><li>Operating guidance</li><li>Maintenance guidance</li><li>Timber-care advice</li><li>Roof and exterior-care advice</li><li>Safety information</li><li>Sauna stone guidance</li><li>Replacement parts</li><li>Accessories</li><li>Technical support</li><li>Help with future maintenance</li>
+    </ul>
+    <p>Because we understand the product and how it was manufactured, customers have somebody knowledgeable to come back to.</p>
+    <div class="split">
+      <div>
+        <h3>Dedicated aftercare booklets</h3>
+        <p>Our customers can receive dedicated aftercare information explaining how to look after their sauna properly.</p>
+        <p class="lead-in">This can cover areas such as:</p>
+        <ul class="chips">
+          <li>Correct operation</li><li>Heating</li><li>Sauna stones</li><li>Cleaning</li><li>Interior timber care</li><li>Exterior timber maintenance</li><li>Ventilation</li><li>Moisture management</li><li>Roof maintenance</li><li>Exterior treatments</li><li>Seasonal checks</li><li>Mobile sauna checks</li><li>Trailer care</li><li>General safety</li><li>Long-term maintenance</li>
+        </ul>
+        <p>A sauna is a significant investment.</p>
+        <p>We want customers to understand how to protect that investment.</p>
+      </div>
+      <div>
+        <h3>UK-based support</h3>
+        <p>We do not want the ownership experience to be:</p>
+        <div class="pull">Imported. Delivered. Forgotten.</div>
+        <p>Our customers have access to a UK-based team that understands the product and can provide ongoing support.</p>
+        <p>You are dealing with people who know how the sauna was built, not simply a reseller reading from an imported instruction manual.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 22. WARRANTY AND JOURNEY, white -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Manufacturer-backed warranty and aftercare</div>
+    <h2>Warranty &amp; <span>aftercare</span></h2>
+    <p>Our focus on longevity continues after installation.</p>
+    <p>Customers benefit from manufacturer-backed warranty and UK aftercare, with access to the team behind the product if support is needed.</p>
+    <div class="draft">DRAFT, needs sign-off</div>
+    <p class="lead-in">Clear warranty information should cover:</p>
+    <ul class="chips">
+      <li>Sauna structure</li><li>Heaters</li><li>Electrical components where applicable</li><li>Glazing</li><li>Trailer components</li><li>Commercial use where applicable</li>
+    </ul>
+    <h3>From idea to aftercare</h3>
+    <p>Because we manufacture rather than simply resell, we can stay involved throughout the entire project.</p>
+    <ol class="journey">
+      <li>Design</li><li>Specification</li><li>Manufacture</li><li>Safety</li><li>Weather protection</li><li>Delivery</li><li>Installation</li><li>Aftercare</li>
+    </ol>
+    <p class="lead-in">One team responsible for the bigger picture.</p>
+  </div>
+</section>
+
+<!-- 23. WHY BSUK, dark, honey light line drawings -->
+<section class="dark">
+  <div class="wrap">
+    <div class="drawrow">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cde8ed1c29f9e1305.png" alt="Barrel sauna">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11bdaa5e26a9690935.png" alt="Hot tub">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee1130b0f957ccb86ce3.png" alt="Ice bath">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cbdaa5e26a96908f0.png" alt="Double Dipper">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14bdaa5e26a969097d.png" alt="Mobile sauna">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11ff484614db7528f5.png" alt="Glamping pod">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14de8ed1c29f9e137f.png" alt="Shepherd's hut">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0c30b0f957ccb86c6f.png" alt="Barrel shower">
+    </div>
+    <div class="kicker">The short version</div>
+    <h2>Why Barrel Sauna <span>UK</span>?</h2>
+    <ul class="whylist">
+      <li>Made in Wales</li>
+      <li>Safety and longevity focused</li>
+      <li>We compete on quality, not lowest price</li>
+      <li>Approximately 48 mm Thermowood construction</li>
+      <li>Aspen benches</li>
+      <li>Thermo-Aspen benches</li>
+      <li>Floating bench options</li>
+      <li>Fully bespoke manufacturing</li>
+      <li>Bespoke dimensions and layouts</li>
+      <li>Designed with British weather in mind</li>
+      <li>Optional additional framed roof protection</li>
+      <li>Traditional roof shingles</li>
+      <li>Wooden roof shingles</li>
+      <li>Choice of bespoke roofing finishes</li>
+      <li>Additional timber treatments</li>
+      <li>Bespoke UK-made windows</li>
+      <li>Premium globe windows</li>
+      <li>Panoramic glazing</li>
+      <li>Personalised glass colours and tints</li>
+      <li>Full glass façade options</li>
+      <li>Wood-fired heating</li>
+      <li>Electric heating</li>
+      <li>Wi-Fi controlled heating</li>
+      <li>Infrared options</li>
+      <li>Hybrid infrared + traditional sauna</li>
+      <li>Solar solutions</li>
+      <li>Off-grid solutions</li>
+      <li>Battery and hybrid power options depending on project</li>
+      <li>Protective heater sheaths</li>
+      <li>Protective bottom plates</li>
+      <li>Heat shielding</li>
+      <li>Heater safety rails</li>
+      <li>Enhanced guarding</li>
+      <li>Correct heater clearances</li>
+      <li>Purpose-designed ventilation</li>
+      <li>Moisture management</li>
+      <li>Himalayan salt walls</li>
+      <li>Himalayan salt accents</li>
+      <li>Illuminated salt features</li>
+      <li>LED lighting behind backrests</li>
+      <li>Under-bench LED lighting</li>
+      <li>Lighting beneath floating benches</li>
+      <li>Colour-changing LEDs</li>
+      <li>Personalised changing-room lighting</li>
+      <li>Commercial branding possibilities</li>
+      <li>In-house mobile sauna trailer manufacturing</li>
+      <li>Welsh steel chassis</li>
+      <li>Galvanised trailer construction</li>
+      <li>Braked trailer systems</li>
+      <li>Stabilising legs</li>
+      <li>Structural reinforcement</li>
+      <li>Integrated storage</li>
+      <li>Trailer electrical systems</li>
+      <li>Road lighting</li>
+      <li>DVSA IVA testing where required</li>
+      <li>Residential sauna expertise</li>
+      <li>Commercial sauna expertise</li>
+      <li>Mobile sauna expertise</li>
+      <li>UK-wide delivery</li>
+      <li>UK-wide installation</li>
+      <li>Dedicated aftercare booklets</li>
+      <li>Ongoing UK-based support</li>
+      <li>Manufacturer-backed warranty and aftercare</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 24. CLOSING, white, CTA -->
+<section class="closing">
+  <div class="wrap narrow">
+    <div class="kicker">Built here. Built safely. Built to last. Built around you.</div>
+    <h2>We aim to build a sauna <span>properly</span>.</h2>
+    <p class="lede">We don’t aim to build the cheapest sauna possible.</p>
+    <p>One that is considered from the protective plate underneath the heater to the roof protecting it from above.</p>
+    <p>One that is designed around British weather.</p>
+    <p>One that uses materials appropriate for the job.</p>
+    <p>One that can be personalised down to the glazing, benching, lighting, roofing and interior finish.</p>
+    <p>One that can be engineered around your home, your business or your site.</p>
+    <p>And one that our team is still here to support long after it has been installed.</p>
+    <p class="lead-in">Not imported. Not off-the-shelf. Not forgotten after delivery.</p>
+    <h3>We compete on quality, not on how cheap we can make it.</h3>
+    <p>Yes, cheaper flat-pack saunas exist.</p>
+    <p>That is not what we do.</p>
+    <p>We believe that when you are investing in a structure combining high temperatures, timber, moisture, electrics or fire and years of British weather exposure, the quality of the build matters.</p>
+    <p>We would rather spend more time, use better materials, add the right protection and build something we are proud to stand behind.</p>
+    <p class="final">Designed in Wales. Built in Wales. Built for <span>you</span>.</p>
+    <a class="pill" href="https://www.barrelsaunauk.com/secure-your-build" target="_top">Secure your build</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <img class="logo" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a159cbca7ceea4e5718f77f.png" alt="Barrel Sauna UK">
+    <div class="icons">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cde8ed1c29f9e1305.png" alt="Barrel sauna">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee1130b0f957ccb86ce3.png" alt="Ice bath">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14bdaa5e26a969097d.png" alt="Mobile sauna">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11ff484614db7528f5.png" alt="Glamping pod">
+      <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0c30b0f957ccb86c6f.png" alt="Barrel shower">
+    </div>
+    <div class="signoff">The Barrel Sauna UK Team</div>
+    <div class="dom">barrelsaunauk.com &middot; Handcrafted in Wales</div>
+    <div class="sigcard">
+      <a href="https://www.barrelsaunauk.com" target="_top"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a96e859fac7854efe0a2fdc.jpeg" alt="Barrel Sauna UK, bespoke, made to order. info@barrelsaunauk.com, +44 2920 676731, www.barrelsaunauk.com"></a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
