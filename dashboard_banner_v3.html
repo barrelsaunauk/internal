@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BSUK Dashboard Banner</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--ground:#16261C;--honey:#C08B41;--honey-light:#D6A868;--tint2:#dbe7dd}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#fff;font-family:Poppins,Arial,sans-serif;overflow:hidden}
+/* The photo is framed on the products (saunas, tubs and trailers), not the roof. */
+.banner{position:relative;width:100%;height:100%;min-height:150px;border-radius:8px;overflow:hidden;color:#fff;
+  background:var(--ground) url("https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aee39c842ff25478cfee981.png") center 72%/cover no-repeat}
+/* Light veil: clear over the products, darker only along the bottom edge for the text. */
+.veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,38,28,0) 0%,rgba(22,38,28,0) 45%,rgba(22,38,28,.55) 78%,rgba(22,38,28,.85) 100%)}
+.left{position:absolute;left:28px;bottom:18px}
+.date{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--tint2);text-shadow:0 1px 6px rgba(0,0,0,.45)}
+.title{font-size:32px;font-weight:700;line-height:1.05;margin-top:6px;text-shadow:0 2px 10px rgba(0,0,0,.4)}
+.title span{color:var(--honey-light)}
+.pill{position:absolute;right:24px;bottom:20px;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(22,38,28,.78);border:1px solid rgba(255,255,255,.18);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.pill b{font-size:15px;letter-spacing:0}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:#8fae86}
+.pill.closed .dot{background:#6b7c70}
+.pill .st{font-size:10px;color:var(--tint2)}
+@media (max-width:600px){.title{font-size:24px}.pill{top:14px;bottom:auto}}
+</style>
+</head>
+<body>
+<div class="banner">
+  <div class="veil"></div>
+  <div class="left">
+    <div class="date" id="date"></div>
+    <div class="title">Daily <span>digest</span></div>
+  </div>
+  <div class="pill" id="pill"><span class="dot"></span>Workshop <b id="time"></b><span class="st" id="st"></span></div>
+</div>
+<script>
+// UK time; workshop shown open 9am to 6pm, Monday to Friday.
+function tick() {
+  var now = new Date();
+  var time = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London", hour: "2-digit", minute: "2-digit" }).format(now);
+  var dow = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London", weekday: "short" }).format(now);
+  var h = Number(time.slice(0, 2));
+  var open = ["Sat", "Sun"].indexOf(dow) < 0 && h >= 9 && h < 18;
+  document.getElementById("time").textContent = time;
+  document.getElementById("date").textContent = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London", weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(now);
+  document.getElementById("st").textContent = open ? "Open" : "Closed";
+  document.getElementById("pill").classList.toggle("closed", !open);
+}
+tick(); setInterval(tick, 30000);
+</script>
+</body>
+</html>
