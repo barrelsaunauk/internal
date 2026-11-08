@@ -5,13 +5,44 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Coffee</title>
 <style>
-/* A small square for the dashboard: the coffee and the paper, nothing else. */
+/* A small square for the dashboard: the coffee and the paper, drawn as vector so it stays crisp at any size. */
 html,body{margin:0;height:100%;background:#F4F1EA;overflow:hidden}
-.sq{position:relative;width:100%;height:100%;min-height:120px;border-radius:8px;overflow:hidden;background:#F4F1EA;display:flex;align-items:center;justify-content:center}
-.sq img{width:82%;height:82%;object-fit:contain;transform:rotate(-4deg)}
+.sq{width:100%;height:100%;min-height:80px;border-radius:8px;background:#F4F1EA;display:flex;align-items:center;justify-content:center}
+svg{width:88%;height:88%;max-width:100%;transform:rotate(-3deg)}
+.s{fill:none;stroke:#1B1B1B;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
+.t{fill:none;stroke:#1B1B1B;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.k{fill:#1B1B1B}
+.f{fill:#F4F1EA;stroke:#1B1B1B;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </head>
 <body>
-<div class="sq"><img src="coffee_sketch.png" alt=""></div>
+<div class="sq">
+<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-label="Coffee and the paper">
+  <!-- newspaper: a folded sheet, slightly skewed -->
+  <path class="s" d="M62 64 L166 44 L186 118 L84 140 Z"/>
+  <path class="t" d="M66 70 L160 52"/>
+  <!-- masthead box and squiggle -->
+  <path class="t" d="M150 50 l12 -2 l2 9 l-12 2 z"/>
+  <path class="t" d="M132 58 q4 -5 8 0 q3 4 7 -2"/>
+  <!-- columns of text -->
+  <path class="t" d="M80 84 L140 72"/>
+  <path class="t" d="M83 93 L150 80"/>
+  <path class="t" d="M86 102 L156 88"/>
+  <path class="t" d="M89 111 L146 100"/>
+  <path class="t" d="M92 120 L168 104"/>
+  <path class="t" d="M95 129 L162 115"/>
+  <!-- saucer, filled so it sits on top of the paper -->
+  <ellipse class="f" cx="58" cy="100" rx="32" ry="9"/>
+  <path class="t" d="M34 103 q24 12 48 0"/>
+  <!-- cup, filled -->
+  <path class="f" d="M34 64 q0 32 24 36 q24 -4 24 -36 z"/>
+  <ellipse class="f" cx="58" cy="64" rx="24" ry="7"/>
+  <ellipse class="k" cx="58" cy="64.5" rx="16" ry="4.2"/>
+  <!-- handle -->
+  <path class="s" d="M82 72 q16 -2 14 12 q-2 10 -14 10"/>
+  <!-- spoon on the saucer -->
+  <path class="t" d="M20 108 q-6 4 -2 8 q5 3 8 -2 q2 -5 -4 -6 M28 118 L46 112"/>
+</svg>
+</div>
 </body>
 </html>
