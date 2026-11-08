@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BSUK Dashboard Banner</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{--ground:#16261C;--honey:#C08B41;--honey-light:#D6A868;--tint2:#dbe7dd}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#fff;font-family:Poppins,Arial,sans-serif;overflow:hidden}
+/* Mobile sauna on the hill: framed on the sauna, the loch and the mountains, with plenty of sky. */
+.banner{position:relative;width:100%;height:100%;min-height:150px;border-radius:8px;overflow:hidden;color:#fff;
+background:var(--ground) url("https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ac12ab722bc27f58f3570e5.jpg") center 58%/cover no-repeat}
+/* Light veil: sky and sauna stay clear, a soft shade along the bottom so the words read. */
+.veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,38,28,0) 0%,rgba(22,38,28,0) 50%,rgba(22,38,28,.45) 80%,rgba(22,38,28,.8) 100%)}
+.left{position:absolute;left:28px;bottom:18px}
+.date{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--tint2);text-shadow:0 1px 6px rgba(0,0,0,.45)}
+.hello{font-size:30px;font-weight:700;line-height:1.05;margin-top:6px;text-shadow:0 2px 10px rgba(0,0,0,.45)}
+.hello span{color:var(--honey-light)}
+.sub{font-size:13px;font-weight:300;margin-top:6px;color:#eef3ee;text-shadow:0 1px 6px rgba(0,0,0,.45)}
+.pill{position:absolute;right:24px;bottom:20px;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(22,38,28,.78);border:1px solid rgba(255,255,255,.18);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.pill b{font-size:15px;letter-spacing:0}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:#8fae86}
+.pill.closed .dot{background:#6b7c70}
+.pill .st{font-size:10px;color:var(--tint2)}
+@media (max-width:600px){.hello{font-size:22px}.sub{display:none}.pill{top:14px;bottom:auto}}
+</style>
+</head>
+<body>
+<div class="banner">
+<div class="veil"></div>
+<div class="left">
+<div class="date" id="date"></div>
+<div class="hello" id="hello">Morning, <span>team</span></div>
+<div class="sub" id="sub"></div>
+</div>
+<div class="pill" id="pill"><span class="dot"></span>Workshop <b id="time"></b><span class="st" id="st"></span></div>
+</div>
+<script>
+// UK time; workshop shown open 9am to 6pm, Monday to Friday.
+// The greeting follows the clock and the line under it changes with the day.
+var lines = {
+  Mon: "New week. Coffee first, then the board.",
+  Tue: "Steady as she goes. Every build on time.",
+  Wed: "Halfway. The numbers below are true as of this morning.",
+  Thu: "Nearly there. Check the installs coming up.",
+  Fri: "Clear the board and the weekend is yours.",
+  Sat: "Workshop is closed. Enjoy it.",
+  Sun: "Workshop is closed. See you Monday."
+};
+function tick() {
+  var now = new Date();
+  var fmt = function (o) { o.timeZone = "Europe/London"; return new Intl.DateTimeFormat("en-GB", o).format(now); };
+  var time = fmt({ hour: "2-digit", minute: "2-digit" });
+  var dow = fmt({ weekday: "short" });
+  var h = Number(time.slice(0, 2));
+  var open = ["Sat", "Sun"].indexOf(dow) < 0 && h >= 9 && h < 18;
+  var greet = h < 12 ? "Morning" : h < 17 ? "Afternoon" : "Evening";
+  document.getElementById("time").textContent = time;
+  document.getElementById("date").textContent = fmt({ weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  document.getElementById("hello").innerHTML = greet + ", <span>team</span>";
+  document.getElementById("sub").textContent = lines[dow] || "";
+  document.getElementById("st").textContent = open ? "Open" : "Closed";
+  document.getElementById("pill").classList.toggle("closed", !open);
+}
+tick(); setInterval(tick, 30000);
+</script>
+</body>
+</html>
