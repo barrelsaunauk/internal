@@ -24,9 +24,6 @@ background:var(--ground) url("https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXk
 .pill .dot{width:8px;height:8px;border-radius:50%;background:#8fae86}
 .pill.closed .dot{background:#6b7c70}
 .pill .st{font-size:10px;color:var(--tint2)}
-/* The coffee and the paper: the whole idea of the dashboard, drawn once. */
-.coffee{position:absolute;right:26px;top:14px;height:84px;width:auto;opacity:.92;filter:drop-shadow(0 2px 6px rgba(0,0,0,.45))}
-@media (max-width:600px){.coffee{display:none}}
 @media (max-width:600px){.hello{font-size:22px}.sub{display:none}.pill{top:14px;bottom:auto}}
 </style>
 </head>
@@ -38,7 +35,6 @@ background:var(--ground) url("https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXk
 <div class="hello" id="hello">Morning, <span>team</span></div>
 <div class="sub" id="sub"></div>
 </div>
-<img class="coffee" src="coffee_sketch_white.png" alt="">
 <div class="pill" id="pill"><span class="dot"></span>Workshop <b id="time"></b><span class="st" id="st"></span></div>
 </div>
 <script>
