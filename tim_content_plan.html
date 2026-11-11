@@ -1,0 +1,322 @@
+<title>Tim Content Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: full-bleed bands alternating dark forest and white. The after deposit run is the hero band, a numbered journey of four white cards with scripts open. Lighter lists below sit in two tinted bands. */
+:root{
+  --ground:#ffffff; --ink:#1d2a21; --muted:#59685d; --deep:#16261C; --forest:#1F3D28; --forest-2:#2B5336; --mid:#417C51;
+  --tint:#eef4ef; --tint-2:#dbe7dd; --line:#d4dfd6; --card:#ffffff; --on-dark:#ffffff; --on-dark-soft:#c9dccd;
+  --honey:#C08B41; --honey-soft:#f7ecdb; --honey-ink:#7a521c; --mint:#d9f0de; --mint-ink:#1F3D28; --dot:#31D24F;
+  --f-body:"Poppins",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ground:#0f1712; --ink:#e7efe9; --muted:#a8b8ac; --deep:#0b120d; --forest:#16261C; --forest-2:#8fc29c; --mid:#9fd0ab;
+  --tint:#16211a; --tint-2:#22352a; --line:#2b3f31; --card:#17221b; --on-dark:#ffffff; --on-dark-soft:#b9cfbe;
+  --honey:#D6A868; --honey-soft:#2c2416; --honey-ink:#f0cf9a; --mint:#1f3a28; --mint-ink:#cdeed5; --dot:#31D24F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --ground:#0f1712; --ink:#e7efe9; --muted:#a8b8ac; --deep:#0b120d; --forest:#16261C; --forest-2:#8fc29c; --mid:#9fd0ab;
+  --tint:#16211a; --tint-2:#22352a; --line:#2b3f31; --card:#17221b; --on-dark:#ffffff; --on-dark-soft:#b9cfbe;
+  --honey:#D6A868; --honey-soft:#2c2416; --honey-ink:#f0cf9a; --mint:#1f3a28; --mint-ink:#cdeed5; --dot:#31D24F; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;margin:0}
+.wrap{max-width:900px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance;margin:0}
+p{margin:0}
+
+/* hero */
+.hero{background:radial-gradient(120% 140% at 85% 0%,#417C51 0%,#2B5336 32%,#16261C 78%);color:var(--on-dark);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;bottom:-60px;width:260px;height:260px;border-radius:50%;border:40px solid rgba(255,255,255,.05)}
+.hero .wrap{padding-block:52px 44px;display:grid;gap:14px;position:relative;z-index:1}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark-soft)}
+.hero h1{font-size:clamp(34px,7vw,56px);line-height:1.04;font-weight:700}
+.hero h1 span{color:#D6A868}
+.hero p{max-width:60ch;color:var(--on-dark-soft);font-size:16px}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:10px 16px;display:grid;min-width:110px}
+.stat .n{font-size:24px;font-weight:600;font-variant-numeric:tabular-nums;color:#fff}
+.stat span{font-size:12px;color:var(--on-dark-soft)}
+.live{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--on-dark-soft)}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--dot);box-shadow:0 0 0 4px rgba(49,210,79,.18)}
+
+/* bands */
+.band{padding-block:44px}
+.band.tint{background:var(--tint)}
+.band.deep{background:var(--deep);color:var(--on-dark)}
+.band .wrap{display:grid;gap:18px}
+.kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--honey-ink);font-weight:500}
+.band.deep .kick{color:var(--on-dark-soft)}
+h2{font-size:clamp(24px,4.5vw,32px);font-weight:600;line-height:1.15;color:var(--forest)}
+:root[data-theme="dark"] h2{color:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) h2{color:var(--ink)}}
+.band.deep h2{color:#fff}
+.lede{color:var(--muted);max-width:64ch}
+.band.deep .lede{color:var(--on-dark-soft)}
+
+/* why panel */
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.why .box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:grid;gap:8px;min-width:0}
+.why .ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:18px;background:var(--honey-soft)}
+.why .box:nth-child(2) .ic{background:var(--mint)}
+.why .box:nth-child(3) .ic{background:var(--tint-2)}
+.why h3{font-size:16px;font-weight:600}
+.why p{font-size:14px;color:var(--muted)}
+
+/* journey */
+.journey{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px}
+.journey span{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:5px 12px;color:#fff}
+.journey em{font-style:normal;color:var(--on-dark-soft)}
+.steps{display:grid;gap:16px;counter-reset:s}
+.step{background:var(--card);color:var(--ink);border-radius:18px;padding:20px 22px;display:grid;gap:12px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.step-head{display:flex;gap:14px;align-items:flex-start}
+.num{counter-increment:s;flex:none;width:44px;height:44px;border-radius:14px;background:var(--forest-2);color:#fff;display:grid;place-items:center;font-weight:600;font-size:18px}
+:root[data-theme="dark"] .num{background:var(--mint);color:var(--mint-ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .num{background:var(--mint);color:var(--mint-ink)}}
+.num::before{content:counter(s)}
+.step-head .txt{min-width:0;display:grid;gap:6px;flex:1}
+.when{font-size:13px;color:var(--honey-ink);font-weight:500}
+.step h3{font-size:18px;font-weight:600;line-height:1.25}
+.use{font-size:14px;color:var(--muted)}
+.tick{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer;flex:none}
+.tick input{width:22px;height:22px;accent-color:#2B5336;margin:0}
+.script{background:var(--honey-soft);border-radius:14px;padding:14px 16px;display:grid;gap:10px}
+.script .lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--honey-ink);font-weight:500}
+.script p{font-size:14.5px;max-width:66ch}
+.script .end{font-size:13px;color:var(--honey-ink)}
+.done h3,.done .vtitle{text-decoration:line-through;opacity:.55}
+
+/* pills */
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 11px 3px 8px;font-size:12px;font-weight:500;letter-spacing:.01em;white-space:nowrap}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.9}
+.p-prio{background:#C08B41;color:#fff}
+.p-talk{background:#2B5336;color:#fff}
+.p-light{background:var(--mint);color:var(--mint-ink)}
+.p-place{background:var(--tint-2);color:var(--ink)}
+:root[data-theme="dark"] .p-talk{background:#2B5336}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .p-prio{background:#a87632}}
+:root[data-theme="dark"] .p-prio{background:#a87632}
+
+/* video tiles */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.tile-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.emo{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:19px;flex:none}
+.e1{background:var(--honey-soft)} .e2{background:var(--mint)} .e3{background:var(--tint-2)}
+.vtitle{font-size:16px;font-weight:600;line-height:1.3}
+.tile .use{font-size:13.5px}
+
+/* session */
+.session{display:grid;gap:10px;counter-reset:o;list-style:none;margin:0;padding:0}
+.session li{counter-increment:o;display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.session li::before{content:counter(o);font-variant-numeric:tabular-nums;font-weight:600;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--tint-2);flex:none}
+.session li .t{flex:1;min-width:0}
+
+/* tools */
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font:inherit;font-size:14px;font-weight:500;background:#C08B41;color:#fff;border:0;border-radius:999px;padding:9px 20px;cursor:pointer}
+.btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5)}
+.count{font-size:14px;color:var(--on-dark-soft)}
+.btn:focus-visible,.tick input:focus-visible{outline:2px solid #D6A868;outline-offset:2px}
+footer{padding-block:28px 40px;color:var(--muted);font-size:13px}
+
+@media (max-width:520px){.step{padding:16px}.step-head{flex-wrap:wrap}.tick{order:3}}
+@media print{
+  .hero,.band.deep{background:#fff!important;color:#111}
+  .hero h1,.band.deep h2{color:#1F3D28}
+  .hero p,.eyebrow,.band.deep .lede,.band.deep .kick,.stat span,.journey em{color:#333}
+  .stat,.journey span{border-color:#bbb;color:#111}.stat .n{color:#111}
+  .hero::after,.bar,.live{display:none}
+  .step,.tile{box-shadow:none;border:1px solid #ccc;break-inside:avoid}
+  .band{padding-block:18px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Filming list for Tim</div>
+    <h1>Tim Content <span>Plan</span></h1>
+    <p>Every video we want from Tim, why we need it, and a first draft script to work from. The after deposit videos come first.</p>
+    <div class="stats">
+      <div class="stat"><span class="n">4</span><span>after deposit</span></div>
+      <div class="stat"><span class="n">8</span><span>auto-send clips</span></div>
+      <div class="stat"><span class="n">7</span><span>lighter pieces</span></div>
+    </div>
+    <div class="live"><i></i>Draft 2, 12 Nov 2026. Shoot date to be set with Tim.</div>
+  </div>
+</header>
+
+<section class="band">
+  <div class="wrap">
+    <div class="kick">Why now</div>
+    <h2>Where we are</h2>
+    <div class="why">
+      <div class="box"><div class="ic">📞</div><h3>Customers chasing</h3><p>Recent customers have been ringing for fixed dates, booking guests and electricians too early, and kicking off over snags while the team is on site fixing them. It pulls Liam away from sales.</p></div>
+      <div class="box"><div class="ic">🎬</div><h3>Videos that explain it first</h3><p>Each one goes out on its own at the right point, around two minutes long. AMP follow up with a call asking if it has been watched.</p></div>
+      <div class="box"><div class="ic">🔋</div><h3>Plan for Tim's energy</h3><p>This won't all happen in one day. Swap a talking piece with a lighter one so Tim isn't doing scripted pieces back to back.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band deep">
+  <div class="wrap">
+    <div class="kick">The priority</div>
+    <h2>After you order, four videos</h2>
+    <p class="lede">Sent to customers from the moment they pay their £500 deposit. Draft scripts from Liam's meeting, for Liam and Jake to shape.</p>
+    <div class="journey"><span>Deposit paid</span><em>then</em><span>Invoice sent</span><em>then</em><span>Week 5</span><em>then</em><span>Install</span></div>
+    <div class="bar">
+      <button class="btn" type="button" id="printBtn">Print this list</button>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="steps">
+
+      <article class="step" data-id="a1">
+        <div class="step-head">
+          <div class="num" aria-hidden="true"></div>
+          <div class="txt">
+            <div class="when">Sent straight after the deposit</div>
+            <h3>Your deposit is paid, here's what happens next</h3>
+            <div class="pills"><span class="pill p-prio">Priority</span><span class="pill p-talk">Talking piece</span></div>
+            <p class="use">Gets them to check their invoice before the build starts.</p>
+          </div>
+          <label class="tick"><input type="checkbox" id="a1">Filmed</label>
+        </div>
+        <div class="script"><div class="lab">Draft script</div>
+          <p>Hi, it's Tim from Barrel Sauna UK. Thank you for paying your deposit. You're now in our order queue.</p>
+          <p>Next, we'll send you your invoice for the full build. Please go through it carefully. If anything you want is missing, tell us now, because we build it exactly as it is on your invoice.</p>
+          <p>Paying your invoice is your final sign off on the design, so take your time with it and ask us anything.</p>
+          <p class="end">Ends on: keep an eye out for your invoice.</p>
+        </div>
+      </article>
+
+      <article class="step" data-id="a2">
+        <div class="step-head">
+          <div class="num" aria-hidden="true"></div>
+          <div class="txt">
+            <div class="when">Sent with the invoice</div>
+            <h3>What your ETA means</h3>
+            <div class="pills"><span class="pill p-prio">Priority</span><span class="pill p-talk">Talking piece</span></div>
+            <p class="use">Why we give a time window, not a fixed date, and why not to book guests yet.</p>
+          </div>
+          <label class="tick"><input type="checkbox" id="a2">Filmed</label>
+        </div>
+        <div class="script"><div class="lab">Draft script</div>
+          <p>Your build comes with an ETA, an estimated time. It's usually around eight to ten weeks.</p>
+          <p>It's an estimate because things outside our hands can move it. A storm can shut sites across the country, and builds ahead of yours can run over. That's why we give you a window, not a fixed date.</p>
+          <p>So please don't take bookings or plan guests around a date yet. If you were building an Airbnb, you wouldn't take guests until it was finished. Once your build is done and signed off, that's the time to start.</p>
+          <p>Ringing us for a date won't make it come sooner, but we will keep you updated.</p>
+        </div>
+      </article>
+
+      <article class="step" data-id="a3">
+        <div class="step-head">
+          <div class="num" aria-hidden="true"></div>
+          <div class="txt">
+            <div class="when">Sent around week 5</div>
+            <h3>Your five week check in</h3>
+            <div class="pills"><span class="pill p-prio">Priority</span><span class="pill p-talk">Talking piece</span></div>
+            <p class="use">Stops customers booking their electrician too early.</p>
+          </div>
+          <label class="tick"><input type="checkbox" id="a3">Filmed</label>
+        </div>
+        <div class="script"><div class="lab">Draft script</div>
+          <p>Hi, it's Tim again. Your build is well on its way.</p>
+          <p>I know you're keen to get started, so let's put it in perspective. Please don't book your electrician yet. Once your build is in and signed off, get your electrician down and start promoting it.</p>
+          <p>If it's for a business, we also have packages that help you launch and promote it. Just ask the team.</p>
+        </div>
+      </article>
+
+      <article class="step" data-id="a4">
+        <div class="step-head">
+          <div class="num" aria-hidden="true"></div>
+          <div class="txt">
+            <div class="when">Sent before install</div>
+            <h3>We're only human, and we always put it right</h3>
+            <div class="pills"><span class="pill p-prio">Priority</span><span class="pill p-talk">Talking piece</span></div>
+            <p class="use">Sets expectations on snags, and asks for patience and respect both ways.</p>
+          </div>
+          <label class="tick"><input type="checkbox" id="a4">Filmed</label>
+        </div>
+        <div class="script"><div class="lab">Draft script</div>
+          <p>One more thing. We're a team that has built hundreds of saunas, and this process is how we work for good reason. Trust the process.</p>
+          <p>We're only human. If anything needs fixing, we won't stop until it's fully sorted. If a light comes out of the box with a broken bulb, we'll post you a new one. We will never try not to give you what you've paid for.</p>
+          <p>Be patient with us and we'll be respectful with you. We finish with everything perfect.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="band tint">
+  <div class="wrap">
+    <div class="kick">Next up</div>
+    <h2>Short clips for the auto-send messages</h2>
+    <p class="lede">From the content plan. Each one goes out automatically at its step.</p>
+    <div class="grid">
+      <div class="tile" data-id="b1"><div class="tile-top"><div class="emo e1">📅</div><label class="tick"><input type="checkbox" id="b1">Filmed</label></div><div class="vtitle">Your call is booked</div><div class="pills"><span class="pill p-talk">Talking piece</span></div><p class="use">What the call covers and what to have ready.</p></div>
+      <div class="tile" data-id="b2"><div class="tile-top"><div class="emo e2">✏️</div><label class="tick"><input type="checkbox" id="b2">Filmed</label></div><div class="vtitle">Why book a design call</div><div class="pills"><span class="pill p-talk">Talking piece</span></div><p class="use">Every build is bespoke, and a call gets it right.</p></div>
+      <div class="tile" data-id="b3"><div class="tile-top"><div class="emo e3">🙏</div><label class="tick"><input type="checkbox" id="b3">Filmed</label></div><div class="vtitle">Thank you for your order</div><div class="pills"><span class="pill p-talk">Talking piece</span></div><p class="use">For the page after a deposit or invoice is paid.</p></div>
+      <div class="tile" data-id="b4"><div class="tile-top"><div class="emo e1">📐</div><label class="tick"><input type="checkbox" id="b4">Filmed</label></div><div class="vtitle">Big projects start with a design stage</div><div class="pills"><span class="pill p-talk">Talking piece</span></div><p class="use">Why large projects start with design, and how the presentations help with funding, council plans and investors.</p></div>
+      <div class="tile" data-id="b5"><div class="tile-top"><div class="emo e2">🪧</div><label class="tick"><input type="checkbox" id="b5">Filmed</label></div><div class="vtitle">Your name on your build</div><div class="pills"><span class="pill p-light">Lighter</span></div><p class="use">Business logos and family name signs.</p></div>
+      <div class="tile" data-id="b6"><div class="tile-top"><div class="emo e3">🎂</div><label class="tick"><input type="checkbox" id="b6">Filmed</label></div><div class="vtitle">Happy birthday from the workshop</div><div class="pills"><span class="pill p-light">Lighter</span></div><p class="use">No name, so it works for anyone buying a build as a gift.</p></div>
+      <div class="tile" data-id="b7"><div class="tile-top"><div class="emo e1">💨</div><label class="tick"><input type="checkbox" id="b7">Filmed</label></div><div class="vtitle">Air jets or massage jets?</div><div class="pills"><span class="pill p-talk">Talking piece</span></div><p class="use">A hot tub explainer. The blog gets written first, then turned into the script.</p></div>
+      <div class="tile" data-id="b8"><div class="tile-top"><div class="emo e2">🛁</div><label class="tick"><input type="checkbox" id="b8">Filmed</label></div><div class="vtitle">Deal of the month hot tub walkthrough</div><div class="pills"><span class="pill p-light">Lighter</span></div><p class="use">Refreshed each month with a new tub, for the hot tub page and email.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="kick">In between</div>
+    <h2>On location and lighter pieces</h2>
+    <p class="lede">Good to slot between the talking pieces.</p>
+    <div class="grid">
+      <div class="tile" data-id="c1"><div class="tile-top"><div class="emo e2">🔥</div><label class="tick"><input type="checkbox" id="c1">Filmed</label></div><div class="vtitle">Hot tub and modern sauna footage</div><div class="pills"><span class="pill p-light">Lighter</span><span class="pill p-place">Unit</span></div><p class="use">Liam wants the Tim day to cover more hot tubs and the modern, straight edge saunas.</p></div>
+      <div class="tile" data-id="c2"><div class="tile-top"><div class="emo e1">🏡</div><label class="tick"><input type="checkbox" id="c2">Filmed</label></div><div class="vtitle">Intro for the modern sauna sister brand</div><div class="pills"><span class="pill p-talk">Talking piece</span><span class="pill p-place">Unit</span></div><p class="use">Tim with a modern sauna and a barrel sauna, saying we also do hot tubs and ice baths and can take care of anything.</p></div>
+      <div class="tile" data-id="c3"><div class="tile-top"><div class="emo e3">🚐</div><label class="tick"><input type="checkbox" id="c3">Filmed</label></div><div class="vtitle">Launch a mobile sauna business</div><div class="pills"><span class="pill p-talk">Talking piece</span></div><p class="use">Landing page video for the done for you media package.</p></div>
+      <div class="tile" data-id="c4"><div class="tile-top"><div class="emo e2">🛌</div><label class="tick"><input type="checkbox" id="c4">Filmed</label></div><div class="vtitle">Try before you buy</div><div class="pills"><span class="pill p-light">Lighter</span><span class="pill p-place">Campsite</span></div><p class="use">Dressing gown in the pod, shower cap in the Double Dipper, sauna cap in the sauna, then book a night. Needs the glamping pod in.</p></div>
+      <div class="tile" data-id="c5"><div class="tile-top"><div class="emo e1">🎙️</div><label class="tick"><input type="checkbox" id="c5">Filmed</label></div><div class="vtitle">Install voiceovers from Tim's sound room</div><div class="pills"><span class="pill p-light">Lighter</span><span class="pill p-place">At home</span></div><p class="use">Tim narrates footage of each finished build, like "the team was in Scotland today". No shoot day needed.</p></div>
+      <div class="tile" data-id="c6"><div class="tile-top"><div class="emo e3">🪵</div><label class="tick"><input type="checkbox" id="c6">Filmed</label></div><div class="vtitle">Woodburners are lovely</div><div class="pills"><span class="pill p-talk">Talking piece</span></div><p class="use">Tim by the hot tub on how natural and therapeutic woodburners are, for the closer's guide.</p></div>
+      <div class="tile" data-id="c7"><div class="tile-top"><div class="emo e2">☀️</div><label class="tick"><input type="checkbox" id="c7">Filmed</label></div><div class="vtitle">Solar on a mobile sauna</div><div class="pills"><span class="pill p-talk">Talking piece</span><span class="pill p-place">Unit</span></div><p class="use">Tim on fitting solar, cut to Jarek fitting a panel in the workshop.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band tint">
+  <div class="wrap">
+    <div class="kick">Suggested</div>
+    <h2>A first session</h2>
+    <p class="lede">One way to run the first day, swapping talking pieces with lighter ones. Change it to suit Tim.</p>
+    <ol class="session">
+      <li><span class="t">Your deposit is paid, here's what happens next</span><span class="pill p-talk">Talking</span></li>
+      <li><span class="t">Hot tub and modern sauna footage</span><span class="pill p-light">Lighter</span></li>
+      <li><span class="t">What your ETA means</span><span class="pill p-talk">Talking</span></li>
+      <li><span class="t">Your name on your build, and happy birthday</span><span class="pill p-light">Lighter</span></li>
+      <li><span class="t">Your five week check in</span><span class="pill p-talk">Talking</span></li>
+      <li><span class="t">Deal of the month hot tub walkthrough</span><span class="pill p-light">Lighter</span></li>
+      <li><span class="t">We're only human, and we always put it right</span><span class="pill p-talk">Talking</span></li>
+    </ol>
+  </div>
+</section>
+
+<footer><div class="wrap">Barrel Sauna UK · Tim Content Plan · Draft 2 · Ticks are saved on this device only.</div></footer>
+
+<script>
+(function(){
+  var KEY='tim_plan_ticks_v1', state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){state={}}
+  var boxes=[].slice.call(document.querySelectorAll('[data-id] input[type=checkbox]'));
+  function paint(){
+    var n=0;
+    boxes.forEach(function(b){var c=b.closest('[data-id]');c.classList.toggle('done',b.checked);if(b.checked)n++;});
+    document.getElementById('count').textContent=n+' of '+boxes.length+' filmed';
+  }
+  boxes.forEach(function(b){
+    b.checked=!!state[b.id];
+    b.addEventListener('change',function(){state[b.id]=b.checked;try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}paint();});
+  });
+  paint();
+  document.getElementById('printBtn').addEventListener('click',function(){try{window.print()}catch(e){}});
+})();
+</script>
