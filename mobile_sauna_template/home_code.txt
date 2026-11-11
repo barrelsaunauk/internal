@@ -1,0 +1,215 @@
+<!-- MOBILE SAUNA TEMPLATE . HOME PAGE . draft 1 -->
+<!-- Swap every item marked PLACEHOLDER. Search this code for PLACEHOLDER to find them all. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap">
+<style>
+body{overflow-x:hidden}
+.mst{width:100vw;position:relative;left:50%;margin-left:-50vw}
+.mst{--ink:#2a2420;--soft:#6b5f57;--sand:#f6efe6;--clay:#e9dccb;--ember:#c4683a;--ember-d:#a5532b;--night:#1f1a17;--line:#e3d6c6;--white:#ffffff;
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--white);font-size:16px;line-height:1.65;margin:0}
+.mst *{box-sizing:border-box}
+.mst h1,.mst h2,.mst h3{font-family:"Fraunces",Georgia,serif;font-weight:600;line-height:1.12;margin:0;text-wrap:balance}
+.mst p{margin:0}
+.mst a{color:inherit}
+.mst .in{max-width:1120px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.mst .kick{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--ember)}
+.mst .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:14px 26px;font-weight:600;font-size:15px;text-decoration:none;transition:transform .15s ease,background .15s ease}
+.mst .btn:hover{transform:translateY(-1px)}
+.mst .btn-main{background:var(--ember);color:#fff}
+.mst .btn-main:hover{background:var(--ember-d)}
+.mst .btn-ghost{border:1.5px solid rgba(255,255,255,.7);color:#fff}
+.mst .ph{position:absolute;top:14px;left:14px;z-index:3;background:#fff3b0;color:#4a3b00;font:600 11px/1.3 "Inter",Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:6px;max-width:80%}
+
+/* hero */
+.mst .hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;color:#fff;overflow:hidden;background:var(--night)}
+.mst .hero video,.mst .hero .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mst .hero .poster{background:linear-gradient(135deg,#3b2a20,#7a4a2e 45%,#c4683a)}
+.mst .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,15,12,.15) 0%,rgba(20,15,12,.35) 45%,rgba(20,15,12,.82) 100%)}
+.mst .hero .in{position:relative;z-index:2;padding-block:120px 72px;display:grid;gap:18px;width:100%}
+.mst .hero .kick{color:#f2c9a8}
+.mst .hero h1{font-size:clamp(40px,7vw,78px);max-width:14ch}
+.mst .hero p{font-size:clamp(16px,2vw,19px);max-width:52ch;color:#f3e9e0}
+.mst .hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+
+/* about */
+.mst .about{padding-block:96px;background:var(--white)}
+.mst .about .in{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.mst .about .copy{display:grid;gap:18px;min-width:0}
+.mst .about h2{font-size:clamp(30px,4.2vw,46px)}
+.mst .about p{color:var(--soft);max-width:56ch}
+.mst .sig{font-family:"Fraunces",Georgia,serif;font-size:22px;color:var(--ink)}
+.mst .vid{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/5;background:linear-gradient(160deg,#e9dccb,#c9a98a);box-shadow:0 30px 60px -30px rgba(60,35,20,.45);max-width:100%}
+.mst .vid iframe,.mst .vid video{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+.mst .play{position:absolute;left:50%;top:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:rgba(255,255,255,.35);backdrop-filter:blur(6px);display:grid;place-items:center}
+.mst .play::before{content:"";border-left:22px solid #fff;border-top:14px solid transparent;border-bottom:14px solid transparent;margin-left:6px}
+
+/* book */
+.mst .book{padding-block:96px;background:var(--sand)}
+.mst .book .head{display:grid;gap:12px;text-align:center;justify-items:center;margin-bottom:44px}
+.mst .book h2{font-size:clamp(30px,4.2vw,46px)}
+.mst .book .head p{color:var(--soft);max-width:58ch}
+.mst .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.mst .tile{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:var(--ink);transition:transform .2s ease,box-shadow .2s ease;min-width:0}
+.mst .tile:hover{transform:translateY(-4px);box-shadow:0 24px 48px -28px rgba(60,35,20,.5)}
+.mst .tile .img{position:relative;aspect-ratio:4/3;background:linear-gradient(140deg,#d9c3a9,#b07d5a)}
+.mst .tile:nth-child(2) .img{background:linear-gradient(140deg,#cbb9a6,#7d5a45)}
+.mst .tile:nth-child(3) .img{background:linear-gradient(140deg,#e2c7a4,#c4683a)}
+.mst .tile .img img{width:100%;height:100%;object-fit:cover;display:block}
+.mst .tile .body{padding:22px 22px 26px;display:grid;gap:10px;flex:1;align-content:start}
+.mst .tile h3{font-size:24px}
+.mst .tile p{color:var(--soft);font-size:15px}
+.mst .tile .go{margin-top:6px;font-weight:600;color:var(--ember);font-size:15px}
+
+/* community */
+.mst .comm{padding-block:104px;background:var(--night);color:#fff}
+.mst .comm .in{display:grid;gap:22px;justify-items:center;text-align:center}
+.mst .comm .kick{color:#f2c9a8}
+.mst .comm h2{font-size:clamp(30px,4.6vw,52px);max-width:20ch}
+.mst .comm p{color:#d8ccc2;max-width:60ch;font-size:17px}
+.mst .pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px}
+.mst .pills span{border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:8px 16px;font-size:14px;color:#f3e9e0}
+
+/* launch */
+.mst .launch{padding-block:96px;background:var(--white)}
+.mst .launch .card{position:relative;background:linear-gradient(135deg,#f6efe6,#efe1cf);border:1px solid var(--line);border-radius:28px;padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.mst .launch .copy{display:grid;gap:16px;min-width:0}
+.mst .launch h2{font-size:clamp(28px,4vw,42px)}
+.mst .launch p{color:var(--soft)}
+.mst .date{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 16px;font-weight:600;width:fit-content}
+.mst .date b{font-weight:600;color:var(--ember)}
+.mst .form{position:relative;background:#fff;border-radius:20px;padding:22px;min-height:320px;border:1px dashed #d1bba2;display:grid;place-items:center;text-align:center;color:var(--soft);font-size:14px}
+
+/* footer */
+.mst footer{background:var(--sand);padding-block:48px;border-top:1px solid var(--line)}
+.mst footer .in{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center}
+.mst footer .brand{font-family:"Fraunces",Georgia,serif;font-size:22px}
+.mst footer nav{display:flex;flex-wrap:wrap;gap:20px;font-size:14px}
+.mst footer nav a{text-decoration:none;color:var(--soft)}
+.mst footer small{display:block;width:100%;color:var(--soft);font-size:13px}
+
+@media (max-width:860px){
+  .mst .about .in,.mst .launch .card{grid-template-columns:1fr}
+  .mst .tiles{grid-template-columns:1fr}
+  .mst .about,.mst .book,.mst .launch{padding-block:72px}
+  .mst .vid{aspect-ratio:4/5;max-width:440px}
+}
+@media (prefers-reduced-motion:reduce){.mst *{transition:none!important}.mst .hero video{display:none}}
+</style>
+
+<div class="mst">
+
+  <!-- 1. HERO -->
+  <section class="hero">
+    <div class="poster"></div>
+    <!-- PLACEHOLDER: hero loop video from Jake. 10 to 20 seconds, no sound, landscape. Paste the GHL media link into src. -->
+    <video autoplay muted loop playsinline preload="metadata" src=""></video>
+    <span class="ph">Placeholder: hero loop video (Jake)</span>
+    <div class="in">
+      <div class="kick">Mobile sauna · [Town or area]</div>
+      <h1>[Business name]</h1>
+      <p>Sauna, cold water and sound, brought to you. A warm place to switch off, slow down and meet good people.</p>
+      <div class="cta">
+        <a class="btn btn-main" href="#book">Book a session</a>
+        <a class="btn btn-ghost" href="#launch">Join our soft launch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. ABOUT -->
+  <section class="about">
+    <div class="in">
+      <div class="copy">
+        <div class="kick">Hello</div>
+        <h2>Hi, I'm [Owner name]</h2>
+        <p>PLACEHOLDER: two or three short paragraphs in the owner's own words. Who they are, why they started, and what a session with them feels like.</p>
+        <p>For Billy Joy: sound baths, healing and a real community feel, where people come back and get to know each other.</p>
+        <div class="sig">[Owner name]</div>
+      </div>
+      <div class="vid">
+        <!-- PLACEHOLDER: intro video. "Hi, I'm Billy Joy from [business], this is what we do." About 60 seconds, portrait. -->
+        <span class="ph">Placeholder: intro video (owner talking)</span>
+        <div class="play" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. BOOKING TYPES -->
+  <section class="book" id="book">
+    <div class="in">
+      <div class="head">
+        <div class="kick">Ways to join us</div>
+        <h2>Find your kind of session</h2>
+        <p>Drop in with others, keep it all to yourselves, or come along to something a little different.</p>
+      </div>
+      <div class="tiles">
+        <a class="tile" href="/group-sessions">
+          <div class="img"><span class="ph">Placeholder: group session photo</span></div>
+          <div class="body">
+            <h3>Group sessions</h3>
+            <p>Book your spot on a shared session. Come on your own or bring a friend, and leave knowing a few more faces.</p>
+            <div class="go">See times and book →</div>
+          </div>
+        </a>
+        <a class="tile" href="/private-bookings">
+          <div class="img"><span class="ph">Placeholder: private booking photo</span></div>
+          <div class="body">
+            <h3>Private bookings</h3>
+            <p>The whole sauna, just for you, for a set time. Couples, friends, families, teams and clubs.</p>
+            <div class="go">See times and book →</div>
+          </div>
+        </a>
+        <a class="tile" href="/hosted-sessions">
+          <div class="img"><span class="ph">Placeholder: hosted session photo</span></div>
+          <div class="body">
+            <h3>Hosted sessions</h3>
+            <p>Sauna paired with something special, like a sound bath, hot yoga or a fitness class, led by a host.</p>
+            <div class="go">See what's on →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. COMMUNITY -->
+  <section class="comm">
+    <div class="in">
+      <div class="kick">Our story</div>
+      <h2>More than a sauna. A place to belong.</h2>
+      <p>PLACEHOLDER: the community story in the owner's words. Why bringing people together matters to them, and what regulars get out of it.</p>
+      <div class="pills"><span>Sauna</span><span>Cold water</span><span>Sound baths</span><span>Community</span></div>
+    </div>
+  </section>
+
+  <!-- 5. SOFT LAUNCH. Before launch: keep this as it is. After launch: change the heading to "We're now open" and the button to "Book here", linking to #book. -->
+  <section class="launch" id="launch">
+    <div class="in">
+      <div class="card">
+        <div class="copy">
+          <div class="kick">Soft launch</div>
+          <h2>Reserve your space at our soft launch</h2>
+          <p>Come and try it before we open properly. Sauna, cold water, refreshments and a chance to meet everyone.</p>
+          <div class="date">Date: <b>[Soft launch date]</b></div>
+        </div>
+        <div class="form">
+          <!-- PLACEHOLDER: GHL form or calendar embed for soft launch sign ups (name, email, mobile, how many coming). -->
+          <span class="ph">Placeholder: soft launch sign up form</span>
+          Sign up form goes here
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FOOTER -->
+  <footer>
+    <div class="in">
+      <div class="brand">[Business name]</div>
+      <nav>
+        <a href="/group-sessions">Group sessions</a>
+        <a href="/private-bookings">Private bookings</a>
+        <a href="/hosted-sessions">Hosted sessions</a>
+        <a href="#launch">Soft launch</a>
+      </nav>
+      <small>[Area served] · [Email] · [Phone] · [Instagram] · [Facebook]</small>
+    </div>
+  </footer>
+
+</div>
