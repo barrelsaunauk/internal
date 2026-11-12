@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ground:#16261C;
+    --forest-deep:#1F3D28;
+    --forest:#2B5336;
+    --mid:#417C51;
+    --sage:#50795F;
+    --sage-pale:#8fae86;
+    --honey:#C08B41;
+    --honey-d:#b07d38;
+    --honey-l:#D6A868;
+    --ink:#3A4240;
+    --ink-l:#5C6663;
+    --tint:#dbe7dd;
+    --tint-l:#eef4ef;
+    --body-dark:#dfe9df;
+    --rule-soft:rgba(65,124,81,0.12);
+    --shadow:0 10px 30px rgba(22,38,28,0.12);
+    --face:'Raleway', Arial, Helvetica, sans-serif;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:#ffffff;}
+  body{
+    font-family:var(--face);
+    color:var(--ink);
+    font-weight:400;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:100%;
+  }
+
+  /* Scroll fix. On desktop the page never scrolls inside the Wix embed box,
+     so the mouse wheel moves the Wix page instead. The sideways guard sits on
+     the wrapper, not on html or body, so it cannot create a second scroller.
+     Phone widths are left alone on purpose. */
+  .pg{width:100%;overflow-x:hidden;}
+  @media (min-width:821px){
+    html,body{overflow:hidden;}
+  }
+
+  .wrap{max-width:1000px;margin:0 auto;width:100%;padding:0 clamp(16px,3.5vw,32px);}
+
+  .kick{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--honey);
+  }
+
+  /* ---------- header ---------- */
+
+  .band{
+    background:#ffffff;
+    padding:clamp(36px,5vw,60px) 0 clamp(8px,2vw,14px);
+    text-align:center;
+  }
+
+  .band h1{
+    font-weight:700;
+    color:var(--forest);
+    font-size:clamp(2rem,5vw,3.2rem);
+    line-height:1.06;
+    letter-spacing:-0.8px;
+    margin-top:12px;
+  }
+
+  .band h1 em{font-style:normal;color:var(--honey);}
+
+  .band .lede{
+    color:var(--ink-l);
+    font-size:clamp(0.95rem,1.6vw,1.05rem);
+    margin:14px auto 0;
+    max-width:600px;
+  }
+
+  /* ---------- deposit card ---------- */
+
+  .page{padding:clamp(24px,4vw,44px) 0 clamp(40px,5.5vw,68px);}
+
+  .card{
+    background:#ffffff;
+    border:1px solid var(--rule-soft);
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .left{padding:clamp(26px,3.6vw,40px) clamp(22px,3.2vw,36px);}
+
+  .ph{
+    font-weight:700;
+    font-size:1.25rem;
+    letter-spacing:-0.2px;
+    color:var(--forest);
+    margin-bottom:16px;
+  }
+
+  .left ul{list-style:none;}
+
+  .left li{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    padding:9px 0;
+  }
+
+  .ic{
+    flex-shrink:0;
+    width:22px;
+    height:22px;
+    color:var(--mid);
+    margin-top:3px;
+  }
+
+  .tx{font-size:0.92rem;color:var(--ink);}
+
+  .fig{font-weight:700;color:var(--forest-deep);}
+
+  .hold{
+    margin-top:22px;
+    background:var(--forest-deep);
+    border-radius:18px;
+    padding:22px 24px 24px;
+    color:#ffffff;
+  }
+
+  .hold .lab{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--honey-l);
+    margin-bottom:8px;
+  }
+
+  .hold .key{
+    font-weight:700;
+    font-size:1.08rem;
+    line-height:1.35;
+    color:#ffffff;
+    margin-bottom:8px;
+  }
+
+  .hold p{
+    font-size:0.86rem;
+    line-height:1.6;
+    color:var(--body-dark);
+  }
+
+  .right{
+    background:var(--forest-deep);
+    padding:clamp(26px,3.6vw,40px) clamp(22px,3.2vw,36px);
+    color:#ffffff;
+  }
+
+  .amsub{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--honey-l);
+    margin-bottom:6px;
+  }
+
+  .amount{
+    font-weight:700;
+    font-size:clamp(3.2rem,7vw,4.6rem);
+    line-height:0.95;
+    letter-spacing:-2px;
+    color:var(--honey-l);
+    margin-bottom:26px;
+  }
+
+  label{
+    display:block;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    margin-bottom:8px;
+    color:var(--sage-pale);
+  }
+
+  .field{margin-bottom:16px;}
+
+  input{
+    width:100%;
+    padding:14px 16px;
+    font-family:var(--face);
+    font-size:16px;
+    font-weight:400;
+    color:var(--ink);
+    border:1px solid #ffffff;
+    border-radius:12px;
+    background:#ffffff;
+    transition:border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input::placeholder{color:#9aa39c;}
+
+  input:focus{
+    outline:none;
+    border-color:var(--honey-l);
+    box-shadow:0 0 0 3px rgba(214,168,104,0.28);
+  }
+
+  input.error{border-color:var(--honey-l);background:#fff7ec;}
+
+  .err-msg{
+    color:var(--honey-l);
+    font-size:0.8rem;
+    margin-top:6px;
+    display:none;
+  }
+
+  .btn{
+    width:100%;
+    padding:17px;
+    background:var(--honey);
+    color:#ffffff;
+    font-family:var(--face);
+    font-size:1rem;
+    font-weight:700;
+    letter-spacing:0.02em;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    margin-top:8px;
+    position:relative;
+    overflow:hidden;
+    transition:box-shadow 0.28s, transform 0.1s;
+  }
+
+  .btn::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:var(--honey-d);
+    opacity:0;
+    transition:opacity 0.28s;
+  }
+
+  .btn span{position:relative;z-index:1;}
+  .btn:hover{box-shadow:0 8px 22px rgba(192,139,65,0.34);}
+  .btn:hover::before{opacity:1;}
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{background:#6f7d72;cursor:not-allowed;box-shadow:none;}
+  .btn:disabled::before{opacity:0;}
+
+  .secure{
+    text-align:center;
+    font-size:0.78rem;
+    color:var(--sage-pale);
+    margin-top:14px;
+  }
+
+  .processing{
+    display:none;
+    text-align:center;
+    color:var(--honey-l);
+    font-size:0.86rem;
+    margin-top:11px;
+  }
+
+  /* ---------- range band ---------- */
+
+  .range{
+    background:var(--ground);
+    color:#ffffff;
+    text-align:center;
+    padding:clamp(44px,6vw,72px) 0 clamp(40px,5.5vw,64px);
+  }
+
+  .range .kick{color:var(--honey-l);}
+
+  .range h2{
+    font-weight:700;
+    color:#ffffff;
+    font-size:clamp(1.7rem,3.6vw,2.5rem);
+    letter-spacing:-0.5px;
+    line-height:1.1;
+    margin:12px 0 36px;
+  }
+
+  .range h2 em{font-style:normal;color:var(--honey-l);}
+
+  .rg{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:30px 20px;
+  }
+
+  .rg figure{margin:0;}
+
+  .rg img{
+    display:block;
+    width:100%;
+    height:150px;
+    object-fit:contain;
+    border:0;
+  }
+
+  .rg figcaption{
+    margin-top:14px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:#ffffff;
+  }
+
+  /* ---------- journey ---------- */
+
+  .steps{
+    background:#ffffff;
+    text-align:center;
+    padding:clamp(44px,6vw,72px) 0 clamp(48px,6vw,84px);
+  }
+
+  .steps h2{
+    font-weight:700;
+    color:var(--forest);
+    font-size:clamp(1.7rem,3.6vw,2.5rem);
+    letter-spacing:-0.5px;
+    line-height:1.1;
+    margin:12px 0 28px;
+  }
+
+  .steps h2 em{font-style:normal;color:var(--honey);}
+
+  .cards{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    text-align:left;
+  }
+
+  .sc{
+    background:#ffffff;
+    border-radius:18px;
+    padding:22px 24px;
+    box-shadow:var(--shadow);
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+  }
+
+  .sc .d{
+    flex-shrink:0;
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    background:var(--forest);
+    font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;
+    font-size:24px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .sc.on .d{background:var(--honey-d);}
+
+  .sc .t{
+    font-weight:700;
+    color:var(--ink);
+    font-size:1rem;
+    margin-bottom:3px;
+  }
+
+  .sc p{font-size:0.9rem;color:var(--ink-l);line-height:1.6;}
+
+  .sc.wide{grid-column:1 / -1;}
+
+  /* ---------- responsive ---------- */
+
+  /* Phone version is compressed on purpose so the whole page fits inside the
+     Wix mobile frame with nothing left to scroll. Keep it under 2650px tall
+     at 320px wide. */
+  @media (max-width:820px){
+    .ack{padding:10px 12px 8px;margin:4px 0 10px;}
+    .ack-h{font-size:10px;margin-bottom:4px;}
+    .ack-row{font-size:12.5px;line-height:1.38;padding:5px 0;gap:9px;}
+    .ack-row input{width:17px;height:17px;}
+    .ack-count{font-size:11px;margin-top:4px;}
+
+    .band{padding:26px 0 4px;}
+    .band h1{font-size:1.9rem;letter-spacing:-0.5px;margin-top:8px;}
+    .band .lede{font-size:0.9rem;margin-top:8px;}
+    .kick{font-size:10px;letter-spacing:0.24em;}
+
+    .page{padding:18px 0 30px;}
+    .card{grid-template-columns:1fr;border-radius:16px;}
+    .left{padding:20px 16px 18px;}
+    .right{padding:20px 16px 22px;}
+    .ph{font-size:1.05rem;margin-bottom:8px;}
+    .left li{padding:5px 0;gap:10px;}
+    .ic{width:18px;height:18px;margin-top:3px;}
+    .tx{font-size:0.84rem;line-height:1.5;}
+    .hold{margin-top:14px;padding:14px 16px 16px;border-radius:14px;}
+    .hold .lab{font-size:10px;margin-bottom:4px;}
+    .hold .key{font-size:0.98rem;margin-bottom:4px;}
+    .hold p{font-size:0.8rem;line-height:1.5;}
+    .amsub{font-size:10px;}
+    .amount{font-size:2.8rem;letter-spacing:-1.2px;margin-bottom:14px;}
+    label{font-size:10px;margin-bottom:5px;}
+    .field{margin-bottom:10px;}
+    input{padding:11px 12px;border-radius:10px;}
+    .btn{font-size:0.94rem;padding:13px;margin-top:4px;}
+    .secure{font-size:0.72rem;margin-top:10px;}
+
+    .range{padding:28px 0 26px;}
+    .range h2{font-size:1.45rem;margin:8px 0 18px;}
+    .rg{grid-template-columns:repeat(4,1fr);gap:14px 8px;}
+    .rg img{height:56px;}
+    .rg figcaption{margin-top:6px;font-size:9px;letter-spacing:0.1em;}
+
+    .steps{padding:28px 0 34px;}
+    .steps h2{font-size:1.45rem;margin:8px 0 16px;}
+    .cards{display:block;background:#ffffff;border-radius:16px;box-shadow:var(--shadow);padding:6px 14px;}
+    .sc{padding:12px 0;box-shadow:none;border-radius:0;gap:12px;border-top:1px solid var(--rule-soft);}
+    .sc:first-child{border-top:0;}
+    .sc .d{width:36px;height:36px;font-size:17px;}
+    .sc .t{font-size:0.9rem;margin-bottom:1px;}
+    .sc p{font-size:0.8rem;line-height:1.45;}
+  }
+
+  /* ---------- acknowledgement tick boxes ---------- */
+  .ack{margin:6px 0 14px;padding:16px 16px 12px;border:1px solid rgba(255,255,255,0.16);border-radius:14px;background:rgba(255,255,255,0.05);}
+  .ack-h{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage-pale);margin-bottom:10px;}
+  .ack-row{display:flex;gap:12px;align-items:flex-start;padding:7px 0;margin:0;font-size:0.86rem;font-weight:400;letter-spacing:0;text-transform:none;line-height:1.5;color:#ffffff;cursor:pointer;border-top:1px solid rgba(255,255,255,0.08);}
+  .ack-row:first-of-type{border-top:0;}
+  .ack-row input{width:20px;height:20px;flex-shrink:0;margin-top:1px;padding:0;accent-color:#8fae86;cursor:pointer;}
+  .ack-count{font-size:0.78rem;color:var(--sage-pale);margin-top:8px;}
+  .ack.done .ack-count{color:#ffffff;}
+  @media (max-width:820px){
+    .ack{padding:10px 12px 8px;margin:4px 0 10px;}
+    .ack-h{font-size:10px;margin-bottom:4px;}
+    .ack-row{font-size:12.5px;line-height:1.38;padding:5px 0;gap:9px;}
+    .ack-row input{width:17px;height:17px;}
+    .ack-count{font-size:11px;margin-top:4px;}
+  }
+  /* PREVIEW ONLY: lets this file scroll when opened on its own. Leave this line out of the Wix code. */
+  html,body{overflow:auto !important;}
+</style>
+</head>
+
+<body>
+<div class="pg">
+
+  <div class="band">
+    <div class="wrap">
+      <p class="kick">Commitment Deposit</p>
+      <h1>Reserve Your <em>Place</em></h1>
+      <p class="lede">Almost there. Hold your position in the build queue while the last details are agreed.</p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="wrap">
+      <div class="card">
+
+        <div class="left">
+          <p class="ph">What your deposit does</p>
+          <ul>
+            <li>
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              <span class="tx">The <span class="fig">&pound;500 deposit</span> is deducted in full from your final invoice. It is not an extra charge.</span>
+            </li>
+            <li>
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              <span class="tx">It reserves your place in the queue for <span class="fig">72 hours</span> while the final details of your sauna are confirmed.</span>
+            </li>
+            <li>
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg>
+              <span class="tx">No materials are ordered and no production begins until your invoice is paid.</span>
+            </li>
+            <li>
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6"/><path d="M9 11h3"/></svg>
+              <span class="tx">Once your specification is agreed, our admin team issues your official invoice.</span>
+            </li>
+            <li>
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.2.9-4.5 4.3 1.1 6.1L12 17l-5.5 2.9 1.1-6.1L3.1 9.5l6.2-.9z"/></svg>
+              <span class="tx">Not ready yet? Your deposit still opens up priority support, renders, more time on your proposal and a site visit.</span>
+            </li>
+          </ul>
+
+          <div class="hold">
+            <p class="lab">72 hours</p>
+            <p class="key">You do not lose your deposit.</p>
+            <p>If the invoice is not settled within 72 hours your place in the queue may be released. Your deposit simply allows us to focus our time. The &pound;500 deposit is non-refundable.</p>
+          </div>
+        </div>
+
+        <div class="right">
+          <p class="amsub">Order queue reservation</p>
+          <p class="amount">&pound;500</p>
+
+          <div class="field">
+            <label for="name">Full name</label>
+            <input type="text" id="name" placeholder="Your name" autocomplete="name">
+            <div class="err-msg" id="name-err">Please enter your name.</div>
+          </div>
+
+          <div class="field">
+            <label for="email">Email address</label>
+            <input type="email" id="email" placeholder="you@email.com" autocomplete="email">
+            <div class="err-msg" id="email-err">Please enter a valid email.</div>
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone number</label>
+            <input type="tel" id="phone" placeholder="+44" autocomplete="tel">
+            <div class="err-msg" id="phone-err">Please enter your phone number with your country code, starting with +.</div>
+          </div>
+
+          <div class="ack" id="ack">
+            <p class="ack-h">Before you reserve, please tick each one</p>
+            <label class="ack-row"><input type="checkbox" class="ack-cb" data-text="I understand the &pound;500 deposit is non-refundable."><span>I understand the &pound;500 deposit is non-refundable.</span></label><label class="ack-row"><input type="checkbox" class="ack-cb" data-text="My build is made exactly as it appears on my invoice, so I will check my invoice as soon as I get it and tell the team straight away if anything is missing."><span>My build is made exactly as it appears on my invoice, so I will check my invoice as soon as I get it and tell the team straight away if anything is missing.</span></label><label class="ack-row"><input type="checkbox" class="ack-cb" data-text="I understand the ETA is an estimate, usually around 8 to 10 weeks, and things outside the team&#8217;s control, like weather or builds ahead of mine, can move it."><span>I understand the ETA is an estimate, usually around 8 to 10 weeks, and things outside the team&#8217;s control, like weather or builds ahead of mine, can move it.</span></label><label class="ack-row"><input type="checkbox" class="ack-cb" data-text="I won&#8217;t book guests, clients or my electrician until my build is finished and signed off."><span>I won&#8217;t book guests, clients or my electrician until my build is finished and signed off.</span></label><label class="ack-row"><input type="checkbox" class="ack-cb" data-text="If a snag needs fixing, the team will put it right, and we will treat each other with respect while they do."><span>If a snag needs fixing, the team will put it right, and we will treat each other with respect while they do.</span></label>
+            <p class="ack-count" id="ackCount">0 of 5 ticked</p>
+          </div>
+          <button class="btn" id="payBtn" type="button" onclick="submitDeposit()">
+            <span>Reserve for &pound;500</span>
+          </button>
+
+          <p class="secure">Secure checkout. Card payments handled by Stripe.</p>
+          <p class="processing" id="processing">Securing your details</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="range">
+    <div class="wrap">
+      <p class="kick">Our range</p>
+      <h2>What else we <em>build</em></h2>
+      <div class="rg">
+        <figure>
+          <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11ff484614db7528f5.png" alt="Glamping pod">
+          <figcaption>Glamping pods</figcaption>
+        </figure>
+        <figure>
+          <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14de8ed1c29f9e137f.png" alt="Shepherd's hut">
+          <figcaption>Shepherd&#8217;s huts</figcaption>
+        </figure>
+        <figure>
+          <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee11bdaa5e26a9690935.png" alt="Hot tubs">
+          <figcaption>Hot tubs</figcaption>
+        </figure>
+        <figure>
+          <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee14bdaa5e26a969097d.png" alt="Mobile sauna">
+          <figcaption>Mobile saunas</figcaption>
+        </figure>
+        <figure>
+          <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cde8ed1c29f9e1305.png" alt="Barrel sauna">
+          <figcaption>Barrel saunas</figcaption>
+        </figure>
+        <figure>
+          <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0cbdaa5e26a96908f0.png" alt="Double dippers">
+          <figcaption>Double dippers</figcaption>
+        </figure>
+        <figure>
+          <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee0c30b0f957ccb86c6f.png" alt="Barrel shower">
+          <figcaption>Barrel showers</figcaption>
+        </figure>
+        <figure>
+          <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6ab0ee1130b0f957ccb86ce3.png" alt="Ice bath">
+          <figcaption>Ice baths</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="wrap">
+      <p class="kick">After Your Deposit</p>
+      <h2>What happens <em>next</em></h2>
+
+      <div class="cards">
+        <div class="sc on">
+          <div class="d">&#129309;</div>
+          <div><p class="t">Deposit received</p><p>Your &pound;500 commitment deposit is received and your place in the queue is reserved for 72 hours.</p></div>
+        </div>
+        <div class="sc">
+          <div class="d">&#128221;</div>
+          <div><p class="t">Specification confirmed</p><p>A member of our team contacts you to confirm your final specification and answer any remaining questions.</p></div>
+        </div>
+        <div class="sc">
+          <div class="d">&#129534;</div>
+          <div><p class="t">Invoice issued</p><p>Our admin team issues your official invoice based on the agreed specification.</p></div>
+        </div>
+        <div class="sc">
+          <div class="d">&#127794;</div>
+          <div><p class="t">Order starts</p><p>Your order officially starts once that invoice is paid, and we begin ordering the materials for your build.</p></div>
+        </div>
+        <div class="sc">
+          <div class="d">&#128183;</div>
+          <div><p class="t">Balance options</p><p>You can hold back the VAT plus &pound;1,000 until your build is complete. Your invoice updates to show as partially paid.</p></div>
+        </div>
+        <div class="sc">
+          <div class="d">&#128296;</div>
+          <div><p class="t">Into production</p><p>Your project is scheduled into production and we send your job intake form to capture any final project information.</p></div>
+        </div>
+        <div class="sc wide">
+          <div class="d">&#128222;</div>
+          <div><p class="t">Your point of contact</p><p>Your order moves to the next department. Marta or Millie will be your point of contact from here through to handover.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  var GHL_WEBHOOK = "https://services.leadconnectorhq.com/hooks/J378Bt0d7JvG2rXks3zo/webhook-trigger/10241606-f478-48d5-9596-fe4ebcccf0ba";
+  var PAYMENT_URL = "https://link.fastpaydirect.com/payment-link/6a705158a655fa0b802a7919";
+  var isSubmitting = false;
+
+  /* acknowledgement tick boxes: the button stays locked until every box is ticked */
+  function ackBoxes(){ return Array.prototype.slice.call(document.querySelectorAll('.ack-cb')); }
+  function allTicked(){ return ackBoxes().every(function(b){ return b.checked; }); }
+  function updateAck(){
+    var boxes = ackBoxes();
+    var n = boxes.filter(function(b){ return b.checked; }).length;
+    document.getElementById('ackCount').textContent = n === boxes.length ? 'All ticked, thank you' : n + ' of ' + boxes.length + ' ticked';
+    document.getElementById('ack').classList.toggle('done', n === boxes.length);
+    if (!isSubmitting) document.getElementById('payBtn').disabled = n !== boxes.length;
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    ackBoxes().forEach(function(b){ b.addEventListener('change', updateAck); });
+    updateAck();
+  });
+
+  function validEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function cleanPhone(phone) {
+    return phone.replace(/[\s()\-]/g, '');
+  }
+
+  function validPhone(phone) {
+    return /^\+[1-9]\d{6,14}$/.test(cleanPhone(phone));
+  }
+
+  function showError(field, errorId) {
+    field.classList.add('error');
+    document.getElementById(errorId).style.display = 'block';
+  }
+
+  function clearErrors() {
+    var fields = ['name', 'email', 'phone'];
+    var errors = ['name-err', 'email-err', 'phone-err'];
+
+    fields.forEach(function(id) {
+      document.getElementById(id).classList.remove('error');
+    });
+
+    errors.forEach(function(id) {
+      document.getElementById(id).style.display = 'none';
+    });
+  }
+
+  function redirectToPayment() {
+    try {
+      window.top.location.href = PAYMENT_URL;
+    } catch (e) {
+      window.location.href = PAYMENT_URL;
+    }
+  }
+
+  function submitDeposit() {
+    if (isSubmitting) return;
+
+    var name = document.getElementById('name');
+    var email = document.getElementById('email');
+    var phone = document.getElementById('phone');
+    var btn = document.getElementById('payBtn');
+    var processing = document.getElementById('processing');
+
+    var nameValue = name.value.trim();
+    var emailValue = email.value.trim();
+    var phoneValue = phone.value.trim();
+    var cleanedPhone = cleanPhone(phoneValue);
+
+    var ok = true;
+
+    clearErrors();
+
+    if (!nameValue) {
+      showError(name, 'name-err');
+      ok = false;
+    }
+
+    if (!validEmail(emailValue)) {
+      showError(email, 'email-err');
+      ok = false;
+    }
+
+    if (!validPhone(phoneValue)) {
+      showError(phone, 'phone-err');
+      ok = false;
+    }
+
+    if (!allTicked()) ok = false;
+
+    if (!ok) return;
+
+    isSubmitting = true;
+    btn.disabled = true;
+    btn.querySelector('span').textContent = "Redirecting to secure checkout";
+    processing.style.display = 'block';
+
+    var payload = {
+      full_name: nameValue,
+      email: emailValue,
+      phone: cleanedPhone,
+      source: "Deposit Page - Reserve Your Place",
+      deposit_type: "500 commitment deposit",
+      reservation_period: "72 hours",
+      note: "No materials are ordered and no production work begins until final invoice is paid in full.",
+      acknowledged: ackBoxes().map(function(b){ return b.getAttribute("data-text").replace(/&pound;/g,"£").replace(/&#8217;/g,"\u2019"); }).join(" | "),
+      acknowledged_at: new Date().toISOString()
+    };
+
+    fetch(GHL_WEBHOOK, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload),
+      keepalive: true
+    })
+    .then(function() {
+      redirectToPayment();
+    })
+    .catch(function() {
+      redirectToPayment();
+    });
+
+    setTimeout(function() {
+      redirectToPayment();
+    }, 2500);
+  }
+</script>
+</body>
+</html>
