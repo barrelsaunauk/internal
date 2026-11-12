@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Expo Email 1 Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--forest:#2B5336;--line:#dfe3df}
+*{box-sizing:border-box}
+body{margin:0;background:#ffffff;font-family:Poppins,Arial,sans-serif;color:#1d2a22}
+.bar{position:sticky;top:0;z-index:5;background:#16261C;color:#fff;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.bar .t{font-size:14px}
+.bar .t span{color:rgba(255,255,255,.7);font-size:12px;display:block}
+.sw{display:flex;border:1px solid rgba(255,255,255,.3);border-radius:999px;overflow:hidden}
+.sw button{font-family:inherit;font-size:13px;background:transparent;color:#fff;border:0;padding:7px 16px;cursor:pointer}
+.sw button.on{background:#fff;color:#16261C}
+.stage{padding:24px 16px 48px;display:flex;justify-content:center}
+.frame{width:100%;max-width:700px;border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:max-width .25s}
+.frame.phone{max-width:390px}
+iframe{display:block;width:100%;border:0;height:2200px}
+</style>
+</head>
+<body>
+<div class="bar">
+<div class="t">Expo email 1, both tracks, v2<span>Subject: Lovely to meet you at the NEC</span></div>
+<div class="sw"><button class="on" id="bd">Desktop</button><button id="bp">Phone</button></div>
+</div>
+<div class="stage"><div class="frame" id="fr"><iframe id="em" title="Email preview"></iframe></div></div>
+
+<template id="mail">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<title>Lovely to meet you at the NEC</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light only;supported-color-schemes:light;}
+html,body{background-color:#ffffff !important;}
+@media only screen and (max-width:480px){
+  .px{padding-left:20px !important;padding-right:20px !important;}
+  .hval{font-size:24px !important;}
+  .pillcell{padding:14px 34px !important;}
+  .pilltext{font-size:16px !important;}
+  .tile{display:block !important;width:100% !important;}
+  .circ{padding:0 0 18px 0 !important;}
+}
+</style>
+</head>
+<body style="margin:0; padding:0; background:#ffffff;">
+
+<div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">Thank you for stopping by our stand. Calls are open again from Monday the 16th.</div>
+
+<table style="background-color:#ffffff; padding:24px 0;" width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tbody>
+    <tr>
+      <td align="center" style="padding:0 12px;">
+        <table style="background-color:#ffffff; border-collapse:collapse; width:100%; max-width:640px;" cellpadding="0" cellspacing="0" border="0">
+          <tbody>
+
+            <!-- Logo band -->
+            <tr>
+              <td style="background-color:#2B5336; padding:12px 32px;" align="center">
+                <img style="height:auto; width:110px; display:block; margin:0 auto;" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a159cbca7ceea4e5718f77f.png" alt="Barrel Sauna UK" width="110">
+              </td>
+            </tr>
+
+            <!-- Eyebrow, heading, intro -->
+            <tr>
+              <td class="px" style="padding:36px 32px 8px 32px; font-family:Poppins, Arial, sans-serif; font-size:15px; color:#333333; line-height:1.6;">
+                <p style="margin:0 0 10px 0; font-size:12px; letter-spacing:5px; text-transform:uppercase; color:#C08B41;">Land, Leisure and Tourism Show</p>
+                <p class="hval" style="margin:0 0 18px 0; font-size:26px; font-weight:600; line-height:1.3; color:#2B5336;">Lovely to meet you at the <span style="color:#C08B41;">NEC</span></p>
+                <p style="margin:0;">Hi {{contact.first_name}},</p>
+                <p style="margin:0;">&nbsp;</p>
+                <p style="margin:0;">Thank you for stopping by our stand. It was great to show you our builds in person.</p>
+                <p style="margin:0;">&nbsp;</p>
+                <p style="margin:0;">Every sauna, hot tub and ice bath we make is built to order in our workshop in Caerphilly. We either build it here and deliver it, or bring the materials and build it on site in one day.</p>
+              </td>
+            </tr>
+
+            <!-- Full bleed workshop photo -->
+            <tr>
+              <td style="padding:24px 0 0 0; line-height:0; font-size:0;">
+                <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a8561324aaffc55cddd1f1c.png" alt="Two barrel saunas, a hot tub and an ice bath in the Barrel Sauna UK workshop" width="640" style="display:block; width:100%; height:auto; border:0;">
+              </td>
+            </tr>
+
+            <!-- Calls open line -->
+            <tr>
+              <td class="px" style="padding:28px 32px 4px 32px; font-family:Poppins, Arial, sans-serif; font-size:15px; color:#333333; line-height:1.6;">
+                <p style="margin:0;">Our calendar is open again from Monday the 16th, so now is a good time to book a design call. Here is what we will cover.</p>
+              </td>
+            </tr>
+
+            <!-- White lift card with disc list -->
+            <tr>
+              <td class="px" style="padding:20px 32px 0 32px;">
+                <table style="background-color:#ffffff; border:1px solid rgba(65,124,81,0.14); border-radius:16px; box-shadow:0 10px 30px rgba(22,38,28,0.12);" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tbody>
+                    <tr>
+                      <td style="padding:26px 28px 6px 28px;">
+                        <p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:12px; letter-spacing:4px; text-transform:uppercase; color:#C08B41;">Your design call</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:16px 28px 14px 28px;">
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                          <tbody>
+                            <tr>
+                              <td width="56" valign="top" style="padding:0 12px 16px 0;">
+                                <table cellpadding="0" cellspacing="0" border="0"><tbody><tr>
+                                  <td width="44" height="44" bgcolor="#417C51" style="width:44px; height:44px; border-radius:50%; font-size:20px;" align="center" valign="middle">🌲</td>
+                                </tr></tbody></table>
+                              </td>
+                              <td valign="top" style="padding:0 0 16px 0; font-family:Poppins, Arial, sans-serif; font-size:15px; color:#333333; line-height:1.6;">
+                                <span style="color:#2B5336;">Your space.</span> Where it will go and how we get it there.
+                              </td>
+                            </tr>
+                            <tr>
+                              <td width="56" valign="top" style="padding:0 12px 16px 0;">
+                                <table cellpadding="0" cellspacing="0" border="0"><tbody><tr>
+                                  <td width="44" height="44" bgcolor="#b07d38" style="width:44px; height:44px; border-radius:50%; font-size:20px;" align="center" valign="middle">🔥</td>
+                                </tr></tbody></table>
+                              </td>
+                              <td valign="top" style="padding:0 0 16px 0; font-family:Poppins, Arial, sans-serif; font-size:15px; color:#333333; line-height:1.6;">
+                                <span style="color:#2B5336;">Your build.</span> The size, style and options that suit how you will use it.
+                              </td>
+                            </tr>
+                            <tr>
+                              <td width="56" valign="top" style="padding:0 12px 16px 0;">
+                                <table cellpadding="0" cellspacing="0" border="0"><tbody><tr>
+                                  <td width="44" height="44" bgcolor="#417C51" style="width:44px; height:44px; border-radius:50%; font-size:20px;" align="center" valign="middle">📅</td>
+                                </tr></tbody></table>
+                              </td>
+                              <td valign="top" style="padding:0 0 16px 0; font-family:Poppins, Arial, sans-serif; font-size:15px; color:#333333; line-height:1.6;">
+                                <span style="color:#2B5336;">What happens next.</span> How our order queue works and when we could build yours.
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Circle photo insert -->
+            <tr>
+              <td class="px" style="padding:30px 32px 0 32px;">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tbody>
+                    <tr>
+                      <td width="132" valign="middle" class="tile circ" style="padding:0 20px 0 0;">
+                        <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9ffd1c641597c752ab184f.jpg" alt="Barrel Sauna UK stainless nameplate, built in the United Kingdom" width="112" height="112" style="display:block; width:112px; height:112px; border-radius:50%; object-fit:cover; border:0;">
+                      </td>
+                      <td valign="middle" class="tile" style="font-family:Poppins, Arial, sans-serif; font-size:15px; color:#333333; line-height:1.6;">
+                        <p style="margin:0 0 6px 0; font-size:18px; font-weight:600; line-height:1.3; color:#2B5336;">Made in <span style="color:#C08B41;">Wales</span></p>
+                        <p style="margin:0;">A Welsh family maker. Our saunas are never self assembly, we build every one ourselves.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Line drawings strip -->
+            <tr>
+              <td class="px" style="padding:32px 32px 0 32px; line-height:0; font-size:0;">
+                <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9c52d9e29b3baf97d3415c.png" alt="Barrel saunas, hot tubs, ice baths, Double Dippers, mobile saunas, glamping pods, shepherd's huts and outdoor showers" width="576" style="display:block; width:100%; height:auto; border:0;">
+              </td>
+            </tr>
+
+            <!-- CTA block -->
+            <tr>
+              <td class="px" style="padding:32px 32px 8px 32px;" align="center">
+                <p style="margin:0 0 18px 0; font-family:Poppins, Arial, sans-serif; font-size:20px; font-weight:600; line-height:1.3; color:#2B5336;">Ready to start <span style="color:#C08B41;">planning</span>?</p>
+                <table cellpadding="0" cellspacing="0" border="0" align="center">
+                  <tbody>
+                    <tr>
+                      <td bgcolor="#b07d38" class="pillcell" style="background-color:#b07d38; border-radius:30px; padding:14px 40px; mso-padding-alt:14px 40px;" align="center">
+                        <a href="https://www.barrelsaunauk.com/book-a-call-back" style="display:block; text-decoration:none; mso-style-textfill-fill-color:#ffffff;"><!--[if mso]><font color="#ffffff"><![endif]--><span class="pilltext" style="font-family:Poppins, Arial, sans-serif; font-size:16px; color:#ffffff; letter-spacing:0.5px;">Book a Design Call</span><!--[if mso]></font><![endif]--></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p style="margin:16px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:13px; color:#888888; line-height:1.5;">Rather see one first? <a href="https://www.barrelsaunauk.com/showroom-bookings" style="color:#2B5336; text-decoration:underline;">Book a showroom visit</a></p>
+              </td>
+            </tr>
+
+            <!-- WhatsApp secondary -->
+            <tr>
+              <td class="px" style="padding:24px 32px 8px 32px; font-family:Poppins, Arial, sans-serif; font-size:15px; color:#333333; line-height:1.6;" align="center">
+                <p style="margin:0;">Questions first? Reply to this email or</p>
+              </td>
+            </tr>
+            <tr>
+              <td class="px" style="padding:12px 32px 8px 32px;" align="center">
+                <table cellpadding="0" cellspacing="0" border="0">
+                  <tbody>
+                    <tr>
+                      <td bgcolor="#31D24F" class="pillcell" style="background-color:#31D24F; border-radius:30px; padding:14px 40px; mso-padding-alt:14px 40px;" align="center">
+                        <a href="https://wa.me/447360274142" style="display:block; text-decoration:none; mso-style-textfill-fill-color:#ffffff;"><!--[if mso]><font color="#ffffff"><![endif]--><span class="pilltext" style="font-family:Poppins, Arial, sans-serif; font-size:16px; color:#ffffff; letter-spacing:0.5px;">WhatsApp Us</span><!--[if mso]></font><![endif]--></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Sign-off -->
+            <tr>
+              <td class="px" style="padding:28px 32px 32px 32px; font-family:Poppins, Arial, sans-serif; font-size:15px; color:#333333; line-height:1.6;">
+                <p style="margin:0;">Speak soon,<br><span style="color:#2B5336;">The Barrel Sauna UK Team</span></p>
+              </td>
+            </tr>
+
+            <!-- Signature -->
+            <tr>
+              <td style="padding:0; line-height:0; font-size:0;">
+                <a href="https://www.barrelsaunauk.com" style="text-decoration:none;"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/bf18840a-71c4-4a73-abb9-6505c182f33d.jpg" alt="Barrel Sauna UK, bespoke, made to order. info@barrelsaunauk.com, WhatsApp +44 7360 274142, www.barrelsaunauk.com" width="640" style="display:block; width:100%; height:auto; border:0;"></a>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
+</template>
+
+<script>
+var f=document.getElementById('em'),fr=document.getElementById('fr');
+f.srcdoc=document.getElementById('mail').innerHTML;
+f.onload=function(){try{f.style.height=f.contentDocument.body.scrollHeight+40+'px'}catch(e){}};
+function set(p){fr.classList.toggle('phone',p);document.getElementById('bp').classList.toggle('on',p);document.getElementById('bd').classList.toggle('on',!p);setTimeout(f.onload,300)}
+document.getElementById('bd').onclick=function(){set(false)};
+document.getElementById('bp').onclick=function(){set(true)};
+</script>
+</body>
+</html>
