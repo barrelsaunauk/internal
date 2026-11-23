@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Upcoming builds · Barrel Sauna UK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+<style>
+:root{
+  --ground:#16261C;--forest-deep:#1F3D28;--forest:#2B5336;--mid:#417C51;--sage:#50795F;--sage-pale:#8fae86;
+  --honey:#C08B41;--honey-light:#D6A868;--tint:#dbe7dd;--tint2:#eef4ef;--ink:#16261C;--white:#ffffff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--white);color:var(--ink);font-family:"Poppins",Arial,sans-serif;font-weight:400;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.hero{background:var(--ground);color:#fff;padding:44px 20px 36px}
+.wrap{max-width:1040px;margin:0 auto}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--honey-light)}
+h1{margin:6px 0 8px;font-size:clamp(28px,5vw,42px);line-height:1.1;font-weight:700}
+h1 span{color:var(--honey-light)}
+.lede{margin:0;max-width:60ch;color:rgba(255,255,255,.82)}
+.stamp{margin-top:14px;font-size:12.5px;color:var(--sage-pale)}
+.counts{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.counts span{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:6px 14px;font-size:13px}
+.counts b{font-weight:700;color:var(--honey-light);margin-right:4px}
+main{padding:28px 20px 56px}
+h2{margin:0 0 4px;font-size:22px;font-weight:700;color:var(--forest-deep)}
+h2 span{color:var(--honey)}
+.sub{margin:0 0 16px;color:var(--sage);font-size:14px}
+section+section{margin-top:40px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 12px;font-size:13px;color:var(--sage)}
+.legend i{display:inline-block;width:18px;height:10px;border-radius:4px;margin-right:6px;vertical-align:middle}
+.k-booked{background:var(--forest-deep)}
+.k-window{background:var(--mid)}
+.k-estimate{background:repeating-linear-gradient(135deg,var(--sage-pale) 0 4px,var(--tint) 4px 8px)}
+.chart{border:1px solid var(--tint);border-radius:16px;overflow-x:auto;background:#fff}
+.grid{min-width:760px;position:relative}
+.row{display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid var(--tint);min-height:56px}
+.row:last-child{border-bottom:0}
+.who{padding:10px 14px;display:flex;flex-direction:column;justify-content:center}
+.who .n{font-weight:700}
+.who .a{font-size:12.5px;color:var(--sage)}
+.track{position:relative}
+.bar{position:absolute;top:16px;height:24px;border-radius:999px;min-width:10px}
+.today{position:absolute;top:0;bottom:0;width:2px;background:var(--honey);z-index:2}
+.months{display:grid;grid-template-columns:200px 1fr;border-bottom:2px solid var(--tint);height:40px}
+.months .lab{padding:11px 14px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sage)}
+.months .mo{position:relative}
+.months .mo span{position:absolute;top:11px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest-deep);border-left:1px solid var(--tint);padding-left:6px;white-space:nowrap}
+.months .today span{position:absolute;top:22px;left:6px;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--honey);white-space:nowrap}
+.cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:700px){.cards{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.cards{grid-template-columns:1fr 1fr 1fr}}
+.card{background:#fff;border:1px solid var(--tint);border-radius:14px;padding:14px 16px;box-shadow:0 1px 2px rgba(22,38,28,.05),0 6px 16px rgba(22,38,28,.06)}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.card .n{font-weight:700;font-size:16px}
+.card .a{font-size:13px;color:var(--sage)}
+.card .p{margin-top:6px;font-size:13.5px}
+.card .w{margin-top:8px;font-size:13px;font-weight:700;color:var(--forest-deep)}
+.pill{flex:0 0 auto;font-size:11px;font-weight:700;letter-spacing:.04em;border-radius:999px;padding:3px 10px;white-space:nowrap;background:var(--tint2);color:var(--sage)}
+.pill.booked{background:var(--forest-deep);color:#fff}
+.pill.window{background:var(--mid);color:#fff}
+.pill.estimate{background:var(--tint);color:var(--forest-deep)}
+.pill.awaiting{background:#f3e6d2;color:#7a5620}
+.pill.hold{background:#eeeeee;color:#555}
+.pill.unknown{background:#f3e6d2;color:#7a5620}
+.note{margin-top:24px;padding:16px 18px;background:var(--tint2);border-radius:14px;font-size:13.5px}
+.note p{margin:0 0 6px}.note p:last-child{margin:0}
+.state{padding:18px;color:var(--sage)}
+footer{padding:0 20px 40px;color:var(--sage);font-size:12px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Barrel Sauna UK · Builds</div>
+    <h1>What's <span>coming up</span></h1>
+    <p class="lede">Every paid build that hasn't been finished yet, straight from our system. It updates on its own, so check back whenever you're planning a shoot.</p>
+    <div class="counts" id="counts"></div>
+    <div class="stamp" id="stamp">Loading…</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <h2>Install <span>timeline</span></h2>
+    <p class="sub">Builds with a window, earliest first. The honey line is today.</p>
+    <div class="legend">
+      <span><i class="k-booked"></i>Booked</span>
+      <span><i class="k-window"></i>Window given</span>
+      <span><i class="k-estimate"></i>Estimate only, could move</span>
+    </div>
+    <div class="chart"><div class="grid" id="grid"><div class="state">Loading the builds…</div></div></div>
+  </section>
+
+  <section>
+    <h2>No date <span>yet</span></h2>
+    <p class="sub">Builds waiting for a date, on hold, or not yet confirmed by the team.</p>
+    <ul class="cards" id="nodate"></ul>
+  </section>
+
+  <div class="note">
+    <p><b>Booked</b> means the install day is set with the customer. <b>Window given</b> means they have been told a week or two.</p>
+    <p><b>Estimate only</b> is our standard 8 to 12 weeks from the deposit, not a promise, so check before travelling.</p>
+  </div>
+</main>
+
+<footer class="wrap">Internal planning page for the content team. Please don't share it with customers.</footer>
+
+<script>
+(function(){
+  var FEED = "https://ghl-mcp.njfeldmann44.workers.dev/public/installs";
+  var DAY = 86400000;
+
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; }); }
+  function d(s){ var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || ""); return m ? new Date(Date.UTC(+m[1], +m[2]-1, +m[3])) : null; }
+  function fmt(x){ return x ? x.toLocaleDateString("en-GB", { day:"numeric", month:"short", timeZone:"UTC" }) : ""; }
+  function today(){ var n = new Date(); return new Date(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate())); }
+  function range(b){
+    var s = d(b.start), e = d(b.end);
+    if (!s) return "";
+    if (!e || +e === +s) return fmt(s);
+    return fmt(s) + " to " + fmt(e);
+  }
+
+  function card(b){
+    return '<li class="card"><div class="top"><div><div class="n">' + esc(b.name) + '</div>' +
+      (b.area ? '<div class="a">' + esc(b.area) + '</div>' : '') + '</div>' +
+      '<span class="pill ' + esc(b.kind) + '">' + esc(b.label) + '</span></div>' +
+      (b.product ? '<div class="p">' + esc(b.product) + '</div>' : '') + '</li>';
+  }
+
+  function render(data){
+    var builds = data.builds || [];
+    var t = today();
+    var dated = builds.filter(function(b){ return /^(booked|window|estimate)$/.test(b.kind) && d(b.start); });
+    var other = builds.filter(function(b){ return dated.indexOf(b) < 0; });
+
+    var soon = dated.filter(function(b){ var s = d(b.start); return s >= t && s - t <= 28 * DAY; }).length;
+    document.getElementById("counts").innerHTML =
+      '<span><b>' + builds.length + '</b>builds in progress</span>' +
+      '<span><b>' + dated.filter(function(b){ return b.kind === "booked"; }).length + '</b>booked</span>' +
+      '<span><b>' + soon + '</b>starting in the next 4 weeks</span>' +
+      '<span><b>' + other.length + '</b>no date yet</span>';
+    document.getElementById("stamp").textContent = "Updated " + new Date(data.updated).toLocaleString("en-GB", { weekday:"short", day:"numeric", month:"short", hour:"2-digit", minute:"2-digit" });
+
+    var grid = document.getElementById("grid");
+    if (!dated.length) {
+      grid.innerHTML = '<div class="state">No dated builds right now.</div>';
+    } else {
+      var first = dated.reduce(function(m, b){ var s = d(b.start); return s < m ? s : m; }, t);
+      var last = dated.reduce(function(m, b){ var e = d(b.end) || d(b.start); return e > m ? e : m; }, t);
+      var start = new Date(Date.UTC(first.getUTCFullYear(), first.getUTCMonth(), 1));
+      var end = new Date(Date.UTC(last.getUTCFullYear(), last.getUTCMonth() + 1, 1));
+      var span = end - start;
+      function pct(x){ return Math.max(0, Math.min(100, (x - start) / span * 100)); }
+
+      var months = "";
+      for (var m = new Date(start); m < end; m = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() + 1, 1))) {
+        months += '<span style="left:' + pct(m).toFixed(2) + '%">' + m.toLocaleDateString("en-GB", { month:"short", timeZone:"UTC" }) + (m.getUTCMonth() === 0 ? " " + m.getUTCFullYear() : "") + '</span>';
+      }
+      var tl = pct(t).toFixed(2) + "%";
+      var h = '<div class="months"><div class="lab">Builds</div><div class="mo">' + months +
+        '<div class="today" style="left:' + tl + '"><span>Today</span></div></div></div>';
+      dated.forEach(function(b){
+        var s = d(b.start), e = d(b.end) || s;
+        var l = pct(s), w = Math.max(pct(new Date(+e + DAY)) - l, 1.2);
+        h += '<div class="row"><div class="who"><span class="n">' + esc(b.name) + '</span><span class="a">' +
+          esc([b.area, range(b)].filter(Boolean).join(" · ")) + '</span></div><div class="track">' +
+          '<div class="bar k-' + esc(b.kind) + '" style="left:' + l.toFixed(2) + '%;width:' + w.toFixed(2) + '%" title="' +
+          esc(b.label + (b.product ? ": " + b.product : "")) + '"></div>' +
+          '<div class="today" style="left:' + tl + '"></div></div></div>';
+      });
+      grid.innerHTML = h;
+    }
+
+    document.getElementById("nodate").innerHTML = other.length ? other.map(card).join("") : '<li class="state">Every build has a date.</li>';
+  }
+
+  fetch(FEED)
+    .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(render)
+    .catch(function(){
+      document.getElementById("stamp").textContent = "Could not load the builds just now. Refresh in a minute.";
+      document.getElementById("grid").innerHTML = '<div class="state">Could not load the builds just now.</div>';
+    });
+})();
+</script>
+</body>
+</html>
