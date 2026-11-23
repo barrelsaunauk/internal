@@ -428,6 +428,15 @@ select.input {
 .legend span { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-l); }
 .photo-count { font-size: 13px; font-weight: 700; color: var(--forest-deep); margin: 18px 0 0 0; }
 
+/* ================= BUILDER SUBMIT + LOCK ================= */
+.choice--3 { grid-template-columns: 1fr 1fr 1fr; }
+.choice button.on-pick { background: var(--forest-deep); border-color: var(--forest-deep); color: #fff; }
+body.b-locked #b-job .card, body.b-locked #b-checks .card, body.b-locked #b-snags .card,
+body.b-locked #b-photos .card, body.b-locked #b-sign .card.sign-card { pointer-events: none; opacity: 0.6; }
+body.b-locked #b-sign .sign-card [data-clear] { display: none; }
+#lock-note { display: none; margin: 22px 0 0 0; }
+body.m-builder.b-locked #lock-note { display: flex; }
+
 /* ================= MODE VISIBILITY ================= */
 [data-mode] { display: none; }
 body.m-builder  [data-mode~="builder"]  { display: block; }
@@ -447,7 +456,7 @@ body.m-customer.c-signed .after-sign { display: block; }
   .hero__draw img { width: 110px; }
   .hero h1 { font-size: 32px; }
   .hero__lede { font-size: 15px; }
-  .grid, .cover, .snag__meta, .review__btns { grid-template-columns: 1fr; }
+  .grid, .cover, .snag__meta, .review__btns, .choice--3 { grid-template-columns: 1fr; }
   .sec h2 { font-size: 22px; }
   .checkrow { display: block; }
   .checkrow__text { margin: 0 0 12px 0; }
@@ -504,6 +513,8 @@ body.m-customer.c-signed .after-sign { display: block; }
     <p>Picked up where you left off. Nothing was lost.</p>
     <button class="btn btn--ghost btn--sm" id="restore-dismiss" type="button">Got it</button>
   </div>
+
+  <div class="signed" id="lock-note"><span class="dot"></span><p id="lock-txt">Your part is locked so it cannot be changed. To start a different job, use Reset at the bottom.</p></div>
 
   <!-- ================= BUILDER 1: THE JOB ================= -->
   <section class="sec" id="b-job" data-mode="builder">
@@ -599,7 +610,7 @@ body.m-customer.c-signed .after-sign { display: block; }
       <div class="sec__num">5</div>
       <div><p class="kicker">Builder sign-off</p><h2>Built, tested, <span>ready</span></h2></div>
     </div>
-    <div class="card">
+    <div class="card sign-card">
       <div class="panel" style="margin-bottom:22px;">
         <p class="label">What signing means</p>
         <p class="focal">The unit is built, tested and ready to hand over</p>
@@ -619,6 +630,20 @@ body.m-customer.c-signed .after-sign { display: block; }
         <p style="margin-bottom:22px;">The customer side opens with everything you have just checked.</p>
         <button class="btn" id="go-customer" type="button">Open the customer walkthrough</button>
       </div>
+    </div>
+
+    <div class="card" id="nosign" style="display:none; margin-top:14px;">
+      <p class="label">Customer cannot sign today?</p>
+      <p class="prose">Submit your part now. It saves to GHL straight away and the office is told, so they can follow up with the customer.</p>
+      <p class="label">Why not</p>
+      <div class="choice choice--3" id="nosign-reason" style="margin-top:0;">
+        <button type="button" data-reason="Customer absent">Customer absent</button>
+        <button type="button" data-reason="Declined to sign">Declined to sign</button>
+        <button type="button" data-reason="Wants to review later">Wants to review later</button>
+      </div>
+      <div class="field" style="margin-top:18px;"><p class="label">Note for the office (optional)</p><textarea class="input" id="nosign-note" rows="2" placeholder="Anything the office should know"></textarea></div>
+      <button class="btn" id="btn-builder-submit" type="button" style="width:100%; margin-top:6px;">Submit my part</button>
+      <div class="status" id="b-status"><p></p></div>
     </div>
   </section>
 
@@ -1096,7 +1121,9 @@ function blank() {
     finished: { sent: false, emailed: false },
     recordUrl: '',
     saveFailed: false,
-    copyEmail: ''
+    copyEmail: '',
+    builderLocked: false,
+    builderSubmit: { reason: '', note: '', sent: false, at: '' }
   };
 }
 var state = blank();
@@ -1591,7 +1618,7 @@ function setMode(m) {
 }
 $('tab-builder').addEventListener('click', function(){ setMode('builder'); });
 $('tab-customer').addEventListener('click', function(){ setMode('customer'); });
-$('go-customer').addEventListener('click', function(){ setMode('customer'); });
+$('go-customer').addEventListener('click', function(){ state.builderLocked = true; setMode('customer'); });
 
 /* =========================================================
    PROGRESS + STEPPER
@@ -1653,6 +1680,14 @@ function refresh() {
   $('walk-count').textContent = wk.filter(function(k){ return state.walkthrough[k]; }).length + ' / ' + wk.length;
 
   $('handoff').style.display = builderDone() ? 'block' : 'none';
+  var cSigned = signed('sig-customer');
+  $('nosign').style.display = (builderDone() && !cSigned && !state.finished.sent) ? 'block' : 'none';
+  document.body.classList.toggle('b-locked', !!state.builderLocked);
+  $('btn-builder-submit').style.display = state.builderSubmit.sent ? 'none' : 'block';
+  if (state.builderSubmit.sent && !cSigned) {
+    $('save-wait').querySelector('.label').textContent = 'Builder part submitted';
+    $('save-wait').querySelector('.focal').textContent = 'Saved to GHL without the customer signature (' + state.builderSubmit.reason + '). The office will follow up.';
+  }
   var cs = signed('sig-customer');
   document.body.classList.toggle('c-signed', cs);
   $('save-wait').style.display = cs ? 'none' : 'block';
@@ -2481,6 +2516,77 @@ $('btn-save').addEventListener('click', function(){
   }
 });
 
+/* BUILDER: submit my part when the customer cannot sign today */
+function builderMissing() {
+  var missing = [];
+  if (!$('f-name').value.trim()) missing.push('customer name');
+  if (!$('f-product').value) missing.push('product');
+  if (!$('f-builder').value.trim()) missing.push('builder name');
+  var a = Object.keys(state.checks).filter(function(k){ return !state.checks[k]; }).length;
+  if (a) missing.push(a + ' build check' + (a > 1 ? 's' : ''));
+  var noOwner = cleanSnags().filter(function(s){ return !s.owner.trim() || !s.due; }).length;
+  if (noOwner) missing.push('an owner and fix-by date on ' + noOwner + ' snag' + (noOwner > 1 ? 's' : ''));
+  var noShots = requiredShots().filter(function(s){ return !shotDone(s.id); }).length;
+  if (noShots) missing.push(noShots + ' required photo' + (noShots > 1 ? 's' : ''));
+  if (!signed('sig-builder')) missing.push('builder signature');
+  if (!state.builderSubmit.reason) missing.push('why the customer cannot sign');
+  return missing;
+}
+function bStatus(msg, kind) {
+  var el = $('b-status');
+  el.className = 'status' + (kind ? ' status--' + kind : '');
+  el.querySelector('p').textContent = msg;
+}
+function renderReason() {
+  document.querySelectorAll('#nosign-reason button').forEach(function(b){
+    b.className = state.builderSubmit.reason === b.dataset.reason ? 'on-pick' : '';
+  });
+  $('nosign-note').value = state.builderSubmit.note || '';
+}
+$('nosign-reason').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-reason]');
+  if (!b || state.builderSubmit.sent) return;
+  state.builderSubmit.reason = state.builderSubmit.reason === b.dataset.reason ? '' : b.dataset.reason;
+  renderReason(); save();
+});
+$('nosign-note').addEventListener('input', function(){ if (!state.builderSubmit.sent) { state.builderSubmit.note = this.value; save(); } });
+
+$('btn-builder-submit').addEventListener('click', function(){
+  var missing = builderMissing();
+  if (missing.length) { bStatus('Still needed: ' + missing.join(', ') + '.', 'bad'); return; }
+  if (!webhookReady()) { bStatus('Not connected to GHL. Your part is saved on this phone.', 'bad'); return; }
+  var btn = $('btn-builder-submit');
+  btn.disabled = true;
+  state.builderLocked = true; refresh(); save();
+  bStatus('Saving your part to GHL...', 'wait');
+  var d = collect();
+  d.status = 'Awaiting customer signature';
+  Promise.resolve().then(function(){ return uploadRecord(d); }).catch(function(){ return ''; }).then(function(url){
+    state.recordUrl = ''; /* the customer-signed PDF is made fresh later */
+    var extra = {
+      customer_not_signed_reason: state.builderSubmit.reason,
+      customer_not_signed_note: (state.builderSubmit.note || '').trim(),
+      builder_submitted_at: new Date().toISOString()
+    };
+    var body = payload(d, 'handover_builder_submitted', url, extra);
+    body.handover_status = 'Awaiting customer signature (' + state.builderSubmit.reason + ')';
+    return postWebhook(body).then(function(){ return url; });
+  }).then(function(url){
+    state.builderSubmit.sent = true;
+    state.builderSubmit.at = new Date().toISOString();
+    refresh(); save();
+    var unsent = unsentPhotos();
+    if (!url) bStatus('Saved to GHL and the office has been told. The PDF did not upload, so download it below and attach it by hand.', 'bad');
+    else if (unsent) bStatus('Saved to GHL and the office has been told. ' + unsent + ' photo' + (unsent > 1 ? 's are' : ' is') + ' still sending. Keep this page open until they show as saved.', 'ok');
+    else bStatus('Saved to GHL and the office has been told. Record, photos and PDF are in the customer\'s folder.', 'ok');
+    if (!url) showFallback(true);
+  }).catch(function(err){
+    btn.disabled = false;
+    bStatus('Could not reach GHL (' + (err && err.message ? err.message : 'no signal') + '). Everything is still on this phone. Tap Submit my part again when you have signal.', 'bad');
+    showFallback(true);
+  });
+});
+
 /* CUSTOMER: email me a copy */
 function cStatus(msg, kind) {
   var el = $('c-status');
@@ -2544,6 +2650,7 @@ paintCustomerInputs();
 renderCover();
 renderShots();
 renderCustChoice();
+renderReason();
 loadThumbs().then(function(){ renderShots(); refresh(); pump(); });
 
 booting = false;
