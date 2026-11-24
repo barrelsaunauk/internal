@@ -226,6 +226,29 @@ select.input {
 .locked .wcard__disc { opacity: 0.45; }
 .waitlabel { flex-shrink: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: #B3261E; background: #fbe9e7; border-radius: 30px; padding: 7px 12px; white-space: nowrap; }
 
+/* section 5: delivery, extra products, specification check */
+.opt2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.opt2 button { font-family: var(--face); font-size: 13px; font-weight: 700; padding: 12px 10px; border: 1px solid var(--hairline); border-radius: 14px; background: #fff; color: var(--ink-l); cursor: pointer; }
+.opt2 button.on { background: var(--forest-deep); border-color: var(--forest-deep); color: #fff; }
+.xprod { display: flex; gap: 10px; align-items: center; margin: 0 0 10px; }
+.xprod select { flex: 1 1 auto; min-width: 0; }
+.suggest { background: var(--tint-l); border-radius: 12px; padding: 10px 14px; margin: 0 0 10px; font-size: 13px; line-height: 1.6; color: var(--forest-deep); }
+.suggest button { margin-left: 6px; }
+.specsrc { font-size: 13px; line-height: 1.6; color: var(--ink-l); background: var(--tint-l); border-radius: 12px; padding: 10px 14px; margin: 0 0 14px; }
+.specsrc strong { color: var(--forest-deep); }
+.specrow { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--rule-soft); }
+.specrow:last-child { border-bottom: 0; }
+.specrow__text { font-size: 14px; color: var(--ink); line-height: 1.55; margin: 0; flex: 1 1 auto; min-width: 0; }
+.specrow__text strong { color: var(--forest-deep); display: block; font-size: 12px; letter-spacing: 0.4px; }
+.specrow .toggle button { min-width: 0; }
+.specrow input.input { flex: 1 1 auto; }
+@media (max-width: 640px) {
+  .specrow { flex-wrap: wrap; }
+  .specrow__text, .specrow input.input { flex: 1 1 100%; }
+  .specrow .toggle { width: 100%; }
+  .specrow .toggle button { flex: 1 1 0; }
+}
+
 /* walkthrough lift cards */
 .walk { display: grid; gap: 12px; }
 .wcard {
@@ -553,12 +576,22 @@ body.m-customer.c-signed .after-sign { display: block; }
       </div>
       <div class="field"><p class="label">Install address</p><textarea class="input" id="f-address" rows="2" placeholder="Street, town, postcode"></textarea></div>
       <div class="grid">
-        <div class="field"><p class="label">Product</p><select class="input" id="f-product"><option value="">Select a product...</option></select></div>
-        <div class="field"><p class="label">Handover date</p><input class="input" id="f-date" type="date"></div>
+        <div class="field"><p class="label">Main product</p><select class="input" id="f-product"><option value="">Select a product...</option></select></div>
+        <div class="field"><p class="label">Actual delivery or installation date</p><input class="input" id="f-date" type="date"></div>
       </div>
       <div class="grid">
-        <div class="field"><p class="label">Builder on site</p><input class="input" id="f-builder" type="text" placeholder="Name"></div>
-        <div class="field"><p class="label">Serial / batch reference</p><input class="input" id="f-serial" type="text" placeholder="If applicable"></div>
+        <div class="field"><p class="label">Builder or installation team</p><input class="input" id="f-builder" type="text" placeholder="Name or team"></div>
+      </div>
+      <div class="field"><p class="label">Delivery method</p>
+        <div class="opt2" id="delivery">
+          <button type="button" data-del="assembled">Fully assembled delivery</button>
+          <button type="button" data-del="onsite">On-site build by our team</button>
+        </div>
+      </div>
+      <div class="field"><p class="label">Other products in this order</p>
+        <div id="xsuggest"></div>
+        <div id="xprods"></div>
+        <button class="btn btn--ghost btn--sm" id="add-xprod" type="button">Add another product</button>
       </div>
     </div>
   </section>
@@ -573,6 +606,20 @@ body.m-customer.c-signed .after-sign { display: block; }
       <span class="paypill wait" id="pay-pill"><span class="dot"></span><span id="pay-word">Checking with the office...</span></span>
       <p class="payinfo" id="pay-info">Only the office can release a job for use, in GHL. The builder cannot change this.</p>
       <button class="paylink" id="pay-again" type="button">Check again</button>
+    </div>
+  </section>
+
+  <!-- ================= SPECIFICATION CHECK (section 5) ================= -->
+  <section class="sec" id="b-spec" data-mode="builder">
+    <div class="sec__head">
+      <div class="sec__num">&#10003;</div>
+      <div><p class="kicker">What they bought</p><h2>Specification <span>check</span></h2></div>
+      <span class="sec__count" id="spec-count"></span>
+    </div>
+    <div class="card">
+      <div class="specsrc" id="spec-src">Looking up the order in GHL...</div>
+      <div id="spec"></div>
+      <button class="btn btn--ghost btn--sm" id="add-spec" type="button">Add a line</button>
     </div>
   </section>
 
@@ -890,6 +937,8 @@ var DB_NAME = 'bsuk_handover_media_v4';
 var UPLOAD_URL = 'https://ghl-mcp.njfeldmann44.workers.dev/handover/upload';
 /* Payment gate (section 4). The Worker decides; the page only asks. */
 var RELEASE_URL = 'https://ghl-mcp.njfeldmann44.workers.dev/handover/release-status';
+/* Job details from the contact id alone (section 5) */
+var JOB_URL = 'https://ghl-mcp.njfeldmann44.workers.dev/handover/job';
 var UPLOAD_KEY = 'bsuk-01kO2Xt0G4HVbLghXWWgdXlm';
 
 /* Video limits. GHL takes up to 25MB per file; bigger clips are shrunk on the phone. */
@@ -1130,7 +1179,6 @@ function shotsFor(key) {
   add('clean', 'Site left clean', 'port', true);
   if (key === 'mobile-trailer') add('coupling', 'Coupling and lights', 'port', true);
 
-  add('serial', 'Serial plate, if there is one', 'port', false, { g: 'Optional' });
   add('video', '15 to 20 second video, hold your phone upright', 'vid', false);
   return out;
 }
@@ -1142,7 +1190,7 @@ var ICON_LAND = '<svg width="34" height="24" viewBox="0 0 34 24" aria-hidden="tr
 var ICON_PORT = '<svg width="24" height="34" viewBox="0 0 24 34" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="31" rx="4" fill="none" stroke="#50795F" stroke-width="2.4"/><circle cx="12" cy="28" r="1.8" fill="#50795F"/></svg>';
 var ICON_VID = '<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="none" stroke="#417C51" stroke-width="2.4"/><path d="M12 10l9 5-9 5z" fill="#417C51"/></svg>';
 
-var JOB_FIELDS = ['f-name','f-order','f-email','f-phone','f-address','f-product','f-date','f-builder','f-serial'];
+var JOB_FIELDS = ['f-name','f-order','f-email','f-phone','f-address','f-product','f-date','f-builder'];
 
 /* =========================================================
    STATE
@@ -1162,7 +1210,10 @@ function blank() {
     saveFailed: false,
     copyEmail: '',
     builderLocked: false,
-    builderSubmit: { reason: '', note: '', sent: false, at: '' }
+    builderSubmit: { reason: '', note: '', sent: false, at: '' },
+    delivery: '',
+    extraProducts: [],
+    spec: { loaded: false, source: null, lines: [] }
   };
 }
 var state = blank();
@@ -1664,8 +1715,9 @@ $('go-customer').addEventListener('click', function(){ state.builderLocked = tru
    ========================================================= */
 function allSet(obj) { var k = Object.keys(obj); return k.length > 0 && k.every(function(x){ return obj[x]; }); }
 function signed(id) { return !!(pads[id] && pads[id].isSigned()); }
-function jobOk() { return !!($('f-name').value.trim() && $('f-product').value && $('f-builder').value.trim()); }
-function builderDone() { return jobOk() && allSet(state.checks) && photosDone() && signed('sig-builder'); }
+function jobOk() { return !!($('f-name').value.trim() && $('f-product').value && $('f-builder').value.trim() && state.delivery); }
+function specOk() { return state.spec.lines.every(function(l){ return l.v; }); }
+function builderDone() { return jobOk() && specOk() && allSet(state.checks) && photosDone() && signed('sig-builder'); }
 
 function stepList() {
   if (mode === 'builder') {
@@ -1776,6 +1828,10 @@ function renderChecks() {
     return;
   }
   var list = PRODUCTS[key].checks.concat(SHARED_CHECKS);
+  state.extraProducts.forEach(function(x){
+    if (!x || !PRODUCTS[x]) return;
+    PRODUCTS[x].checks.forEach(function(c){ list.push(PRODUCTS[x].name + ': ' + c); });
+  });
   var fresh = {};
   list.forEach(function(t){
     var v = state.checks[t] || '';
@@ -2144,11 +2200,156 @@ function payLine() {
 }
 
 /* =========================================================
+   SECTION 5: JOB DETAILS FROM GHL, DELIVERY, PRODUCTS, SPEC
+   ========================================================= */
+var DELIVERY_LABEL = { assembled: 'Fully assembled delivery', onsite: 'On-site build by our team' };
+var JOB_SUGGEST = [];
+
+function renderDelivery() {
+  document.querySelectorAll('#delivery button').forEach(function(b){ b.classList.toggle('on', b.dataset.del === state.delivery); });
+}
+$('delivery').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-del]'); if (!b) return;
+  state.delivery = state.delivery === b.dataset.del ? '' : b.dataset.del;
+  renderDelivery(); refresh(); save();
+});
+
+function guessProduct(text) {
+  var t = String(text || '').toLowerCase();
+  if (/ice bath|double dipper|plunge|cold/.test(t)) return 'ice-bath';
+  if (/hot tub/.test(t)) return 'hot-tub';
+  if (/shower/.test(t)) return 'outdoor-shower';
+  if (/changing room/.test(t)) return 'changing-room';
+  if (/shepherd|hut/.test(t)) return 'shepherds-hut';
+  if (/trailer|mobile/.test(t)) return 'mobile-trailer';
+  if (/cube/.test(t) && PRODUCTS['cube-sauna']) return 'cube-sauna';
+  if (/sauna/.test(t)) return 'barrel-sauna';
+  return '';
+}
+function productOptions(sel) {
+  return '<option value="">Select a product...</option>' + Object.keys(PRODUCTS).map(function(k){
+    return '<option value="' + k + '"' + (k === sel ? ' selected' : '') + '>' + esc(PRODUCTS[k].name) + '</option>';
+  }).join('');
+}
+function renderXprods() {
+  $('xprods').innerHTML = state.extraProducts.map(function(x, i){
+    return '<div class="xprod"><select class="input" data-xprod="' + i + '">' + productOptions(x) + '</select><button class="snag__kill" type="button" data-xkill="' + i + '">&times;</button></div>';
+  }).join('');
+  var open = JOB_SUGGEST.filter(function(s){ return !s.added; });
+  $('xsuggest').innerHTML = open.map(function(s, i){
+    var k = guessProduct(s.text);
+    return '<div class="suggest">Estimate also lists: <strong>' + esc(s.text) + '</strong>' +
+      (k ? '<button class="btn btn--ghost btn--sm" type="button" data-xadd="' + JOB_SUGGEST.indexOf(s) + '">Add ' + esc(PRODUCTS[k].name) + ' checks</button>' : '') + '</div>';
+  }).join('');
+}
+function productsChanged() { renderXprods(); renderChecks(); refresh(); save(); }
+$('add-xprod').addEventListener('click', function(){ state.extraProducts.push(''); productsChanged(); });
+document.addEventListener('change', function(e){
+  var t = e.target;
+  if (t.matches('select[data-xprod]')) { state.extraProducts[+t.dataset.xprod] = t.value; productsChanged(); }
+});
+document.addEventListener('click', function(e){
+  var k = e.target.closest('[data-xkill]');
+  if (k) { state.extraProducts.splice(+k.dataset.xkill, 1); productsChanged(); return; }
+  var a = e.target.closest('[data-xadd]');
+  if (a) {
+    var s = JOB_SUGGEST[+a.dataset.xadd]; var key = guessProduct(s.text);
+    s.added = true;
+    if (key && state.extraProducts.indexOf(key) === -1) state.extraProducts.push(key);
+    productsChanged();
+  }
+});
+
+/* Specification check: each line Matches or Missing or wrong. Wrong ones become snags. */
+function specSnagText(l) { return 'Spec: ' + (l.label ? l.label + ', ' : '') + (l.value || 'line') + ' (missing or wrong)'; }
+function renderSpec() {
+  var src = state.spec.source;
+  $('spec-src').innerHTML = src
+    ? 'From estimate <strong>' + esc(src.reference) + '</strong>' + (src.issued ? ', issued ' + esc(ukDate(src.issued)) : '') +
+      '. Check every line against the <strong>final invoice and any agreed changes</strong>, not just the estimate.'
+    : (state.spec.loaded
+      ? 'No estimate found in GHL for this customer. Add each option from the final invoice with Add a line.'
+      : (CONTACT_ID ? 'Looking up the order in GHL...' : 'Open this page from the customer\'s GHL record to load what they bought, or add each option with Add a line.'));
+  $('spec').innerHTML = state.spec.lines.map(function(l, i){
+    var text = l.manual
+      ? '<input class="input" type="text" data-specedit="' + i + '" value="' + esc(l.value) + '" placeholder="Option, size or extra">'
+      : '<p class="specrow__text">' + (l.label ? '<strong>' + esc(l.label) + '</strong>' : '') + esc(l.value) + '</p>';
+    return '<div class="specrow">' + text + '<div class="toggle">' +
+      '<button type="button" data-spec="' + i + '" data-v="ok" class="' + (l.v === 'ok' ? 'on-pass' : '') + '">Matches</button>' +
+      '<button type="button" data-spec="' + i + '" data-v="bad" class="' + (l.v === 'bad' ? 'on-fail' : '') + '">Missing or wrong</button>' +
+      (l.manual ? '<button type="button" class="snag__kill" data-speckill="' + i + '">&times;</button>' : '') +
+      '</div></div>';
+  }).join('');
+  var n = state.spec.lines.length;
+  $('spec-count').textContent = n ? state.spec.lines.filter(function(l){ return l.v; }).length + ' / ' + n : '';
+}
+function syncSpecSnag(l) {
+  var at = state.snags.findIndex(function(s){ return s.specRef && s.specRef === l.ref; });
+  if (l.v === 'bad' && at === -1) state.snags.push({ text: specSnagText(l), owner: 'Office team', due: '', specRef: l.ref });
+  if (l.v !== 'bad' && at !== -1) state.snags.splice(at, 1);
+}
+document.addEventListener('click', function(e){
+  var b = e.target.closest('button[data-spec]');
+  if (b) {
+    var l = state.spec.lines[+b.dataset.spec];
+    l.v = l.v === b.dataset.v ? '' : b.dataset.v;
+    syncSpecSnag(l); renderSpec(); renderSnags(); refresh(); save(); return;
+  }
+  var k = e.target.closest('[data-speckill]');
+  if (k) {
+    var gone = state.spec.lines.splice(+k.dataset.speckill, 1)[0];
+    if (gone) { gone.v = ''; syncSpecSnag(gone); }
+    renderSpec(); renderSnags(); refresh(); save();
+  }
+});
+document.addEventListener('input', function(e){
+  var t = e.target;
+  if (t.matches('input[data-specedit]')) { state.spec.lines[+t.dataset.specedit].value = t.value; save(); }
+});
+$('add-spec').addEventListener('click', function(){
+  state.spec.lines.push({ label: '', value: '', v: '', manual: true, ref: 'm' + Date.now() });
+  renderSpec(); refresh(); save();
+  var ins = document.querySelectorAll('input[data-specedit]'); if (ins.length) ins[ins.length - 1].focus();
+});
+
+function fillIfEmpty(id, v) { var el = $(id); if (el && v && !el.value.trim()) { el.value = v; return true; } return false; }
+
+function fetchJob() {
+  if (!CONTACT_ID) { state.spec.loaded = true; renderSpec(); return; }
+  fetch(JOB_URL, {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ key: UPLOAD_KEY, contact_id: CONTACT_ID })
+  }).then(function(r){ return r.json(); }).then(function(j){
+    if (!j || !j.ok) throw new Error((j && j.error) || 'failed');
+    var any = false;
+    any = fillIfEmpty('f-name', j.name) || any;
+    any = fillIfEmpty('f-email', j.email) || any;
+    any = fillIfEmpty('f-phone', j.phone) || any;
+    any = fillIfEmpty('f-address', j.address) || any;
+    any = fillIfEmpty('f-order', j.orderNumber) || any;
+    fillIfEmpty('f-date', j.installDate);
+    if (any) $('ghl-chip').classList.add('show');
+    if (!state.delivery && j.deliveryMethod) state.delivery = j.deliveryMethod;
+    JOB_SUGGEST = (j.additionalProducts || []).map(function(t){
+      var k = guessProduct(t);
+      return { text: t, added: !!(k && state.extraProducts.indexOf(k) !== -1) };
+    });
+    if (!state.spec.lines.length && j.specLines && j.specLines.length) {
+      state.spec.lines = j.specLines.map(function(l, i){ return { label: l.label, value: l.value, v: '', manual: false, ref: 'e' + i }; });
+    }
+    if (j.source) state.spec.source = j.source;
+    state.spec.loaded = true;
+  }).catch(function(){
+    state.spec.loaded = true;
+  }).then(function(){ renderDelivery(); renderXprods(); renderSpec(); renderChecks(); refresh(); save(); });
+}
+
+/* =========================================================
    PRE-FILL FROM URL (one-tap open from GHL)
    ========================================================= */
 function prefill() {
   var p = new URLSearchParams(window.location.search);
-  var map = { name: 'f-name', order: 'f-order', email: 'f-email', phone: 'f-phone', address: 'f-address', builder: 'f-builder', serial: 'f-serial' };
+  var map = { name: 'f-name', order: 'f-order', email: 'f-email', phone: 'f-phone', address: 'f-address', builder: 'f-builder' };
   var any = false;
   Object.keys(map).forEach(function(k){
     var v = p.get(k);
@@ -2170,7 +2371,10 @@ function validate() {
   var missing = [];
   if (!$('f-name').value.trim()) missing.push('customer name');
   if (!$('f-product').value) missing.push('product');
-  if (!$('f-builder').value.trim()) missing.push('builder name');
+  if (!$('f-builder').value.trim()) missing.push('builder or team');
+  if (!state.delivery) missing.push('delivery method');
+  var sp = state.spec.lines.filter(function(l){ return !l.v; }).length;
+  if (sp) missing.push(sp + ' specification line' + (sp > 1 ? 's' : ''));
   var a = Object.keys(state.checks).filter(function(k){ return !state.checks[k]; }).length;
   if (a) missing.push(a + ' build check' + (a > 1 ? 's' : ''));
   var b = Object.keys(state.walkthrough).filter(function(k){ return !state.walkthrough[k]; }).length;
@@ -2187,14 +2391,22 @@ function validate() {
   return missing;
 }
 
+function allProductNames() {
+  var keys = [$('f-product').value].concat(state.extraProducts).filter(function(k){ return k && PRODUCTS[k]; });
+  return keys.map(function(k){ return PRODUCTS[k].name; });
+}
+
 function collect() {
   var snags = cleanSnags().map(function(s){ return { text: s.text.trim(), owner: s.owner.trim(), due: s.due }; });
   var fails = Object.keys(state.checks).filter(function(k){ return state.checks[k] === 'fail'; });
   var key = $('f-product').value;
   return {
     name: $('f-name').value.trim(), email: $('f-email').value.trim(), phone: $('f-phone').value.trim(),
-    order: $('f-order').value.trim(), product: key ? PRODUCTS[key].name : '', productKey: key,
-    address: $('f-address').value.trim(), serial: $('f-serial').value.trim(), date: $('f-date').value,
+    order: $('f-order').value.trim(), product: allProductNames().join(', '), productKey: key,
+    address: $('f-address').value.trim(), date: $('f-date').value,
+    delivery: DELIVERY_LABEL[state.delivery] || '',
+    spec: state.spec.lines.map(function(l){ return { text: (l.label ? l.label + ': ' : '') + l.value, v: l.v }; }),
+    specSource: state.spec.source ? 'Estimate ' + state.spec.source.reference + (state.spec.source.issued ? ', issued ' + ukDate(state.spec.source.issued) : '') : 'Entered by the builder',
     builder: $('f-builder').value.trim(), notes: $('f-notes').value.trim(),
     snags: snags, fails: fails,
     status: (snags.length || fails.length) ? 'Snagged' : 'Clean',
@@ -2294,7 +2506,8 @@ function makePDF(d) {
     var lines = doc.splitTextToSize(txt, CW - 26);
     var h = Math.max(lines.length * 4.6, 6);
     room(h + 3);
-    var words = yes ? { pass: 'YES', fail: 'NOT YET', na: 'N/A', wait: 'AWAITING PAYMENT' } : { pass: 'PASS', fail: 'FAIL', na: 'N/A', wait: 'AWAITING PAYMENT' };
+    var words = yes === 'spec' ? { pass: 'MATCHES', fail: 'MISSING OR WRONG' }
+      : yes ? { pass: 'YES', fail: 'NOT YET', na: 'N/A', wait: 'AWAITING PAYMENT' } : { pass: 'PASS', fail: 'FAIL', na: 'N/A', wait: 'AWAITING PAYMENT' };
     var tone = verdict === 'pass' ? C.mid : verdict === 'fail' || verdict === 'wait' ? C.honey : C.fine;
     doc.setFontSize(9.5); doc.setTextColor.apply(doc, C.body);
     doc.text(lines, PG.m, y + 3.4);
@@ -2331,8 +2544,8 @@ function makePDF(d) {
 
   section('The Job');
   pair('Customer', d.name, 'Order number', d.order);
-  pair('Product', d.product, 'Handover date', ukDate(d.date));
-  pair('Builder on site', d.builder, 'Serial / batch', d.serial);
+  pair('Products', d.product, 'Delivery or installation date', ukDate(d.date));
+  pair('Builder or team', d.builder, 'Delivery method', d.delivery);
   pair('Email', d.email, 'Phone', d.phone);
   full('Install address', d.address);
   full('Payment', payLine());
@@ -2359,6 +2572,13 @@ function makePDF(d) {
   pair('Aftercare', DOCS.aftercare.title, 'Version', DOCS.aftercare.version);
   ACKS.forEach(function(a){ checkLine(a.t, state.acks[a.id] ? 'pass' : 'fail', true); });
   y += 4;
+
+  if (d.spec.length) {
+    section('Specification check');
+    para('Checked against: ' + d.specSource + '.');
+    d.spec.forEach(function(l){ checkLine(l.text, l.v === 'ok' ? 'pass' : l.v === 'bad' ? 'fail' : '', 'spec'); });
+    y += 4;
+  }
 
   section('Build Checks');
   Object.keys(state.checks).forEach(function(k){ checkLine(k, state.checks[k], false); });
@@ -2457,7 +2677,8 @@ function payload(d, event, pdfUrl, extra) {
     contact_id: CONTACT_ID,
     first_name: d.name.split(' ')[0] || '', full_name: d.name, email: d.email, phone: d.phone,
     order_number: d.order, product: d.product, handover_product: d.product,
-    install_address: d.address, serial_reference: d.serial,
+    install_address: d.address, delivery_method: d.delivery,
+    spec_check: d.spec.map(function(l){ return l.text + ': ' + (l.v === 'ok' ? 'Matches' : l.v === 'bad' ? 'Missing or wrong' : 'Not checked'); }).join(' | '),
     handover_date: d.date, handover_date_long: longDate(parseIso(d.date) || new Date()),
     handover_builder: d.builder, handover_status: d.status,
     handover_snags: d.snags.length ? d.snags.map(function(s){ return s.text + ' (owner: ' + (s.owner || '-') + ', fix by: ' + (s.due || '-') + ')'; }).join(' | ') : 'None',
@@ -2617,7 +2838,10 @@ function builderMissing() {
   var missing = [];
   if (!$('f-name').value.trim()) missing.push('customer name');
   if (!$('f-product').value) missing.push('product');
-  if (!$('f-builder').value.trim()) missing.push('builder name');
+  if (!$('f-builder').value.trim()) missing.push('builder or team');
+  if (!state.delivery) missing.push('delivery method');
+  var sp = state.spec.lines.filter(function(l){ return !l.v; }).length;
+  if (sp) missing.push(sp + ' specification line' + (sp > 1 ? 's' : ''));
   var a = Object.keys(state.checks).filter(function(k){ return !state.checks[k]; }).length;
   if (a) missing.push(a + ' build check' + (a > 1 ? 's' : ''));
   var noOwner = cleanSnags().filter(function(s){ return !s.owner.trim() || !s.due; }).length;
@@ -2750,6 +2974,10 @@ renderReason();
 loadThumbs().then(function(){ renderShots(); refresh(); pump(); });
 renderPay();
 checkPayment();
+renderDelivery();
+renderXprods();
+renderSpec();
+fetchJob();
 
 booting = false;
 setMode(mode);
