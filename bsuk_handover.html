@@ -209,6 +209,23 @@ select.input {
 .toggle button.on-fail { background: var(--honey); border-color: var(--honey); color: #fff; }
 .toggle button.on-na   { background: var(--tint); border-color: var(--tint); color: var(--forest-deep); }
 
+/* payment and release (section 4) */
+.paypill { display: inline-flex; align-items: center; gap: 8px; border-radius: 30px; padding: 7px 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; }
+.paypill .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.paypill.ok { background: #e3f1e6; color: var(--mid); }
+.paypill.no { background: #fbe9e7; color: #B3261E; }
+.paypill.wait { background: var(--tint-l); color: var(--ink-l); }
+.payinfo { font-size: 14px; color: var(--ink); line-height: 1.7; margin: 14px 0 0; }
+.payinfo strong { color: var(--forest-deep); }
+.paylink { background: none; border: 0; padding: 0; margin-top: 12px; font-family: var(--face); font-size: 13px; font-weight: 700; color: var(--mid); text-decoration: underline; cursor: pointer; }
+.payband { display: none; border-left: 4px solid #B3261E; background: #fbe9e7; border-radius: 10px; padding: 14px 16px; margin: 0 0 18px; }
+.payband.show { display: block; }
+.payband p { margin: 0; font-size: 14px; line-height: 1.6; color: #5a1a14; }
+.payband p strong { color: #B3261E; }
+.locked .checkrow__text, .locked .wcard__text { color: var(--dead); }
+.locked .wcard__disc { opacity: 0.45; }
+.waitlabel { flex-shrink: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: #B3261E; background: #fbe9e7; border-radius: 30px; padding: 7px 12px; white-space: nowrap; }
+
 /* walkthrough lift cards */
 .walk { display: grid; gap: 12px; }
 .wcard {
@@ -514,6 +531,8 @@ body.m-customer.c-signed .after-sign { display: block; }
     <button class="btn btn--ghost btn--sm" id="restore-dismiss" type="button">Got it</button>
   </div>
 
+  <div class="payband" id="pay-band"><p><strong>Physically complete, not released for use.</strong> The office has not confirmed payment yet. Test firing, commissioning and the first-use demo stay locked until it does. Everything else can still be filled in and saved.</p></div>
+
   <div class="signed" id="lock-note"><span class="dot"></span><p id="lock-txt">Your part is locked so it cannot be changed. To start a different job, use Reset at the bottom.</p></div>
 
   <!-- ================= BUILDER 1: THE JOB ================= -->
@@ -541,6 +560,19 @@ body.m-customer.c-signed .after-sign { display: block; }
         <div class="field"><p class="label">Builder on site</p><input class="input" id="f-builder" type="text" placeholder="Name"></div>
         <div class="field"><p class="label">Serial / batch reference</p><input class="input" id="f-serial" type="text" placeholder="If applicable"></div>
       </div>
+    </div>
+  </section>
+
+  <!-- ================= PAYMENT AND RELEASE (office only, read only here) ================= -->
+  <section class="sec" id="b-pay" data-mode="builder">
+    <div class="sec__head">
+      <div class="sec__num">&pound;</div>
+      <div><p class="kicker">Office only</p><h2>Payment and <span>release</span></h2></div>
+    </div>
+    <div class="card">
+      <span class="paypill wait" id="pay-pill"><span class="dot"></span><span id="pay-word">Checking with the office...</span></span>
+      <p class="payinfo" id="pay-info">Only the office can release a job for use, in GHL. The builder cannot change this.</p>
+      <button class="paylink" id="pay-again" type="button">Check again</button>
     </div>
   </section>
 
@@ -856,6 +888,8 @@ var DB_NAME = 'bsuk_handover_media_v4';
    The server receives multipart fields: key, contactId, name, order, email, phone,
    folder, shot, label, file. It answers JSON { ok: true, url: '...' }. */
 var UPLOAD_URL = 'https://ghl-mcp.njfeldmann44.workers.dev/handover/upload';
+/* Payment gate (section 4). The Worker decides; the page only asks. */
+var RELEASE_URL = 'https://ghl-mcp.njfeldmann44.workers.dev/handover/release-status';
 var UPLOAD_KEY = 'bsuk-01kO2Xt0G4HVbLghXWWgdXlm';
 
 /* Video limits. GHL takes up to 25MB per file; bigger clips are shrunk on the phone. */
@@ -943,6 +977,11 @@ var WALKTHROUGH = [
   { t: 'I know who to ring if something goes wrong', e: '&#128222;' }
 ];
 var WALKTHROUGH_CHECKS = WALKTHROUGH.map(function(w){ return w.t; });
+
+/* Test firing, commissioning and first-use items. Locked until the office releases the job. */
+var PAY_LOCK = /tested to temperature|fired and brought to temperature|stove fired|chiller unit run for a full cycle|controls demonstrated/i;
+var PAY = { state: 'checking', released: false, verifiedBy: '', verifiedAt: '', exception: false };
+function payLocked(t) { return !PAY.released && PAY_LOCK.test(t); }
 
 var PRODUCTS = {
   'barrel-sauna': { name: 'Barrel Sauna', checks: [
@@ -1738,9 +1777,14 @@ function renderChecks() {
   }
   var list = PRODUCTS[key].checks.concat(SHARED_CHECKS);
   var fresh = {};
-  list.forEach(function(t){ fresh[t] = state.checks[t] || ''; });
+  list.forEach(function(t){
+    var v = state.checks[t] || '';
+    if (payLocked(t)) v = 'wait'; else if (v === 'wait') v = '';
+    fresh[t] = v;
+  });
   state.checks = fresh;
   box.innerHTML = list.map(function(t){
+    if (payLocked(t)) return '<div class="checkrow locked"><p class="checkrow__text">' + esc(t) + '</p><span class="waitlabel">Waiting for payment</span></div>';
     return '<div class="checkrow"><p class="checkrow__text">' + esc(t) + '</p>' + renderToggle('checks', esc(t), state.checks[t]) + '</div>';
   }).join('');
   refresh();
@@ -1748,9 +1792,14 @@ function renderChecks() {
 
 function renderWalkthrough() {
   var keep = {};
-  WALKTHROUGH_CHECKS.forEach(function(t){ keep[t] = state.walkthrough[t] || ''; });
+  WALKTHROUGH_CHECKS.forEach(function(t){
+    var v = state.walkthrough[t] || '';
+    if (payLocked(t)) v = 'wait'; else if (v === 'wait') v = '';
+    keep[t] = v;
+  });
   state.walkthrough = keep;
   $('walkthrough').innerHTML = WALKTHROUGH.map(function(w){
+    if (payLocked(w.t)) return '<div class="wcard locked"><div class="wcard__disc">' + w.e + '</div><p class="wcard__text">' + esc(w.t) + '</p><span class="waitlabel">Waiting for payment</span></div>';
     return '<div class="wcard"><div class="wcard__disc">' + w.e + '</div><p class="wcard__text">' + esc(w.t) + '</p>' + renderToggle('walkthrough', esc(w.t), state.walkthrough[w.t]) + '</div>';
   }).join('');
   refresh();
@@ -2049,6 +2098,52 @@ $('f-product').addEventListener('change', function(){ renderChecks(); renderShot
 $('restore-dismiss').addEventListener('click', function(){ $('restore').classList.remove('show'); });
 
 /* =========================================================
+   PAYMENT AND RELEASE (asks the Worker, never decides itself)
+   ========================================================= */
+function renderPay() {
+  var pill = $('pay-pill'), word = $('pay-word'), info = $('pay-info');
+  pill.className = 'paypill ' + (PAY.released ? 'ok' : PAY.state === 'done' ? 'no' : 'wait');
+  if (PAY.released) {
+    word.textContent = 'Released for use';
+    info.innerHTML = 'Payment verified by <strong>' + esc(PAY.verifiedBy) + '</strong> on <strong>' + esc(PAY.verifiedAt) + '</strong>.' +
+      (PAY.exception ? ' Released as an approved payment exception.' : '') + ' Test firing and the first-use demo are unlocked.';
+  } else if (PAY.state === 'done') {
+    word.textContent = 'Not released yet';
+    info.innerHTML = 'The office has not confirmed cleared payment. Carry on with the checks, snags, photos and your signature. The locked items open as soon as the office releases the job.';
+  } else if (PAY.state === 'nocontact') {
+    word.textContent = 'Cannot check';
+    info.innerHTML = 'This page was not opened from the customer\'s GHL record, so payment cannot be checked. Open it from GHL to unlock test firing and the first-use demo.';
+  } else if (PAY.state === 'error') {
+    word.textContent = 'Could not check';
+    info.innerHTML = 'The payment check did not get through, often a weak signal on site. Locked items stay locked. Tap Check again.';
+  } else {
+    word.textContent = 'Checking with the office...';
+    info.innerHTML = 'Only the office can release a job for use, in GHL. The builder cannot change this.';
+  }
+  $('pay-band').classList.toggle('show', !PAY.released);
+}
+
+function checkPayment() {
+  if (!CONTACT_ID) { PAY = { state: 'nocontact', released: false }; renderPay(); renderChecks(); renderWalkthrough(); return; }
+  PAY.state = 'checking'; renderPay();
+  fetch(RELEASE_URL, {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ key: UPLOAD_KEY, contact_id: CONTACT_ID })
+  }).then(function(r){ return r.json(); }).then(function(j){
+    if (!j || !j.ok) throw new Error((j && j.error) || 'failed');
+    PAY = { state: 'done', released: !!j.released, verifiedBy: j.verifiedBy || '', verifiedAt: j.verifiedAt || '', exception: !!j.exception };
+  }).catch(function(){
+    PAY = { state: 'error', released: false };
+  }).then(function(){ renderPay(); renderChecks(); renderWalkthrough(); save(); });
+}
+$('pay-again').addEventListener('click', checkPayment);
+
+function payLine() {
+  if (PAY.released) return 'Released, verified by ' + PAY.verifiedBy + ' on ' + PAY.verifiedAt + (PAY.exception ? ' (approved exception)' : '');
+  return 'Not released at time of handover';
+}
+
+/* =========================================================
    PRE-FILL FROM URL (one-tap open from GHL)
    ========================================================= */
 function prefill() {
@@ -2199,8 +2294,8 @@ function makePDF(d) {
     var lines = doc.splitTextToSize(txt, CW - 26);
     var h = Math.max(lines.length * 4.6, 6);
     room(h + 3);
-    var words = yes ? { pass: 'YES', fail: 'NOT YET', na: 'N/A' } : { pass: 'PASS', fail: 'FAIL', na: 'N/A' };
-    var tone = verdict === 'pass' ? C.mid : verdict === 'fail' ? C.honey : C.fine;
+    var words = yes ? { pass: 'YES', fail: 'NOT YET', na: 'N/A', wait: 'AWAITING PAYMENT' } : { pass: 'PASS', fail: 'FAIL', na: 'N/A', wait: 'AWAITING PAYMENT' };
+    var tone = verdict === 'pass' ? C.mid : verdict === 'fail' || verdict === 'wait' ? C.honey : C.fine;
     doc.setFontSize(9.5); doc.setTextColor.apply(doc, C.body);
     doc.text(lines, PG.m, y + 3.4);
     doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5); doc.setTextColor.apply(doc, tone);
@@ -2240,6 +2335,7 @@ function makePDF(d) {
   pair('Builder on site', d.builder, 'Serial / batch', d.serial);
   pair('Email', d.email, 'Phone', d.phone);
   full('Install address', d.address);
+  full('Payment', payLine());
   y += 3;
 
   /* outcome */
@@ -2652,6 +2748,8 @@ renderShots();
 renderCustChoice();
 renderReason();
 loadThumbs().then(function(){ renderShots(); refresh(); pump(); });
+renderPay();
+checkPayment();
 
 booting = false;
 setMode(mode);
