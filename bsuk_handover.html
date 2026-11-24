@@ -132,6 +132,11 @@ body {
   padding: 14px 18px; margin: 22px 0 0 0;
 }
 .restore.show { display: flex; }
+.switchjob { display: none; border-left: 4px solid var(--honey); background: #fbf3e8; border-radius: 10px; padding: 14px 16px; margin: 0 0 18px; }
+.switchjob.show { display: block; }
+.switchjob p { margin: 0 0 12px; font-size: 14px; line-height: 1.6; color: var(--ink); }
+.switchjob p strong { color: var(--forest-deep); }
+.switchjob__btns { display: flex; flex-wrap: wrap; gap: 8px; }
 .restore p { margin: 0; font-size: 14px; color: var(--ink); line-height: 1.6; }
 
 /* ================= SECTIONS ================= */
@@ -248,6 +253,23 @@ select.input {
   .specrow .toggle { width: 100%; }
   .specrow .toggle button { flex: 1 1 0; }
 }
+
+/* sections 6 and 7: product details, four answers, electrical rows */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips button { font-family: var(--face); font-size: 12px; font-weight: 700; padding: 9px 14px; border: 1px solid var(--hairline); border-radius: 30px; background: #fff; color: var(--ink-l); cursor: pointer; }
+.chips button.on { background: var(--forest-deep); border-color: var(--forest-deep); color: #fff; }
+.popt { margin: 0 0 16px; }
+.toggle button.on-nt { background: #fff4e0; border-color: var(--honey); color: #8a5a17; }
+.toggle button.on-elec { background: #e8eef9; border-color: #3b5b9a; color: #2b4577; }
+.toggle--wide button { white-space: normal; line-height: 1.25; }
+.ntwrap { padding: 0 0 14px; border-bottom: 1px solid var(--rule-soft); }
+.ntwrap .input { width: 100%; }
+.eltag { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 700; letter-spacing: 0.6px; color: #2b4577; background: #e8eef9; border-radius: 20px; padding: 3px 8px; vertical-align: middle; }
+.elecnote { display: none; border-left: 4px solid #3b5b9a; background: #eef2fa; border-radius: 10px; padding: 14px 16px; margin: 18px 0 0; }
+.elecnote.show { display: block; }
+.elecnote p { margin: 0 0 6px; font-size: 14px; line-height: 1.6; color: var(--ink); }
+.elecnote ul { margin: 6px 0 0; padding-left: 18px; font-size: 14px; line-height: 1.6; }
+.elecrule { font-size: 12.5px; line-height: 1.6; color: var(--ink-l); background: #eef2fa; border-radius: 12px; padding: 10px 14px; margin: 0 0 14px; }
 
 /* walkthrough lift cards */
 .walk { display: grid; gap: 12px; }
@@ -549,6 +571,14 @@ body.m-customer.c-signed .after-sign { display: block; }
 
 <main class="wrap">
 
+  <div class="switchjob" id="switchjob">
+    <p><strong>This device has unfinished work for <span id="switch-name">another customer</span>.</strong> To keep the two jobs apart, nothing from it has been carried over here.</p>
+    <div class="switchjob__btns">
+      <button class="btn btn--sm" id="switch-fresh" type="button">Start this customer (clears the other job)</button>
+      <button class="btn btn--ghost btn--sm" id="switch-back" type="button">Go back to <span id="switch-name2">that job</span></button>
+    </div>
+  </div>
+
   <div class="restore" id="restore">
     <p>Picked up where you left off. Nothing was lost.</p>
     <button class="btn btn--ghost btn--sm" id="restore-dismiss" type="button">Got it</button>
@@ -582,6 +612,7 @@ body.m-customer.c-signed .after-sign { display: block; }
       <div class="grid">
         <div class="field"><p class="label">Builder or installation team</p><input class="input" id="f-builder" type="text" placeholder="Name or team"></div>
       </div>
+      <div id="popts"></div>
       <div class="field"><p class="label">Delivery method</p>
         <div class="opt2" id="delivery">
           <button type="button" data-del="assembled">Fully assembled delivery</button>
@@ -630,7 +661,10 @@ body.m-customer.c-signed .after-sign { display: block; }
       <div><p class="kicker">Build checks</p><h2>Tested before <span>handover</span></h2></div>
       <span class="sec__count" id="checks-count"></span>
     </div>
-    <div class="card"><div id="checks"><p class="empty">Select a product above to load the build checks.</p></div></div>
+    <div class="card">
+      <p class="elecrule" id="elec-rule">Thermal Living Limited does not carry out mains electrical wiring, connections, testing, certification or commissioning. For rows marked <span class="eltag">ELECTRICAL</span> record only what was done: installed, inspected, tested working after the customer's electrician connected it, or awaiting their electrician.</p>
+      <div id="checks"><p class="empty">Select a product above to load the build checks.</p></div>
+    </div>
   </section>
 
   <!-- ================= BUILDER 3: SNAGS + NOTES ================= -->
@@ -769,6 +803,7 @@ body.m-customer.c-signed .after-sign { display: block; }
     <div class="card">
       <div class="strip" id="strip"></div>
       <div id="outstanding" style="margin-top:20px;"></div>
+      <div class="elecnote" id="elecnote"></div>
     </div>
     <div class="card">
       <p class="label">Your cover</p>
@@ -1010,11 +1045,7 @@ var DRAW = {
    DATA
    ========================================================= */
 var SHARED_CHECKS = [
-  'Unit sited level and stable on prepared base',
-  'All timber inspected, no splits, warping or damage in transit',
-  'Cladding and banding secure, no movement',
-  'Doors and windows open, close and seal correctly',
-  'All fixings tight, no exposed sharp edges',
+  'No exposed sharp edges or loose fixings',
   'Site left clean, all packaging and offcuts removed'
 ];
 
@@ -1028,111 +1059,94 @@ var WALKTHROUGH = [
 var WALKTHROUGH_CHECKS = WALKTHROUGH.map(function(w){ return w.t; });
 
 /* Test firing, commissioning and first-use items. Locked until the office releases the job. */
-var PAY_LOCK = /tested to temperature|fired and brought to temperature|stove fired|chiller unit run for a full cycle|controls demonstrated/i;
+var PAY_LOCK = /test fired|controls demonstrated/i;
 var PAY = { state: 'checking', released: false, verifiedBy: '', verifiedAt: '', exception: false };
 function payLocked(t) { return !PAY.released && PAY_LOCK.test(t); }
 
+/* Sections 6 and 7. A product is a base type plus details and add-ons. Checks are built from
+   Millie's lists. Rows made with E() are electrical: we never connect, test or commission mains,
+   so those rows record Installed / Inspected / Tested working / Awaiting electrician instead of Pass. */
 var PRODUCTS = {
-  'barrel-sauna': { name: 'Barrel Sauna', checks: [
-    'Heater mounted, guarded and tested to temperature',
-    'Stones loaded and correctly spaced',
-    'Thermometer and hygrometer fitted and reading',
-    'Benches secure, no flex under load',
-    'Backrests and headrests fitted',
-    'Vents open and close freely, inlet and outlet',
-    'Roof shingles or covering watertight',
-    'Electrical connection tested by a qualified person',
-    'Bucket, ladle and accessories handed over'
-  ]},
-  'cube-sauna': { name: 'Cube Sauna', checks: [
-    'Heater mounted, guarded and tested to temperature',
-    'Stones loaded and correctly spaced',
-    'Thermometer and hygrometer fitted and reading',
-    'Benches secure, no flex under load',
-    'Glass front and door seals checked',
-    'Vents open and close freely, inlet and outlet',
-    'Roof watertight, no standing water',
-    'Electrical connection tested by a qualified person',
-    'Bucket, ladle and accessories handed over'
-  ]},
-  'hot-tub': { name: 'Hot Tub', checks: [
-    'Tub filled and held for a full pressure test, no leaks',
-    'Stove or heater fired and brought to temperature',
-    'Flue fitted, sealed and drawing correctly',
-    'Heat shield or guard fitted around the stove',
-    'Drain valve operates and seals',
-    'Liner seated correctly, no creasing or pinching',
-    'Steps and grab handles secure',
-    'Lid fits and latches',
-    'Thermometer fitted and reading'
-  ]},
-  'ice-bath': { name: 'Ice Bath', checks: [
-    'Bath filled and held, no leaks at seams or fittings',
-    'Chiller unit run for a full cycle and reaching target temperature',
-    'Filtration running, no airlocks',
-    'Drain valve operates and seals',
-    'Insulation and lid fitted correctly',
-    'Electrical connection tested by a qualified person',
-    'Thermometer or digital readout fitted and correct'
-  ]},
-  'sauna-hot-tub-combo': { name: 'Sauna plus Hot Tub Combination', checks: [
-    'Sauna heater mounted, guarded and tested to temperature',
-    'Sauna stones loaded and correctly spaced',
-    'Sauna benches and vents checked',
-    'Tub filled and held for a full pressure test, no leaks',
-    'Tub stove fired, flue fitted and drawing correctly',
-    'Heat shield fitted around the tub stove',
-    'Both drain points operate and seal',
-    'Electrical connection tested by a qualified person',
-    'Accessories for both units handed over'
-  ]},
-  'mobile-trailer': { name: 'Mobile Sauna Trailer', checks: [
-    'Chassis and axle inspected, no damage',
-    'Road lights tested, indicators, brake, tail, number plate',
-    'Tyre pressures and tread checked',
-    'Wheel nuts torqued',
-    'Coupling, breakaway cable and jockey wheel checked',
-    'Stabiliser legs deploy and hold',
-    'Load restrained, nothing loose inside for transit',
-    'Heater mounted, guarded and tested to temperature',
-    'Flue secure and sealed for travel',
-    'Number plate fitted and matching',
-    'Towing weight confirmed and given to the customer'
-  ]},
-  'shepherds-hut': { name: "Shepherd's Hut", checks: [
-    'Wheels and chassis inspected, hut sitting level',
-    'Roof watertight, no standing water, flashing sealed',
-    'Windows and stable door operate and seal',
-    'Internal fit-out secure, units, shelving, bed base',
-    'Stove installed, flue sealed, heat shields fitted',
-    'Carbon monoxide alarm fitted and tested',
-    'Smoke alarm fitted and tested',
-    'Electrics tested by a qualified person, RCD tripping correctly',
-    'Plumbing filled, run and checked for leaks',
-    'Insulation and vapour barrier signed off before close-up'
-  ]},
-  'changing-room': { name: 'Changing Room', checks: [
-    'Unit sited level, door swings clear',
-    'Benches and hooks secure',
-    'Roof watertight',
-    'Lighting fitted and tested',
-    'Ventilation clear',
-    'Flooring laid and sealed'
-  ]},
-  'outdoor-shower': { name: 'Outdoor Shower', checks: [
-    'Plumbing connected, run and checked for leaks',
-    'Hot and cold both flowing and mixing correctly',
-    'Drainage running away cleanly, no pooling',
-    'Fixings secure, no movement in the frame',
-    'Timber treated and sealed at all cut ends',
-    'Isolation valve fitted and shown to the customer'
-  ]},
-  'other': { name: 'Other / Bespoke', checks: [
-    'Build matches the agreed specification',
-    'All bespoke elements checked against the drawing',
-    'Any powered or plumbed elements tested by a qualified person'
-  ]}
+  'barrel-sauna':        { name: 'Sauna', kind: 'sauna' },
+  'mobile-trailer':      { name: 'Mobile trailer sauna', kind: 'sauna', trailer: true },
+  'sauna-hot-tub-combo': { name: 'Sauna plus hot tub', kind: 'combo' },
+  'hot-tub':             { name: 'Hot tub', kind: 'tub' },
+  'ice-bath':            { name: 'Ice bath or cold plunge', kind: 'plunge' },
+  'outdoor-shower':      { name: 'Outdoor or bucket shower', kind: 'shower' },
+  'changing-room':       { name: 'Changing room, cabin or pod', kind: 'structure' },
+  'shepherds-hut':       { name: "Shepherd's hut", kind: 'hut' },
+  'other':               { name: 'Other or bespoke', kind: 'other' }
 };
+var OPT_CHOICES = {
+  shape:   { label: 'Sauna shape', kinds: ['sauna', 'combo'], list: [['barrel','Barrel'],['straight','Straight'],['square','Square'],['bespoke','Bespoke'],['indoor','Indoor']] },
+  heater:  { label: 'Sauna heater', kinds: ['sauna', 'combo'], list: [['wood','Wood-fired'],['electric','Electric'],['infrared','Infrared'],['hybrid','Hybrid']] },
+  tubHeat: { label: 'Hot tub heating', kinds: ['tub', 'combo'], list: [['wood','Wood-fired'],['electric','Electric'],['hybrid','Hybrid']] },
+  control: { label: 'Hot tub controls', kinds: ['tub', 'combo'], list: [['gecko','Gecko'],['balboa','Balboa'],['none','None or other']] },
+  shower:  { label: 'Shower type', kinds: ['shower'], list: [['outdoor','Outdoor shower'],['bucket','Bucket shower']] }
+};
+var ADDONS = [['changing','Changing room'],['solar','Solar system'],['chiller','Chiller or heat pump'],['filtration','Filtration and circulation'],['trailer','Trailer']];
+
+function E(t) { return { t: t, e: 1 }; }
+function saunaChecks(o) {
+  var c = [
+    'Structure level, stable and positioned as agreed',
+    'Finished appearance matches the agreed specification',
+    o.shape === 'indoor' ? 'Room ventilation and surrounding clearances suitable' : 'Roof covering and visible weatherproofing details complete',
+    'Timber, bands, joints and fixings secure, no splits or damage',
+    'Door opens safely from the inside',
+    'Door closes without excessive force, hinges, latch and seals working',
+    'Windows and panoramic glazing undamaged and sealed',
+    'Benches and backrests secure, no flex under load',
+    'Ventilation fitted and unobstructed'
+  ];
+  var h = o.heater;
+  if (h === 'wood' || h === 'hybrid') c = c.concat(['Stove positioned with the manufacturer clearances', 'Heat guard and shielding fitted', 'Chimney and flue installed and sealed, roof flashing in place', 'Correct stones loaded and accessories supplied', 'Stove test fired and flue drawing']);
+  if (h === 'electric') c = c.concat(['Electric heater mounted with the manufacturer clearances', 'Heat guard fitted', 'Correct stones loaded and accessories supplied']);
+  if (h === 'electric' || h === 'hybrid') c.push(E('Electric heater and control panel'));
+  if (h === 'infrared') c = c.concat(['Infrared panels mounted securely with guards fitted', E('Infrared panels and controller')]);
+  if (!h) c = c.concat(['Heater position and applicable manufacturer clearances', 'Protective guards and heat shielding fitted', 'Correct stones and accessories supplied']);
+  c.push(E('Lighting and other fitted extras'));
+  return c;
+}
+function tubChecks(o) {
+  var c = ['Shell and visible finish undamaged', 'Plumbing, fittings and connections secure', 'Water tightness checked with a fill test', 'Drain valves operate and seal', 'Filtration and circulation fitted', 'Covers, steps and accessories supplied', 'Safety and operating guidance supplied'];
+  if (o.tubHeat === 'wood' || o.tubHeat === 'hybrid') c = c.concat(['Hot tub stove fitted with heat shield and clearances', 'Hot tub flue fitted and sealed', 'Hot tub stove test fired and heating the water']);
+  if (o.tubHeat === 'electric' || o.tubHeat === 'hybrid') c.push(E('Hot tub heater, pumps and jets'));
+  if (o.control === 'gecko') c.push(E('Gecko control system'));
+  if (o.control === 'balboa') c.push(E('Balboa control system'));
+  return c;
+}
+var PLUNGE_CHECKS = ['Shell and visible finish undamaged', 'Plumbing, fittings and connections secure', 'Water tightness checked with a fill test', 'Drain valves operate and seal', 'Covers, steps and accessories supplied', 'Safety and operating guidance supplied'];
+var STRUCTURE_CHECKS = ['Structure level, stable and positioned as agreed', 'Finished appearance matches the agreed specification', 'Roof covering and weatherproofing complete', 'Door opens safely from the inside, closes and seals', 'Windows undamaged and sealed', 'Interior fit-out complete as agreed', 'Timber and fixings secure, no splits or damage', E('Lighting and fitted electrics')];
+var ADDON_CHECKS = {
+  changing: ['Changing room partition and door fitted and operating', 'Changing room benches and hooks fitted'],
+  solar: ['Solar panel mounted and secured', 'Battery, controller and cabling mounted and protected', 'Solar system tested within our contracted scope'],
+  chiller: ['Chiller or heat pump positioned with airflow clearances', 'Chiller flow and return connections secure', E('Chiller or heat pump (Poolex)')],
+  filtration: ['Filtration and circulation equipment fitted, no leaks at fittings', E('Filtration and circulation pump')],
+  trailer: ['Trailer chassis and mounting arrangements secure', 'Axles, wheels and tyres in good condition', 'Wheel fixings checked and secure', 'Hitch and coupling secure and operating', 'Handbrake and breakaway cable fitted and working', 'Jockey wheel and stabilisers operating', 'Road lighting working with a towing vehicle', 'Equipment secured for towing', 'Chimney and detachable components secured or stowed for towing', 'Towing information and guidance supplied to the customer']
+};
+
+/* All checks for one product. The main product uses the chosen details and add-ons; extra products use defaults. */
+function checksFor(key, o, addons) {
+  var p = PRODUCTS[key]; if (!p) return [];
+  o = o || {}; addons = addons || {};
+  var c = [];
+  if (p.kind === 'sauna') c = saunaChecks(o);
+  if (p.kind === 'combo') c = saunaChecks(o).concat(tubChecks(o));
+  if (p.kind === 'tub') c = tubChecks(o);
+  if (p.kind === 'plunge') c = PLUNGE_CHECKS.slice();
+  if (p.kind === 'shower') c = o.shower === 'bucket'
+    ? ['Bucket shower fitted level and secure', 'Bucket mechanism and pull chain operate', 'Drainage runs away cleanly']
+    : ['Shower fitted level and secure', 'Water connections secure, no leaks where tested', 'Drainage runs away cleanly', 'Controls and valves operate where water is connected'];
+  if (p.kind === 'structure') c = STRUCTURE_CHECKS.slice();
+  if (p.kind === 'hut') c = STRUCTURE_CHECKS.concat(['Stove installed with clearances, flue sealed and heat shields fitted', 'Carbon monoxide alarm fitted and tested', 'Smoke alarm fitted and tested', 'Plumbing filled and checked for leaks where connected']);
+  if (p.kind === 'other') c = ['Build matches the agreed specification and drawing', 'All bespoke elements checked against the drawing', E('Any powered elements')];
+  ADDONS.forEach(function(a){
+    var on = addons[a[0]] || (a[0] === 'trailer' && p.trailer);
+    if (on) c = c.concat(ADDON_CHECKS[a[0]]);
+  });
+  return c;
+}
 
 /* =========================================================
    SHOT LIST
@@ -1213,6 +1227,9 @@ function blank() {
     builderSubmit: { reason: '', note: '', sent: false, at: '' },
     delivery: '',
     extraProducts: [],
+    opt: { shape: '', heater: '', tubHeat: '', control: '', shower: '' },
+    addons: {},
+    ntReason: {},
     spec: { loaded: false, source: null, lines: [] }
   };
 }
@@ -1632,8 +1649,9 @@ $('cust-choice').addEventListener('click', function(e){
 /* =========================================================
    AUTOSAVE
    ========================================================= */
+var HOLD_SAVE = false; /* true while another customer's unfinished work is on this device */
 function save() {
-  if (booting) return;
+  if (booting || HOLD_SAVE) return;
   var job = {};
   JOB_FIELDS.forEach(function(id){ job[id] = $(id).value; });
   job['f-notes'] = $('f-notes').value;
@@ -1802,6 +1820,7 @@ function matchProduct(v) {
   if (!v) return '';
   var low = v.toLowerCase().trim();
   if (PRODUCTS[low]) return low;
+  if (low === 'cube-sauna' || low === 'cube sauna') return 'barrel-sauna';
   var hit = Object.keys(PRODUCTS).find(function(k){ return PRODUCTS[k].name.toLowerCase() === low; });
   return hit || '';
 }
@@ -1809,41 +1828,117 @@ function matchProduct(v) {
 /* =========================================================
    CHECK ROWS
    ========================================================= */
-function renderToggle(scope, id, current) {
+function renderToggle(scope, id, current, elec) {
   var opts = scope === 'walkthrough'
     ? [{ v: 'pass', l: 'Yes', c: 'on-pass' }, { v: 'fail', l: 'Not yet', c: 'on-fail' }, { v: 'na', l: 'N/A', c: 'on-na' }]
-    : [{ v: 'pass', l: 'Pass', c: 'on-pass' }, { v: 'fail', l: 'Fail', c: 'on-fail' }, { v: 'na', l: 'N/A', c: 'on-na' }];
-  return '<div class="toggle">' + opts.map(function(o){
+    : elec
+      ? [{ v: 'inst', l: 'Installed', c: 'on-na' }, { v: 'insp', l: 'Inspected', c: 'on-na' }].concat(PAY.released ? [{ v: 'test', l: 'Tested working', c: 'on-pass' }] : []).concat([{ v: 'elec', l: 'Awaiting electrician', c: 'on-elec' }, { v: 'na', l: 'N/A', c: 'on-na' }])
+      : [{ v: 'pass', l: 'Pass', c: 'on-pass' }, { v: 'fail', l: 'Action required', c: 'on-fail' }, { v: 'na', l: 'N/A', c: 'on-na' }, { v: 'nt', l: 'Not tested', c: 'on-nt' }];
+  return '<div class="toggle' + (scope === 'checks' ? ' toggle--wide' : '') + '">' + opts.map(function(o){
     return '<button type="button" data-scope="' + scope + '" data-id="' + id + '" data-v="' + o.v + '" class="' + (current === o.v ? o.c : '') + '">' + o.l + '</button>';
   }).join('') + '</div>';
 }
 
+var ELEC_ROWS = {};
+function checkText(c) { return typeof c === 'string' ? c : c.t; }
 function renderChecks() {
   var key = $('f-product').value;
   var box = $('checks');
-  if (!key) {
+  if (!key || !PRODUCTS[key]) {
     box.innerHTML = '<p class="empty">Select a product above to load the build checks.</p>';
     state.checks = {};
     refresh();
     return;
   }
-  var list = PRODUCTS[key].checks.concat(SHARED_CHECKS);
+  var list = checksFor(key, state.opt, state.addons).concat(SHARED_CHECKS);
   state.extraProducts.forEach(function(x){
     if (!x || !PRODUCTS[x]) return;
-    PRODUCTS[x].checks.forEach(function(c){ list.push(PRODUCTS[x].name + ': ' + c); });
+    checksFor(x, {}, {}).forEach(function(c){
+      var name = PRODUCTS[x].name + ': ' + checkText(c);
+      list.push(typeof c === 'string' ? name : E(name));
+    });
   });
+  ELEC_ROWS = {};
   var fresh = {};
-  list.forEach(function(t){
-    var v = state.checks[t] || '';
-    if (payLocked(t)) v = 'wait'; else if (v === 'wait') v = '';
-    fresh[t] = v;
+  list.forEach(function(c){
+    var tx = checkText(c);
+    if (typeof c !== 'string') ELEC_ROWS[tx] = true;
+    var v = state.checks[tx] || '';
+    if (payLocked(tx)) v = 'wait'; else if (v === 'wait') v = '';
+    if (v === 'test' && !PAY.released) v = '';
+    fresh[tx] = v;
   });
   state.checks = fresh;
-  box.innerHTML = list.map(function(t){
-    if (payLocked(t)) return '<div class="checkrow locked"><p class="checkrow__text">' + esc(t) + '</p><span class="waitlabel">Waiting for payment</span></div>';
-    return '<div class="checkrow"><p class="checkrow__text">' + esc(t) + '</p>' + renderToggle('checks', esc(t), state.checks[t]) + '</div>';
+  box.innerHTML = list.map(function(c){
+    var tx = checkText(c), el = !!ELEC_ROWS[tx];
+    var label = esc(tx) + (el ? ' <span class="eltag">ELECTRICAL</span>' : '');
+    if (payLocked(tx)) return '<div class="checkrow locked"><p class="checkrow__text">' + label + '</p><span class="waitlabel">Waiting for payment</span></div>';
+    var row = '<div class="checkrow"><p class="checkrow__text">' + label + '</p>' + renderToggle('checks', esc(tx), state.checks[tx], el) + '</div>';
+    if (state.checks[tx] === 'nt') row += '<div class="ntwrap"><input class="input" type="text" data-nt="' + esc(tx) + '" value="' + esc(state.ntReason[tx] || '') + '" placeholder="Why was this not tested? e.g. no water on site yet"></div>';
+    return row;
   }).join('');
   refresh();
+}
+
+/* Action required adds a snag automatically, so the office gets a task for it */
+function syncCheckSnags() {
+  Object.keys(state.checks).forEach(function(k){
+    var ref = 'c:' + k;
+    var at = state.snags.findIndex(function(s){ return s.specRef === ref; });
+    if (state.checks[k] === 'fail' && at === -1) state.snags.push({ text: 'Action required: ' + k, owner: '', due: '', specRef: ref });
+    if (state.checks[k] !== 'fail' && at !== -1) state.snags.splice(at, 1);
+  });
+  state.snags = state.snags.filter(function(s){ return !(s.specRef && s.specRef.indexOf('c:') === 0 && !(s.specRef.slice(2) in state.checks)); });
+}
+document.addEventListener('input', function(e){
+  var t = e.target;
+  if (t.matches('input[data-nt]')) {
+    var key = Object.keys(state.checks).find(function(k){ return esc(k) === t.dataset.nt; });
+    if (key) { state.ntReason[key] = t.value; save(); }
+  }
+});
+
+/* Product details and add-ons */
+function renderPopts() {
+  var key = $('f-product').value, p = PRODUCTS[key];
+  if (!p) { $('popts').innerHTML = ''; return; }
+  var html = '';
+  Object.keys(OPT_CHOICES).forEach(function(k){
+    var oc = OPT_CHOICES[k];
+    if (oc.kinds.indexOf(p.kind) === -1) return;
+    html += '<div class="popt"><p class="label">' + oc.label + '</p><div class="chips">' + oc.list.map(function(c){
+      return '<button type="button" data-opt="' + k + '" data-ov="' + c[0] + '" class="' + (state.opt[k] === c[0] ? 'on' : '') + '">' + c[1] + '</button>';
+    }).join('') + '</div></div>';
+  });
+  html += '<div class="popt"><p class="label">Add-ons fitted</p><div class="chips">' + ADDONS.filter(function(a){ return !(a[0] === 'trailer' && p.trailer); }).map(function(a){
+    return '<button type="button" data-addon="' + a[0] + '" class="' + (state.addons[a[0]] ? 'on' : '') + '">' + a[1] + '</button>';
+  }).join('') + '</div></div>';
+  $('popts').innerHTML = html;
+}
+function poptsMissing() {
+  var p = PRODUCTS[$('f-product').value]; if (!p) return 0;
+  var n = 0;
+  Object.keys(OPT_CHOICES).forEach(function(k){ if (OPT_CHOICES[k].kinds.indexOf(p.kind) !== -1 && !state.opt[k]) n++; });
+  return n;
+}
+document.addEventListener('click', function(e){
+  var o = e.target.closest('button[data-opt]');
+  if (o) { state.opt[o.dataset.opt] = state.opt[o.dataset.opt] === o.dataset.ov ? '' : o.dataset.ov; renderPopts(); renderChecks(); syncCheckSnags(); renderSnags(); save(); return; }
+  var a = e.target.closest('button[data-addon]');
+  if (a) { state.addons[a.dataset.addon] = !state.addons[a.dataset.addon]; renderPopts(); renderChecks(); syncCheckSnags(); renderSnags(); save(); }
+});
+
+/* Guess details from the estimate lines, only where nothing has been chosen yet */
+function guessOptsFrom(text) {
+  var t = String(text || '').toLowerCase();
+  if (!$('f-product').value) {
+    var k = /mobile|trailer/.test(t) ? 'mobile-trailer' : /sauna/.test(t) ? 'barrel-sauna' : guessProduct(t);
+    if (k && PRODUCTS[k]) $('f-product').value = k;
+  }
+  if (!state.opt.shape) state.opt.shape = /indoor/.test(t) ? 'indoor' : /barrel/.test(t) ? 'barrel' : /square|cube/.test(t) ? 'square' : '';
+  if (!state.opt.heater) state.opt.heater = /hybrid/.test(t) ? 'hybrid' : /infrared/.test(t) ? 'infrared' : /wood[- ]?(fired|burning)|stove/.test(t) ? 'wood' : /harvia|electric|kw|control panel|wifi/.test(t) ? 'electric' : '';
+  if (/changing/.test(t)) state.addons.changing = true;
+  if (/solar/.test(t)) state.addons.solar = true;
 }
 
 function renderWalkthrough() {
@@ -1868,7 +1963,7 @@ document.addEventListener('click', function(e){
   var key = Object.keys(state[scope]).find(function(k){ return esc(k) === b.dataset.id; });
   if (!key) return;
   state[scope][key] = state[scope][key] === b.dataset.v ? '' : b.dataset.v;
-  if (scope === 'checks') renderChecks(); else renderWalkthrough();
+  if (scope === 'checks') { renderChecks(); syncCheckSnags(); renderSnags(); } else renderWalkthrough();
   save();
 });
 
@@ -1877,24 +1972,34 @@ document.addEventListener('click', function(e){
    ========================================================= */
 function cleanSnags() { return state.snags.filter(function(s){ return s.text && s.text.trim(); }); }
 
+function countChecks(vals) { return Object.keys(state.checks).filter(function(k){ return vals.indexOf(state.checks[k]) !== -1; }).length; }
 function renderStrip() {
   var keys = Object.keys(state.checks);
-  var pass = keys.filter(function(k){ return state.checks[k] === 'pass'; }).length;
-  var fail = keys.filter(function(k){ return state.checks[k] === 'fail'; }).length;
-  var na = keys.filter(function(k){ return state.checks[k] === 'na'; }).length;
+  var pass = countChecks(['pass', 'test']), fail = countChecks(['fail']), na = countChecks(['na']);
+  var nt = countChecks(['nt']), inst = countChecks(['inst', 'insp']), el = countChecks(['elec']);
   $('strip-total').textContent = keys.length ? keys.length + ' checks' : '';
   var html = '<div class="strip__cell"><p class="n">' + pass + '</p><p class="k">Passed</p></div>';
-  if (fail) html += '<div class="strip__cell fail"><p class="n">' + fail + '</p><p class="k">Outstanding</p></div>';
+  if (fail) html += '<div class="strip__cell fail"><p class="n">' + fail + '</p><p class="k">Action required</p></div>';
+  if (nt) html += '<div class="strip__cell fail"><p class="n">' + nt + '</p><p class="k">Not tested</p></div>';
+  if (el) html += '<div class="strip__cell na"><p class="n">' + el + '</p><p class="k">Awaiting electrician</p></div>';
+  if (inst) html += '<div class="strip__cell na"><p class="n">' + inst + '</p><p class="k">Installed, not tested</p></div>';
   if (na) html += '<div class="strip__cell na"><p class="n">' + na + '</p><p class="k">Not applicable</p></div>';
   $('strip').innerHTML = html;
+  var waiting = keys.filter(function(k){ return state.checks[k] === 'elec'; });
+  var nts = keys.filter(function(k){ return state.checks[k] === 'nt'; });
+  var note = '';
+  if (waiting.length) note += '<p><strong>Your electrician needs to connect and commission this equipment.</strong> It must not be used until they have. We do not carry out mains wiring, connections, testing or commissioning.</p><ul>' + waiting.map(function(k){ return '<li>' + esc(k) + '</li>'; }).join('') + '</ul>';
+  if (nts.length) note += '<p style="margin-top:12px;"><strong>Not tested today:</strong></p><ul>' + nts.map(function(k){ return '<li>' + esc(k) + (state.ntReason[k] ? ', ' + esc(state.ntReason[k]) : '') + '</li>'; }).join('') + '</ul>';
+  $('elecnote').innerHTML = note;
+  $('elecnote').classList.toggle('show', !!note);
 }
 
 function renderOutstanding() {
-  var fails = Object.keys(state.checks).filter(function(k){ return state.checks[k] === 'fail'; });
+  var fails = Object.keys(state.checks).filter(function(k){ return state.checks[k] === 'fail' && !state.snags.some(function(s){ return s.specRef === 'c:' + k; }); });
   var snags = cleanSnags();
   var box = $('outstanding');
   if (!fails.length && !snags.length) {
-    box.innerHTML = '<div class="panel panel--clean"><p class="label">Nothing outstanding</p><p class="focal">Everything was checked and passed. Your build is finished.</p></div>';
+    box.innerHTML = '<div class="panel panel--clean"><p class="label">Nothing outstanding</p><p class="focal">Nothing was recorded as needing action. Anything not tested or awaiting your electrician is listed below.</p></div>';
     return;
   }
   var n = fails.length + snags.length;
@@ -2150,7 +2255,7 @@ JOB_FIELDS.concat(['f-notes']).forEach(function(id){
   el.addEventListener('input', fn);
   el.addEventListener('change', fn);
 });
-$('f-product').addEventListener('change', function(){ renderChecks(); renderShots(); renderHero(); refresh(); save(); });
+$('f-product').addEventListener('change', function(){ renderPopts(); renderChecks(); syncCheckSnags(); renderSnags(); renderShots(); renderHero(); refresh(); save(); });
 $('restore-dismiss').addEventListener('click', function(){ $('restore').classList.remove('show'); });
 
 /* =========================================================
@@ -2222,7 +2327,6 @@ function guessProduct(text) {
   if (/changing room/.test(t)) return 'changing-room';
   if (/shepherd|hut/.test(t)) return 'shepherds-hut';
   if (/trailer|mobile/.test(t)) return 'mobile-trailer';
-  if (/cube/.test(t) && PRODUCTS['cube-sauna']) return 'cube-sauna';
   if (/sauna/.test(t)) return 'barrel-sauna';
   return '';
 }
@@ -2338,10 +2442,11 @@ function fetchJob() {
       state.spec.lines = j.specLines.map(function(l, i){ return { label: l.label, value: l.value, v: '', manual: false, ref: 'e' + i }; });
     }
     if (j.source) state.spec.source = j.source;
+    guessOptsFrom((j.specLines || []).map(function(l){ return l.label + ' ' + l.value; }).join(' '));
     state.spec.loaded = true;
   }).catch(function(){
     state.spec.loaded = true;
-  }).then(function(){ renderDelivery(); renderXprods(); renderSpec(); renderChecks(); refresh(); save(); });
+  }).then(function(){ renderDelivery(); renderXprods(); renderSpec(); renderPopts(); renderChecks(); renderShots(); refresh(); save(); });
 }
 
 /* =========================================================
@@ -2375,8 +2480,12 @@ function validate() {
   if (!state.delivery) missing.push('delivery method');
   var sp = state.spec.lines.filter(function(l){ return !l.v; }).length;
   if (sp) missing.push(sp + ' specification line' + (sp > 1 ? 's' : ''));
+  var pm = poptsMissing();
+  if (pm) missing.push(pm + ' product detail' + (pm > 1 ? 's' : ''));
   var a = Object.keys(state.checks).filter(function(k){ return !state.checks[k]; }).length;
   if (a) missing.push(a + ' build check' + (a > 1 ? 's' : ''));
+  var ntr = Object.keys(state.checks).filter(function(k){ return state.checks[k] === 'nt' && !(state.ntReason[k] || '').trim(); }).length;
+  if (ntr) missing.push('a reason for ' + ntr + ' check' + (ntr > 1 ? 's' : '') + ' not tested');
   var b = Object.keys(state.walkthrough).filter(function(k){ return !state.walkthrough[k]; }).length;
   if (b) missing.push(b + ' walkthrough item' + (b > 1 ? 's' : ''));
   var noOwner = cleanSnags().filter(function(s){ return !s.owner.trim() || !s.due; }).length;
@@ -2399,8 +2508,18 @@ function allProductNames() {
 function collect() {
   var snags = cleanSnags().map(function(s){ return { text: s.text.trim(), owner: s.owner.trim(), due: s.due }; });
   var fails = Object.keys(state.checks).filter(function(k){ return state.checks[k] === 'fail'; });
+  var failsOnly = fails.filter(function(k){ return !state.snags.some(function(s){ return s.specRef === 'c:' + k; }); });
   var key = $('f-product').value;
+  var ELW = { inst: 'Installed only', insp: 'Inspected', test: 'Tested working', elec: 'Awaiting customer electrician', na: 'Not applicable' };
   return {
+    failsOnly: failsOnly,
+    details: Object.keys(OPT_CHOICES).filter(function(k){ return state.opt[k]; }).map(function(k){
+      var c = OPT_CHOICES[k].list.find(function(x){ return x[0] === state.opt[k]; }); return OPT_CHOICES[k].label + ': ' + (c ? c[1] : state.opt[k]);
+    }).concat(ADDONS.filter(function(a){ return state.addons[a[0]]; }).map(function(a){ return 'Add-on: ' + a[1]; })),
+    notTested: Object.keys(state.checks).filter(function(k){ return state.checks[k] === 'nt'; }).map(function(k){ return k + ' (' + (state.ntReason[k] || 'no reason given') + ')'; }),
+    electrical: Object.keys(ELEC_ROWS).filter(function(k){ return k in state.checks; }).map(function(k){ return { t: k, v: ELW[state.checks[k]] || 'Not recorded' }; }),
+    elecOutstanding: Object.keys(state.checks).some(function(k){ return state.checks[k] === 'elec'; }),
+
     name: $('f-name').value.trim(), email: $('f-email').value.trim(), phone: $('f-phone').value.trim(),
     order: $('f-order').value.trim(), product: allProductNames().join(', '), productKey: key,
     address: $('f-address').value.trim(), date: $('f-date').value,
@@ -2507,8 +2626,9 @@ function makePDF(d) {
     var h = Math.max(lines.length * 4.6, 6);
     room(h + 3);
     var words = yes === 'spec' ? { pass: 'MATCHES', fail: 'MISSING OR WRONG' }
-      : yes ? { pass: 'YES', fail: 'NOT YET', na: 'N/A', wait: 'AWAITING PAYMENT' } : { pass: 'PASS', fail: 'FAIL', na: 'N/A', wait: 'AWAITING PAYMENT' };
-    var tone = verdict === 'pass' ? C.mid : verdict === 'fail' || verdict === 'wait' ? C.honey : C.fine;
+      : yes ? { pass: 'YES', fail: 'NOT YET', na: 'N/A', wait: 'AWAITING PAYMENT' }
+      : { pass: 'PASS', fail: 'ACTION REQUIRED', na: 'N/A', nt: 'NOT TESTED', wait: 'AWAITING PAYMENT', inst: 'INSTALLED', insp: 'INSPECTED', test: 'TESTED WORKING', elec: 'AWAITING ELECTRICIAN' };
+    var tone = verdict === 'pass' || verdict === 'test' ? C.mid : verdict === 'fail' || verdict === 'wait' || verdict === 'nt' ? C.honey : C.fine;
     doc.setFontSize(9.5); doc.setTextColor.apply(doc, C.body);
     doc.text(lines, PG.m, y + 3.4);
     doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5); doc.setTextColor.apply(doc, tone);
@@ -2557,7 +2677,7 @@ function makePDF(d) {
   doc.setFillColor.apply(doc, C.forestDeep); doc.rect(PG.m, y, 1.1, 20, 'F');
   label('Handover outcome', PG.m + 6, y + 7);
   doc.setFont('helvetica', 'bold'); doc.setFontSize(12.5); doc.setTextColor.apply(doc, C.forestDeep);
-  var n = d.snags.length + d.fails.length;
+  var n = d.snags.length + d.failsOnly.length;
   doc.text(d.status === 'Clean' ? 'Clean handover, nothing outstanding' : n + ' item' + (n === 1 ? '' : 's') + ' outstanding', PG.m + 6, y + 14.5);
   doc.setFont('helvetica', 'normal');
   y += 28;
@@ -2581,8 +2701,21 @@ function makePDF(d) {
   }
 
   section('Build Checks');
-  Object.keys(state.checks).forEach(function(k){ checkLine(k, state.checks[k], false); });
+  if (d.details.length) { para(d.details.join('. ') + '.'); y += 1; }
+  Object.keys(state.checks).forEach(function(k){
+    if (ELEC_ROWS[k]) return;
+    checkLine(k, state.checks[k], false);
+    if (state.checks[k] === 'nt') para('Not tested because: ' + (state.ntReason[k] || 'no reason given'), C.sub);
+  });
   y += 4;
+
+  if (d.electrical.length) {
+    section('Electrical');
+    para('Thermal Living Limited does not carry out mains electrical wiring, connections, testing, certification or commissioning. Mains-powered equipment must not be used until the customer\'s qualified electrician has connected and commissioned it.');
+    d.electrical.forEach(function(r){ checkLine(r.t, state.checks[r.t], false); });
+    y += 4;
+  }
+
 
   section('Snag List');
   if (d.snags.length) {
@@ -2678,6 +2811,10 @@ function payload(d, event, pdfUrl, extra) {
     first_name: d.name.split(' ')[0] || '', full_name: d.name, email: d.email, phone: d.phone,
     order_number: d.order, product: d.product, handover_product: d.product,
     install_address: d.address, delivery_method: d.delivery,
+    product_details: d.details.join(' | '),
+    handover_not_tested: d.notTested.length ? d.notTested.join(' | ') : 'None',
+    electrical_status: d.electrical.map(function(r){ return r.t + ': ' + r.v; }).join(' | '),
+    electrical_outstanding: d.elecOutstanding ? 'Yes' : 'No',
     spec_check: d.spec.map(function(l){ return l.text + ': ' + (l.v === 'ok' ? 'Matches' : l.v === 'bad' ? 'Missing or wrong' : 'Not checked'); }).join(' | '),
     handover_date: d.date, handover_date_long: longDate(parseIso(d.date) || new Date()),
     handover_builder: d.builder, handover_status: d.status,
@@ -2842,8 +2979,12 @@ function builderMissing() {
   if (!state.delivery) missing.push('delivery method');
   var sp = state.spec.lines.filter(function(l){ return !l.v; }).length;
   if (sp) missing.push(sp + ' specification line' + (sp > 1 ? 's' : ''));
+  var pm = poptsMissing();
+  if (pm) missing.push(pm + ' product detail' + (pm > 1 ? 's' : ''));
   var a = Object.keys(state.checks).filter(function(k){ return !state.checks[k]; }).length;
   if (a) missing.push(a + ' build check' + (a > 1 ? 's' : ''));
+  var ntr = Object.keys(state.checks).filter(function(k){ return state.checks[k] === 'nt' && !(state.ntReason[k] || '').trim(); }).length;
+  if (ntr) missing.push('a reason for ' + ntr + ' check' + (ntr > 1 ? 's' : '') + ' not tested');
   var noOwner = cleanSnags().filter(function(s){ return !s.owner.trim() || !s.due; }).length;
   if (noOwner) missing.push('an owner and fix-by date on ' + noOwner + ' snag' + (noOwner > 1 ? 's' : ''));
   var noShots = requiredShots().filter(function(s){ return !shotDone(s.id); }).length;
@@ -2955,10 +3096,35 @@ initReview();
 pads['sig-builder'] = initPad('sig-builder');
 pads['sig-customer'] = initPad('sig-customer');
 
-var restored = load();
+/* One job per device at a time: a link for a different customer never inherits the saved job */
+var OTHER_JOB = null;
+(function(){
+  var urlContact = new URLSearchParams(window.location.search).get('contact') || '';
+  if (urlContact.indexOf('{{') !== -1) urlContact = '';
+  var blob = null;
+  try { blob = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); } catch (e) {}
+  if (blob && blob.v === 4 && blob.contact && urlContact && blob.contact !== urlContact) {
+    OTHER_JOB = { contact: blob.contact, name: (blob.job && blob.job['f-name']) || 'another customer' };
+  }
+})();
+var restored = OTHER_JOB ? false : load();
+if (OTHER_JOB) {
+  HOLD_SAVE = true;
+  $('switch-name').textContent = OTHER_JOB.name;
+  $('switch-name2').textContent = OTHER_JOB.name;
+  $('switchjob').classList.add('show');
+  $('switch-fresh').addEventListener('click', function(){
+    wipe();
+    dbClear().catch(function(){}).then(function(){ window.location.reload(); });
+  });
+  $('switch-back').addEventListener('click', function(){
+    window.location.href = window.location.pathname + '?contact=' + encodeURIComponent(OTHER_JOB.contact);
+  });
+}
 var urlHadData = prefill();
 if (restored && !urlHadData) $('restore').classList.add('show');
 
+renderPopts();
 renderChecks();
 renderWalkthrough();
 renderDocs();
@@ -2971,7 +3137,7 @@ renderCover();
 renderShots();
 renderCustChoice();
 renderReason();
-loadThumbs().then(function(){ renderShots(); refresh(); pump(); });
+if (!OTHER_JOB) loadThumbs().then(function(){ renderShots(); refresh(); pump(); });
 renderPay();
 checkPayment();
 renderDelivery();
