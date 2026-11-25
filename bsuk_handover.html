@@ -797,7 +797,7 @@ body.m-customer.c-signed .after-sign { display: block; }
   <section class="sec" id="c-checked" data-mode="customer">
     <div class="sec__head">
       <div class="sec__num">1</div>
-      <div><p class="kicker">What we checked</p><h2>Tested before you <span>got the keys</span></h2></div>
+      <div><p class="kicker">The big day</p><h2 id="c-ready-h">Your sauna is <span>ready</span></h2><p class="prose" style="margin:6px 0 0;">Built in our Welsh workshop, checked by our team, and now officially yours.</p></div>
       <span class="sec__count" id="strip-total"></span>
     </div>
     <div class="card">
@@ -1100,7 +1100,7 @@ function saunaChecks(o) {
     'Ventilation fitted and unobstructed'
   ];
   var h = o.heater;
-  if (h === 'wood' || h === 'hybrid') c = c.concat(['Stove positioned with the manufacturer clearances', 'Heat guard and shielding fitted', 'Chimney and flue installed and sealed, roof flashing in place', 'Correct stones loaded and accessories supplied', 'Stove test fired and flue drawing']);
+  if (h === 'wood' || h === 'hybrid') c = c.concat(['Stove positioned with the manufacturer clearances', 'Heat guard and shielding fitted', 'Chimney and flue installed and sealed, roof flashing in place', 'Correct stones loaded and accessories supplied']);
   if (h === 'electric') c = c.concat(['Electric heater mounted with the manufacturer clearances', 'Heat guard fitted', 'Correct stones loaded and accessories supplied']);
   if (h === 'electric' || h === 'hybrid') c.push(E('Electric heater and control panel'));
   if (h === 'infrared') c = c.concat(['Infrared panels mounted securely with guards fitted', E('Infrared panels and controller')]);
@@ -1155,7 +1155,7 @@ function checksFor(key, o, addons) {
 var NO_DOOR = ['hot-tub', 'ice-bath', 'outdoor-shower'];
 
 function shotsFor(key) {
-  if (!key) return [];
+  key = key || 'other';
   var door = NO_DOOR.indexOf(key) === -1;
   var out = [];
   function add(id, label, o, req, extra) { out.push(Object.assign({ id: id, label: label, o: o, req: req }, extra || {})); }
@@ -1688,6 +1688,11 @@ function wipe() { try { localStorage.removeItem(SAVE_KEY); } catch (e) {} }
 /* =========================================================
    HERO + DRAWINGS
    ========================================================= */
+var READY_NOUN = { 'barrel-sauna': ['sauna', 'is'], 'mobile-trailer': ['mobile sauna', 'is'], 'sauna-hot-tub-combo': ['sauna and hot tub', 'are'], 'hot-tub': ['hot tub', 'is'], 'ice-bath': ['ice bath', 'is'], 'outdoor-shower': ['outdoor shower', 'is'], 'changing-room': ['cabin', 'is'], 'shepherds-hut': ["shepherd's hut", 'is'], 'other': ['build', 'is'] };
+function renderReadyHeading() {
+  var n = READY_NOUN[$('f-product').value] || ['build', 'is'];
+  $('c-ready-h').innerHTML = 'Your ' + esc(n[0]) + ' ' + n[1] + ' <span>ready</span>';
+}
 function productName() { var k = $('f-product').value; return k ? PRODUCTS[k].name : ''; }
 function drawSrc() { var f = DRAW[$('f-product').value]; return f ? CDN + f : ''; }
 
@@ -1705,6 +1710,7 @@ function renderHero() {
     $('h-kicker').textContent = name ? 'Prepared for ' + name : 'Your handover';
     $('h-title').innerHTML = p ? 'Welcome to your new <span>' + esc(p.toLowerCase()) + '</span>' : 'Your <span>handover</span>';
     $('h-lede').textContent = 'Handed over on ' + longDate(handoverDate()) + '.';
+    renderReadyHeading();
   }
 }
 
@@ -1733,7 +1739,7 @@ $('go-customer').addEventListener('click', function(){ state.builderLocked = tru
    ========================================================= */
 function allSet(obj) { var k = Object.keys(obj); return k.length > 0 && k.every(function(x){ return obj[x]; }); }
 function signed(id) { return !!(pads[id] && pads[id].isSigned()); }
-function jobOk() { return !!($('f-name').value.trim() && $('f-product').value && $('f-builder').value.trim() && state.delivery); }
+function jobOk() { return !!($('f-name').value.trim() && $('f-order').value.trim()); }
 function specOk() { return state.spec.lines.every(function(l){ return l.v; }); }
 function builderDone() { return jobOk() && specOk() && allSet(state.checks) && photosDone() && signed('sig-builder'); }
 
@@ -2365,15 +2371,27 @@ document.addEventListener('click', function(e){
 });
 
 /* Specification check: each line Matches or Missing or wrong. Wrong ones become snags. */
+var FINAL_INVOICES = [];
+function invoiceHtml() {
+  var links = FINAL_INVOICES.map(function(f, i){
+    var url = typeof f === 'string' ? f : (f && (f.url || f.link)) || '';
+    if (!url) return '';
+    var nm = FINAL_INVOICES.length > 1 ? 'View final invoice ' + (i + 1) : 'View final invoice';
+    return '<a class="btn btn--sm" href="' + esc(url) + '" target="_blank" rel="noopener" style="margin:0 8px 8px 0;">' + nm + '</a>';
+  }).join('');
+  if (links) return '<div style="margin:0 0 12px;">' + links + '</div>';
+  if (!state.spec.loaded || !CONTACT_ID) return '';
+  return '<p style="margin:0 0 8px; color:#C08B41; font-weight:700;">No final invoice uploaded in GHL yet. Check against the estimate below and ask the office for the final invoice.</p>';
+}
 function specSnagText(l) { return 'Spec: ' + (l.label ? l.label + ', ' : '') + (l.value || 'line') + ' (missing or wrong)'; }
 function renderSpec() {
   var src = state.spec.source;
-  $('spec-src').innerHTML = src
+  $('spec-src').innerHTML = invoiceHtml() + (src
     ? 'From estimate <strong>' + esc(src.reference) + '</strong>' + (src.issued ? ', issued ' + esc(ukDate(src.issued)) : '') +
       '. Check every line against the <strong>final invoice and any agreed changes</strong>, not just the estimate.'
     : (state.spec.loaded
       ? 'No estimate found in GHL for this customer. Add each option from the final invoice with Add a line.'
-      : (CONTACT_ID ? 'Looking up the order in GHL...' : 'Open this page from the customer\'s GHL record to load what they bought, or add each option with Add a line.'));
+      : (CONTACT_ID ? 'Looking up the order in GHL...' : 'Open this page from the customer\'s GHL record to load what they bought, or add each option with Add a line.')));
   $('spec').innerHTML = state.spec.lines.map(function(l, i){
     var text = l.manual
       ? '<input class="input" type="text" data-specedit="' + i + '" value="' + esc(l.value) + '" placeholder="Option, size or extra">'
@@ -2442,6 +2460,7 @@ function fetchJob() {
       state.spec.lines = j.specLines.map(function(l, i){ return { label: l.label, value: l.value, v: '', manual: false, ref: 'e' + i }; });
     }
     if (j.source) state.spec.source = j.source;
+    FINAL_INVOICES = Array.isArray(j.finalInvoice) ? j.finalInvoice : (j.finalInvoice ? [j.finalInvoice] : []);
     guessOptsFrom((j.specLines || []).map(function(l){ return l.label + ' ' + l.value; }).join(' '));
     state.spec.loaded = true;
   }).catch(function(){
@@ -2475,9 +2494,7 @@ function prefill() {
 function validate() {
   var missing = [];
   if (!$('f-name').value.trim()) missing.push('customer name');
-  if (!$('f-product').value) missing.push('product');
-  if (!$('f-builder').value.trim()) missing.push('builder or team');
-  if (!state.delivery) missing.push('delivery method');
+  if (!$('f-order').value.trim()) missing.push('order number');
   var sp = state.spec.lines.filter(function(l){ return !l.v; }).length;
   if (sp) missing.push(sp + ' specification line' + (sp > 1 ? 's' : ''));
   var pm = poptsMissing();
@@ -2492,7 +2509,6 @@ function validate() {
   if (noOwner) missing.push('an owner and fix-by date on ' + noOwner + ' snag' + (noOwner > 1 ? 's' : ''));
   var noShots = requiredShots().filter(function(s){ return !shotDone(s.id); }).length;
   if (noShots) missing.push(noShots + ' required photo' + (noShots > 1 ? 's' : ''));
-  if (!state.media) missing.push('the photo question');
   if (!signed('sig-builder')) missing.push('builder signature');
   var noAck = ACKS.filter(function(a){ return !state.acks[a.id]; }).length;
   if (noAck) missing.push(noAck + ' customer confirmation' + (noAck > 1 ? 's' : ''));
@@ -2974,9 +2990,7 @@ $('btn-save').addEventListener('click', function(){
 function builderMissing() {
   var missing = [];
   if (!$('f-name').value.trim()) missing.push('customer name');
-  if (!$('f-product').value) missing.push('product');
-  if (!$('f-builder').value.trim()) missing.push('builder or team');
-  if (!state.delivery) missing.push('delivery method');
+  if (!$('f-order').value.trim()) missing.push('order number');
   var sp = state.spec.lines.filter(function(l){ return !l.v; }).length;
   if (sp) missing.push(sp + ' specification line' + (sp > 1 ? 's' : ''));
   var pm = poptsMissing();
