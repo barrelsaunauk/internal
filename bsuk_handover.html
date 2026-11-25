@@ -1097,11 +1097,18 @@ function saunaChecks(o) {
     'Door closes without excessive force, hinges, latch and seals working',
     'Windows and panoramic glazing undamaged and sealed',
     'Benches and backrests secure, no flex under load',
-    'Ventilation fitted and unobstructed'
+    'Ventilation fitted and unobstructed',
+    'All internal fixings hidden or fully recessed, none where skin can touch',
+    'No screws visible or protruding on bench tops, fronts or edges',
+    'Door aligned, planed back if it sticks, hinges adjusted',
+    'Customer shown how to adjust the hinges'
   ];
+  if (!o.shape || o.shape === 'barrel') c.push('Barrel staves tight with no visible gaps, bands evenly tensioned');
+  if (o.shape !== 'indoor') c.push('Shingles nailed, stapled or torch-applied, none loose');
+  c.push('Globe or feature windows installed as per the manual, sealed and aligned');
   var h = o.heater;
-  if (h === 'wood' || h === 'hybrid') c = c.concat(['Stove positioned with the manufacturer clearances', 'Heat guard and shielding fitted', 'Chimney and flue installed and sealed, roof flashing in place', 'Correct stones loaded and accessories supplied']);
-  if (h === 'electric') c = c.concat(['Electric heater mounted with the manufacturer clearances', 'Heat guard fitted', 'Correct stones loaded and accessories supplied']);
+  if (h === 'wood' || h === 'hybrid') c = c.concat(['Stove positioned as low as possible, with the manufacturer clearances', 'Heat guard, heatproof plates and safety rails fitted', 'Chimney and flue installed and sealed, roof flashing in place', 'Correct stones loaded and accessories supplied']);
+  if (h === 'electric') c = c.concat(['Electric heater mounted as low as possible, with the manufacturer clearances', 'Heat guard, heatproof plates and safety rails fitted', 'Correct stones loaded and accessories supplied']);
   if (h === 'electric' || h === 'hybrid') c.push(E('Electric heater and control panel'));
   if (h === 'infrared') c = c.concat(['Infrared panels mounted securely with guards fitted', E('Infrared panels and controller')]);
   if (!h) c = c.concat(['Heater position and applicable manufacturer clearances', 'Protective guards and heat shielding fitted', 'Correct stones and accessories supplied']);
@@ -1193,7 +1200,7 @@ function shotsFor(key) {
   add('clean', 'Site left clean', 'port', true);
   if (key === 'mobile-trailer') add('coupling', 'Coupling and lights', 'port', true);
 
-  add('video', '15 to 20 second video, hold your phone upright', 'vid', false);
+  add('video', 'Walkaround video of the finished build, about 20 seconds, phone upright', 'vid', true);
   return out;
 }
 var CUST_SHOT = { id: 'customer', label: 'You with your build', o: 'port', req: false };
@@ -2371,26 +2378,26 @@ document.addEventListener('click', function(e){
 });
 
 /* Specification check: each line Matches or Missing or wrong. Wrong ones become snags. */
-var FINAL_INVOICES = [];
+var SOW_FILES = [];
 function invoiceHtml() {
-  var links = FINAL_INVOICES.map(function(f, i){
+  var links = SOW_FILES.map(function(f, i){
     var url = typeof f === 'string' ? f : (f && (f.url || f.link)) || '';
     if (!url) return '';
-    var nm = FINAL_INVOICES.length > 1 ? 'View final invoice ' + (i + 1) : 'View final invoice';
+    var nm = SOW_FILES.length > 1 ? 'View statement of work ' + (i + 1) : 'View statement of work';
     return '<a class="btn btn--sm" href="' + esc(url) + '" target="_blank" rel="noopener" style="margin:0 8px 8px 0;">' + nm + '</a>';
   }).join('');
   if (links) return '<div style="margin:0 0 12px;">' + links + '</div>';
   if (!state.spec.loaded || !CONTACT_ID) return '';
-  return '<p style="margin:0 0 8px; color:#C08B41; font-weight:700;">No final invoice uploaded in GHL yet. Check against the estimate below and ask the office for the final invoice.</p>';
+  return '<p style="margin:0 0 8px; color:#C08B41; font-weight:700;">No statement of work uploaded in GHL yet. Check against the estimate below and ask the office for the statement of work.</p>';
 }
 function specSnagText(l) { return 'Spec: ' + (l.label ? l.label + ', ' : '') + (l.value || 'line') + ' (missing or wrong)'; }
 function renderSpec() {
   var src = state.spec.source;
   $('spec-src').innerHTML = invoiceHtml() + (src
     ? 'From estimate <strong>' + esc(src.reference) + '</strong>' + (src.issued ? ', issued ' + esc(ukDate(src.issued)) : '') +
-      '. Check every line against the <strong>final invoice and any agreed changes</strong>, not just the estimate.'
+      '. Check every line against the <strong>statement of work and any agreed changes</strong>, not just the estimate.'
     : (state.spec.loaded
-      ? 'No estimate found in GHL for this customer. Add each option from the final invoice with Add a line.'
+      ? 'No estimate found in GHL for this customer. Add each option from the statement of work with Add a line.'
       : (CONTACT_ID ? 'Looking up the order in GHL...' : 'Open this page from the customer\'s GHL record to load what they bought, or add each option with Add a line.')));
   $('spec').innerHTML = state.spec.lines.map(function(l, i){
     var text = l.manual
@@ -2460,7 +2467,7 @@ function fetchJob() {
       state.spec.lines = j.specLines.map(function(l, i){ return { label: l.label, value: l.value, v: '', manual: false, ref: 'e' + i }; });
     }
     if (j.source) state.spec.source = j.source;
-    FINAL_INVOICES = Array.isArray(j.finalInvoice) ? j.finalInvoice : (j.finalInvoice ? [j.finalInvoice] : []);
+    SOW_FILES = Array.isArray(j.finalInvoice) ? j.finalInvoice : (j.finalInvoice ? [j.finalInvoice] : []);
     guessOptsFrom((j.specLines || []).map(function(l){ return l.label + ' ' + l.value; }).join(' '));
     state.spec.loaded = true;
   }).catch(function(){
