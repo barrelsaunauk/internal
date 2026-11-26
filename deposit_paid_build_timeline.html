@@ -1,373 +1,433 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
-<script>document.documentElement.classList.add("js");</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
 <title>Your Build | Barrel Sauna UK</title>
-<meta name="description" content="What happens next with your build, and when you will hear from us.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ground:#16261C; --forest-deep:#1F3D28; --forest:#2B5336; --mid:#417C51;
-    --sage:#50795F; --sage-pale:#8fae86;
-    --honey:#C08B41; --honey-l:#D6A868; --honey-d:#b07d38;
-    --body-dark:#dfe9df;
-    --ink:#3A4240; --ink-l:#5C6663; --tint:#dbe7dd; --tint-l:#eef4ef;
-    --hairline:rgba(65,124,81,0.30); --rule-soft:rgba(65,124,81,0.12);
-    --wa:#31D24F; --wa-d:#28b843;
-    --face:'Raleway', Arial, Helvetica, sans-serif;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{background:#ffffff;}
-  body{font-family:var(--face);color:var(--ink);font-weight:400;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:960px;margin:0 auto;padding:0 24px;}
-  .kicker{font-size:12px;font-weight:700;letter-spacing:0.32em;text-transform:uppercase;color:var(--honey);margin-bottom:14px;}
-
-  /* ---------- HERO ---------- */
-  .hero{
-    position:relative; min-height:92vh; overflow:hidden;
-    background:url('https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9cb028e29b3baf97db9dbc.png') center 45%/cover no-repeat;
-    display:flex; align-items:flex-end;
-  }
-  .hero .veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg, rgba(22,38,28,0.50) 0%, rgba(22,38,28,0.30) 40%, rgba(22,38,28,0.84) 100%);}
-  .hero-inner{position:relative;z-index:2;width:100%;max-width:960px;margin:0 auto;padding:0 24px 88px;}
-  .hero .kicker{color:var(--honey-l);}
-  .hero h1{font-size:clamp(44px,7vw,72px);font-weight:700;line-height:1.04;letter-spacing:-1px;color:#ffffff;max-width:760px;margin-bottom:20px;}
-  .hero h1 span{color:var(--honey-l);}
-  .hero p.sub{font-size:18px;color:var(--body-dark);max-width:600px;margin-bottom:26px;}
-  .hero .scrollhint{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--sage-pale);}
-
-  /* ---------- SECTIONS ---------- */
-  section{padding:80px 0;}
-  h2{font-size:clamp(30px,4.5vw,40px);font-weight:700;line-height:1.12;letter-spacing:-0.5px;color:var(--ink);margin-bottom:18px;}
-  h2 span{color:var(--honey);}
-  p{margin-bottom:15px;max-width:640px;}
-  p.lede{font-size:18px;color:var(--ink-l);}
-  .dark{background:var(--ground);color:var(--body-dark);}
-  .dark h2{color:#ffffff;}
-  .dark h2 span{color:var(--honey-l);}
-  .dark .kicker{color:var(--honey-l);}
-  .dark p.lede{color:var(--body-dark);}
-  .forest{background:var(--forest);color:var(--body-dark);}
-  .forest h2{color:#ffffff;}
-  .forest h2 span{color:var(--honey-l);}
-  .forest .kicker{color:var(--honey-l);}
-  .forest p.lede{color:var(--body-dark);}
-  .tinted{background:var(--tint-l);}
-
-  /* buttons */
-  .btn{display:inline-block;background:var(--honey);color:#ffffff;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:17px 40px;border-radius:30px;text-decoration:none;}
-  .btn:hover{background:var(--honey-d);}
-  .btn.wa{background:var(--wa);}
-  .btn.wa:hover{background:var(--wa-d);}
-
-  /* tick lists */
-  ul.ticks{list-style:none;margin:6px 0 18px;max-width:640px;}
-  ul.ticks li{position:relative;padding-left:28px;margin-bottom:6px;font-size:15px;line-height:1.6;}
-  ul.ticks li::before{content:"\2713";position:absolute;left:0;top:0;color:var(--honey);font-weight:700;}
-  .dark ul.ticks li,.forest ul.ticks li{color:var(--body-dark);}
-  .dark ul.ticks li::before,.forest ul.ticks li::before{color:var(--honey-l);}
-
-  /* point of contact */
-  .contact-card{background:#ffffff;border:1px solid var(--hairline);border-radius:12px;padding:30px 28px;box-shadow:0 10px 26px rgba(43,83,54,0.10);margin-top:34px;max-width:760px;}
-  .contact-card p{max-width:none;}
-  .contact-row{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-end;border-top:1px solid var(--rule-soft);margin-top:24px;padding-top:24px;}
-  .contact-row .lab{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--sage);margin-bottom:12px;}
-  .contact-row .num{font-size:22px;font-weight:700;color:var(--forest-deep);text-decoration:none;letter-spacing:0.5px;}
-
-  /* journey */
-  .journey{display:grid;gap:16px;margin-top:38px;}
-  .jstep{background:#ffffff;border:1px solid var(--hairline);border-radius:12px;padding:26px 26px 22px;box-shadow:0 10px 26px rgba(43,83,54,0.10);display:grid;grid-template-columns:132px 1fr;gap:22px;align-items:start;color:var(--ink);}
-  .jstep .side{text-align:center;}
-  .jstep .disc{width:56px;height:56px;border-radius:50%;background:var(--honey);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px;}
-  .jstep .sl{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--sage);}
-  .jstep .t{display:block;font-weight:700;color:var(--forest-deep);font-size:19px;margin-bottom:8px;}
-  .jstep p{font-size:15px;color:var(--ink-l);line-height:1.65;margin-bottom:10px;max-width:none;}
-  .jstep ul.ticks{margin-bottom:8px;}
-  .jstep ul.ticks li{color:var(--ink-l);}
-  .jstep ul.ticks li::before{color:var(--honey);}
-
-  /* on site badge */
-  .icon-lead{display:flex;align-items:center;gap:16px;margin:8px 0 22px;}
-  .icon-lead .disc{width:52px;height:52px;border-radius:50%;background:var(--sage);display:flex;align-items:center;justify-content:center;font-size:22px;flex:0 0 52px;}
-  .dark .icon-lead .disc,.forest .icon-lead .disc{background:#3F6A4C;}
-
-  /* faq */
-  .faq{max-width:760px;margin-top:30px;border-top:1px solid var(--rule-soft);}
-  .faq .qa{padding:24px 0;border-bottom:1px solid var(--rule-soft);}
-  .faq .q{display:block;font-weight:700;font-size:18px;color:var(--forest-deep);margin-bottom:8px;}
-  .faq p{max-width:none;margin-bottom:0;color:var(--ink-l);font-size:15px;line-height:1.65;}
-
-  /* video */
-  .video-band .frame{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 18px 44px rgba(22,38,28,0.35);margin-top:36px;}
-  .video-band video{display:block;width:100%;height:auto;}
-
-  /* range tiles */
-  .xgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px;}
-  .xtile{border-radius:12px;overflow:hidden;border:1px solid var(--hairline);background:#ffffff;color:var(--ink);}
-  .xtile img{display:block;width:100%;height:200px;object-fit:cover;}
-  .xtile .xlab{padding:16px 18px 18px;}
-  .xtile .xlab .t{display:block;font-weight:700;color:var(--forest-deep);font-size:16px;margin-bottom:4px;}
-  .xtile .xlab span{font-size:14px;color:var(--ink-l);line-height:1.55;}
-  @media (max-width:900px){.xgrid{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:560px){.xgrid{grid-template-columns:1fr;}}
-
-  /* sign off */
-  .signoff{text-align:center;}
-  .signoff p{max-width:none;margin-bottom:4px;font-size:18px;}
-
-  /* reveal on scroll */
-  .js .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease, transform .8s ease;}
-  .js .reveal.in{opacity:1;transform:none;}
-  @media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none;}}
-
-  /* footer */
-  footer{background:var(--ground);color:var(--body-dark);text-align:center;padding:56px 0 48px;}
-  footer .rule{width:44px;border-top:1px solid rgba(143,174,134,0.25);margin:0 auto 26px;}
-  footer p{max-width:none;margin-bottom:6px;font-size:15px;}
-  footer .site{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--sage-pale);margin-top:20px;}
-  footer .site a{color:#ffffff;text-decoration:none;}
-
-  @media (max-width:720px){
-    .hero-inner{padding-bottom:64px;}
-    section{padding:60px 0;}
-    .jstep{grid-template-columns:1fr;gap:12px;}
-    .jstep .side{text-align:left;display:flex;align-items:center;gap:14px;}
-    .jstep .disc{margin:0;}
-  }
+:root { color-scheme: light only; supported-color-schemes: light; }
+html, body { background-color:#ffffff !important; }
+@media only screen and (max-width:480px) {
+  .px { padding-left:20px !important; padding-right:20px !important; }
+  .herocell { padding:72px 24px 52px 24px !important; }
+  .herotitle { font-size:32px !important; }
+  .h2 { font-size:23px !important; }
+  .tile { display:block !important; width:100% !important; padding:0 0 16px 0 !important; }
+  .quote { font-size:19px !important; }
+  .arrows { display:none !important; }
+}
 </style>
-</head>
-<body>
+<!-- outlook-fixes-applied --></head>
+<body style="margin:0; padding:0; background:#ffffff;">
+<div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">Your deposit is in. Here is what happens next, and the quickest way to reach us.</div>
+<table role="presentation" style="background-color:#ffffff;" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tbody><tr><td align="center" style="padding:0;">
+<table role="presentation" style="background-color:#ffffff; border-collapse:collapse; width:100%;" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tbody>
 
-<!-- HERO : plain garden build photo, dark veil, live heading -->
-<div class="hero">
-  <div class="veil"></div>
-  <div class="hero-inner">
-    <div class="kicker">Order confirmed</div>
-    <h1>Deposit <span>received</span></h1>
-    <p class="sub">Your deposit has been received. That secures your place in the order queue, and your project is now officially underway.</p>
-    <div class="scrollhint">Scroll to explore</div>
-  </div>
+<!-- HERO -->
+<tr>
+<td background="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9d99aa506b5777476b9b3f.jpg" bgcolor="#1F3D28" style="background-color:#1F3D28; background-image:linear-gradient(rgba(22,38,28,0.45),rgba(22,38,28,0.88)),url(https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9d99aa506b5777476b9b3f.jpg); background-size:cover; background-position:center;">
+<!--[if gte mso 9]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:640px;height:380px;"><v:fill type="frame" src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9d99aa506b5777476b9b3f.jpg" color="#1F3D28" /><v:textbox inset="0,0,0,0"><![endif]-->
+<div>
+<table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px; margin:0 auto;"><tr>
+<td class="herocell" style="padding:96px 40px 64px 40px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:12px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:#8fae86;">You're in the queue!</p>
+<p class="herotitle" style="margin:12px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:40px; font-weight:300; line-height:1.15; color:#ffffff;">Your build is <span style="font-weight:700;">underway</span></p>
+<p style="margin:16px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.6; color:#dbe7dd;">Here is what happens next, and the quickest way to reach us.</p>
+</td></tr></table>
 </div>
+<!--[if gte mso 9]></v:textbox></v:rect><![endif]-->
+</td>
+</tr>
 
-<!-- YOUR POINT OF CONTACT -->
-<section>
-  <div class="wrap reveal">
-    <div class="kicker">Your point of contact</div>
-    <h2>Looking after you from <span>here</span></h2>
-    <div class="contact-card">
-      <p>Now that your order is in process, your design consultant hands you over to the team who will be looking after your build.</p>
-      <p>You will have a point of contact on WhatsApp, and our office number is always there if you would rather talk to someone.</p>
-      <p>You are in good hands, and there is nothing you need to do. We will be in touch at each stage as your build progresses.</p>
-      <div class="contact-row">
-        <div>
-          <div class="lab">WhatsApp</div>
-          <a class="btn wa" href="https://wa.me/447360274142">WhatsApp Us</a>
-        </div>
-        <div>
-          <div class="lab">Office</div>
-          <a class="num" href="tel:+447928998392">+44 7928 998392</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- GREETING + DEPOSIT CARD -->
+<tr>
+<td align="center" bgcolor="#eef4ef" style="background-color:#eef4ef;">
+<!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+<table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px; margin:0 auto;"><tr>
+<td class="px" style="padding:34px 32px 34px 32px;">
+<p style="margin:0px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.7; color:#1F3D28;">Hi {{contact.first_name}},</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:18px;"><tr>
+<td bgcolor="#ffffff" style="background-color:#ffffff; border-radius:16px; padding:22px 22px; box-shadow:0 10px 26px rgba(22,38,28,0.10);">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="56" valign="middle" style="line-height:0; font-size:0;"><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Check%20mark%20button/3D/check_mark_button_3d.png" width="52" height="52" alt="✅" style="display:block; margin:0 auto; max-width:52px; width:52px; height:52px; border:0;"></td>
+<td valign="middle" style="padding-left:16px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:12px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:#417C51;">Deposit received</p>
+<p style="margin:4px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.6; color:#1F3D28;">That secures your place in the order queue, and your project is now officially underway.</p>
+</td></tr></table>
+</td></tr></table>
+</td></tr></table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td>
+</tr>
 
-<!-- BUILT TO ORDER + YOUR JOURNEY : forest band, five white cards -->
-<section class="forest">
-  <div class="wrap reveal">
-    <div class="kicker">Built to order</div>
-    <p class="lede">Our admin team will now begin ordering the materials and components required specifically for your build before it moves into production.</p>
-    <p class="lede">Every product we manufacture is built to order. Nothing is taken from stock, meaning every project follows its own commissioning process.</p>
+<!-- WINDOWS -->
+<tr>
+<td align="center" bgcolor="#16261C" style="background-color:#16261C;">
+<!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+<table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px; margin:0 auto;"><tr>
+<td class="px" style="padding:44px 32px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:12px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:#8fae86;">The most important bit</p>
+<p class="h2" style="margin:10px 0 18px 0; font-family:Poppins, Arial, sans-serif; font-size:26px; font-weight:300; line-height:1.3; color:#ffffff;">Why we give <span style="font-weight:700; color:#ffffff;">windows, not exact dates</span></p>
+<p style="margin:0px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.7; color:#dbe7dd;">Every installation is a little different. If the build before yours needs extra groundwork, decking or unexpected site work, our team can't leave that customer halfway through to arrive at the next job.</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:26px 0 24px 0;"><tr>
+<td bgcolor="#ffffff" style="background-color:#ffffff; border-radius:10px; padding:28px 26px 26px 26px; box-shadow:0 14px 30px rgba(0,0,0,0.35); transform:rotate(-1.2deg);">
+<img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Pushpin/3D/pushpin_3d.png" width="40" height="40" alt="📌" style="display:block; margin:0 auto; max-width:40px; width:40px; height:40px; border:0;">
+<p class="quote" style="margin:10px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:21px; font-weight:300; line-height:1.45; color:#1F3D28;"><span style="font-weight:700;">The same courtesy would be extended to you,</span> should your installation need extra time.</p>
+</td></tr></table>
+<p style="margin:0px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.7; color:#dbe7dd;">A realistic window means we can finish every build to the standard it deserves, yours included.</p>
+</td></tr></table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td>
+</tr>
 
-    <h2 style="margin-top:48px;">Your <span>journey</span></h2>
-    <div class="journey">
+<!-- CONTACT -->
+<tr>
+<td align="center" bgcolor="#ffffff" style="background-color:#ffffff;">
+<!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+<table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px; margin:0 auto;"><tr>
+<td class="px" style="padding:44px 32px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:12px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:#C08B41;">Questions along the way</p>
+<p class="h2" style="margin:10px 0 18px 0; font-family:Poppins, Arial, sans-serif; font-size:26px; font-weight:300; line-height:1.3; color:#1F3D28;">The <span style="font-weight:700; color:#b07d38;">fastest way</span> to reach us</p>
+<p style="margin:0px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.7; color:#1F3D28;">Now that your order is in, your design consultant hands you over to the team who will look after your build. There is nothing you need to do.</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:20px;"><tr>
+<td align="center" bgcolor="#eef4ef" style="background-color:#eef4ef; border-radius:18px; padding:28px 24px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.7; color:#1F3D28;">Our WhatsApp line is shared and watched by the whole team, so it's always the quickest way to get an answer. Usually it's Marta, our office manager, who replies.</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:20px auto 0 auto;"><tr>
+<td bgcolor="#31D24F" align="center" style="background-color:#31D24F; border-radius:30px; padding:14px 34px; mso-padding-alt:14px 34px;">
+<a href="https://wa.me/447360274142" style="display:block; text-decoration:none; font-family:Poppins, Arial, sans-serif; font-size:15px; font-weight:700; color:#ffffff;"><!--[if mso]><font color="#ffffff"><![endif]-->WhatsApp us<!--[if mso]></font><![endif]--></a>
+</td></tr></table>
+</td></tr></table>
+<p style="margin:14px 0 0 0; text-align:center; font-family:Poppins, Arial, sans-serif; font-size:13px; line-height:1.6; color:#50795F;">Rather talk? Call the office on <a href="tel:+442920676731" style="color:#1F3D28; font-weight:700; text-decoration:none;"><!--[if mso]><font color="#1F3D28"><![endif]-->+44 2920 676731<!--[if mso]></font><![endif]--></a>. Your message is passed to the same team, so WhatsApp is quicker.</p>
+</td></tr></table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td>
+</tr>
 
-      <div class="jstep">
-        <div class="side"><div class="disc">🤝</div><div class="sl">Step 1</div></div>
-        <div>
-          <span class="t">Order Confirmed</span>
-          <p>Your order has been received and entered into our production system.</p>
-          <p>Your dedicated customer profile is now created and our team begins coordinating everything required for your build.</p>
-        </div>
-      </div>
+<!-- JOURNEY -->
+<tr>
+<td align="center" bgcolor="#16261C" style="background-color:#16261C;">
+<!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+<table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px; margin:0 auto;"><tr>
+<td class="px" style="padding:44px 32px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:12px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:#8fae86;">Your journey</p>
+<p class="h2" style="margin:10px 0 18px 0; font-family:Poppins, Arial, sans-serif; font-size:26px; font-weight:300; line-height:1.3; color:#ffffff;">What <span style="font-weight:700; color:#ffffff;">happens next</span></p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:6px;">
+<tr>
+<td width="64" valign="top" style="padding:0 0 26px 0; line-height:0; font-size:0;">
+<img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Handshake/3D/handshake_3d.png" width="56" height="56" alt="🤝" style="display:block; width:56px; height:56px; max-width:56px; border:0;">
+</td>
+<td valign="top" style="padding:2px 0 26px 18px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:11px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:#8fae86;">Step 1</p>
+<p style="margin:4px 0 6px 0; font-family:Poppins, Arial, sans-serif; font-size:18px; font-weight:700; line-height:1.3; color:#ffffff;">Order confirmed</p>
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.7; color:#dbe7dd;">Your order is in our production system and the team starts coordinating everything your build needs.</p>
+</td>
+</tr><tr>
+<td width="64" valign="top" style="padding:0 0 26px 0; line-height:0; font-size:0;">
+<img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Evergreen%20tree/3D/evergreen_tree_3d.png" width="56" height="56" alt="🌲" style="display:block; width:56px; height:56px; max-width:56px; border:0;">
+</td>
+<td valign="top" style="padding:2px 0 26px 18px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:11px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:#8fae86;">Step 2</p>
+<p style="margin:4px 0 6px 0; font-family:Poppins, Arial, sans-serif; font-size:18px; font-weight:700; line-height:1.3; color:#ffffff;">Materials ordered</p>
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.7; color:#dbe7dd;">Nothing comes off a shelf. Your materials are ordered just for your build, which may include Thermowood or Nordic Spruce, bespoke windows, custom timber rings, a Harvia heater, lighting, roofing, glass and electrical components.</p>
+</td>
+</tr><tr>
+<td width="64" valign="top" style="padding:0 0 26px 0; line-height:0; font-size:0;">
+<img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Hammer/3D/hammer_3d.png" width="56" height="56" alt="🔨" style="display:block; width:56px; height:56px; max-width:56px; border:0;">
+</td>
+<td valign="top" style="padding:2px 0 26px 18px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:11px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:#8fae86;">Step 3</p>
+<p style="margin:4px 0 6px 0; font-family:Poppins, Arial, sans-serif; font-size:18px; font-weight:700; line-height:1.3; color:#ffffff;">Production queue</p>
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.7; color:#dbe7dd;">Once everything arrives, your build moves through our Caerphilly workshop. Every project is bespoke, so build times vary with the specification.</p>
+</td>
+</tr><tr>
+<td width="64" valign="top" style="padding:0 0 26px 0; line-height:0; font-size:0;">
+<img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Spiral%20calendar/3D/spiral_calendar_3d.png" width="56" height="56" alt="🗓️" style="display:block; width:56px; height:56px; max-width:56px; border:0;">
+</td>
+<td valign="top" style="padding:2px 0 26px 18px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:11px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:#8fae86;">Step 4</p>
+<p style="margin:4px 0 6px 0; font-family:Poppins, Arial, sans-serif; font-size:18px; font-weight:700; line-height:1.3; color:#ffffff;">Production update</p>
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.7; color:#dbe7dd;">At around 6 weeks we aim to have a clearer picture of progress, your completion window and installation planning.</p>
+<p style="margin:12px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.7; color:#dbe7dd;">You don't need to wait for us. Message us on WhatsApp any time and we'll tell you where your build is.</p>
+</td>
+</tr><tr>
+<td width="64" valign="top" style="padding:0 0 0px 0; line-height:0; font-size:0;">
+<img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Delivery%20truck/3D/delivery_truck_3d.png" width="56" height="56" alt="🚚" style="display:block; width:56px; height:56px; max-width:56px; border:0;">
+</td>
+<td valign="top" style="padding:2px 0 0px 18px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:11px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:#8fae86;">Step 5</p>
+<p style="margin:4px 0 6px 0; font-family:Poppins, Arial, sans-serif; font-size:18px; font-weight:700; line-height:1.3; color:#ffffff;">Installation scheduling</p>
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.7; color:#dbe7dd;">As production nears completion, we arrange delivery or installation with you. This is normally 2 to 3 weeks after your production update, depending on location, installation type and workload.</p>
+</td>
+</tr>
+</table>
+</td></tr></table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td>
+</tr>
 
-      <div class="jstep">
-        <div class="side"><div class="disc">🌲</div><div class="sl">Step 2</div></div>
-        <div>
-          <span class="t">Materials Ordered</span>
-          <p>Unlike mass-produced products, every order requires its own materials to be commissioned.</p>
-          <p>This may include:</p>
-          <ul class="ticks">
-            <li>Thermowood or Nordic Spruce</li>
-            <li>Bespoke windows</li>
-            <li>Custom timber rings</li>
-            <li>Harvia heater</li>
-            <li>Lighting</li>
-            <li>Roofing</li>
-            <li>Glass</li>
-            <li>Electrical components</li>
-          </ul>
-        </div>
-      </div>
+<!-- ON SITE -->
+<tr>
+<td align="center" bgcolor="#ffffff" style="background-color:#ffffff;">
+<!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+<table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px; margin:0 auto;"><tr>
+<td class="px" style="padding:44px 32px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:12px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:#C08B41;">If we're building on site</p>
+<p class="h2" style="margin:10px 0 18px 0; font-family:Poppins, Arial, sans-serif; font-size:26px; font-weight:300; line-height:1.3; color:#1F3D28;">Most builds are done in <span style="font-weight:700; color:#b07d38;">one visit</span></p>
+<p style="margin:0px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.7; color:#1F3D28;">Most of the time our team arrives with everything needed and completes the build in one go. Before then, we'll check that everything is workable at your property, including access for the team and materials.</p>
+<p style="margin:12px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.7; color:#1F3D28;">Occasionally, depending on where you sit on our installation route, the team may do things a little differently:</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:18px;">
+<tr><td style="padding:0 0 14px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td bgcolor="#ffffff" style="background-color:#ffffff; border:1px solid #dbe7dd; border-top:4px solid #417C51; border-radius:14px; padding:18px 20px; box-shadow:0 10px 24px rgba(22,38,28,0.10);">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="48" valign="middle" style="line-height:0; font-size:0;"><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Package/3D/package_3d.png" width="44" height="44" alt="📦" style="display:block; margin:0 auto; max-width:44px; width:44px; height:44px; border:0;"></td>
+<td valign="middle" style="padding-left:16px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:16px; font-weight:700; color:#1F3D28;">Everything on the van</p>
+<p style="margin:4px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.6; color:#50795F;">We arrive with all materials ready to begin straight away.</p>
+</td></tr></table>
+</td></tr></table>
+</td></tr><tr><td style="padding:0 0 14px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td bgcolor="#ffffff" style="background-color:#ffffff; border:1px solid #dbe7dd; border-top:4px solid #417C51; border-radius:14px; padding:18px 20px; box-shadow:0 10px 24px rgba(22,38,28,0.10);">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="48" valign="middle" style="line-height:0; font-size:0;"><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Delivery%20truck/3D/delivery_truck_3d.png" width="44" height="44" alt="🚚" style="display:block; margin:0 auto; max-width:44px; width:44px; height:44px; border:0;"></td>
+<td valign="middle" style="padding-left:16px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:16px; font-weight:700; color:#1F3D28;">Delivered ahead</p>
+<p style="margin:4px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.6; color:#50795F;">Materials arrive a day or two before the team does.</p>
+</td></tr></table>
+</td></tr></table>
+</td></tr><tr><td style="padding:0 0 14px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td bgcolor="#ffffff" style="background-color:#ffffff; border:1px solid #dbe7dd; border-top:4px solid #417C51; border-radius:14px; padding:18px 20px; box-shadow:0 10px 24px rgba(22,38,28,0.10);">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="48" valign="middle" style="line-height:0; font-size:0;"><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Building%20construction/3D/building_construction_3d.png" width="44" height="44" alt="🏗️" style="display:block; margin:0 auto; max-width:44px; width:44px; height:44px; border:0;"></td>
+<td valign="middle" style="padding-left:16px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:16px; font-weight:700; color:#1F3D28;">Groundwork first</p>
+<p style="margin:4px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.6; color:#50795F;">Groundwork or decking starts before the main structure.</p>
+</td></tr></table>
+</td></tr></table>
+</td></tr>
+</table>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:4px;"><tr>
+<td bgcolor="#eef4ef" style="background-color:#eef4ef; border-radius:12px; padding:16px 18px; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.6; color:#1F3D28;">It lets our carpenters make the most of their time on site rather than travelling back and forth to Wales.</td>
+</tr></table>
+</td></tr></table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td>
+</tr>
 
-      <div class="jstep">
-        <div class="side"><div class="disc">🔨</div><div class="sl">Step 3</div></div>
-        <div>
-          <span class="t">Production Queue</span>
-          <p>Once all required materials are available, your order progresses through our production schedule.</p>
-          <p>Because every project is bespoke, no two builds are ever identical. Build times naturally vary depending on specification and complexity.</p>
-        </div>
-      </div>
-
-      <div class="jstep">
-        <div class="side"><div class="disc">📞</div><div class="sl">Step 4</div></div>
-        <div>
-          <span class="t">Production Update</span>
-          <p>Around 6 weeks after ordering, one of our admin team will usually contact you with an update on your project.</p>
-          <p>By this stage we generally have a much clearer picture of:</p>
-          <ul class="ticks">
-            <li>Progress</li>
-            <li>Production status</li>
-            <li>Estimated completion window</li>
-            <li>Installation planning</li>
-          </ul>
-          <p>If there is important information before then, we'll of course get in touch sooner.</p>
-        </div>
-      </div>
-
-      <div class="jstep">
-        <div class="side"><div class="disc">📅</div><div class="sl">Step 5</div></div>
-        <div>
-          <span class="t">Installation Scheduling</span>
-          <p>Once production is nearing completion, our scheduling team will contact you to arrange delivery or installation.</p>
-          <p>This is normally 2 to 3 weeks after your production update, although this can vary depending on location, installation type and current workload.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- IF WE'RE BUILDING ON SITE -->
-<section>
-  <div class="wrap reveal">
-    <div class="kicker">If we're building on site</div>
-    <h2>Most builds are done in <span>one visit</span></h2>
-    <div class="icon-lead"><div class="disc">🏠</div><p class="lede" style="margin:0;">The majority of the time our team arrives with everything needed and completes the build in one go.</p></div>
-    <p>Before then, we will be in touch to check that everything is workable at your property, including access for the team and materials.</p>
-    <p>Occasionally, depending on your location within our installation route, it works better to do things a little differently. The team may:</p>
-    <ul class="ticks">
-      <li>Arrive with all materials ready to begin immediately</li>
-      <li>Have materials delivered beforehand</li>
-      <li>Begin groundwork or decking before the main structure is assembled</li>
-    </ul>
-    <p>Where materials do arrive a day or two ahead, it allows our carpentry team to maximise their time on site rather than travelling back and forth to Wales.</p>
-  </div>
-</section>
-
-<!-- INSTALLATION WINDOWS : dark band -->
-<section class="dark">
-  <div class="wrap reveal">
-    <div class="kicker">Installation windows</div>
-    <h2>Why we give windows rather than <span>exact dates</span></h2>
-    <p class="lede">Many customers ask why we provide installation windows rather than exact dates, and it is a fair question.</p>
-    <p>It comes down to the fact that every installation is a little different.</p>
-    <p>For example, if the project immediately before yours requires additional groundwork, decking or unexpected site work, our team cannot simply leave that customer halfway through to arrive on another job.</p>
-    <p>The same courtesy would be extended to you should your installation require additional time.</p>
-    <p>Giving you a realistic window means we can finish every project to the standard it deserves, including yours.</p>
-  </div>
-</section>
-
-<!-- MOBILE SAUNA CUSTOMERS : tinted -->
-<section class="tinted">
-  <div class="wrap reveal">
-    <div class="kicker">Mobile sauna customers</div>
-    <h2>DVSA testing before <span>handover</span></h2>
-    <div class="icon-lead"><div class="disc">🚐</div><p class="lede" style="margin:0;">Your trailer must successfully complete DVSA testing before handover.</p></div>
-    <p>Testing dates are booked in advance and often give us the first reliable indication of your estimated completion date.</p>
-    <p>Once your test date is confirmed, we'll be able to provide a much more accurate delivery window.</p>
-  </div>
-</section>
+<!-- MOBILE SAUNA -->
+<tr>
+<td background="https://files.leadconnectorhq.com/file/6a848744d07034adc2f99a70/horizon-stretch.png" bgcolor="#1F3D28" style="background-color:#1F3D28; background-image:linear-gradient(rgba(22,38,28,0.62),rgba(22,38,28,0.88)),url(https://files.leadconnectorhq.com/file/6a848744d07034adc2f99a70/horizon-stretch.png); background-size:cover; background-position:center;">
+<!--[if gte mso 9]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:640px;height:460px;"><v:fill type="frame" src="https://files.leadconnectorhq.com/file/6a848744d07034adc2f99a70/horizon-stretch.png" color="#1F3D28" /><v:textbox inset="0,0,0,0"><![endif]-->
+<div>
+<table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px; margin:0 auto;"><tr>
+<td class="px" style="padding:72px 32px 62px 32px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:12px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:#8fae86;">Mobile sauna customers</p>
+<p class="h2" style="margin:10px 0 20px 0; font-family:Poppins, Arial, sans-serif; font-size:26px; font-weight:300; line-height:1.3; color:#ffffff;"><span style="font-weight:700;">DVSA tested</span> before handover</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td style="padding:0 0 10px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td bgcolor="#2B5336" style="background-color:#2B5336; background-color:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.22); border-radius:14px; padding:14px 16px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="30" height="30" bgcolor="#ffffff" align="center" valign="middle" style="width:30px; height:30px; border-radius:50%; font-family:Poppins, Arial, sans-serif; font-size:13px; font-weight:700; color:#1F3D28;">1</td>
+<td style="padding-left:14px; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.5; color:#ffffff;">Every trailer passes DVSA testing before it's handed over</td>
+</tr></table>
+</td></tr></table>
+</td></tr><tr><td style="padding:0 0 10px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td bgcolor="#2B5336" style="background-color:#2B5336; background-color:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.22); border-radius:14px; padding:14px 16px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="30" height="30" bgcolor="#ffffff" align="center" valign="middle" style="width:30px; height:30px; border-radius:50%; font-family:Poppins, Arial, sans-serif; font-size:13px; font-weight:700; color:#1F3D28;">2</td>
+<td style="padding-left:14px; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.5; color:#ffffff;">The test date gives us your first firm estimate</td>
+</tr></table>
+</td></tr></table>
+</td></tr><tr><td style="padding:0 0 10px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td bgcolor="#2B5336" style="background-color:#2B5336; background-color:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.22); border-radius:14px; padding:14px 16px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="30" height="30" bgcolor="#ffffff" align="center" valign="middle" style="width:30px; height:30px; border-radius:50%; font-family:Poppins, Arial, sans-serif; font-size:13px; font-weight:700; color:#1F3D28;">3</td>
+<td style="padding-left:14px; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.5; color:#ffffff;">Then we can give you a much tighter delivery window</td>
+</tr></table>
+</td></tr></table>
+</td></tr>
+</table>
+</td></tr></table>
+</div>
+<!--[if gte mso 9]></v:textbox></v:rect><![endif]-->
+</td>
+</tr>
 
 <!-- FAQ -->
-<section>
-  <div class="wrap reveal">
-    <div class="kicker">Frequently asked questions</div>
-    <h2>Answers to what <span>most people ask</span></h2>
-    <div class="faq">
-      <div class="qa">
-        <span class="q">Can I make changes to my order?</span>
-        <p>Minor changes may be possible before production begins. Once materials have been ordered or manufacturing has started, changes may not be possible or may incur additional costs.</p>
-      </div>
-      <div class="qa">
-        <span class="q">When will I hear from you?</span>
-        <p>Typically around the 6 week mark, unless we need to contact you sooner.</p>
-      </div>
-      <div class="qa">
-        <span class="q">Can I get weekly updates?</span>
-        <p>As every project is bespoke, we generally contact customers at key milestones rather than sending routine updates.</p>
-      </div>
-      <div class="qa">
-        <span class="q">Can my installation date change?</span>
-        <p>Occasionally, yes. Factors such as weather, previous installations or supplier lead times can affect scheduling. We'll always keep you informed of any significant changes.</p>
-      </div>
-      <div class="qa">
-        <span class="q">Can I add additional items to my order?</span>
-        <p>Yes. We build everything that complements saunas, in a similar style and using the same materials so it all matches aesthetically. If you are considering anything further, it is worth doing so as early as possible. That way we can aim to bring everything at once and save you on delivery costs.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<tr>
+<td align="center" bgcolor="#ffffff" style="background-color:#ffffff;">
+<!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+<table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px; margin:0 auto;"><tr>
+<td class="px" style="padding:44px 32px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:12px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:#C08B41;">Frequently asked questions</p>
+<p class="h2" style="margin:10px 0 18px 0; font-family:Poppins, Arial, sans-serif; font-size:26px; font-weight:300; line-height:1.3; color:#1F3D28;">Answers to what <span style="font-weight:700; color:#b07d38;">most people ask</span></p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td style="padding:0 0 12px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="border:1px solid #dbe7dd; border-radius:14px; padding:18px 20px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="34" valign="top" style="font-family:Poppins, Arial, sans-serif; font-size:13px; font-weight:700; letter-spacing:1px; color:#C08B41; padding-top:2px;">01</td>
+<td valign="top">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:16px; font-weight:400; line-height:1.5; color:#1F3D28;">Can I make changes to my order?</p>
+<p style="margin:6px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.7; color:#50795F;">Minor changes may be possible before production begins. Once materials are ordered or manufacturing has started, changes may not be possible or may add cost.</p>
+</td></tr></table>
+</td></tr></table>
+</td></tr><tr><td style="padding:0 0 12px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="border:1px solid #dbe7dd; border-radius:14px; padding:18px 20px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="34" valign="top" style="font-family:Poppins, Arial, sans-serif; font-size:13px; font-weight:700; letter-spacing:1px; color:#C08B41; padding-top:2px;">02</td>
+<td valign="top">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:16px; font-weight:400; line-height:1.5; color:#1F3D28;">How do I get an update?</p>
+<p style="margin:6px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.7; color:#50795F;">Message us on WhatsApp whenever you like and the team will tell you where your build is.</p>
+</td></tr></table>
+</td></tr></table>
+</td></tr><tr><td style="padding:0 0 12px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="border:1px solid #dbe7dd; border-radius:14px; padding:18px 20px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="34" valign="top" style="font-family:Poppins, Arial, sans-serif; font-size:13px; font-weight:700; letter-spacing:1px; color:#C08B41; padding-top:2px;">03</td>
+<td valign="top">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:16px; font-weight:400; line-height:1.5; color:#1F3D28;">Can I get weekly updates?</p>
+<p style="margin:6px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.7; color:#50795F;">We don't send routine weekly updates because every build moves at its own pace. We'll be in touch at the key milestones, and you can message us on WhatsApp any time in between.</p>
+</td></tr></table>
+</td></tr></table>
+</td></tr><tr><td style="padding:0 0 12px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="border:1px solid #dbe7dd; border-radius:14px; padding:18px 20px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="34" valign="top" style="font-family:Poppins, Arial, sans-serif; font-size:13px; font-weight:700; letter-spacing:1px; color:#C08B41; padding-top:2px;">04</td>
+<td valign="top">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:16px; font-weight:400; line-height:1.5; color:#1F3D28;">Can my installation window change?</p>
+<p style="margin:6px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.7; color:#50795F;">Occasionally, yes. Weather, the installation before yours or supplier lead times can affect scheduling. We'll keep you informed of any significant change.</p>
+</td></tr></table>
+</td></tr></table>
+</td></tr><tr><td style="padding:0 0 12px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="border:1px solid #dbe7dd; border-radius:14px; padding:18px 20px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="34" valign="top" style="font-family:Poppins, Arial, sans-serif; font-size:13px; font-weight:700; letter-spacing:1px; color:#C08B41; padding-top:2px;">05</td>
+<td valign="top">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:16px; font-weight:400; line-height:1.5; color:#1F3D28;">Can I add items to my order?</p>
+<p style="margin:6px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:14px; line-height:1.7; color:#50795F;">Yes. Everything we build is made in the same style and materials, so it all matches. Ask as early as you can and we can aim to bring everything at once, saving you on delivery.</p>
+</td></tr></table>
+</td></tr></table>
+</td></tr>
+</table>
+</td></tr></table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td>
+</tr>
 
-<!-- WHILE YOU WAIT : dark band, expo video, range tiles -->
-<section class="dark video-band">
-  <div class="wrap reveal">
-    <div class="kicker">While you wait</div>
-    <h2>What else can we <span>build?</span></h2>
-    <p class="lede">Everything we make is built in the same style and from the same materials, so anything you add sits alongside your sauna as though it was always meant to be there.</p>
-    <div class="frame">
-      <video controls preload="metadata" poster="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa05f79dd867dc12dde0e34.jpg">
-        <source src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9e0fbeb81a3502a8901f0f.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="xgrid">
-      <div class="xtile"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9b2fe280583b8e7062b397.png" alt="Barrel sauna"><div class="xlab"><span class="t">Barrel saunas</span><span>Bespoke barrel saunas, made to order.</span></div></div>
-      <div class="xtile"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a994bc9174710d6163e3c4b.png" alt="Hot tub"><div class="xlab"><span class="t">Hot tubs</span><span>Wood-fired and electric hot tubs, built to order.</span></div></div>
-      <div class="xtile"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9948dc0ba3728cefed8a58.png" alt="Cold plunge"><div class="xlab"><span class="t">Cold plunges</span><span>Pictured: the single cold plunge, a great companion to a compact sauna.</span></div></div>
-      <div class="xtile"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a774d899994d35aa05de03f.jpg" alt="Mobile sauna trailer"><div class="xlab"><span class="t">Mobile saunas</span><span>A complete mobile sauna, built as one unit on its own custom trailer.</span></div></div>
-      <div class="xtile"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa154a69416bfd5312819bc.jpg" alt="The Double Dipper"><div class="xlab"><span class="t">The Double Dipper</span><span>Hot tub and cold plunge in one build.</span></div></div>
-      <div class="xtile"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa1597bd953a0128b482fe8.jpg" alt="Glamping pod"><div class="xlab"><span class="t">Glamping pods</span><span>Pods for gardens and glamping sites.</span></div></div>
-      <div class="xtile"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9c80a3e29b3baf97d7ca43.png" alt="Shepherd's hut"><div class="xlab"><span class="t">Shepherd's huts</span><span>Traditional huts, built to order.</span></div></div>
-      <div class="xtile"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa526c7df2d0155532ed538.jpg" alt="Outdoor shower"><div class="xlab"><span class="t">Showers</span><span>A perfect match with a sauna or hot tub, especially for commercial builds.</span></div></div>
-    </div>
-  </div>
-</section>
+<!-- WHAT ELSE -->
+<tr>
+<td align="center" bgcolor="#16261C" style="background-color:#16261C;">
+<!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+<table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px; margin:0 auto;"><tr>
+<td class="px" style="padding:44px 32px;">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:12px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:#8fae86;">While you wait</p>
+<p class="h2" style="margin:10px 0 18px 0; font-family:Poppins, Arial, sans-serif; font-size:26px; font-weight:300; line-height:1.3; color:#ffffff;">What else <span style="font-weight:700; color:#ffffff;">can we build?</span></p>
+<p style="margin:0px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.7; color:#dbe7dd;">Everything we make is built in the same style and from the same materials, so anything you add sits alongside your sauna as though it was always meant to be there.</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:22px 0 22px 0;"><tr>
+<td style="border-radius:14px; overflow:hidden; line-height:0; font-size:0;"><a href="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9e0fbeb81a3502a8901f0f.mp4" style="text-decoration:none;"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa05f79dd867dc12dde0e34.jpg" alt="Watch our workshop walkaround" width="576" style="display:block; width:100%; height:auto; border:0; border-radius:14px;"></a></td>
+</tr><tr><td style="padding-top:10px; font-family:Poppins, Arial, sans-serif; font-size:13px; font-weight:700; letter-spacing:3px; text-transform:uppercase;"><a href="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9e0fbeb81a3502a8901f0f.mp4" style="color:#8fae86; text-decoration:none;; mso-style-textfill-fill-color: #8fae86;"><!--[if mso]><font color="#8fae86"><![endif]-->&#9654;&nbsp; Watch the walkaround<!--[if mso]></font><![endif]--></a></td></tr></table>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td class="tile" width="50%" valign="top" style="padding:0 8px 16px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td style="border-radius:12px 12px 0 0; overflow:hidden; line-height:0; font-size:0;"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9b2fe280583b8e7062b397.png" alt="Barrel saunas" width="280" style="display:block; width:100%; height:auto; border:0; border-radius:12px 12px 0 0;"></td></tr>
+<tr><td bgcolor="#1F3D28" style="background-color:#1F3D28; border-top:3px solid #b07d38; border-radius:0 0 12px 12px; padding:11px 14px; font-family:Poppins, Arial, sans-serif; font-size:15px; font-weight:700; color:#ffffff;">Barrel saunas</td></tr>
+</table>
+</td><td class="tile" width="50%" valign="top" style="padding:0 0 16px 8px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td style="border-radius:12px 12px 0 0; overflow:hidden; line-height:0; font-size:0;"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a994bc9174710d6163e3c4b.png" alt="Hot tubs" width="280" style="display:block; width:100%; height:auto; border:0; border-radius:12px 12px 0 0;"></td></tr>
+<tr><td bgcolor="#1F3D28" style="background-color:#1F3D28; border-top:3px solid #b07d38; border-radius:0 0 12px 12px; padding:11px 14px; font-family:Poppins, Arial, sans-serif; font-size:15px; font-weight:700; color:#ffffff;">Hot tubs</td></tr>
+</table>
+</td></tr><tr><td class="tile" width="50%" valign="top" style="padding:0 8px 16px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td style="border-radius:12px 12px 0 0; overflow:hidden; line-height:0; font-size:0;"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9948dc0ba3728cefed8a58.png" alt="Cold plunges" width="280" style="display:block; width:100%; height:auto; border:0; border-radius:12px 12px 0 0;"></td></tr>
+<tr><td bgcolor="#1F3D28" style="background-color:#1F3D28; border-top:3px solid #b07d38; border-radius:0 0 12px 12px; padding:11px 14px; font-family:Poppins, Arial, sans-serif; font-size:15px; font-weight:700; color:#ffffff;">Cold plunges</td></tr>
+</table>
+</td><td class="tile" width="50%" valign="top" style="padding:0 0 16px 8px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td style="border-radius:12px 12px 0 0; overflow:hidden; line-height:0; font-size:0;"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a774d899994d35aa05de03f.jpg" alt="Mobile saunas" width="280" style="display:block; width:100%; height:auto; border:0; border-radius:12px 12px 0 0;"></td></tr>
+<tr><td bgcolor="#1F3D28" style="background-color:#1F3D28; border-top:3px solid #b07d38; border-radius:0 0 12px 12px; padding:11px 14px; font-family:Poppins, Arial, sans-serif; font-size:15px; font-weight:700; color:#ffffff;">Mobile saunas</td></tr>
+</table>
+</td></tr><tr><td class="tile" width="50%" valign="top" style="padding:0 8px 16px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td style="border-radius:12px 12px 0 0; overflow:hidden; line-height:0; font-size:0;"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa154a69416bfd5312819bc.jpg" alt="Double Dippers" width="280" style="display:block; width:100%; height:auto; border:0; border-radius:12px 12px 0 0;"></td></tr>
+<tr><td bgcolor="#1F3D28" style="background-color:#1F3D28; border-top:3px solid #b07d38; border-radius:0 0 12px 12px; padding:11px 14px; font-family:Poppins, Arial, sans-serif; font-size:15px; font-weight:700; color:#ffffff;">Double Dippers</td></tr>
+</table>
+</td><td class="tile" width="50%" valign="top" style="padding:0 0 16px 8px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td style="border-radius:12px 12px 0 0; overflow:hidden; line-height:0; font-size:0;"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa1597bd953a0128b482fe8.jpg" alt="Glamping pods" width="280" style="display:block; width:100%; height:auto; border:0; border-radius:12px 12px 0 0;"></td></tr>
+<tr><td bgcolor="#1F3D28" style="background-color:#1F3D28; border-top:3px solid #b07d38; border-radius:0 0 12px 12px; padding:11px 14px; font-family:Poppins, Arial, sans-serif; font-size:15px; font-weight:700; color:#ffffff;">Glamping pods</td></tr>
+</table>
+</td></tr><tr><td class="tile" width="50%" valign="top" style="padding:0 8px 16px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td style="border-radius:12px 12px 0 0; overflow:hidden; line-height:0; font-size:0;"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a9c80a3e29b3baf97d7ca43.png" alt="Shepherd's huts" width="280" style="display:block; width:100%; height:auto; border:0; border-radius:12px 12px 0 0;"></td></tr>
+<tr><td bgcolor="#1F3D28" style="background-color:#1F3D28; border-top:3px solid #b07d38; border-radius:0 0 12px 12px; padding:11px 14px; font-family:Poppins, Arial, sans-serif; font-size:15px; font-weight:700; color:#ffffff;">Shepherd's huts</td></tr>
+</table>
+</td><td class="tile" width="50%" valign="top" style="padding:0 0 16px 8px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td style="border-radius:12px 12px 0 0; overflow:hidden; line-height:0; font-size:0;"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6aa526c7df2d0155532ed538.jpg" alt="Barrel showers" width="280" style="display:block; width:100%; height:auto; border:0; border-radius:12px 12px 0 0;"></td></tr>
+<tr><td bgcolor="#1F3D28" style="background-color:#1F3D28; border-top:3px solid #b07d38; border-radius:0 0 12px 12px; padding:11px 14px; font-family:Poppins, Arial, sans-serif; font-size:15px; font-weight:700; color:#ffffff;">Barrel showers</td></tr>
+</table>
+</td></tr>
+</table>
+<p style="margin:10px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:16px; font-weight:300; line-height:1.7; color:#dbe7dd;"><span style="font-weight:700; color:#ffffff;">Our team are highly experienced craftsmen,</span> so we can build pretty much anything you have in mind. If you have an idea, just ask.</p>
+</td></tr></table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td>
+</tr>
 
-<!-- SIGN OFF -->
-<section class="signoff">
-  <div class="wrap reveal">
-    <p>Speak soon,</p>
-    <p>The Barrel Sauna UK Team</p>
-  </div>
-</section>
+<!-- CTA + SIGN-OFF -->
+<tr>
+<td align="center" bgcolor="#ffffff" style="background-color:#ffffff;">
+<!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+<table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px; margin:0 auto;"><tr>
+<td class="px" style="padding:44px 32px 32px 32px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center">
+<p style="margin:0; font-family:Poppins, Arial, sans-serif; font-size:12px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:#C08B41;">Want to talk it through?</p>
+<p class="h2" style="margin:10px 0 10px 0; font-family:Poppins, Arial, sans-serif; font-size:26px; font-weight:300; line-height:1.3; color:#1F3D28;"><span style="font-weight:700; color:#b07d38;">Book a call back</span> with the team</p>
+<p style="margin:0 0 22px 0; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.7; color:#1F3D28;">Pick a time that suits you and we'll ring you.</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr>
+<td class="arrows" style="padding-right:12px; font-family:Poppins, Arial, sans-serif; font-size:20px; font-weight:700; color:#b07d38; letter-spacing:2px;">&rsaquo;&rsaquo;&rsaquo;</td>
+<td bgcolor="#b07d38" align="center" style="background-color:#b07d38; border-radius:30px; padding:14px 34px; mso-padding-alt:14px 34px;">
+<a href="https://www.barrelsaunauk.com/book-a-call-back" style="display:block; text-decoration:none; font-family:Poppins, Arial, sans-serif; font-size:15px; font-weight:700; color:#ffffff;"><!--[if mso]><font color="#ffffff"><![endif]-->Book a call back<!--[if mso]></font><![endif]--></a>
+</td>
+<td class="arrows" style="padding-left:12px; font-family:Poppins, Arial, sans-serif; font-size:20px; font-weight:700; color:#b07d38; letter-spacing:2px;">&lsaquo;&lsaquo;&lsaquo;</td>
+</tr></table>
+</td></tr></table>
+<p style="margin:36px 0 0 0; font-family:Poppins, Arial, sans-serif; font-size:15px; line-height:1.6; color:#1F3D28;">Speak soon,<br><span style="font-weight:700;">The Barrel Sauna UK Team</span></p>
+</td></tr></table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td>
+</tr>
 
-<footer>
-  <div class="rule"></div>
-  <div style="display:inline-block;background:#ffffff;border-radius:14px;padding:16px;max-width:560px;width:92%;box-shadow:0 14px 36px rgba(0,0,0,0.35);margin-bottom:10px;">
-    <img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/6a96e859fac7854efe0a2fdc.jpeg" alt="The Barrel Sauna UK Team" style="display:block;width:100%;height:auto;border-radius:8px;">
-  </div>
-  <div class="site">Barrel Sauna UK · <a href="https://barrelsaunauk.com">barrelsaunauk.com</a></div>
-</footer>
+<!-- SIGNATURE -->
+<tr>
+<td align="center" style="padding:0; line-height:0; font-size:0;">
+<!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+<table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:640px; margin:0 auto;"><tr><td style="line-height:0; font-size:0;">
+<a href="https://www.barrelsaunauk.com" style="text-decoration:none;"><img src="https://assets.cdn.filesafe.space/J378Bt0d7JvG2rXks3zo/media/bf18840a-71c4-4a73-abb9-6505c182f33d.jpg" alt="Barrel Sauna UK, bespoke, made to order. info@barrelsaunauk.com, +44 2920 676731, WhatsApp +44 7360 274142, www.barrelsaunauk.com" width="640" style="display:block; width:100%; height:auto; border:0;"></a>
+</td></tr></table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td>
+</tr>
 
-<script>
-  var io = new IntersectionObserver(function(es){
-    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold: 0.15});
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-</script>
+</tbody>
+</table>
+</td></tr></tbody>
+</table>
 </body>
 </html>
